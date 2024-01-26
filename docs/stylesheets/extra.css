@@ -18,6 +18,20 @@
     color: #BD93F9 !important;
 }
 
+.md-typeset .admonition.note .admonition-icon::before {
+    content: 'brightness_4';
+}
+
+.admonition {
+    border-color: #BD93F9 !important;
+    background-color: rgba(189, 147, 249, 0.20) !important;
+}
+
+.admonition-title::before {
+    background-color: #BD93F9 !important;
+}
+
+
 
 h1 {
     font-style: bold !important;

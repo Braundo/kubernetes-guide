@@ -31,3 +31,26 @@
 ## Ways of Running Controllers
 - Built-in controllers run inside the kube-controller-manager.
 - Custom controllers can run either inside or outside the Kubernetes cluster.
+
+``` mermaid
+graph LR
+    subgraph Kubernetes Cluster
+        apiServer[API Server]
+        controller[Controller]
+        resource[Resource Spec]
+        actualState[Actual State]
+        desiredState[Desired State]
+
+        resource -->|defines| desiredState
+        apiServer -->|observes| actualState
+        actualState -->|reported via kubelet| apiServer
+        desiredState --> controller
+    end
+
+    apiServer -->|notifies of state changes| controller
+    controller -->|attempts to match| desiredState
+
+    classDef k8s fill:#326ce5,stroke:#fff,stroke-width:2px;
+    class apiServer,controller k8s;
+
+```
