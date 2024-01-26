@@ -1,0 +1,29 @@
+.md-header {
+    background: #44475A;
+}
+
+.md-footer {
+    background: #44475A;
+}
+
+.md-footer-meta {
+    display: none;
+}
+
+.md-footer__button {
+    color: #BD93F9;
+}
+
+.md-nav__link--active, .md-nav__link:hover {
+    color: #BD93F9 !important;
+}
+
+
+h1 {
+    font-style: bold !important;
+}
+
+h2 {
+    color: #8f9bbd;
+    font-weight: bold !important;
+}

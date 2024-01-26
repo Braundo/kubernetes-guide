@@ -1,0 +1,56 @@
+site_name: Kubernetes TLDR
+nav:
+  - Home: index.md
+  - Architecture:
+    - Nodes: architecture/nodes.md
+    - Node Communication: architecture/node-communication.md
+    - Controllers: architecture/controllers.md
+    - Leases: architecture/leases.md
+    - Cloud Controller Manager: architecture/cloud-controller-manager.md
+    - cgroup v2: architecture/cgroupv2.md
+    - Container Runtime Interface: architecture/cri.md
+    - Garbage Collection: architecture/garbage-collection.md
+    - Mixed Version Proxy: architecture/mixed-version-proxy.md
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  font:
+    text: Ubuntu
+    code: Fira Code
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.expand
+    - navigation.path
+    - palette.toggle
+    - toc.follow
+extra_css:
+  - stylesheets/extra.css
+extra:
+  generator: false
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - attr_list
+  - md_in_html
+plugins:
+  - mermaid2
