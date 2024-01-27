@@ -14,7 +14,7 @@
     color: #BD93F9;
 }
 
-.md-nav__link--active, .md-nav__link:hover {
+.md-nav__link--active, .md-nav__link:hover, .md-nav__link:active {
     color: #BD93F9 !important;
 }
 
