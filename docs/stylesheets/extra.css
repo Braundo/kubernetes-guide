@@ -18,8 +18,18 @@
     color: #BD93F9 !important;
 }
 
+/* Override the color for active section headers in the sidebar */
+.md-nav__title--active {
+    color: #BD93F9 !important; /* Replace with your desired color */
+}
+
+
 .md-typeset .admonition.note .admonition-icon::before {
     content: 'brightness_4';
+}
+
+.md-nav__link:focus {
+    color: #BD93F9 !important;
 }
 
 .admonition {
