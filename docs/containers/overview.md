@@ -18,29 +18,28 @@
 - You can allow your cluster to pick the default container runtime for a Pod or specify the RuntimeClass for different settings.
 
 <br/><br/>
+A simple way to think about the relationship of containers and Kubernetes is that each **node** can run multiple **pods**, which in turn each run a single **container** (typically).
 
 ``` mermaid
 graph TD
-    subgraph Host_Infrastructure["Host Infrastructure"]
-        OS[Operating System]
-        Hardware[Hardware]
-    end
+    Node[Node] --> Pod1[Pod]
+    Node --> Pod2[Pod]
+    Node --> Pod3[Pod]
+    Node --> Pod4[Pod]
 
-    subgraph Kubernetes_Node["Kubernetes Node"]
-        Node[Node]
-    end
+    Pod1 --> Container1[Container]
+    Pod2 --> Container2[Container]
+    Pod3 --> Container3[Container]
+    Pod4 --> Container4[Container]
 
-    subgraph Pod["Pod"]
-        Container[Container]
-    end
-
-    Kubernetes_Node -->|runs on| OS
-    OS --> Hardware
-    Node --> Pod
-    Pod --> Container
-
-    classDef k8s fill:#326ce5,stroke:#fff,stroke-width:2px;
-    class OS,Hardware,Node,Pod,Container k8s;
-
+    style Node fill:#f9f,stroke:#333,stroke-width:4px
+    style Pod1 fill:#bbf,stroke:#333,stroke-width:2px
+    style Pod2 fill:#bbf,stroke:#333,stroke-width:2px
+    style Pod3 fill:#bbf,stroke:#333,stroke-width:2px
+    style Pod4 fill:#bbf,stroke:#333,stroke-width:2px
+    style Container1 fill:#88f,stroke:#333,stroke-width:1px
+    style Container2 fill:#88f,stroke:#333,stroke-width:1px
+    style Container3 fill:#88f,stroke:#333,stroke-width:1px
+    style Container4 fill:#88f,stroke:#333,stroke-width:1px
 
 ```
