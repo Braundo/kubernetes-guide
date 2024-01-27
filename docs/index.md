@@ -3,7 +3,7 @@ icon: material/home
 ---
 
 # Welcome to K8s Guide
-
+!!! info "SITE IS STILL UNDER CONSTRUCTION!"
 !!! info "Content current as of Kubernetes verison 1.28"
 
 Welcome to k8s.guide, your concise companion through the world of Kubernetes. My aim was to provide a simplified, digestible, and easy-to-navigate version of the official Kubernetes documentation.
