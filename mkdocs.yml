@@ -20,7 +20,7 @@ nav:
     - Lifecycle Hooks: containers/container-lifecycle-hooks.md
   - Pods:
     - Overview: pods/overview.md
-    - Pod Lifecycle: pods/lifecycle.md
+    - Pod Lifecycle: pods/pod-lifecycle.md
     - Init Containers: pods/init-containers.md
     - Disruptions: pods/disruptions.md
     - Ephemeral Containers: pods/ephemeral-containers.md
@@ -148,3 +148,4 @@ markdown_extensions:
   - md_in_html
 plugins:
   - mermaid2
+  - search
