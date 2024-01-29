@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../ipv4-ipv6/">
+      
+      
+        <link rel="next" href="../service-networking/">
       
       
       <link rel="icon" href="../../assets/logo.svg">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Kubernetes secrets good practices - Kubernetes TLDR</title>
+        <title>Topology Aware Routing - Kubernetes TLDR</title>
       
     
     
@@ -70,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#principles-and-practices" class="md-skip">
+        <a href="#motivation" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kubernetes secrets good practices
+              Topology Aware Routing
             
           </span>
         </div>
@@ -578,27 +582,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../containers/container-runtime.md" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Container Runtime
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../containers/runtime-class/" class="md-nav__link">
         
   
@@ -960,7 +943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workloads/daemonset.md" class="md-nav__link">
+      <a href="../../workloads/daemonsets/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1027,19 +1010,21 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -1053,7 +1038,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Services & Networking
@@ -1067,7 +1052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/network-overview/" class="md-nav__link">
+      <a href="../network-overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1088,7 +1073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/service/" class="md-nav__link">
+      <a href="../service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1109,7 +1094,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/ingress/" class="md-nav__link">
+      <a href="../ingress/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1130,7 +1115,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/endpoint-slices/" class="md-nav__link">
+      <a href="../endpoint-slices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1151,7 +1136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/network-policies/" class="md-nav__link">
+      <a href="../network-policies/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1172,7 +1157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/dns/" class="md-nav__link">
+      <a href="../dns/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1193,7 +1178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/ipv4-ipv6/" class="md-nav__link">
+      <a href="../ipv4-ipv6/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1211,10 +1196,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../services-and-networking/topology-aware-routing.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Topology Aware Routing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1223,6 +1226,105 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-topology-aware-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Topology Aware Routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-works-best" class="md-nav__link">
+    <span class="md-ellipsis">
+      When it works best
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpointslice-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      EndpointSlice controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kube-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safeguards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safeguards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constraints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-heuristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom heuristics
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1235,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/service-networking/" class="md-nav__link">
+      <a href="../service-networking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1745,7 +1847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security/" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1766,7 +1868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pod-security-standards/" class="md-nav__link">
+      <a href="../../security/pod-security-standards/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1787,7 +1889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../service-accounts/" class="md-nav__link">
+      <a href="../../security/service-accounts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1808,7 +1910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pod-security-admission/" class="md-nav__link">
+      <a href="../../security/pod-security-admission/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1829,7 +1931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../controlling-access-to-k8s-api.md" class="md-nav__link">
+      <a href="../../security/controlling-access-to-kubernetes-api/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1850,7 +1952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rbac-best-practices.md" class="md-nav__link">
+      <a href="../../security/rbac-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1871,7 +1973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kubernetes-secrets-best-practices.md" class="md-nav__link">
+      <a href="../../security/kubernetes-secrets-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1892,7 +1994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multi-tenancy/" class="md-nav__link">
+      <a href="../../security/multi-tenancy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1913,7 +2015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hardening-guide-auth.md" class="md-nav__link">
+      <a href="../../security/hardening-guide-auth/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1934,7 +2036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kubernetes-api-server-bypass.md" class="md-nav__link">
+      <a href="../../security/kubernetes-api-server-bypass-risks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1955,7 +2057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../security-checklist/" class="md-nav__link">
+      <a href="../../security/security-checklist/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2379,7 +2481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scheduling-and-eviction/pod-priority-preemption.md" class="md-nav__link">
+      <a href="../../scheduling-and-eviction/pod-priority-and-preemption/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2570,7 +2672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../administration/metrics-for-kubernetes-components.md" class="md-nav__link">
+      <a href="../../administration/metrics-for-kubernetes-components/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2612,7 +2714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../administration/traces-for-kubernetes-components.md" class="md-nav__link">
+      <a href="../../administration/traces-for-kubernetes-components/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2654,7 +2756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../administration/api-priority-and-fairness.md" class="md-nav__link">
+      <a href="../../administration/api-priority-and-fairness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2721,72 +2823,81 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#principles-and-practices" class="md-nav__link">
+  <a href="#motivation" class="md-nav__link">
     <span class="md-ellipsis">
-      Principles and Practices
+      Motivation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-encryption-at-rest" class="md-nav__link">
+  <a href="#enabling-topology-aware-routing" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Encryption at Rest
+      Enabling Topology Aware Routing
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-least-privilege-access-to-secrets" class="md-nav__link">
+  <a href="#when-it-works-best" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Least-Privilege Access to Secrets
+      When it works best
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-recommendations" class="md-nav__link">
+  <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
-      Additional Recommendations
+      How It Works
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-access-to-external-secrets" class="md-nav__link">
+  <a href="#endpointslice-controller" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Access to External Secrets
+      EndpointSlice controller
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#restrict-secret-access-to-specific-containers" class="md-nav__link">
+  <a href="#kube-proxy" class="md-nav__link">
     <span class="md-ellipsis">
-      Restrict Secret Access to Specific Containers
+      kube-proxy
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#protect-secret-data-after-reading" class="md-nav__link">
+  <a href="#safeguards" class="md-nav__link">
     <span class="md-ellipsis">
-      Protect Secret Data After Reading
+      Safeguards
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#avoid-sharing-secret-manifests" class="md-nav__link">
+  <a href="#constraints" class="md-nav__link">
     <span class="md-ellipsis">
-      Avoid Sharing Secret Manifests
+      Constraints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-heuristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom heuristics
     </span>
   </a>
   
@@ -2807,29 +2918,53 @@
                   
 
 
-  <h1>Kubernetes secrets good practices</h1>
+  <h1>Topology Aware Routing</h1>
 
-<h2 id="principles-and-practices">Principles and Practices</h2>
-<p>In Kubernetes, a Secret is an object that stores sensitive information like passwords, OAuth tokens, and SSH keys. Secrets offer better control over sensitive information and reduce the risk of accidental exposure. By default, Secret values are base64 encoded and stored unencrypted, but you can configure them to be encrypted at rest. Pods can reference Secrets in various ways, such as in a volume mount or as an environment variable.</p>
-<h2 id="configure-encryption-at-rest">Configure Encryption at Rest</h2>
-<p>Secrets are stored unencrypted in etcd by default. It's recommended to configure encryption for Secret data in etcd.</p>
-<h2 id="configure-least-privilege-access-to-secrets">Configure Least-Privilege Access to Secrets</h2>
-<p>When planning your access control mechanism, like Kubernetes Role-based Access Control (RBAC), restrict access to Secret objects. Limit watch or list access to only the most privileged, system-level components. Only grant 'get' access if the component's behavior requires it.</p>
-<h2 id="additional-recommendations">Additional Recommendations</h2>
+<h2 id="motivation">Motivation</h2>
 <ul>
-<li>Use short-lived Secrets.</li>
-<li>Implement audit rules that alert on specific events, like concurrent reading of multiple Secrets by a single user.</li>
-<li>Improve etcd management policies, such as wiping or shredding the durable storage used by etcd once it's no longer in use.</li>
-<li>If there are multiple etcd instances, configure encrypted SSL/TLS communication between them.</li>
+<li>Designed for multi-zone environments.</li>
+<li>Aims to keep network traffic within the originating zone for reliability, performance, and cost.</li>
 </ul>
-<h2 id="configure-access-to-external-secrets">Configure Access to External Secrets</h2>
-<p>You can use third-party Secrets store providers to keep your confidential data outside your cluster. The Kubernetes Secrets Store CSI Driver is a DaemonSet that allows the kubelet to retrieve Secrets from external stores and mount them into specific Pods. ## For Developers</p>
-<h2 id="restrict-secret-access-to-specific-containers">Restrict Secret Access to Specific Containers</h2>
-<p>If a Pod has multiple containers and only one needs access to a Secret, configure the volume mount or environment variable so that the other containers don't have access.</p>
-<h2 id="protect-secret-data-after-reading">Protect Secret Data After Reading</h2>
-<p>After reading the Secret from an environment variable or volume, your application should still protect the value. For example, avoid logging the Secret or transmitting it to an untrusted party.</p>
-<h2 id="avoid-sharing-secret-manifests">Avoid Sharing Secret Manifests</h2>
-<p>If you configure a Secret through a manifest with the Secret data encoded as base64, avoid sharing this file or checking it into a source repository.</p>
+<h2 id="enabling-topology-aware-routing">Enabling Topology Aware Routing</h2>
+<ul>
+<li>Enabled by setting the <code>service.kubernetes.io/topology-mode</code> annotation to <code>Auto</code>.</li>
+<li>EndpointSlices will have Topology Hints populated to allocate endpoints to specific zones.</li>
+</ul>
+<h2 id="when-it-works-best">When it works best</h2>
+<ul>
+<li>Even distribution of incoming traffic.</li>
+<li>Service has 3 or more endpoints per zone.</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<ul>
+<li>"Auto" heuristic proportionally allocates endpoints to each zone.</li>
+<li>EndpointSlice controller sets hints based on allocatable CPU cores in each zone.</li>
+</ul>
+<h2 id="endpointslice-controller">EndpointSlice controller</h2>
+<ul>
+<li>Responsible for setting hints on EndpointSlices.</li>
+<li>Allocates endpoints based on the allocatable CPU cores for nodes in each zone.</li>
+</ul>
+<h2 id="kube-proxy">kube-proxy</h2>
+<ul>
+<li>Filters endpoints based on hints set by the EndpointSlice controller.</li>
+<li>Sometimes allocates endpoints from different zones for even distribution.</li>
+</ul>
+<h2 id="safeguards">Safeguards</h2>
+<ul>
+<li>Several rules to ensure safe use of Topology Aware Hints.</li>
+<li>If rules aren't met, <code>kube-proxy</code> selects endpoints from anywhere in the cluster.</li>
+</ul>
+<h2 id="constraints">Constraints</h2>
+<ul>
+<li>Not used when <code>internalTrafficPolicy</code> is set to <code>Local</code>.</li>
+<li>Does not work well for Services with traffic originating from a subset of zones.</li>
+<li>Does not account for unready nodes or nodes with specific labels.</li>
+</ul>
+<h2 id="custom-heuristics">Custom heuristics</h2>
+<ul>
+<li>Allows for custom heuristics if the built-in ones don't meet specific use cases.</li>
+</ul>
 
 
 
@@ -2860,6 +2995,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../ipv4-ipv6/" class="md-footer__link md-footer__link--prev" aria-label="Previous: IPv4 - IPv6">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                IPv4 - IPv6
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../service-networking/" class="md-footer__link md-footer__link--next" aria-label="Next: Service Networking">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Service Networking
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

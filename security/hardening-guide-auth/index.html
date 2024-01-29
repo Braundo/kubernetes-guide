@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../multi-tenancy/">
+      
+      
+        <link rel="next" href="../kubernetes-api-server-bypass-risks/">
       
       
       <link rel="icon" href="../../assets/logo.svg">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Topolgy aware routing - Kubernetes TLDR</title>
+        <title>Hardening Guide - Kubernetes TLDR</title>
       
     
     
@@ -70,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#motivation" class="md-skip">
+        <a href="#x509-client-certificate-authentication" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Topolgy aware routing
+              Hardening Guide
             
           </span>
         </div>
@@ -578,27 +582,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../containers/container-runtime.md" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Container Runtime
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../containers/runtime-class/" class="md-nav__link">
         
   
@@ -960,7 +943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workloads/daemonset.md" class="md-nav__link">
+      <a href="../../workloads/daemonsets/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1067,7 +1050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../network-overview/" class="md-nav__link">
+      <a href="../../services-and-networking/network-overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1088,7 +1071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../service/" class="md-nav__link">
+      <a href="../../services-and-networking/service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1109,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingress/" class="md-nav__link">
+      <a href="../../services-and-networking/ingress/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1130,7 +1113,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../endpoint-slices/" class="md-nav__link">
+      <a href="../../services-and-networking/endpoint-slices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1151,7 +1134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../network-policies/" class="md-nav__link">
+      <a href="../../services-and-networking/network-policies/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1172,7 +1155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dns/" class="md-nav__link">
+      <a href="../../services-and-networking/dns/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1193,7 +1176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ipv4-ipv6/" class="md-nav__link">
+      <a href="../../services-and-networking/ipv4-ipv6/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1214,7 +1197,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../topology-aware-routing.md" class="md-nav__link">
+      <a href="../../services-and-networking/topology-aware-routing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1235,7 +1218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../service-networking/" class="md-nav__link">
+      <a href="../../services-and-networking/service-networking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1705,19 +1688,21 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
         
           
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
@@ -1731,7 +1716,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             Security
@@ -1745,7 +1730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security/" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1766,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/pod-security-standards/" class="md-nav__link">
+      <a href="../pod-security-standards/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1787,7 +1772,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/service-accounts/" class="md-nav__link">
+      <a href="../service-accounts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1808,7 +1793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/pod-security-admission/" class="md-nav__link">
+      <a href="../pod-security-admission/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1829,7 +1814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/controlling-access-to-k8s-api.md" class="md-nav__link">
+      <a href="../controlling-access-to-kubernetes-api/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1850,7 +1835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/rbac-best-practices.md" class="md-nav__link">
+      <a href="../rbac-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1871,7 +1856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/kubernetes-secrets-best-practices.md" class="md-nav__link">
+      <a href="../kubernetes-secrets-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1892,7 +1877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/multi-tenancy/" class="md-nav__link">
+      <a href="../multi-tenancy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1910,10 +1895,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../security/hardening-guide-auth.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Hardening Guide
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1922,6 +1925,96 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#x509-client-certificate-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      X.509 Client Certificate Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-token-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static Token File
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootstrap-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serviceaccount-secret-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      ServiceAccount Secret Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokenrequest-api-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenRequest API Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openid-connect-oidc-token-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenID Connect (OIDC) Token Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#webhook-token-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Webhook Token Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticating Proxy
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1934,7 +2027,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/kubernetes-api-server-bypass.md" class="md-nav__link">
+      <a href="../kubernetes-api-server-bypass-risks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1955,7 +2048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/security-checklist/" class="md-nav__link">
+      <a href="../security-checklist/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2379,7 +2472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scheduling-and-eviction/pod-priority-preemption.md" class="md-nav__link">
+      <a href="../../scheduling-and-eviction/pod-priority-and-preemption/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2570,7 +2663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../administration/metrics-for-kubernetes-components.md" class="md-nav__link">
+      <a href="../../administration/metrics-for-kubernetes-components/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2612,7 +2705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../administration/traces-for-kubernetes-components.md" class="md-nav__link">
+      <a href="../../administration/traces-for-kubernetes-components/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2654,7 +2747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../administration/api-priority-and-fairness.md" class="md-nav__link">
+      <a href="../../administration/api-priority-and-fairness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2721,81 +2814,72 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#motivation" class="md-nav__link">
+  <a href="#x509-client-certificate-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      Motivation
+      X.509 Client Certificate Authentication
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#enabling-topology-aware-routing" class="md-nav__link">
+  <a href="#static-token-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Topology Aware Routing
+      Static Token File
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-it-works-best" class="md-nav__link">
+  <a href="#bootstrap-tokens" class="md-nav__link">
     <span class="md-ellipsis">
-      When it works best
+      Bootstrap Tokens
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#serviceaccount-secret-tokens" class="md-nav__link">
     <span class="md-ellipsis">
-      How It Works
+      ServiceAccount Secret Tokens
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#endpointslice-controller" class="md-nav__link">
+  <a href="#tokenrequest-api-tokens" class="md-nav__link">
     <span class="md-ellipsis">
-      EndpointSlice controller
+      TokenRequest API Tokens
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#kube-proxy" class="md-nav__link">
+  <a href="#openid-connect-oidc-token-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      kube-proxy
+      OpenID Connect (OIDC) Token Authentication
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#safeguards" class="md-nav__link">
+  <a href="#webhook-token-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      Safeguards
+      Webhook Token Authentication
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#constraints" class="md-nav__link">
+  <a href="#authenticating-proxy" class="md-nav__link">
     <span class="md-ellipsis">
-      Constraints
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#custom-heuristics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom heuristics
+      Authenticating Proxy
     </span>
   </a>
   
@@ -2816,52 +2900,48 @@
                   
 
 
-  <h1>Topolgy aware routing</h1>
+  <h1>Hardening Guide</h1>
 
-<h2 id="motivation">Motivation</h2>
+<h2 id="x509-client-certificate-authentication">X.509 Client Certificate Authentication</h2>
 <ul>
-<li>Designed for multi-zone environments.</li>
-<li>Aims to keep network traffic within the originating zone for reliability, performance, and cost.</li>
+<li>Used for system components like Kubelet to API Server.</li>
+<li>Not suitable for user authentication due to non-revocable certificates and other limitations.</li>
 </ul>
-<h2 id="enabling-topology-aware-routing">Enabling Topology Aware Routing</h2>
+<h2 id="static-token-file">Static Token File</h2>
 <ul>
-<li>Enabled by setting the <code>service.kubernetes.io/topology-mode</code> annotation to <code>Auto</code>.</li>
-<li>EndpointSlices will have Topology Hints populated to allocate endpoints to specific zones.</li>
+<li>Credentials are stored in clear text on control plane node disks.</li>
+<li>Not recommended for production due to security risks and lack of lockout mechanisms.</li>
 </ul>
-<h2 id="when-it-works-best">When it works best</h2>
+<h2 id="bootstrap-tokens">Bootstrap Tokens</h2>
 <ul>
-<li>Even distribution of incoming traffic.</li>
-<li>Service has 3 or more endpoints per zone.</li>
+<li>Used for joining nodes to clusters.</li>
+<li>Not suitable for user authentication due to hard-coded group memberships and lack of lockout mechanisms.</li>
 </ul>
-<h2 id="how-it-works">How It Works</h2>
+<h2 id="serviceaccount-secret-tokens">ServiceAccount Secret Tokens</h2>
 <ul>
-<li>"Auto" heuristic proportionally allocates endpoints to each zone.</li>
-<li>EndpointSlice controller sets hints based on allocatable CPU cores in each zone.</li>
+<li>Used for workloads in the cluster to authenticate to the API server.</li>
+<li>Being replaced with TokenRequest API tokens.
+Unsuitable for user authentication for various reasons, including lack of expiry.</li>
 </ul>
-<h2 id="endpointslice-controller">EndpointSlice controller</h2>
+<h2 id="tokenrequest-api-tokens">TokenRequest API Tokens</h2>
 <ul>
-<li>Responsible for setting hints on EndpointSlices.</li>
-<li>Allocates endpoints based on the allocatable CPU cores for nodes in each zone.</li>
+<li>Useful for short-lived service authentication.</li>
+<li>Not recommended for user authentication due to lack of revocation methods.</li>
 </ul>
-<h2 id="kube-proxy">kube-proxy</h2>
+<h2 id="openid-connect-oidc-token-authentication">OpenID Connect (OIDC) Token Authentication</h2>
 <ul>
-<li>Filters endpoints based on hints set by the EndpointSlice controller.</li>
-<li>Sometimes allocates endpoints from different zones for even distribution.</li>
+<li>Allows integration with external identity providers.</li>
+<li>Requires careful setup and short token lifespan for security.</li>
 </ul>
-<h2 id="safeguards">Safeguards</h2>
+<h2 id="webhook-token-authentication">Webhook Token Authentication</h2>
 <ul>
-<li>Several rules to ensure safe use of Topology Aware Hints.</li>
-<li>If rules aren't met, <code>kube-proxy</code> selects endpoints from anywhere in the cluster.</li>
+<li>Allows an external service to make authentication decisions via a webhook.</li>
+<li>Suitability depends on the software used for the authentication service.</li>
 </ul>
-<h2 id="constraints">Constraints</h2>
+<h2 id="authenticating-proxy">Authenticating Proxy</h2>
 <ul>
-<li>Not used when <code>internalTrafficPolicy</code> is set to <code>Local</code>.</li>
-<li>Does not work well for Services with traffic originating from a subset of zones.</li>
-<li>Does not account for unready nodes or nodes with specific labels.</li>
-</ul>
-<h2 id="custom-heuristics">Custom heuristics</h2>
-<ul>
-<li>Allows for custom heuristics if the built-in ones don't meet specific use cases.</li>
+<li>Uses a proxy to set specific header values for username and group memberships.</li>
+<li>Requires securely configured TLS and proper header security.</li>
 </ul>
 
 
@@ -2893,6 +2973,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../multi-tenancy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Multi-Tenancy">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Multi-Tenancy
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../kubernetes-api-server-bypass-risks/" class="md-footer__link md-footer__link--next" aria-label="Next: API Server Bypass">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                API Server Bypass
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../controlling-access-to-kubernetes-api/">
+      
+      
+        <link rel="next" href="../kubernetes-secrets-best-practices/">
       
       
       <link rel="icon" href="../../assets/logo.svg">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Metrics for k8s system components - Kubernetes TLDR</title>
+        <title>RBAC Best Practices - Kubernetes TLDR</title>
       
     
     
@@ -69,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#general-good-practice" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Metrics for k8s system components
+              RBAC Best Practices
             
           </span>
         </div>
@@ -573,27 +582,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../containers/container-runtime.md" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Container Runtime
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../containers/runtime-class/" class="md-nav__link">
         
   
@@ -955,7 +943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workloads/daemonset.md" class="md-nav__link">
+      <a href="../../workloads/daemonsets/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1209,7 +1197,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services-and-networking/topology-aware-routing.md" class="md-nav__link">
+      <a href="../../services-and-networking/topology-aware-routing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1700,19 +1688,21 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
         
           
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
@@ -1726,7 +1716,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             Security
@@ -1740,7 +1730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security/" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1761,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/pod-security-standards/" class="md-nav__link">
+      <a href="../pod-security-standards/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1782,7 +1772,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/service-accounts/" class="md-nav__link">
+      <a href="../service-accounts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1803,7 +1793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/pod-security-admission/" class="md-nav__link">
+      <a href="../pod-security-admission/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1824,7 +1814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/controlling-access-to-k8s-api.md" class="md-nav__link">
+      <a href="../controlling-access-to-kubernetes-api/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1842,10 +1832,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../security/rbac-best-practices.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    RBAC Best Practices
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1854,6 +1862,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-good-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Good Practice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimize-distribution-of-privileged-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimize Distribution of Privileged Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardening
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#periodic-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Periodic Review
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-escalation-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privilege Escalation Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#denial-of-service-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Denial of Service Risks
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1866,7 +1946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/kubernetes-secrets-best-practices.md" class="md-nav__link">
+      <a href="../kubernetes-secrets-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1887,7 +1967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/multi-tenancy/" class="md-nav__link">
+      <a href="../multi-tenancy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1908,7 +1988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/hardening-guide-auth.md" class="md-nav__link">
+      <a href="../hardening-guide-auth/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1929,7 +2009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/kubernetes-api-server-bypass.md" class="md-nav__link">
+      <a href="../kubernetes-api-server-bypass-risks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1950,7 +2030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/security-checklist/" class="md-nav__link">
+      <a href="../security-checklist/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2374,7 +2454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scheduling-and-eviction/pod-priority-preemption.md" class="md-nav__link">
+      <a href="../../scheduling-and-eviction/pod-priority-and-preemption/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2481,7 +2561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../certificates/" class="md-nav__link">
+      <a href="../../administration/certificates/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2502,7 +2582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../managing-resources/" class="md-nav__link">
+      <a href="../../administration/managing-resources/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2523,7 +2603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cluster-networking/" class="md-nav__link">
+      <a href="../../administration/cluster-networking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2544,7 +2624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../logging-architecture/" class="md-nav__link">
+      <a href="../../administration/logging-architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2565,7 +2645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../metrics-for-kubernetes-components.md" class="md-nav__link">
+      <a href="../../administration/metrics-for-kubernetes-components/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2586,7 +2666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../system-logs/" class="md-nav__link">
+      <a href="../../administration/system-logs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2607,7 +2687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../traces-for-kubernetes-components.md" class="md-nav__link">
+      <a href="../../administration/traces-for-kubernetes-components/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2628,7 +2708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../proxies-in-kubernetes/" class="md-nav__link">
+      <a href="../../administration/proxies-in-kubernetes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2649,7 +2729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api-priority-and-fairness.md" class="md-nav__link">
+      <a href="../../administration/api-priority-and-fairness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2670,7 +2750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../installing-addons/" class="md-nav__link">
+      <a href="../../administration/installing-addons/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2709,6 +2789,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-good-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Good Practice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimize-distribution-of-privileged-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimize Distribution of Privileged Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardening
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#periodic-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Periodic Review
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-escalation-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privilege Escalation Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#denial-of-service-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Denial of Service Risks
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2722,25 +2864,20 @@
                   
 
 
-  <h1>Metrics for k8s system components</h1>
+  <h1>RBAC Best Practices</h1>
 
-<p><strong>Prometheus Format</strong>: Kubernetes components emit metrics in Prometheus format, which is structured plain text readable by both humans and machines.
-<br/><br/></p>
-<p><strong>Metrics Endpoint</strong>: Metrics are generally available on the <code>/metrics</code> endpoint of the HTTP server. For components that don't expose this endpoint by default, it can be enabled using the <code>-bind-address</code> flag.
-<br/><br/></p>
-<p><strong>Components</strong>: Metrics are available for various components like <code>kube-controller-manager</code>, <code>kube-proxy</code>, <code>kube-apiserver</code>, <code>kube-scheduler</code>, and <code>kubelet</code>.
-<br/><br/></p>
-<p><strong>RBAC Authorization</strong>: If your cluster uses RBAC, reading metrics requires authorization via a user, group, or ServiceAccount with a ClusterRole that allows accessing <code>/metrics</code>.
-<br/><br/></p>
-<p><strong>Metric Lifecycle</strong>: Metrics go through different stages Alpha, Stable, Deprecated, Hidden, and Deleted. Each stage has its own set of rules and stability guarantees.
-<br/><br/></p>
-<p><strong>Command-Line Flags</strong>: Admins can enable hidden metrics through a command-line flag on a specific binary, using the flag <code>show-hidden-metrics-for-version</code>.
-<br/><br/></p>
-<p><strong>Component Metrics</strong>: Specific metrics are available for the <code>kube-controller-manager</code> and <code>kube-scheduler</code>, providing insights into the performance and health of these components.
-<br/><br/></p>
-<p><strong>Disabling Metrics</strong>: Metrics can be turned off via the command-line flag <code>-disabled-metrics</code> if they are causing performance issues.
-<br/><br/></p>
-<p><strong>Metric Cardinality Enforcement</strong>: To limit resource use, you can use the <code>-allow-label-value</code> command-line option to dynamically configure an allow-list of label values for a metric.</p>
+<h2 id="general-good-practice">General Good Practice</h2>
+<p>Least Privilege: Assign minimal RBAC rights to users and service accounts. Use RoleBindings instead of ClusterRoleBindings, avoid wildcard permissions, and don't use cluster-admin accounts for daily tasks.</p>
+<h2 id="minimize-distribution-of-privileged-tokens">Minimize Distribution of Privileged Tokens</h2>
+<p>Limit the number of nodes running powerful pods and avoid running them alongside untrusted or publicly-exposed ones. Use Taints, NodeAffinity, or PodAntiAffinity to ensure separation.</p>
+<h2 id="hardening">Hardening</h2>
+<p>Review default RBAC rights and make changes to harden security. For instance, review bindings for the <code>system:unauthenticated</code> group and set <code>automountServiceAccountToken: false</code> to avoid auto-mounting of service account tokens.</p>
+<h2 id="periodic-review">Periodic Review</h2>
+<p>Regularly review RBAC settings to remove redundant entries and check for privilege escalations.</p>
+<h2 id="privilege-escalation-risks">Privilege Escalation Risks</h2>
+<p>Be cautious with privileges like listing secrets, workload creation, and persistent volume creation as they can lead to privilege escalation.</p>
+<h2 id="denial-of-service-risks">Denial of Service Risks</h2>
+<p>Users with object creation rights can potentially create a denial-of-service condition. Resource quotas can be used to mitigate this issue.</p>
 
 
 
@@ -2771,6 +2908,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../controlling-access-to-kubernetes-api/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Controlling Access to K8s API">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Controlling Access to K8s API
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../kubernetes-secrets-best-practices/" class="md-footer__link md-footer__link--next" aria-label="Next: Secrets Best Practices">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Secrets Best Practices
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
