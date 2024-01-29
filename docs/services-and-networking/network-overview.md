@@ -12,7 +12,7 @@
 - Ingress provides extra functionality for exposing HTTP applications, websites, and APIs.
 
 
-# Service
+## Service
 - Exposes an application running in the cluster behind a single outward-facing endpoint.
 
 
