@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1243,6 +1248,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Service Networking
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1252,6 +1268,101 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-clusterips-are-allocated" class="md-nav__link">
+    <span class="md-ellipsis">
+      How ClusterIPs are Allocated
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uniqueness-of-clusterip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uniqueness of ClusterIP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-reserve-clusterips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Reserve ClusterIPs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-clusterip-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoiding ClusterIP Conflicts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-internal-traffic-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Internal Traffic Policy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Service Internal Traffic Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Points:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it Works
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2834,92 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-clusterips-are-allocated" class="md-nav__link">
+    <span class="md-ellipsis">
+      How ClusterIPs are Allocated
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uniqueness-of-clusterip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uniqueness of ClusterIP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-reserve-clusterips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Reserve ClusterIPs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-clusterip-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoiding ClusterIP Conflicts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-internal-traffic-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Internal Traffic Policy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Service Internal Traffic Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Points:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it Works
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2736,9 +2933,59 @@
                   
 
 
-  <h1>Service Networking</h1>
-
-
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Services expose applications running on a set of Pods.</li>
+<li>Services can have a cluster-scoped virtual IP address (ClusterIP).</li>
+<li>Clients connect using the virtual IP, and Kubernetes load-balances the traffic.</li>
+</ul>
+<h2 id="how-clusterips-are-allocated">How ClusterIPs are Allocated</h2>
+<ul>
+<li><strong>Dynamically</strong>: The control plane picks a free IP address from the configured IP range.</li>
+<li><strong>Statically</strong>: You can specify an IP address within the configured IP range.</li>
+</ul>
+<h2 id="uniqueness-of-clusterip">Uniqueness of ClusterIP</h2>
+<ul>
+<li>Every Service ClusterIP must be unique across the cluster.</li>
+<li>Creating a Service with an already allocated ClusterIP will result in an error.</li>
+</ul>
+<h2 id="why-reserve-clusterips">Why Reserve ClusterIPs</h2>
+<ul>
+<li>For well-known IP addresses that other components and users in the cluster can use.</li>
+<li>Example: DNS Service in the cluster may use a well-known IP.</li>
+</ul>
+<h2 id="avoiding-clusterip-conflicts">Avoiding ClusterIP Conflicts</h2>
+<ul>
+<li>Kubernetes has an allocation strategy to reduce the risk of collision.</li>
+<li>The ClusterIP range is divided based on a formula.</li>
+<li>Dynamic IP assignment uses the upper band by default.  </li>
+</ul>
+<p>For the KCAD exam, understanding how ClusterIPs are allocated, both dynamically and statically, is crucial. Also, knowing how to avoid conflicts and the uniqueness constraint can be vital.</p>
+<h1 id="service-internal-traffic-policy">Service Internal Traffic Policy</h1>
+<h2 id="key-points">Key Points:</h2>
+<ul>
+<li><strong>Feature State</strong>: Available in Kubernetes v1.26 as stable.</li>
+<li><strong>Purpose</strong>: Allows internal traffic restrictions to only route internal traffic to endpoints within the originating node. This is useful for reducing costs and improving performance.</li>
+<li><strong>Configuration</strong>: You can enable this feature by setting .spec.internalTrafficPolicy to Local in the Service specification.</li>
+<li>This instructs kube-proxy to only use node-local endpoints for cluster-internal traffic.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-service</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MyApp</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">targetPort</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9376</span>
+<span class="w">      </span><span class="nt">internalTrafficPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Local</span>
+</code></pre></div>
+<h2 id="how-it-works">How it Works</h2>
+<ul>
+<li>The kube-proxy filters the endpoints based on the <code>.spec.internalTrafficPolicy</code> setting. When set to <code>Local</code>, only node-local endpoints - are considered. When set to <code>Cluster</code> (the default), or not set, all endpoints are considered.</li>
+</ul>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1350,6 +1355,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Projected Volumes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1359,6 +1375,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration-secret-downwardapi-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration: Secret, DownwardAPI, ConfigMap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration-non-default-permission-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration: Non-Default Permission Mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serviceaccounttoken-projected-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      ServiceAccountToken Projected Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securitycontext-interactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SecurityContext Interactions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SecurityContext Interactions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2825,83 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration-secret-downwardapi-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration: Secret, DownwardAPI, ConfigMap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration-non-default-permission-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration: Non-Default Permission Mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serviceaccounttoken-projected-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      ServiceAccountToken Projected Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securitycontext-interactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SecurityContext Interactions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SecurityContext Interactions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2917,42 @@
 
   <h1>Projected Volumes</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Projected volumes map multiple existing volume sources into a single directory.</li>
+<li>Supported volume sources: <code>secret</code>, <code>downwardAPI</code>, <code>configMap</code>, <code>serviceAccountToken</code>.</li>
+<li>All sources must be in the same namespace as the Pod.</li>
+</ul>
+<h2 id="example-configuration-secret-downwardapi-configmap">Example Configuration: Secret, DownwardAPI, ConfigMap</h2>
+<ul>
+<li>Demonstrates how to combine <code>secret</code>, <code>downwardAPI</code>, and <code>configMap</code> in a single Pod.</li>
+<li>Uses <code>apiVersion: v1, kind: Pod</code>, and specifies volume sources under projected.sources.</li>
+</ul>
+<h2 id="example-configuration-non-default-permission-mode">Example Configuration: Non-Default Permission Mode</h2>
+<ul>
+<li>Shows how to set a non-default permission mode for secrets.</li>
+<li>Uses mode: 511 to set specific permissions for the secret.</li>
+</ul>
+<h2 id="serviceaccounttoken-projected-volumes">ServiceAccountToken Projected Volumes</h2>
+<ul>
+<li>Allows injecting the token for the current service account into a Pod.</li>
+<li>Fields:<ul>
+<li><strong>audience</strong>: Intended audience of the token (optional).</li>
+<li><strong>expirationSeconds</strong>: Token validity duration, at least 10 minutes.</li>
+<li><strong>path</strong>: Relative path to the mount point.</li>
+</ul>
+</li>
+</ul>
+<h2 id="securitycontext-interactions">SecurityContext Interactions</h2>
+<h3 id="linux">Linux</h3>
+<ul>
+<li>Projected files have correct ownership, including container user ownership.</li>
+</ul>
+<h3 id="windows">Windows</h3>
+<ul>
+<li>Ownership is not enforced due to virtual SAM database in each container.</li>
+<li>Recommended to place shared files in their own volume mount outside of <code>C:\\</code>.</li>
+</ul>
 
 
 

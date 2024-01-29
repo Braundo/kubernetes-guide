@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1476,6 +1481,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    CSI Volume Cloning
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1485,6 +1501,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Considerations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provisioning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2801,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Considerations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provisioning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2869,25 @@
 
   <h1>CSI Volume Cloning</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<p>The document introduces the concept of cloning existing Container Storage Interface (CSI) Volumes in Kubernetes. The feature allows you to specify existing Persistent Volume Claims (PVCs) in the <code>dataSource</code> field to indicate that you want to clone a volume. A clone is essentially a duplicate of an existing Kubernetes volume that behaves like any standard volume. The key difference is that upon provisioning, the backend device creates an exact duplicate of the specified volume instead of a new empty one.</p>
+<h2 id="implementation">Implementation</h2>
+<p>From the Kubernetes API perspective, cloning is implemented by allowing you to specify an existing PVC as a <code>dataSource</code> during new PVC creation. The source PVC must be bound and available, meaning it should not be in use.</p>
+<h2 id="user-considerations">User Considerations</h2>
+<ul>
+<li>Cloning support is only available for CSI drivers.</li>
+<li>Only dynamic provisioners support cloning.</li>
+<li>CSI drivers may or may not have implemented volume cloning.</li>
+<li>Cloning can only be done within the same namespace for both source and destination PVCs.</li>
+<li>Cloning is supported with different Storage Classes.</li>
+<li>The destination volume can have the same or a different storage class as the source.</li>
+<li>The default storage class can be used, and storageClassName can be omitted in the spec.</li>
+<li>Cloning can only be done between two volumes that use the same <code>VolumeMode</code> setting.</li>
+</ul>
+<h2 id="provisioning">Provisioning</h2>
+<p>Clones are provisioned like any other PVC, except that a <code>dataSource</code> is added that references an existing PVC in the same namespace. The document provides a YAML example for creating a new PVC that is a clone of an existing one.</p>
+<h2 id="usage">Usage</h2>
+<p>Once the new PVC is available, it can be consumed like any other PVC. It becomes an independent object that can be consumed, cloned, snapshotted, or deleted independently. The source is not linked to the newly created clone in any way, allowing for modifications or deletions without affecting the clone.</p>
 
 
 

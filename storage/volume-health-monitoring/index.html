@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#feature-state" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1539,6 +1544,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Volume Health Monitoring
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1548,6 +1564,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#feature-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature State
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controller-side-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controller-Side Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-side-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node-Side Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#feature-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature State
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controller-side-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controller-Side Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-side-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node-Side Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,20 @@
 
   <h1>Volume Health Monitoring</h1>
 
-
+<h2 id="feature-state">Feature State</h2>
+<p>The feature is in alpha state as of Kubernetes v1.21.</p>
+<h2 id="overview">Overview</h2>
+<p>Volume Health Monitoring in Kubernetes is part of the Container Storage Interface (CSI). It allows CSI Drivers to detect abnormal conditions in the underlying storage systems and report them as events on Persistent Volume Claims (PVCs) or Pods.</p>
+<h2 id="components">Components</h2>
+<p>The feature is implemented in two main components:
+1. <strong>External Health Monitor Controller</strong>: This controller watches for abnormal volume conditions and reports them on the related PVC.
+2. <strong>Kubelet</strong>: It also plays a role in volume health monitoring.</p>
+<h2 id="controller-side-monitoring">Controller-Side Monitoring</h2>
+<p>If a CSI Driver supports this feature from the controller side, an event will be reported on the related PVC when an abnormal volume condition is detected. The External Health Monitor controller also watches for node failure events. You can enable node failure monitoring by setting the <code>enable-node-watcher</code> flag to true. When a node failure is detected, an event is reported on the PVC to indicate that pods using this PVC are on a failed node.</p>
+<h2 id="node-side-monitoring">Node-Side Monitoring</h2>
+<p>If a CSI Driver supports this feature from the node side, an event will be reported on every Pod using the PVC when an abnormal volume condition is detected.</p>
+<h2 id="metrics">Metrics</h2>
+<p>Volume Health information is also exposed as Kubelet VolumeStats metrics. A new metric <code>kubelet_volume_stats_health_status_abnormal</code> is added, which includes two labels: <code>namespace</code> and <code>persistentvolumeclaim</code>. The count is either 1 or 0, where 1 indicates the volume is unhealthy and 0 indicates the volume is healthy.</p>
 
 
 

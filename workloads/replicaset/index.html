@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-a-replicaset" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -947,6 +952,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ReplicaSets
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -956,6 +972,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-replicaset" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a ReplicaSet?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Purpose
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relationship-with-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relationship with Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels-and-selectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labels and Selectors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scaling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yaml-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      YAML Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rolling-updates-and-rollbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rolling Updates and Rollbacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ownership
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-intervention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Intervention
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2864,122 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-replicaset" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a ReplicaSet?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Purpose
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relationship-with-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relationship with Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels-and-selectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labels and Selectors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scaling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yaml-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      YAML Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rolling-updates-and-rollbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rolling Updates and Rollbacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ownership
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-intervention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Intervention
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2995,31 @@
 
   <h1>ReplicaSets</h1>
 
-
+<p>A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods.  </p>
+<h2 id="what-is-a-replicaset">What is a ReplicaSet?</h2>
+<p>A ReplicaSet is a Kubernetes controller that ensures a specified number of pod replicas are running at any given time.</p>
+<h2 id="purpose">Purpose</h2>
+<p>It is designed to maintain high availability and fault tolerance for pods.</p>
+<h2 id="relationship-with-pods">Relationship with Pods</h2>
+<p>A ReplicaSet creates and deletes pods as needed to meet the desired replica count.</p>
+<h2 id="labels-and-selectors">Labels and Selectors</h2>
+<p>ReplicaSets use labels and selectors to identify which pods to manage.</p>
+<h2 id="scaling">Scaling</h2>
+<p>You can manually scale a ReplicaSet or use it with an autoscaler.</p>
+<h2 id="yaml-configuration">YAML Configuration</h2>
+<p>A ReplicaSet is defined in a YAML file, specifying the desired number of replicas and the pod template.</p>
+<h2 id="rolling-updates-and-rollbacks">Rolling Updates and Rollbacks</h2>
+<p>While ReplicaSets themselves don't support rolling updates, they are often used with Deployments that do.</p>
+<h2 id="ownership">Ownership</h2>
+<p>A ReplicaSet is considered the "owner" of the pods it manages, and this ownership info is stored in the pod's metadata.</p>
+<h2 id="manual-intervention">Manual Intervention</h2>
+<p>It's possible to manually delete pods managed by a ReplicaSet, but it's generally not recommended unless you know what you're doing.</p>
+<h2 id="limitations">Limitations</h2>
+<p>ReplicaSets do not support pod versioning, unlike Deployments.</p>
+<h2 id="use-cases">Use Cases</h2>
+<p>Ideal for stateless applications where pods are interchangeable.</p>
+<h2 id="best-practices">Best Practices</h2>
+<p>It's generally better to use Deployments, which use ReplicaSets under the hood but offer more features like rolling updates.</p>
 
 
 

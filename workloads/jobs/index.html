@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#running-an-example-job" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -989,6 +994,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Workloads
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -998,6 +1014,275 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-an-example-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running an example Job
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-a-job-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing a Job spec
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-selector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod selector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-execution-for-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel execution for Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completion-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Completion mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-pod-and-container-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling Pod and container failures
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-backoff-failure-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod backoff failure policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backoff-limit-per-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backoff limit per index
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-failure-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod failure policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-termination-and-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job termination and cleanup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clean-up-finished-jobs-automatically" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clean up finished jobs automatically
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ttl-mechanism-for-finished-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTL mechanism for finished Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ttl-after-finished-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTL-After-Finished Controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup-for-finished-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cleanup for Finished Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting TTL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caveats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cronjobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cronjobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schedule Syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deadline-for-delayed-job-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deadline for Delayed Job Start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concurrency-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concurrency Policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule-suspension" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schedule Suspension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobs-history-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jobs History Limits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-zones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Zones
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Creation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +3008,266 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-an-example-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running an example Job
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-a-job-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing a Job spec
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-selector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod selector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-execution-for-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel execution for Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completion-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Completion mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-pod-and-container-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling Pod and container failures
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-backoff-failure-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod backoff failure policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backoff-limit-per-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backoff limit per index
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-failure-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod failure policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-termination-and-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job termination and cleanup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clean-up-finished-jobs-automatically" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clean up finished jobs automatically
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ttl-mechanism-for-finished-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTL mechanism for finished Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ttl-after-finished-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTL-After-Finished Controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup-for-finished-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cleanup for Finished Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting TTL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caveats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cronjobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cronjobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schedule Syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deadline-for-delayed-job-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deadline for Delayed Job Start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concurrency-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concurrency Policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule-suspension" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schedule Suspension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobs-history-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jobs History Limits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-zones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Zones
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Creation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +3283,145 @@
 
   <h1>Workloads</h1>
 
-
+<h2 id="running-an-example-job">Running an example Job</h2>
+<ul>
+<li>Use <code>kubectl create -f</code> to create a Job from a YAML file.</li>
+<li><code>kubectl get jobs</code> to list all Jobs and their statuses.</li>
+</ul>
+<h2 id="writing-a-job-spec">Writing a Job spec</h2>
+<ul>
+<li><code>metadata.name</code> to specify the Job name.</li>
+<li><code>spec.template.spec.containers[].image</code> to specify the container image.</li>
+<li><code>spec.template.spec.restartPolicy</code> must be either <code>Never</code> or <code>OnFailure</code>.</li>
+</ul>
+<h2 id="job-labels">Job Labels</h2>
+<ul>
+<li>Labels are key-value pairs attached to Jobs.</li>
+<li>Useful for organizing and querying Jobs.</li>
+</ul>
+<h2 id="pod-template">Pod Template</h2>
+<ul>
+<li>Nested inside the Job spec under spec.template.</li>
+<li>Specifies the Pod's containers, volumes, and other configurations.</li>
+</ul>
+<h2 id="pod-selector">Pod selector</h2>
+<ul>
+<li>Automatically generated based on Job's <code>metadata.labels</code>.</li>
+<li>Do not set <code>.spec.selector</code> field manually unless you know what you're doing.</li>
+</ul>
+<h2 id="parallel-execution-for-jobs">Parallel execution for Jobs</h2>
+<ul>
+<li><code>spec.parallelism</code>: Number of Pods running simultaneously.</li>
+<li><code>spec.completions</code>: Number of Pods that must complete successfully for the Job to be marked as complete.</li>
+</ul>
+<h2 id="completion-mode">Completion mode</h2>
+<ul>
+<li>Indexed Jobs: Each Pod gets a unique index between 0 and spec.completions-1.
+NonIndexed: No unique identifiers for Pods.</li>
+</ul>
+<h2 id="handling-pod-and-container-failures">Handling Pod and container failures</h2>
+<ul>
+<li><code>spec.backoffLimit</code>: Number of allowed failures before Job is marked as failed.</li>
+<li><code>spec.activeDeadlineSeconds</code>: Time in seconds that a Job is allowed to run.</li>
+</ul>
+<h2 id="pod-backoff-failure-policy">Pod backoff failure policy</h2>
+<ul>
+<li>Exponential backoff for restarting failed Pods.
+Controlled by spec.backoffLimit and spec.activeDeadlineSeconds.</li>
+</ul>
+<h2 id="backoff-limit-per-index">Backoff limit per index</h2>
+<ul>
+<li>In Indexed Jobs, each index has its own backoff limit and retry mechanism.</li>
+</ul>
+<h2 id="pod-failure-policy">Pod failure policy</h2>
+<ul>
+<li>No explicit failure policy, but can be managed using <code>spec.backoffLimit</code> and <code>spec.activeDeadlineSeconds</code>.</li>
+</ul>
+<h2 id="job-termination-and-cleanup">Job termination and cleanup</h2>
+<ul>
+<li>Deleting a Job will also delete all its Pods.</li>
+<li>Use <code>kubectl delete job --selector=</code> to delete multiple Jobs.</li>
+</ul>
+<h2 id="clean-up-finished-jobs-automatically">Clean up finished jobs automatically</h2>
+<ul>
+<li><code>.spec.ttlSecondsAfterFinished</code>: Time-to-live in seconds after Job completion, after which the Job and its Pods are deleted.</li>
+</ul>
+<h2 id="ttl-mechanism-for-finished-jobs">TTL mechanism for finished Jobs</h2>
+<ul>
+<li>TTL controller in Kubernetes takes care of this.</li>
+<li>Only works if the feature gate <code>TTLAfterFinished</code> is enabled.</li>
+</ul>
+<h2 id="job-patterns">Job patterns</h2>
+<ul>
+<li><strong>One-off Jobs</strong>: Run once and terminate.</li>
+<li><strong>CronJobs</strong>: Scheduled Jobs, defined using cron syntax.</li>
+</ul>
+<h2 id="ttl-after-finished-controller">TTL-After-Finished Controller</h2>
+<ul>
+<li>Provides a TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution.</li>
+</ul>
+<h2 id="cleanup-for-finished-jobs">Cleanup for Finished Jobs</h2>
+<ul>
+<li>Supported only for Jobs.</li>
+<li>You can specify <code>.spec.ttlSecondsAfterFinished</code> field to clean up finished Jobs automatically.</li>
+<li>The timer starts once the Job status changes to Complete or Failed.</li>
+<li>After TTL expires, the Job becomes eligible for cascading removal, including its dependent objects.</li>
+<li>Kubernetes honors object lifecycle guarantees, such as waiting for finalizers.</li>
+</ul>
+<h2 id="setting-ttl">Setting TTL</h2>
+<ul>
+<li>You can set the TTL seconds at any time.</li>
+<li>Can be specified in the Job manifest.</li>
+<li>Can be manually set for existing, already finished Jobs.</li>
+<li>Can use a mutating admission webhook to set this field dynamically at Job creation time or after the Job has finished.</li>
+<li>You can write your own controller to manage the cleanup TTL for Jobs based on selectors.</li>
+</ul>
+<h2 id="caveats">Caveats</h2>
+<ul>
+<li><strong>Updating TTL for Finished Jobs</strong>: You can modify the TTL period even after the job is created or has finished. However, retention is not guaranteed if you extend the TTL after it has already expired.</li>
+<li><strong>Time Skew</strong>: The feature is sensitive to time skew in your cluster, which may cause the control plane to clean up Job objects at the wrong time.</li>
+</ul>
+<h2 id="cronjobs">Cronjobs</h2>
+<ul>
+<li>CronJobs are used for performing regular scheduled actions like backups, report generation, etc.</li>
+</ul>
+<h2 id="schedule-syntax">Schedule Syntax</h2>
+<ul>
+<li>Uses Cron syntax for scheduling.</li>
+<li>Extended "Vixie cron" step values are supported.</li>
+<li>Macros like <code>@monthly</code>, <code>@weekly</code>, etc., can also be used.</li>
+</ul>
+<h2 id="job-template">Job Template</h2>
+<ul>
+<li>Defines a template for the Jobs that the CronJob creates.</li>
+<li>Same schema as a Job but nested and without <code>apiVersion</code> or <code>kind</code>.</li>
+</ul>
+<h2 id="deadline-for-delayed-job-start">Deadline for Delayed Job Start</h2>
+<ul>
+<li>Optional <code>.spec.startingDeadlineSeconds</code> field.</li>
+<li>Defines a deadline for starting the Job if it misses its scheduled time.</li>
+</ul>
+<h2 id="concurrency-policy">Concurrency Policy</h2>
+<ul>
+<li>Optional <code>.spec.concurrencyPolicy</code> field.</li>
+<li>Options: <code>Allow</code> (default), <code>Forbid</code>, <code>Replace</code>.</li>
+</ul>
+<h2 id="schedule-suspension">Schedule Suspension</h2>
+<ul>
+<li>Optional <code>.spec.suspend</code> field to suspend execution of Jobs.</li>
+</ul>
+<h2 id="jobs-history-limits">Jobs History Limits</h2>
+<ul>
+<li><code>.spec.successfulJobsHistoryLimit</code> and <code>.spec.failedJobsHistoryLimit</code> fields are optional.</li>
+</ul>
+<h2 id="time-zones">Time Zones</h2>
+<ul>
+<li>Time zones can be specified using <code>.spec.timeZone</code>.</li>
+</ul>
+<h2 id="job-creation">Job Creation</h2>
+<ul>
+<li>A CronJob creates a Job object approximately once per execution time of its schedule.</li>
+</ul>
 
 
 

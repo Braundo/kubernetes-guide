@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1371,6 +1376,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Ephemeral Volumes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1380,6 +1396,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-ephemeral-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Ephemeral Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csi-ephemeral-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSI Ephemeral Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generic-ephemeral-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generic Ephemeral Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-and-persistentvolumeclaim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lifecycle and PersistentVolumeClaim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Considerations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-ephemeral-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Ephemeral Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csi-ephemeral-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSI Ephemeral Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generic-ephemeral-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generic Ephemeral Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-and-persistentvolumeclaim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lifecycle and PersistentVolumeClaim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Considerations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,42 @@
 
   <h1>Ephemeral Volumes</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Ephemeral volumes are designed for temporary storage needs.</li>
+<li>They follow the Pod's lifetime and are created and deleted along with the Pod.</li>
+<li>Useful for caching services and read-only input data like configuration or secret keys.</li>
+</ul>
+<h2 id="types-of-ephemeral-volumes">Types of Ephemeral Volumes</h2>
+<ul>
+<li><code>emptyDir</code>: Empty at Pod startup, storage from kubelet base directory or RAM.</li>
+<li><code>configMap</code>, <code>downwardAPI</code>, <code>secret</code>: Inject Kubernetes data into a Pod.</li>
+<li><code>CSI ephemeral</code> volumes: Provided by special CSI drivers.</li>
+<li>Generic ephemeral volumes: Can be provided by any storage driver that supports dynamic provisioning.</li>
+</ul>
+<h2 id="csi-ephemeral-volumes">CSI Ephemeral Volumes</h2>
+<ul>
+<li>Managed locally on each node.</li>
+<li>Created after a Pod has been scheduled onto a node.</li>
+<li>No concept of rescheduling Pods.</li>
+<li>Not covered by storage resource usage limits of a Pod.</li>
+</ul>
+<h2 id="generic-ephemeral-volumes">Generic Ephemeral Volumes</h2>
+<ul>
+<li>Similar to emptyDir but may have additional features like fixed size, initial data, etc.</li>
+<li>Supports typical volume operations like snapshotting, cloning, resizing, and storage capacity tracking.</li>
+</ul>
+<h2 id="lifecycle-and-persistentvolumeclaim">Lifecycle and PersistentVolumeClaim</h2>
+<ul>
+<li>PVC parameters are allowed inside a volume source of the Pod.</li>
+<li>When the Pod is created, an actual PVC object is created and deleted along with the Pod.</li>
+<li>PVCs can be used like any other PVCs, including as data sources in volume cloning or snapshotting.</li>
+</ul>
+<h2 id="security-considerations">Security Considerations</h2>
+<ul>
+<li>Allows users to create PVCs indirectly.</li>
+<li>Normal namespace quota for PVCs still applies.</li>
+</ul>
 
 
 

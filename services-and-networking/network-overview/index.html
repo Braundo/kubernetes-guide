@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#the-kubernetes-network-model" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1075,6 +1080,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1084,6 +1100,128 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubernetes-network-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Kubernetes Network Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-networking-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Networking Concerns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ingress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ingress-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingress Controllers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpointslices" class="md-nav__link">
+    <span class="md-ellipsis">
+      EndpointSlices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-for-services-and-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNS for Services and Pods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipv4ipv6-dual-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      IPv4/IPv6 dual-stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#topology-aware-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topology Aware Routing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-internal-traffic-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Internal Traffic Policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2861,119 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubernetes-network-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Kubernetes Network Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-networking-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Networking Concerns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ingress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ingress-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingress Controllers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpointslices" class="md-nav__link">
+    <span class="md-ellipsis">
+      EndpointSlices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-for-services-and-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNS for Services and Pods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipv4ipv6-dual-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      IPv4/IPv6 dual-stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#topology-aware-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topology Aware Routing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-internal-traffic-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Internal Traffic Policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2736,9 +2987,56 @@
                   
 
 
-  <h1>Overview</h1>
-
-
+<h2 id="the-kubernetes-network-model">The Kubernetes Network Model</h2>
+<ul>
+<li>Every Pod gets a unique cluster-wide IP address.</li>
+<li>Pods can communicate with all other pods on any node without NAT.</li>
+<li>Agents on a node can communicate with all pods on that node.</li>
+<li>"IP-per-pod" model: Containers within a Pod share their network namespaces, including their IP and MAC addresses.</li>
+</ul>
+<h2 id="kubernetes-networking-concerns">Kubernetes Networking Concerns</h2>
+<ul>
+<li>Containers within a Pod communicate via loopback.</li>
+<li>Cluster networking enables communication between different Pods.</li>
+<li>The Service API exposes applications running in Pods to be reachable from outside the cluster.</li>
+<li>Ingress provides extra functionality for exposing HTTP applications, websites, and APIs.</li>
+</ul>
+<h1 id="service">Service</h1>
+<ul>
+<li>Exposes an application running in the cluster behind a single outward-facing endpoint.</li>
+</ul>
+<h2 id="ingress">Ingress</h2>
+<ul>
+<li>Makes HTTP (or HTTPS) network service available using a protocol-aware configuration mechanism.</li>
+</ul>
+<h2 id="ingress-controllers">Ingress Controllers</h2>
+<ul>
+<li>Required for an Ingress to work in the cluster.</li>
+</ul>
+<h2 id="endpointslices">EndpointSlices</h2>
+<ul>
+<li>Allows the Service to scale to handle large numbers of backends.</li>
+</ul>
+<h2 id="network-policies">Network Policies</h2>
+<ul>
+<li>Controls traffic flow at the IP address or port level.</li>
+</ul>
+<h2 id="dns-for-services-and-pods">DNS for Services and Pods</h2>
+<ul>
+<li>Workloads can discover Services within the cluster using DNS.</li>
+</ul>
+<h2 id="ipv4ipv6-dual-stack">IPv4/IPv6 dual-stack</h2>
+<ul>
+<li>Supports single-stack IPv4, single-stack IPv6, or dual-stack networking.</li>
+</ul>
+<h2 id="topology-aware-routing">Topology Aware Routing</h2>
+<ul>
+<li>Helps keep network traffic within the zone where it originated.</li>
+</ul>
+<h2 id="service-internal-traffic-policy">Service Internal Traffic Policy</h2>
+<ul>
+<li>Keeps network traffic within the node if two Pods in the cluster are running on the same node.</li>
+</ul>
 
 
 

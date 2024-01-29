@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#feature-state" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1497,6 +1502,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Storage Capacity
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1506,6 +1522,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#feature-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature State
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-begin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before You Begin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Extensions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rescheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rescheduling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#feature-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature State
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-begin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before You Begin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Extensions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rescheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rescheduling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,36 @@
 
   <h1>Storage Capacity</h1>
 
-
+<h2 id="feature-state">Feature State</h2>
+<ul>
+<li>The feature is stable as of Kubernetes v1.24. It helps Kubernetes keep track of storage capacity and aids the scheduler in placing Pods on nodes with sufficient storage.</li>
+</ul>
+<h2 id="before-you-begin">Before You Begin</h2>
+<ul>
+<li>To utilize storage capacity tracking, you must be running Kubernetes v1.28 or above and use a CSI driver that supports this feature.</li>
+</ul>
+<h2 id="api-extensions">API Extensions</h2>
+<ul>
+<li><code>CSIStorageCapacity</code> objects: Created by a CSI driver in its namespace, each object contains capacity information for one storage class and specifies which nodes can access that storage.</li>
+<li><code>CSIDriverSpec.StorageCapacity</code> field: When set to true, the Kubernetes scheduler considers storage capacity for volumes using the CSI driver.</li>
+</ul>
+<h2 id="scheduling">Scheduling</h2>
+<ul>
+<li>The scheduler uses storage capacity information if:</li>
+<li>A Pod uses a yet-to-be-created volume.</li>
+<li>The volume uses a StorageClass that references a CSI driver and uses <code>WaitForFirstConsumer</code> volume binding mode.</li>
+<li>The CSIDriver object for the driver has StorageCapacity set to true.</li>
+<li>In this case, the scheduler only considers nodes with enough storage. The check is basic and compares the volume size against the capacity listed in CSIStorageCapacity objects that include the node.</li>
+</ul>
+<h2 id="rescheduling">Rescheduling</h2>
+<ul>
+<li>Node selection is tentative until the CSI driver confirms the volume creation. If the volume can't be created due to outdated capacity information, the scheduler retries.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Scheduling can fail permanently if a Pod uses multiple volumes and one volume consumes all the available capacity in a topology segment.</li>
+<li>The feature increases the chance of successful scheduling but doesn't guarantee it due to potentially outdated information.</li>
+</ul>
 
 
 

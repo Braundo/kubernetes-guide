@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -905,6 +910,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -914,6 +930,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-and-replicaset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment and ReplicaSet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statefulset" class="md-nav__link">
+    <span class="md-ellipsis">
+      StatefulSet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daemonset" class="md-nav__link">
+    <span class="md-ellipsis">
+      DaemonSet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-and-cronjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job and CronJob
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2801,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-and-replicaset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment and ReplicaSet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statefulset" class="md-nav__link">
+    <span class="md-ellipsis">
+      StatefulSet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daemonset" class="md-nav__link">
+    <span class="md-ellipsis">
+      DaemonSet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-and-cronjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job and CronJob
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2869,37 @@
 
   <h1>Resources</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Kubernetes offers built-in APIs for declarative management of workloads.</li>
+<li>Workloads run as containers inside Pods.</li>
+<li>Kubernetes control plane manages Pods based on workload object specifications.</li>
+</ul>
+<h2 id="deployment-and-replicaset">Deployment and ReplicaSet</h2>
+<ul>
+<li>Most common way to run applications on the cluster.</li>
+<li>Good for managing stateless application workloads.</li>
+<li>Pods in a Deployment are interchangeable.</li>
+<li>Replaces the legacy <code>ReplicationController</code> API.</li>
+</ul>
+<h2 id="statefulset">StatefulSet</h2>
+<ul>
+<li>Manages one or more Pods running the same application code.</li>
+<li>Pods have a distinct identity, unlike Deployments.</li>
+<li>Commonly used to link Pods with their persistent storage via <code>PersistentVolume</code>.</li>
+<li>Replacement Pods connect to the same <code>PersistentVolume</code>.</li>
+</ul>
+<h2 id="daemonset">DaemonSet</h2>
+<ul>
+<li>Defines Pods that provide node-specific facilities.</li>
+<li>Useful for running drivers or other node-level services.</li>
+<li>Can run across every node or a subset of nodes in the cluster.</li>
+</ul>
+<h2 id="job-and-cronjob">Job and CronJob</h2>
+<ul>
+<li><strong>Job</strong> represents a one-off task that runs to completion.</li>
+<li><strong>CronJob</strong> represents tasks that repeat according to a schedule.</li>
+</ul>
 
 
 

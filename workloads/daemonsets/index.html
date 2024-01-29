@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-a-daemonset" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -2709,6 +2714,119 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-daemonset" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a DaemonSet?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-a-daemonset-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing a DaemonSet Spec
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Template
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pod Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pod-selector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Selector
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-pods-on-select-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Pods on Select Nodes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-daemon-pods-are-scheduled" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Daemon Pods are Scheduled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taints-and-tolerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Taints and Tolerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communicating-with-daemon-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communicating with Daemon Pods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updating-a-daemonset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating a DaemonSet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives-to-daemonset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives to DaemonSet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployments-vs-daemonsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployments vs DaemonSets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2722,9 +2840,55 @@
                   
 
 
-  <h1>Daemonsets</h1>
-
-
+<h2 id="what-is-a-daemonset">What is a DaemonSet?</h2>
+<ul>
+<li>A <strong>DaemonSet</strong> ensures that all (or some) nodes in a Kubernetes cluster run a copy of a specific Pod.</li>
+<li>Typical uses include running a cluster storage daemon, logs collection daemon, or node monitoring daemon on every node.</li>
+</ul>
+<h2 id="writing-a-daemonset-spec">Writing a DaemonSet Spec</h2>
+<ul>
+<li>You can describe a DaemonSet in a YAML file.</li>
+<li>Required fields include <code>apiVersion</code>, <code>kind</code>, and <code>metadata</code>.</li>
+</ul>
+<h1 id="pod-template">Pod Template</h1>
+<ul>
+<li>The <code>.spec.template</code> is a Pod template with the same schema as a Pod.</li>
+<li>It must have a <code>RestartPolicy</code> equal to <code>Always</code>.</li>
+</ul>
+<h2 id="pod-selector">Pod Selector</h2>
+<ul>
+<li>The <code>.spec.selector</code> field is a pod selector that must match the labels of the <code>.spec.template</code>.</li>
+</ul>
+<h2 id="running-pods-on-select-nodes">Running Pods on Select Nodes</h2>
+<ul>
+<li>You can specify node selectors or affinities to control on which nodes the Pods will run.</li>
+</ul>
+<h2 id="how-daemon-pods-are-scheduled">How Daemon Pods are Scheduled</h2>
+<ul>
+<li>The DaemonSet controller adds spec.affinity.nodeAffinity to match the target host.</li>
+<li>Different schedulers can be specified for the Pods.</li>
+</ul>
+<h2 id="taints-and-tolerations">Taints and Tolerations</h2>
+<ul>
+<li>DaemonSet controller automatically adds a set of tolerations to DaemonSet Pods to ensure they can be scheduled even under various node conditions.</li>
+</ul>
+<h2 id="communicating-with-daemon-pods">Communicating with Daemon Pods</h2>
+<ul>
+<li>Various patterns like <code>Push</code>, <code>NodeIP</code> and <code>Known Port</code>, <code>DNS</code>, and <code>Service</code> can be used for communication.</li>
+</ul>
+<h2 id="updating-a-daemonset">Updating a DaemonSet</h2>
+<ul>
+<li>Node labels can be changed, and the DaemonSet will update accordingly.</li>
+<li>Rolling updates and rollbacks can be performed.</li>
+</ul>
+<h2 id="alternatives-to-daemonset">Alternatives to DaemonSet</h2>
+<ul>
+<li>Daemon processes can also be run directly on nodes using init scripts, but DaemonSets offer several advantages like monitoring, logging, and resource isolation.</li>
+</ul>
+<h2 id="deployments-vs-daemonsets">Deployments vs DaemonSets</h2>
+<ul>
+<li>Use Deployments for stateless services and DaemonSets for node-level functionalities.</li>
+</ul>
 
 
 

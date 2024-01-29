@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1329,6 +1334,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Persistent Volumes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1338,6 +1354,236 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-of-a-volume-and-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lifecycle of a Volume and Claim
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle of a Volume and Claim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provisioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reclaiming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclaiming
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage-object-in-use-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Object in Use Protection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reclaiming_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclaiming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistentvolume-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      PersistentVolume Claims
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claims-as-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Claims As Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-block-volume-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw Block Volume Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-snapshot-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Snapshot and Restore
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-cloning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Cloning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-populators-and-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Populators and Data Sources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-namespace-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Namespace Data Sources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-source-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Source References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-volume-populators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Volume Populators
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-cross-namespace-volume-data-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a Cross-Namespace Volume Data Source
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2969,227 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-of-a-volume-and-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lifecycle of a Volume and Claim
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle of a Volume and Claim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provisioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reclaiming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclaiming
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage-object-in-use-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Object in Use Protection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reclaiming_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclaiming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistentvolume-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      PersistentVolume Claims
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claims-as-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Claims As Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-block-volume-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw Block Volume Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-snapshot-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Snapshot and Restore
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-cloning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Cloning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume-populators-and-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume Populators and Data Sources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-namespace-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Namespace Data Sources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-source-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Source References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-volume-populators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Volume Populators
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-cross-namespace-volume-data-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a Cross-Namespace Volume Data Source
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +3205,125 @@
 
   <h1>Persistent Volumes</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>PVs are abstraction layers for storage in Kubernetes.</li>
+<li>PVCs are requests for PV resources by pods.</li>
+<li>PVs are cluster-wide and can be used by multiple pods.</li>
+</ul>
+<h2 id="lifecycle-of-a-volume-and-claim">Lifecycle of a Volume and Claim</h2>
+<h3 id="provisioning">Provisioning</h3>
+<ul>
+<li>PVs can be provisioned statically or dynamically.</li>
+<li>Dynamic provisioning relies on StorageClasses.</li>
+<li>StorageClasses define provisioning mechanisms (e.g., AWS EBS, GCE PD).</li>
+</ul>
+<h3 id="binding">Binding</h3>
+<ul>
+<li>PVCs are bound to suitable PVs based on labels, storage capacity, and access modes.</li>
+</ul>
+<h3 id="using">Using</h3>
+<ul>
+<li>Pods specify PVCs in their volume specifications.</li>
+<li>Multiple pods can use the same PVC, but only one pod can mount it in <code>ReadWrite</code> mode at a time.</li>
+</ul>
+<h3 id="reclaiming">Reclaiming</h3>
+<ul>
+<li>PVs can be <strong>retained</strong>, <strong>recycled</strong>, or <strong>deleted</strong> after PVC release.</li>
+<li><strong>Retain</strong>: PV data is preserved.</li>
+<li><strong>Recycle</strong>: Data is deleted and PV can be reused.</li>
+<li><strong>Delete</strong>: PV is deleted along with data.</li>
+</ul>
+<h2 id="storage-object-in-use-protection">Storage Object in Use Protection</h2>
+<ul>
+<li>PVs with bound PVCs have a finalizer to prevent accidental deletion.</li>
+<li>Ensures data safety while PVCs are in use.</li>
+</ul>
+<h2 id="reclaiming_1">Reclaiming</h2>
+<ul>
+<li>Defines PV's behavior after PVC release.</li>
+<li>Options include Retain, Recycle, and Delete.</li>
+<li>Appropriate setting depends on use case.</li>
+</ul>
+<h2 id="persistentvolume-claims">PersistentVolume Claims</h2>
+<ul>
+<li>PVCs request storage resources.</li>
+<li>They specify access modes (<code>ReadWriteOnce</code>, <code>ReadOnlyMany</code>, <code>ReadWriteMany</code>), resource requests, and StorageClass.</li>
+<li>Reference a StorageClass to dynamically provision PVs.</li>
+</ul>
+<h2 id="access-modes">Access Modes</h2>
+<ul>
+<li><code>ReadWriteOnce</code>: Can be mounted as read-write by a single node.</li>
+<li><code>ReadOnlyMany</code>: Can be mounted read-only by many nodes.</li>
+<li><code>ReadWriteMany</code>: Can be mounted as read-write by many nodes.</li>
+</ul>
+<h2 id="volume-modes">Volume Modes</h2>
+<ul>
+<li>PVCs can specify volume modes:</li>
+<li>Filesystem: Usual file-based volumes.</li>
+<li>Block: Raw block devices.</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li>PVCs request storage capacity (e.g., 1Gi) and StorageClass.</li>
+<li>Helps in selecting an appropriate PV.</li>
+</ul>
+<h2 id="selector">Selector</h2>
+<ul>
+<li>PVCs can use selectors to filter PVs based on labels and annotations.</li>
+<li>Useful for matching specific criteria.</li>
+</ul>
+<h2 id="class">Class</h2>
+<ul>
+<li>StorageClass defines storage type (e.g., SSD, HDD) and provisioning.</li>
+<li>PVCs reference a StorageClass to request storage.</li>
+</ul>
+<h2 id="claims-as-volumes">Claims As Volumes</h2>
+<ul>
+<li>Pods can consume PVCs as volumes.</li>
+<li>Allows dynamic provisioning based on pod requirements.</li>
+</ul>
+<h2 id="raw-block-volume-support">Raw Block Volume Support</h2>
+<ul>
+<li>Kubernetes supports raw block volumes for high-performance workloads.</li>
+<li>PVCs request raw block volumes.</li>
+<li>Useful for databases and applications needing low-level access.</li>
+</ul>
+<h2 id="volume-snapshot-and-restore">Volume Snapshot and Restore</h2>
+<ul>
+<li>Kubernetes supports volume snapshots and restoration.</li>
+<li>Users can create, clone, and restore volumes from snapshots.</li>
+</ul>
+<h2 id="volume-cloning">Volume Cloning</h2>
+<ul>
+<li>Enables creating PVCs from existing PV data.</li>
+<li>Useful for scaling applications or creating replicas.</li>
+</ul>
+<h2 id="volume-populators-and-data-sources">Volume Populators and Data Sources</h2>
+<ul>
+<li>Populators enable dynamic provisioning from data sources.</li>
+<li>Data sources can be external data or other PVCs.</li>
+</ul>
+<h2 id="cross-namespace-data-sources">Cross-Namespace Data Sources</h2>
+<ul>
+<li>Data sources can be referenced across namespaces.</li>
+<li>Enhances flexibility in PVC usage.</li>
+</ul>
+<h2 id="data-source-references">Data Source References</h2>
+<ul>
+<li>PVCs can reference data sources to create volumes.</li>
+<li>Supports various volume types and scenarios.</li>
+</ul>
+<h2 id="using-volume-populators">Using Volume Populators</h2>
+<ul>
+<li>Populators facilitate on-demand provisioning based on data sources.</li>
+<li>Ideal for dynamic storage allocation.</li>
+</ul>
+<h2 id="using-a-cross-namespace-volume-data-source">Using a Cross-Namespace Volume Data Source</h2>
+<ul>
+<li>Data sources can be referenced from different namespaces.</li>
+<li>Enables sharing data sources across projects.</li>
+</ul>
 
 
 

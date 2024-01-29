@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#key-features" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -926,6 +931,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deployments
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -935,6 +951,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yaml-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      YAML Example
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2783,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yaml-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      YAML Example
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2833,43 @@
 
   <h1>Deployments</h1>
 
-
+<p>A Kubernetes Deployment is a higher-level abstraction designed to manage the desired state of a set of replicated Pods. It allows you to describe an intended state in a Deployment object, and the Deployment controller changes the actual state to the desired state at a controlled rate. Here are some key features and functionalities:  </p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li><strong>Replica Management</strong>: You can specify the number of Pod replicas you want to run.</li>
+<li><strong>Updates</strong>: Allows for rolling updates to Pods, ensuring zero downtime.</li>
+<li><strong>Rollbacks</strong>: If something goes wrong, you can roll back to a previous stable version.</li>
+<li><strong>Scaling</strong>: You can easily scale your application up or down.</li>
+<li><strong>Self-healing</strong>: Automatically replaces failed or unhealthy Pods.</li>
+</ul>
+<h2 id="common-operations">Common Operations</h2>
+<ul>
+<li><strong>Create a Deployment</strong>: Usually done through a YAML file that describes the Deployment.</li>
+<li><strong>Inspect a Deployment</strong>: Using commands like <code>kubectl get deployments</code> or <code>kubectl describe deployment &lt;deployment-name&gt;</code>.</li>
+<li><strong>Update a Deployment</strong>: You can update the image or other fields in the YAML and apply it.</li>
+<li><strong>Rollback a Deployment</strong>: Using <code>kubectl rollout undo deployment &lt;deployment-name&gt;</code>.</li>
+<li><strong>Scale a Deployment</strong>: Using <code>kubectl scale deployment &lt;deployment-name&gt; --replicas=number</code>.</li>
+</ul>
+<h2 id="yaml-example">YAML Example</h2>
+<p>Here's a simple example of a Deployment YAML file:</p>
+<p><code>yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2</code></p>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#overview" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1413,6 +1418,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Dynamic Volume Provisioning
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1422,6 +1438,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-dynamic-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Dynamic Provisioning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-dynamic-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Dynamic Provisioning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defaulting-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defaulting Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topology-awareness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topology Awareness
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-dynamic-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Dynamic Provisioning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-dynamic-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Dynamic Provisioning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defaulting-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defaulting Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topology-awareness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topology Awareness
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,30 @@
 
   <h1>Dynamic Volume Provisioning</h1>
 
-
+<h2 id="overview">Overview</h2>
+<ul>
+<li>Dynamic volume provisioning allows for the on-demand creation of storage volumes. This eliminates the need for cluster administrators to manually create storage volumes and their corresponding PersistentVolume objects in Kubernetes. The feature is based on the API object <code>StorageClass</code> from the API group <code>storage.k8s.io</code>.</li>
+</ul>
+<h2 id="background">Background</h2>
+<ul>
+<li>A cluster administrator can define multiple <code>StorageClass</code> objects, each specifying a volume plugin (provisioner) and the parameters to pass to that provisioner. This allows for the exposure of multiple types of storage within a cluster, each with custom parameters. This design abstracts the complexity of storage provisioning from end-users, allowing them to choose from multiple storage options.</li>
+</ul>
+<h2 id="enabling-dynamic-provisioning">Enabling Dynamic Provisioning</h2>
+<ul>
+<li>To enable this feature, a cluster administrator must pre-create one or more <code>StorageClass</code> objects. These objects define which provisioner should be used and what parameters should be passed when dynamic provisioning is invoked. For example, a storage class named "slow" might provision standard disk-like persistent disks, while a storage class named "fast" might provision SSD-like persistent disks.</li>
+</ul>
+<h2 id="using-dynamic-provisioning">Using Dynamic Provisioning</h2>
+<ul>
+<li>Users can request dynamically provisioned storage by including a storage class in their <code>PersistentVolumeClaim</code>. The <code>storageClassName</code> field of the <code>PersistentVolumeClaim</code> object must match the name of a <code>StorageClass</code> configured by the administrator. For instance, to select the "fast" storage class, a user would specify <code>storageClassName: fast</code> in their claim.</li>
+</ul>
+<h2 id="defaulting-behavior">Defaulting Behavior</h2>
+<ul>
+<li>Dynamic provisioning can be enabled such that all claims are dynamically provisioned if no storage class is specified. This is achieved by marking one <code>StorageClass</code> object as the default and ensuring that the <code>DefaultStorageClass</code> admission controller is enabled on the API server.</li>
+</ul>
+<h2 id="topology-awareness">Topology Awareness</h2>
+<ul>
+<li>In Multi-Zone clusters, it's important that storage backends are provisioned in the Zones where Pods are scheduled. This ensures that Pods can be spread across Zones in a Region while still having access to the appropriate storage.</li>
+</ul>
 
 
 

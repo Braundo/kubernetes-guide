@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1434,6 +1439,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Volume Snapshots
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1443,6 +1459,104 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-objects-and-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Objects and Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lifecycle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deletion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumesnapshots-and-volumesnapshotcontents-specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      VolumeSnapshots and VolumeSnapshotContents Specs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-volume-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting Volume Mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provisioning-volumes-from-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provisioning Volumes from Snapshots
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2837,95 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-objects-and-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Objects and Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lifecycle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deletion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumesnapshots-and-volumesnapshotcontents-specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      VolumeSnapshots and VolumeSnapshotContents Specs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-volume-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting Volume Mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provisioning-volumes-from-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provisioning Volumes from Snapshots
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2941,24 @@
 
   <h1>Volume Snapshots</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<p>In Kubernetes, a VolumeSnapshot represents a snapshot of a volume on a storage system. The document assumes familiarity with Kubernetes persistent volumes. VolumeSnapshotContent and VolumeSnapshot API resources are provided to create volume snapshots. A VolumeSnapshotContent is a snapshot taken from a volume in the cluster, provisioned by an administrator. It is a resource in the cluster, similar to a PersistentVolume.</p>
+<h2 id="api-objects-and-support">API Objects and Support</h2>
+<p>VolumeSnapshot, VolumeSnapshotContent, and VolumeSnapshotClass are Custom Resource Definitions (CRDs), not part of the core API. VolumeSnapshot support is only available for CSI drivers. A snapshot controller and a sidecar helper container called csi-snapshotter are deployed as part of the VolumeSnapshot deployment process. The snapshot controller watches VolumeSnapshot and VolumeSnapshotContent objects and is responsible for their creation and deletion.</p>
+<h2 id="lifecycle">Lifecycle</h2>
+<p>VolumeSnapshotContents are resources in the cluster, while VolumeSnapshots are requests for those resources. Snapshots can be provisioned in two ways: pre-provisioned or dynamically provisioned. In pre-provisioned, a cluster administrator creates VolumeSnapshotContents with details of the real volume snapshot on the storage system. In dynamic provisioning, a snapshot is taken from a PersistentVolumeClaim.</p>
+<h2 id="binding">Binding</h2>
+<p>The snapshot controller handles the binding of a VolumeSnapshot object with an appropriate VolumeSnapshotContent object. The binding is a one-to-one mapping.</p>
+<h2 id="protection">Protection</h2>
+<p>While taking a snapshot of a PersistentVolumeClaim, that PersistentVolumeClaim is in-use. Deletion of the PersistentVolumeClaim object is postponed until the snapshot is readyToUse or aborted.</p>
+<h2 id="deletion">Deletion</h2>
+<p>Deletion is triggered by deleting the VolumeSnapshot object, and the DeletionPolicy will be followed. If the DeletionPolicy is Delete, then the underlying storage snapshot will be deleted along with the VolumeSnapshotContent object.</p>
+<h2 id="volumesnapshots-and-volumesnapshotcontents-specs">VolumeSnapshots and VolumeSnapshotContents Specs</h2>
+<p>Each VolumeSnapshot contains a spec and a status. For dynamically provisioning a snapshot, <code>volumeHandle</code> is the unique identifier of the volume created on the storage backend. For pre-provisioned snapshots, <code>snapshotHandle</code> is the unique identifier of the volume snapshot created on the storage backend.</p>
+<h2 id="converting-volume-mode">Converting Volume Mode</h2>
+<p>If the VolumeSnapshots API supports the <code>sourceVolumeMode</code> field, then it has the capability to prevent unauthorized users from converting the mode of a volume.</p>
+<h2 id="provisioning-volumes-from-snapshots">Provisioning Volumes from Snapshots</h2>
+<p>You can provision a new volume, pre-populated with data from a snapshot, by using the <code>dataSource</code> field in the PersistentVolumeClaim object.</p>
 
 
 

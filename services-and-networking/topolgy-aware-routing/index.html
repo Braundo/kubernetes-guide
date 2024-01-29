@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#motivation" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -2709,6 +2714,95 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-topology-aware-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Topology Aware Routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-it-works-best" class="md-nav__link">
+    <span class="md-ellipsis">
+      When it works best
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpointslice-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      EndpointSlice controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kube-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safeguards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safeguards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constraints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-heuristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom heuristics
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2724,7 +2818,51 @@
 
   <h1>Topolgy aware routing</h1>
 
-
+<h2 id="motivation">Motivation</h2>
+<ul>
+<li>Designed for multi-zone environments.</li>
+<li>Aims to keep network traffic within the originating zone for reliability, performance, and cost.</li>
+</ul>
+<h2 id="enabling-topology-aware-routing">Enabling Topology Aware Routing</h2>
+<ul>
+<li>Enabled by setting the <code>service.kubernetes.io/topology-mode</code> annotation to <code>Auto</code>.</li>
+<li>EndpointSlices will have Topology Hints populated to allocate endpoints to specific zones.</li>
+</ul>
+<h2 id="when-it-works-best">When it works best</h2>
+<ul>
+<li>Even distribution of incoming traffic.</li>
+<li>Service has 3 or more endpoints per zone.</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<ul>
+<li>"Auto" heuristic proportionally allocates endpoints to each zone.</li>
+<li>EndpointSlice controller sets hints based on allocatable CPU cores in each zone.</li>
+</ul>
+<h2 id="endpointslice-controller">EndpointSlice controller</h2>
+<ul>
+<li>Responsible for setting hints on EndpointSlices.</li>
+<li>Allocates endpoints based on the allocatable CPU cores for nodes in each zone.</li>
+</ul>
+<h2 id="kube-proxy">kube-proxy</h2>
+<ul>
+<li>Filters endpoints based on hints set by the EndpointSlice controller.</li>
+<li>Sometimes allocates endpoints from different zones for even distribution.</li>
+</ul>
+<h2 id="safeguards">Safeguards</h2>
+<ul>
+<li>Several rules to ensure safe use of Topology Aware Hints.</li>
+<li>If rules aren't met, <code>kube-proxy</code> selects endpoints from anywhere in the cluster.</li>
+</ul>
+<h2 id="constraints">Constraints</h2>
+<ul>
+<li>Not used when <code>internalTrafficPolicy</code> is set to <code>Local</code>.</li>
+<li>Does not work well for Services with traffic originating from a subset of zones.</li>
+<li>Does not account for unready nodes or nodes with specific labels.</li>
+</ul>
+<h2 id="custom-heuristics">Custom heuristics</h2>
+<ul>
+<li>Allows for custom heuristics if the built-in ones don't meet specific use cases.</li>
+</ul>
 
 
 

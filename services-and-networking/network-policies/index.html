@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#the-two-sorts-of-pod-isolation" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1159,6 +1164,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Network Policies
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1168,6 +1184,149 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-sorts-of-pod-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Two Sorts of Pod Isolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-networkpolicy-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      The NetworkPolicy Resource
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior-of-to-and-from-selectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior of to and from Selectors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-deny-all-ingress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Deny All Ingress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allow-all-ingress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow All Ingress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-deny-all-egress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Deny All Egress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allow-all-egress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow All Egress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-deny-all-ingress-and-all-egress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Deny All Ingress and All Egress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sctp-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCTP Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-a-range-of-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targeting a Range of Ports
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-multiple-namespaces-by-label" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targeting Multiple Namespaces by Label
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-a-namespace-by-its-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targeting a Namespace by its Name
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-cant-do-with-network-policies-at-least-not-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      What You Can't Do with Network Policies (at least, not yet)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2882,140 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-sorts-of-pod-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Two Sorts of Pod Isolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-networkpolicy-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      The NetworkPolicy Resource
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior-of-to-and-from-selectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavior of to and from Selectors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-deny-all-ingress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Deny All Ingress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allow-all-ingress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow All Ingress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-deny-all-egress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Deny All Egress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allow-all-egress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow All Egress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-deny-all-ingress-and-all-egress-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Deny All Ingress and All Egress Traffic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sctp-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCTP Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-a-range-of-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targeting a Range of Ports
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-multiple-namespaces-by-label" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targeting Multiple Namespaces by Label
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-a-namespace-by-its-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      Targeting a Namespace by its Name
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-cant-do-with-network-policies-at-least-not-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      What You Can't Do with Network Policies (at least, not yet)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +3031,66 @@
 
   <h1>Network Policies</h1>
 
-
+<h2 id="the-two-sorts-of-pod-isolation">The Two Sorts of Pod Isolation</h2>
+<ol>
+<li><strong>Namespace isolation</strong>: Isolating whole namespaces from one another.</li>
+<li><strong>Pod isolation</strong>: More granular control, isolating individual pods.</li>
+</ol>
+<h2 id="the-networkpolicy-resource">The NetworkPolicy Resource</h2>
+<ul>
+<li>Defines how pods are allowed to communicate with each other and other network endpoints.</li>
+<li>PodSelector targets Pods to apply the policy.</li>
+<li>PolicyTypes specifies what types of traffic are affected.</li>
+</ul>
+<h2 id="behavior-of-to-and-from-selectors">Behavior of to and from Selectors</h2>
+<ul>
+<li>ingress and egress rules can be set.</li>
+<li>Rules can be as specific as "allow traffic from these IPs" or "allow traffic from Pods with these labels."</li>
+</ul>
+<h2 id="default-policies">Default Policies</h2>
+<ul>
+<li>Policies that apply when no other policies do.</li>
+</ul>
+<h2 id="default-deny-all-ingress-traffic">Default Deny All Ingress Traffic</h2>
+<ul>
+<li>Blocks all incoming traffic to Pods unless it matches a NetworkPolicy.</li>
+</ul>
+<h2 id="allow-all-ingress-traffic">Allow All Ingress Traffic</h2>
+<ul>
+<li>Allows all incoming traffic to Pods.</li>
+</ul>
+<h2 id="default-deny-all-egress-traffic">Default Deny All Egress Traffic</h2>
+<ul>
+<li>Blocks all outgoing traffic from Pods unless it matches a NetworkPolicy.</li>
+</ul>
+<h2 id="allow-all-egress-traffic">Allow All Egress Traffic</h2>
+<ul>
+<li>Allows all outgoing traffic from Pods.</li>
+</ul>
+<h2 id="default-deny-all-ingress-and-all-egress-traffic">Default Deny All Ingress and All Egress Traffic</h2>
+<ul>
+<li>Blocks both incoming and outgoing traffic unless they match a NetworkPolicy.</li>
+</ul>
+<h2 id="sctp-support">SCTP Support</h2>
+<ul>
+<li>SCTP (Stream Control Transmission Protocol) is supported as a protocol alongside TCP and UDP.</li>
+</ul>
+<h2 id="targeting-a-range-of-ports">Targeting a Range of Ports</h2>
+<ul>
+<li>NetworkPolicy can target a range of ports instead of a single port.</li>
+</ul>
+<h2 id="targeting-multiple-namespaces-by-label">Targeting Multiple Namespaces by Label</h2>
+<ul>
+<li>NetworkPolicy can target multiple namespaces using namespace labels.</li>
+</ul>
+<h2 id="targeting-a-namespace-by-its-name">Targeting a Namespace by its Name</h2>
+<ul>
+<li>Specific namespaces can be targeted by their name.</li>
+</ul>
+<h2 id="what-you-cant-do-with-network-policies-at-least-not-yet">What You Can't Do with Network Policies (at least, not yet)</h2>
+<ul>
+<li>Limitations like not being able to enforce egress based on DNS names, or not being able to limit access based on the protocol's fields.</li>
+</ul>
 
 
 

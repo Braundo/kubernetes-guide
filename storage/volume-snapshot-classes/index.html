@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1455,6 +1460,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Volume Snapshot Classes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1464,6 +1480,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-volumesnapshotclass-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      The VolumeSnapshotClass Resource
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-volumesnapshotclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default VolumeSnapshotClass
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deletion-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deletion Policy
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-volumesnapshotclass-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      The VolumeSnapshotClass Resource
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-volumesnapshotclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default VolumeSnapshotClass
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deletion-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deletion Policy
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,47 @@
 
   <h1>Volume Snapshot Classes</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>The concept of VolumeSnapshotClass in Kubernetes is similar to that of StorageClass. While StorageClass allows administrators to define "classes" of storage for provisioning volumes, VolumeSnapshotClass serves the same purpose but for provisioning volume snapshots.</li>
+</ul>
+<h2 id="the-volumesnapshotclass-resource">The VolumeSnapshotClass Resource</h2>
+<ul>
+<li>A VolumeSnapshotClass contains three main fields:</li>
+<li><strong>Driver</strong>: Specifies the CSI volume plugin used for provisioning VolumeSnapshots.</li>
+<li><strong>DeletionPolicy</strong>: Configures what happens to a VolumeSnapshotContent when the associated VolumeSnapshot is deleted. It can be either <code>Retain</code> or <code>Delete</code>.</li>
+<li><strong>Parameters</strong>: Describes additional configurations for volume snapshots belonging to this class.</li>
+</ul>
+<p>The name of the VolumeSnapshotClass object is significant as it is used by users to request a particular class. Once created, these objects cannot be updated. Here's an example YAML configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">snapshot.storage.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VolumeSnapshotClass</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">csi-hostpath-snapclass</span>
+<span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostpath.csi.k8s.io</span>
+<span class="nt">deletionPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete</span>
+<span class="nt">parameters</span><span class="p">:</span>
+</code></pre></div>
+<h2 id="default-volumesnapshotclass">Default VolumeSnapshotClass</h2>
+<ul>
+<li>Administrators can specify a default VolumeSnapshotClass for those VolumeSnapshots that don't request any particular class. This is done by adding an annotation <code>snapshot.storage.kubernetes.io/is-default-class: "true"</code>.</li>
+</ul>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">snapshot.storage.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VolumeSnapshotClass</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">csi-hostpath-snapclass</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">snapshot.storage.kubernetes.io/is-default-class</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostpath.csi.k8s.io</span>
+<span class="nt">deletionPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete</span>
+<span class="nt">parameters</span><span class="p">:</span>
+</code></pre></div></p>
+<h2 id="deletion-policy">Deletion Policy</h2>
+<ul>
+<li>The <code>deletionPolicy</code> can be either <code>Retain</code> or <code>Delete</code>:</li>
+<li><code>Retain</code>: The underlying snapshot and VolumeSnapshotContent remain even if the VolumeSnapshot is deleted.</li>
+<li><code>Delete</code>: Both the underlying storage snapshot and the VolumeSnapshotContent object are deleted when the VolumeSnapshot is deleted.</li>
+</ul>
 
 
 
