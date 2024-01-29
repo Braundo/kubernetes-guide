@@ -15,7 +15,6 @@ nav:
     - Overview: containers/overview.md
     - Images: containers/images.md
     - Environment: containers/container-environment.md
-    - Container Runtime: containers/container-runtime.md
     - Runtime Class: containers/runtime-class.md
     - Lifecycle Hooks: containers/container-lifecycle-hooks.md
   - Pods:
@@ -31,7 +30,7 @@ nav:
     - Resources: workloads/resources.md
     - Deployments: workloads/deployments.md
     - ReplicaSets: workloads/replicaset.md
-    - DaemonSets: workloads/daemonset.md
+    - DaemonSets: workloads/daemonsets.md
     - Workloads: workloads/jobs.md
     - ReplicationController: workloads/replicationcontroller.md
   - Services & Networking:
@@ -68,12 +67,12 @@ nav:
     - Pod Security Standards: security/pod-security-standards.md
     - Service Accounts: security/service-accounts.md
     - Pod Security Admission: security/pod-security-admission.md
-    - Controlling Access to K8s API: security/controlling-access-to-k8s-api.md
+    - Controlling Access to K8s API: security/controlling-access-to-kubernetes-api.md
     - RBAC Best Practices: security/rbac-best-practices.md
     - Secrets Best Practices: security/kubernetes-secrets-best-practices.md
     - Multi-Tenancy: security/multi-tenancy.md
     - Hardening Guide: security/hardening-guide-auth.md
-    - API Server Bypass: security/kubernetes-api-server-bypass.md
+    - API Server Bypass: security/kubernetes-api-server-bypass-risks.md
     - Security Checklist: security/security-checklist.md
   - Policies: 
     - Overview: policies/policies-overview.md
@@ -92,7 +91,7 @@ nav:
     - Dynamic Resource Allocation: scheduling-and-eviction/dynamic-resource-allocation.md
     - Scheduler Performance Tuning: scheduling-and-eviction/scheduler-performance-tuning.md
     - Resource Bin Packing: scheduling-and-eviction/resource-bin-packing.md
-    - Pod Priority and Preemption: scheduling-and-eviction/pod-priority-preemption.md
+    - Pod Priority and Preemption: scheduling-and-eviction/pod-priority-and-preemption.md
     - Node Pressure Eviction: scheduling-and-eviction/node-pressure-eviction.md
     - API Initiated Eviction: scheduling-and-eviction/api-initiated-eviction.md
   - Administration:
