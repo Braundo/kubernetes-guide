@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-are-service-accounts" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1746,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1795,6 +1800,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Service Accounts
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1804,6 +1820,113 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are Service Accounts?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Service Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use Service Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#granting-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Granting Permissions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-namespace-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Namespace Access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assigning-a-serviceaccount-to-a-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assigning a ServiceAccount to a Pod
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-service-account-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticating Service Account Credentials
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-in-your-own-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticating in Your Own Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2846,104 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are Service Accounts?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Service Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use Service Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#granting-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Granting Permissions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-namespace-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Namespace Access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assigning-a-serviceaccount-to-a-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assigning a ServiceAccount to a Pod
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-service-account-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticating Service Account Credentials
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-in-your-own-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticating in Your Own Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2959,40 @@
 
   <h1>Service Accounts</h1>
 
-
+<h2 id="what-are-service-accounts">What are Service Accounts?</h2>
+<p>A service account is a non-human account in Kubernetes that provides a distinct identity within a cluster. These accounts are useful for various purposes, such as authenticating to the API server or implementing identity-based security policies. Service accounts have specific properties:<br />
+- <strong>Namespaced</strong>: Bound to a Kubernetes namespace.
+- <strong>Lightweight</strong>: Defined in the Kubernetes API.
+- <strong>Portable</strong>: Can be easily included in configuration bundles for containerized workloads.</p>
+<h2 id="default-service-accounts">Default Service Accounts</h2>
+<p>When you create a cluster, Kubernetes automatically creates a default ServiceAccount for every namespace. These default accounts have limited permissions, primarily for API discovery. If you delete the default ServiceAccount, the control plane replaces it.</p>
+<h2 id="use-cases">Use Cases</h2>
+<p>Service accounts can be used in scenarios like:<br />
+- Pods needing to communicate with the Kubernetes API server.
+- Pods requiring an identity for an external service.
+- External services needing to communicate with the Kubernetes API server.
+- Third-party security software relying on ServiceAccount identities.</p>
+<h2 id="how-to-use-service-accounts">How to Use Service Accounts</h2>
+<ul>
+<li><strong>Create a ServiceAccount</strong>: Use <code>kubectl</code> or a manifest to define the object.</li>
+<li><strong>Grant Permissions</strong>: Use mechanisms like RBAC to grant the necessary permissions.</li>
+<li><strong>Assign to Pods</strong>: During Pod creation, assign the ServiceAccount.</li>
+</ul>
+<h2 id="granting-permissions">Granting Permissions</h2>
+<p>You can use Kubernetes RBAC to grant minimal permissions to each service account, adhering to the principle of least privilege.</p>
+<h2 id="cross-namespace-access">Cross-Namespace Access</h2>
+<p>RBAC can also be used to allow service accounts in one namespace to perform actions in another namespace.</p>
+<h2 id="assigning-a-serviceaccount-to-a-pod">Assigning a ServiceAccount to a Pod</h2>
+<p>To assign a ServiceAccount to a Pod, set the <code>spec.serviceAccountName</code> field in the Pod specification. Kubernetes will automatically provide the credentials for that ServiceAccount to the Pod.</p>
+<h2 id="authenticating-service-account-credentials">Authenticating Service Account Credentials</h2>
+<p>ServiceAccounts use signed JSON Web Tokens (JWTs) to authenticate. The API server validates these tokens based on various parameters like signature, expiry, and audience.</p>
+<h2 id="authenticating-in-your-own-code">Authenticating in Your Own Code</h2>
+<p>If you have services that need to validate Kubernetes service account credentials, you can use methods like the TokenReview API or OIDC discovery.</p>
+<h2 id="alternatives">Alternatives</h2>
+<ul>
+<li>Issue your own tokens and use Webhook Token Authentication for validation.</li>
+<li>Use service meshes like Istio for providing certificates to Pods.</li>
+</ul>
 
 
 

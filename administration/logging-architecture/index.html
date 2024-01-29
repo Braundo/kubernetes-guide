@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#application-logs" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2557,6 +2562,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Logging Architecture
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2566,6 +2582,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#application-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-level-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster-level Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-and-container-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod and Container Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-nodes-handle-container-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Nodes Handle Container Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Rotation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-component-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Component Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Locations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-level-logging-architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster-level Logging Architectures
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2828,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#application-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-level-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster-level Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-and-container-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod and Container Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-nodes-handle-container-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Nodes Handle Container Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Rotation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-component-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Component Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Locations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-level-logging-architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster-level Logging Architectures
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2923,32 @@
 
   <h1>Logging Architecture</h1>
 
-
+<h2 id="application-logs">Application Logs</h2>
+<p>Standard Output and Standard Error Streams: Applications in Kubernetes should write logs to the standard output (stdout) and standard error (stderr) streams. This allows Kubernetes to capture these logs regardless of the logging library or format used by the application.</p>
+<h2 id="cluster-level-logging">Cluster-level Logging</h2>
+<ul>
+<li><strong>Separate Storage</strong>: Logs should be stored in a dedicated storage system separate from nodes, pods, or containers. This ensures that logs are retained even if the associated Kubernetes objects are deleted.</li>
+<li><strong>No Native Solution</strong>: Kubernetes itself doesn't offer a built-in log storage solution, but you can integrate third-party tools like Elasticsearch, Logstash, and Kibana (ELK stack) or other logging solutions.</li>
+</ul>
+<h2 id="pod-and-container-logs">Pod and Container Logs</h2>
+<p><strong>Log Capture</strong>: Kubernetes captures logs for each container within a running Pod. These logs are available through the <code>kubectl logs</code> command.</p>
+<h2 id="how-nodes-handle-container-logs">How Nodes Handle Container Logs</h2>
+<p><strong>Container Runtimes</strong>: Container runtimes like Docker or containerd capture the standard output and standard error streams and redirect them to a logging driver, which is usually configured to write to a file on disk.</p>
+<h2 id="log-rotation">Log Rotation</h2>
+<p><strong>Kubelet Configuration</strong>: The <code>kubelet</code>, running on each node, can be configured to automatically rotate logs to prevent filling up storage space. This is particularly useful for long-running Pods or high-verbosity logging.</p>
+<h2 id="system-component-logs">System Component Logs</h2>
+<ul>
+<li><strong>Running in Containers</strong>: Some system components may run in containers and write logs to the standard output and standard error streams.</li>
+<li><strong>Directly Running</strong>: Some components may run directly on the node and write logs to files in specific directories.</li>
+</ul>
+<h2 id="log-locations">Log Locations</h2>
+<p><strong>OS Dependent</strong>: The locations where logs are stored depend on the operating system. For example, in a system using <code>systemd</code>, you might find logs in <code>/var/log</code>.</p>
+<h2 id="cluster-level-logging-architectures">Cluster-level Logging Architectures</h2>
+<ul>
+<li><strong>Node-level Logging Agent</strong>: An agent running on each node can be responsible for capturing logs and sending them to a centralized logging solution.</li>
+<li><strong>Dedicated Sidecar Container</strong>: A sidecar container within each Pod can capture and forward logs.</li>
+<li><strong>Direct Push to Backend</strong>: Applications can be configured to push logs directly to a logging backend, bypassing the need for a separate logging agent.</li>
+</ul>
 
 
 

@@ -12,7 +12,7 @@
         <link rel="prev" href="../resource-management/">
       
       
-        <link rel="next" href="../../security/pod-security-standards/">
+        <link rel="next" href="../../security/cloud-native-security/">
       
       
       <link rel="icon" href="../../assets/logo.svg">
@@ -72,6 +72,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#kubeconfig-files" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -1688,6 +1693,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Organizing Cluster Access
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1697,6 +1713,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubeconfig-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubeconfig Files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supporting-multiple-clusters-users-and-authentication-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supporting Multiple Clusters, Users, and Authentication Mechanisms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubeconfig-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      The KUBECONFIG Environment Variable
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging-kubeconfig-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merging Kubeconfig Files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      File References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxy-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1754,7 +1850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2723,6 +2819,77 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubeconfig-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubeconfig Files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supporting-multiple-clusters-users-and-authentication-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supporting Multiple Clusters, Users, and Authentication Mechanisms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubeconfig-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      The KUBECONFIG Environment Variable
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging-kubeconfig-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merging Kubeconfig Files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      File References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxy-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2905,26 @@
 
   <h1>Organizing Cluster Access</h1>
 
-
+<h2 id="kubeconfig-files">Kubeconfig Files</h2>
+<p>Kubeconfig files are used to store information about clusters, users, namespaces, and authentication mechanisms. The <code>kubectl</code> command-line tool relies on these files to interact with the cluster. By default, <code>kubectl</code> looks for a file named <code>config</code> in the <code>$HOME/.kube</code> directory. You can specify other kubeconfig files by setting the <code>KUBECONFIG</code> environment variable or using the <code>--kubeconfig</code> flag.</p>
+<h2 id="supporting-multiple-clusters-users-and-authentication-mechanisms">Supporting Multiple Clusters, Users, and Authentication Mechanisms</h2>
+<p>If you have multiple clusters and various authentication methods, kubeconfig files help you manage them. For instance:<br />
+- A running kubelet might use certificates for authentication.
+- A user might use tokens.
+- Administrators might provide sets of certificates to individual users.</p>
+<h2 id="context">Context</h2>
+<p>In a kubeconfig file, a context is used to group access parameters under a name. Each context has three parameters: cluster, namespace, and user. The <code>kubectl</code> tool uses parameters from the current context by default. You can switch contexts using the <code>kubectl config use-context</code> command.</p>
+<h2 id="the-kubeconfig-environment-variable">The KUBECONFIG Environment Variable</h2>
+<p>This variable holds a list of kubeconfig files. On Linux and Mac, the list is colon-delimited, while on Windows, it's semicolon-delimited. If the variable doesn't exist, the default kubeconfig file <code>$HOME/.kube/config</code> is used. If it does exist, <code>kubectl</code> merges the files listed in the variable.</p>
+<h2 id="merging-kubeconfig-files">Merging Kubeconfig Files</h2>
+<p><code>kubectl</code> follows specific rules when merging kubeconfig files:<br />
+- If the <code>-kubeconfig</code> flag is set, only that file is used.
+- If the <code>KUBECONFIG</code> variable is set, the files listed are merged.
+- The first file to set a value wins, and conflicting entries are ignored.</p>
+<h2 id="file-references">File References</h2>
+<p>Paths in a kubeconfig file are relative to the location of the kubeconfig file itself. On the command line, they are relative to the current working directory.</p>
+<h2 id="proxy-configuration">Proxy Configuration</h2>
+<p>You can configure <code>kubectl</code> to use a proxy for each cluster by setting <code>proxy-url</code> in the kubeconfig file.</p>
 
 
 
@@ -2791,13 +2977,13 @@
         
         
           
-          <a href="../../security/pod-security-standards/" class="md-footer__link md-footer__link--next" aria-label="Next: Pod Security Standards">
+          <a href="../../security/cloud-native-security/" class="md-footer__link md-footer__link--next" aria-label="Next: Cloud Native Security">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Pod Security Standards
+                Cloud Native Security
               </div>
             </div>
             <div class="md-footer__button md-icon">

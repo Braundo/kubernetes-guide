@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-a-limitrange" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2049,6 +2054,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Limit Ranges
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2058,6 +2074,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-limitrange" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a LimitRange?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-it-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Does it Work?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Considerations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2783,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-limitrange" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a LimitRange?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-it-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Does it Work?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Considerations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2833,20 @@
 
   <h1>Limit Ranges</h1>
 
-
+<h2 id="what-is-a-limitrange">What is a LimitRange?</h2>
+<p>A LimitRange is a policy that sets constraints on the resource allocations for various object kinds like Pods or PersistentVolumeClaims within a namespace. It can enforce minimum and maximum compute resource usage per Pod or Container, set storage request limits for PersistentVolumeClaims, and even enforce a ratio between resource requests and limits.</p>
+<h2 id="how-does-it-work">How Does it Work?</h2>
+<ol>
+<li>Default Values: If a Pod or Container doesn't specify compute resource requirements, the LimitRange admission controller will apply default request and limit values.</li>
+<li>Tracking Usage: The LimitRange ensures that resource usage does not exceed the minimum, maximum, and ratio defined in any LimitRange present in the namespace.</li>
+<li>Validation: If you try to create or update an object that violates a LimitRange constraint, the API server will reject the request with an <code>HTTP 403 Forbidden</code> status.</li>
+</ol>
+<h2 id="special-considerations">Special Considerations</h2>
+<ul>
+<li>LimitRange validations occur only at the Pod admission stage, not on running Pods.</li>
+<li>If two or more LimitRange objects exist in a namespace, the default value applied is not deterministic.</li>
+<li>The LimitRange does not check the consistency of the default values it applies. For example, a default limit value could be less than the request value specified for the container, making the Pod unschedulable.</li>
+</ul>
 
 
 

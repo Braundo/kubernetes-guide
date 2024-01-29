@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-a-resource-quota" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2070,6 +2075,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Resource Quotas
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2079,6 +2095,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-resource-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Resource Quota?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-it-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Does It Work?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-resources-that-can-be-quota-ed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Resources That Can Be Quota-ed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Scopes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-resource-quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Resource Quotas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-resource-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Resource Quota?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-it-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Does It Work?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-resources-that-can-be-quota-ed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Resources That Can Be Quota-ed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Scopes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-resource-quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Resource Quotas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,32 @@
 
   <h1>Resource Quotas</h1>
 
-
+<h2 id="what-is-a-resource-quota">What is a Resource Quota?</h2>
+<p>A Resource Quota is an object in Kubernetes that sets limits on resource usage for each namespace. This is particularly useful when multiple teams or services share a Kubernetes cluster and you want to prevent any single team or service from consuming all the resources.</p>
+<h2 id="how-does-it-work">How Does It Work?</h2>
+<ul>
+<li><strong>Namespaces</strong>: Different teams usually work in different namespaces. This isolation is often enforced using Role-Based Access Control (RBAC).</li>
+<li><strong>ResourceQuota Object</strong>: For each namespace, an administrator creates a ResourceQuota object that defines the resource limits.</li>
+<li><strong>Resource Tracking</strong>: As users create Kubernetes resources like pods and services in a namespace, the quota system keeps track of the usage to ensure it doesn't exceed the limits defined in the ResourceQuota object.</li>
+<li><strong>Violation &amp; Enforcement</strong>: If a resource request violates a quota, the request will fail with an HTTP 403 FORBIDDEN status, along with a message explaining the violated constraint.</li>
+</ul>
+<h2 id="types-of-resources-that-can-be-quota-ed">Types of Resources That Can Be Quota-ed</h2>
+<ul>
+<li><strong>Compute Resources</strong>: CPU and memory can be limited. You can set both "requests" and "limits" for these resources.</li>
+<li><strong>Storage Resources</strong>: You can limit the storage requested in Persistent Volume Claims (PVCs).</li>
+<li><strong>Object Count</strong>: You can also limit the number of specific types of objects, like Pods, Services, etc.</li>
+<li><strong>Extended Resources</strong>: From Kubernetes 1.10 onwards, you can also quota extended resources like GPUs.</li>
+<li><strong>Priority Class</strong>: You can set quotas based on the priority class of the pods.</li>
+</ul>
+<h2 id="special-scopes">Special Scopes</h2>
+<p>Resource quotas can also have scopes that further restrict what is measured by the quota. For example, you can set a quota that only counts resources for Pods that are not in a terminal state (i.e., their <code>.status.phase</code> is neither <code>Failed</code> nor <code>Succeeded</code>).</p>
+<h2 id="enabling-resource-quotas">Enabling Resource Quotas</h2>
+<p>Resource quotas are usually enabled by default in many Kubernetes distributions. They are activated when the API server has <code>ResourceQuota</code> listed in its <code>--enable-admission-plugins</code> flag.</p>
+<h2 id="practical-examples">Practical Examples</h2>
+<ul>
+<li><strong>Team Quotas</strong>: In a cluster with 32 GiB RAM and 16 cores, you could let Team A use 20 GiB and 10 cores, Team B use 10 GiB and 4 cores, and keep the rest in reserve.</li>
+<li><strong>Environment Quotas</strong>: Limit the "testing" namespace to 1 core and 1 GiB RAM, while letting the "production" namespace use any amount.</li>
+</ul>
 
 
 

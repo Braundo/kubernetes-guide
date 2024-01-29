@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#how-to-use-priority-and-preemption" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1740,7 +1745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2709,6 +2714,77 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-priority-and-preemption" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use Priority and Preemption
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#priorityclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      PriorityClass
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-preempting-priorityclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-preempting PriorityClass
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Priority
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effect-of-pod-priority-on-scheduling-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Effect of Pod Priority on Scheduling Order
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preemption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preemption
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-of-preemption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations of Preemption
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2724,7 +2800,31 @@
 
   <h1>Pod priority and preemption</h1>
 
-
+<h2 id="how-to-use-priority-and-preemption">How to Use Priority and Preemption</h2>
+<ul>
+<li>Add one or more <code>PriorityClasses</code>.</li>
+<li>Create Pods with <code>priorityClassName</code> set to one of the added <code>PriorityClasses</code>.</li>
+</ul>
+<h2 id="priorityclass">PriorityClass</h2>
+<ul>
+<li>Defines a mapping from a priority class name to the integer value of the priority.</li>
+<li>Optional fields: <code>globalDefault</code> and <code>description</code>.</li>
+</ul>
+<h2 id="non-preempting-priorityclass">Non-preempting PriorityClass</h2>
+<p><strong>Pods with preemptionPolicy</strong>: Never cannot preempt other pods but may still be preempted by higher-priority pods.</p>
+<h2 id="pod-priority">Pod Priority</h2>
+<p>After you have one or more PriorityClasses, you can create Pods that specify one of those PriorityClass names in their specifications.</p>
+<h2 id="effect-of-pod-priority-on-scheduling-order">Effect of Pod Priority on Scheduling Order</h2>
+<p>The scheduler orders pending Pods by their priority.</p>
+<h2 id="preemption">Preemption</h2>
+<p>If no Node is found that satisfies all the specified requirements of the Pod, preemption logic is triggered.</p>
+<h2 id="limitations-of-preemption">Limitations of Preemption</h2>
+<ul>
+<li>Graceful termination of preemption victims.</li>
+<li><code>PodDisruptionBudget</code> is supported, but not guaranteed.</li>
+<li>Inter-Pod affinity on lower-priority Pods.</li>
+<li>Cross node preemption is not supported.</li>
+</ul>
 
 
 

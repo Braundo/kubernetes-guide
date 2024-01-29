@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#key-points" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2345,6 +2350,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Scheduler Performance Tuning
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2354,6 +2370,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Points
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internal-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Details
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2783,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Points
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internal-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Details
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2833,32 @@
 
   <h1>Scheduler Performance Tuning</h1>
 
-
+<h2 id="key-points">Key Points</h2>
+<ul>
+<li>
+<p><strong>Balancing Latency and Accuracy</strong>: In large clusters, you can balance the scheduler's behavior between latency (quick placement of new Pods) and accuracy (making fewer poor placement decisions).</p>
+</li>
+<li>
+<p><strong>Setting the Threshold</strong>: The <code>percentageOfNodesToScore</code> option in the <code>KubeSchedulerConfiguration</code> setting determines a threshold for scheduling nodes. It accepts values between 0 and 100. A value of 0 indicates that the scheduler should use its default setting.</p>
+</li>
+<li>
+<p><strong>Node Scoring Threshold</strong>: To improve performance, the scheduler can stop looking for feasible nodes once it has found enough. You specify a threshold as a percentage of all nodes in your cluster.</p>
+</li>
+<li>
+<p><strong>Default Threshold</strong>: If you don't specify a threshold, Kubernetes calculates a figure using a linear formula. The lower bound for the automatic value is 5%.</p>
+</li>
+</ul>
+<h2 id="example-configuration">Example Configuration</h2>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubescheduler.config.\</span>
+<span class="l l-Scalar l-Scalar-Plain">k8s.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">KubeSchedulerConfiguration</span>
+<span class="nt">algorithmSource</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DefaultProvider</span>
+<span class="nn">...</span>
+<span class="nt">percentageOfNodesToScore</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+</code></pre></div>
+<h2 id="internal-details">Internal Details</h2>
+<p>The scheduler iterates over the nodes in a round-robin fashion and also considers nodes from different zones to ensure fairness.</p>
 
 
 

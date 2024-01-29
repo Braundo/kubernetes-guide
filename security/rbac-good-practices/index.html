@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#general-good-practice" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1740,7 +1745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2709,6 +2714,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-good-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Good Practice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimize-distribution-of-privileged-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimize Distribution of Privileged Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardening
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#periodic-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Periodic Review
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-escalation-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privilege Escalation Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#denial-of-service-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Denial of Service Risks
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2724,7 +2791,18 @@
 
   <h1>Rbac good practices</h1>
 
-
+<h2 id="general-good-practice">General Good Practice</h2>
+<p>Least Privilege: Assign minimal RBAC rights to users and service accounts. Use RoleBindings instead of ClusterRoleBindings, avoid wildcard permissions, and don't use cluster-admin accounts for daily tasks.</p>
+<h2 id="minimize-distribution-of-privileged-tokens">Minimize Distribution of Privileged Tokens</h2>
+<p>Limit the number of nodes running powerful pods and avoid running them alongside untrusted or publicly-exposed ones. Use Taints, NodeAffinity, or PodAntiAffinity to ensure separation.</p>
+<h2 id="hardening">Hardening</h2>
+<p>Review default RBAC rights and make changes to harden security. For instance, review bindings for the <code>system:unauthenticated</code> group and set <code>automountServiceAccountToken: false</code> to avoid auto-mounting of service account tokens.</p>
+<h2 id="periodic-review">Periodic Review</h2>
+<p>Regularly review RBAC settings to remove redundant entries and check for privilege escalations.</p>
+<h2 id="privilege-escalation-risks">Privilege Escalation Risks</h2>
+<p>Be cautious with privileges like listing secrets, workload creation, and persistent volume creation as they can lead to privilege escalation.</p>
+<h2 id="denial-of-service-risks">Denial of Service Risks</h2>
+<p>Users with object creation rights can potentially create a denial-of-service condition. Resource quotas can be used to mitigate this issue.</p>
 
 
 

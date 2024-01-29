@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#general-configuration-tips" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1604,6 +1609,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Best Practices
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1613,6 +1629,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-configuration-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Configuration Tips
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#naked-pods-vs-replicasets-deployments-and-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Naked" Pods vs ReplicaSets, Deployments, and Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using kubectl
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1754,7 +1832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2723,6 +2801,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-configuration-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Configuration Tips
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#naked-pods-vs-replicasets-deployments-and-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Naked" Pods vs ReplicaSets, Deployments, and Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using kubectl
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2869,32 @@
 
   <h1>Best Practices</h1>
 
-
+<h2 id="general-configuration-tips">General Configuration Tips</h2>
+<ul>
+<li>Always specify the latest stable API version in your configuration files.</li>
+<li>Store configuration files in version control to facilitate quick rollbacks and cluster restoration.</li>
+<li>Prefer YAML over JSON for configuration files as it's more user-friendly.</li>
+</ul>
+<h2 id="naked-pods-vs-replicasets-deployments-and-jobs">"Naked" Pods vs ReplicaSets, Deployments, and Jobs</h2>
+<ul>
+<li>Avoid using naked Pods that are not bound to a ReplicaSet or Deployment.</li>
+<li>Use Deployments for almost all scenarios as they ensure the desired number of Pods and specify a strategy for Pod replacement.</li>
+</ul>
+<h2 id="services">Services</h2>
+<ul>
+<li>Create a Service before its corresponding backend workloads (Deployments or ReplicaSets).</li>
+<li>Services provide environment variables to containers, which implies an ordering requirement: Services must be created before the - Pods that need them.</li>
+</ul>
+<h2 id="using-labels">Using Labels</h2>
+<ul>
+<li>Use semantic labels for your application or Deployment.</li>
+<li>Labels can be manipulated for debugging; removing labels will make the Pod invisible to controllers and Services.</li>
+</ul>
+<h2 id="using-kubectl">Using kubectl</h2>
+<ul>
+<li>Use <code>kubectl apply -f directory</code> to apply configurations from all .yaml, .yml, and .json files in a directory.</li>
+<li>Use label selectors for <code>get</code> and <code>delete</code> operations instead of specific object names.</li>
+</ul>
 
 
 

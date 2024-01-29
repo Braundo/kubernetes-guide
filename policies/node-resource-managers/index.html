@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#topology-manager" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2112,6 +2117,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Node Resource Managers
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2121,6 +2137,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topology-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topology Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-manager-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU Manager Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-manager-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Manager Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2828,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topology-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topology Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-manager-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU Manager Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-manager-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Manager Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2923,22 @@
 
   <h1>Node Resource Managers</h1>
 
-
+<h2 id="topology-manager">Topology Manager</h2>
+<p>The Topology Manager is the central component that coordinates the resource allocation process. It works in conjunction with other managers like the CPU Manager, Device Manager, and Memory Manager to ensure that resources are allocated in a way that maximizes performance and minimizes latency.</p>
+<h2 id="policies">Policies</h2>
+<p>The Topology Manager uses policies to determine how to allocate resources. These policies can be configured to suit different types of workloads. For example, you might have a policy that prioritizes the allocation of CPUs that are physically close to each other for a latency-sensitive application.</p>
+<h2 id="cpu-manager">CPU Manager</h2>
+<p>This manager is responsible for allocating CPU resources to pods. It ensures that CPU-intensive workloads are scheduled on the appropriate CPUs to maximize performance.</p>
+<h2 id="cpu-manager-policies">CPU Manager Policies</h2>
+<p>Different policies can be applied to manage how CPUs are allocated. For example, you might use a "static" policy to pin pods to specific CPUs, ensuring that they always have the resources they need.</p>
+<h2 id="device-manager">Device Manager</h2>
+<p>This manager handles the allocation of hardware devices like GPUs or TPUs. It works in tandem with the Topology Manager to ensure that devices are allocated in a way that is most beneficial for the running pods.</p>
+<h2 id="memory-manager">Memory Manager</h2>
+<p>This manager is responsible for allocating memory resources, particularly hugepages, to pods. Hugepages are larger-than-normal pages that can be used to improve memory performance for certain types of workloads.</p>
+<h2 id="memory-manager-policies">Memory Manager Policies</h2>
+<p>Just like with CPUs, different policies can be applied to manage how memory is allocated. This can be particularly useful for workloads that require a large amount of memory or have specific latency requirements.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Each of these managers has its own set of configurable parameters, allowing you to fine-tune how resources are allocated on a per-node basis. Understanding and configuring Node Resource Managers can be crucial for getting the most out of your Kubernetes clusters, especially for high-performance or latency-sensitive applications.</p>
 
 
 

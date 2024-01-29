@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#api-objects-as-policies" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2028,6 +2033,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2037,6 +2053,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-objects-as-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Objects as Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Controllers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validatingadmissionpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidatingAdmissionPolicy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-admission-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Admission Control
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubelet-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubelet Configurations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-objects-as-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Objects as Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Controllers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validatingadmissionpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidatingAdmissionPolicy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-admission-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Admission Control
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubelet-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubelet Configurations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,37 @@
 
   <h1>Overview</h1>
 
-
+<h2 id="api-objects-as-policies">API Objects as Policies</h2>
+<ul>
+<li><strong>NetworkPolicies</strong>: Restrict ingress and egress traffic for workloads.</li>
+<li><strong>LimitRanges</strong>: Manage resource allocation constraints across different object kinds.</li>
+<li><strong>ResourceQuotas</strong>: Limit resource consumption for a namespace.</li>
+</ul>
+<h2 id="admission-controllers">Admission Controllers</h2>
+<ul>
+<li>These run in the API server and can validate or mutate API requests.</li>
+<li>Example: The <code>AlwaysPullImages</code> admission controller modifies a new Pod to set the image pull policy to <code>Always</code>.</li>
+<li>Kubernetes has several built-in admission controllers that are configurable via the API server <code>-enable-admission-plugins</code> flag.</li>
+</ul>
+<h2 id="validatingadmissionpolicy">ValidatingAdmissionPolicy</h2>
+<ul>
+<li>Allows configurable validation checks to be executed in the API server using the Common Expression Language (CEL).</li>
+<li>Can be used to block, audit, and warn users about non-compliant configurations.</li>
+</ul>
+<h2 id="dynamic-admission-control">Dynamic Admission Control</h2>
+<ul>
+<li>These controllers run outside the API server as separate applications.</li>
+<li>They can perform complex checks, including those that require retrieval of other cluster resources and external data.</li>
+<li>Example: An image verification check can look up data from OCI registries to validate container image signatures and attestations.</li>
+</ul>
+<h2 id="kubelet-configurations">Kubelet Configurations</h2>
+<ul>
+<li>Some Kubelet configurations act as policies, such as Process ID limits and reservations, and Node Resource Managers.</li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<ul>
+<li>Dynamic Admission Controllers that act as flexible policy engines are being developed in the Kubernetes ecosystem. Some examples are Kubewarden, Kyverno, OPA Gatekeeper, and Polaris.</li>
+</ul>
 
 
 

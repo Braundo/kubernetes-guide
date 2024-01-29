@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-a-configmap" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1625,6 +1630,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ConfigMaps
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1634,6 +1650,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a ConfigMap?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configmap-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConfigMap Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configmaps-and-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConfigMaps and Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-configmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ConfigMaps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#immutable-configmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Immutable ConfigMaps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1754,7 +1841,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2723,6 +2810,68 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a ConfigMap?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configmap-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConfigMap Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configmaps-and-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConfigMaps and Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-configmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ConfigMaps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#immutable-configmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Immutable ConfigMaps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2887,22 @@
 
   <h1>ConfigMaps</h1>
 
-
+<h2 id="what-is-a-configmap">What is a ConfigMap?</h2>
+<p>A ConfigMap is an API object in Kubernetes used to store non-confidential data in key-value pairs. It allows you to decouple environment-specific configuration from your container images, making your applications easily portable.</p>
+<h2 id="motivation">Motivation</h2>
+<p>The primary use case for ConfigMaps is to separate configuration data from application code. For example, you might have an environment variable named <code>DATABASE_HOST</code> that varies between your local development environment and the cloud. By using a ConfigMap, you can manage these settings independently of the container images and the application code.</p>
+<h2 id="configmap-object">ConfigMap Object</h2>
+<p>A ConfigMap object has <code>data</code> and <code>binaryData</code> fields, which accept key-value pairs. The <code>data</code> field is designed for UTF-8 strings, while <code>binaryData</code> is for base64-encoded strings. Starting from Kubernetes v1.19, you can make a ConfigMap immutable by adding an <code>immutable</code> field to its definition.</p>
+<h2 id="configmaps-and-pods">ConfigMaps and Pods</h2>
+<p>You can refer to a ConfigMap in a Pod spec to configure the container(s) based on the data in the ConfigMap. There are four ways to use a ConfigMap in a Pod:<br />
+1. Inside a container command and args
+2. As environment variables for a container
+3. As a read-only volume for the application to read
+4. By writing code that uses the Kubernetes API to read the ConfigMap</p>
+<h2 id="using-configmaps">Using ConfigMaps</h2>
+<p>ConfigMaps can be mounted as data volumes or used by other parts of the system for configuration. You can specify which keys to include and the paths where they should be mounted when defining a Pod that uses a ConfigMap.</p>
+<h2 id="immutable-configmaps">Immutable ConfigMaps</h2>
+<p>From Kubernetes v1.21, you can set ConfigMaps as immutable, which prevents accidental or unwanted updates and reduces the load on the <code>kube-apiserver</code>.</p>
 
 
 

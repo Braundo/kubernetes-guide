@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#why-pid-limiting" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2091,6 +2096,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Process ID Limits
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2100,6 +2116,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-pid-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why PID Limiting?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-configure-pid-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Configure PID Limiting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pid-based-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      PID-Based Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-pid-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why PID Limiting?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-configure-pid-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Configure PID Limiting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pid-based-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      PID-Based Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,28 @@
 
   <h1>Process ID Limits</h1>
 
-
+<h2 id="why-pid-limiting">Why PID Limiting?</h2>
+<ul>
+<li>PIDs are a fundamental resource on nodes.</li>
+<li>It's easy to hit the task limit without hitting other resource limits, causing instability.</li>
+<li>Cluster administrators need mechanisms to prevent PID exhaustion that could affect host daemons like <code>kubelet</code> or <code>kube-proxy</code>.</li>
+</ul>
+<h2 id="how-to-configure-pid-limiting">How to Configure PID Limiting</h2>
+<ul>
+<li><strong>Node-Level PID Limits</strong>: You can reserve a number of PIDs for system use and Kubernetes system daemons using the -system-reserved and <code>-kube-reserved</code> command-line options for the <code>kubelet</code>.</li>
+<li><strong>Pod-Level PID Limits</strong>: The number of PIDs can be limited at the node level for each Pod. This is configured using the <code>-pod-max-pids</code> command-line parameter to the <code>kubelet</code> or by setting <code>PodPidsLimit</code> in the <code>kubelet</code> configuration file.</li>
+</ul>
+<h2 id="pid-based-eviction">PID-Based Eviction</h2>
+<ul>
+<li><code>Kubelet</code> can terminate a Pod if it's consuming an abnormal number of PIDs.</li>
+<li>You can configure soft and hard eviction policies.</li>
+<li>The eviction signal value is calculated periodically and does not enforce the limit.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Per-Pod PID limiting protects one Pod from another but doesn't protect node agents from PID exhaustion.</li>
+<li>Pod-defined PID limits are not currently supported.</li>
+</ul>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#pod-security-levels" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1746,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1816,6 +1821,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Pod Security Admission
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1825,6 +1841,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pod-security-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Security Levels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels-for-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labels for Namespaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workload-resources-and-pod-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workload Resources and Pod Templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemptions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pod-security-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Security Levels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels-for-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labels for Namespaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workload-resources-and-pod-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workload Resources and Pod Templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemptions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,24 @@
 
   <h1>Pod Security Admission</h1>
 
-
+<h2 id="pod-security-levels">Pod Security Levels</h2>
+<p>The Pod Security Admission Controller places requirements on a Pod's Security Context and other related fields according to three levels defined by the Pod Security Standards:<br />
+- Privileged
+- Baseline
+- Restricted</p>
+<h2 id="labels-for-namespaces">Labels for Namespaces</h2>
+<p>Once the feature is enabled or the webhook is installed, you can configure namespaces with labels to define the admission control mode for pod security. The modes are:<br />
+- <strong>Enforce</strong>: Policy violations will cause the pod to be rejected.
+- <strong>Audit</strong>: Policy violations will trigger an audit annotation but are otherwise allowed.
+- <strong>Warn</strong>: Policy violations will trigger a user-facing warning but are otherwise allowed.</p>
+<h2 id="workload-resources-and-pod-templates">Workload Resources and Pod Templates</h2>
+<p>Pods are often created indirectly via workload objects like Deployments or Jobs. Both the audit and warning modes are applied to these workload resources, but the enforce mode is only applied to the resulting pod objects.</p>
+<h2 id="exemptions">Exemptions</h2>
+<p>You can define exemptions to bypass pod security enforcement. These exemptions can be based on:<br />
+- Usernames
+- RuntimeClassNames
+- Namespaces 
+- Certain pod field updates are also exempt from policy checks.</p>
 
 
 

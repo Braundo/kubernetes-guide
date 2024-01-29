@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#scheduling-overview" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2177,6 +2182,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Kubernetes Scheduler
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2186,6 +2202,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scheduling-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduling Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kube-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-scheduler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Selection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring the Scheduler
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scheduling-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduling Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kube-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-scheduler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Selection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring the Scheduler
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,29 @@
 
   <h1>Kubernetes Scheduler</h1>
 
-
+<h2 id="scheduling-overview">Scheduling Overview</h2>
+<ul>
+<li><strong>Role of Scheduler</strong>: The scheduler watches for newly created Pods that have no Node assigned and is responsible for finding the best Node for each Pod.</li>
+<li><strong>Scheduling Principles</strong>: The scheduler takes into account various factors like resource requirements, hardware/software constraints, affinity and anti-affinity rules, etc., to make the scheduling decision.</li>
+</ul>
+<h2 id="kube-scheduler">kube-scheduler</h2>
+<ul>
+<li><strong>Default Scheduler</strong>: <code>kube-scheduler</code> is the default scheduler in Kubernetes and is part of the control plane.</li>
+<li><strong>Customization</strong>: It's designed to allow you to write your own scheduling component if needed.</li>
+<li><strong>Feasible Nodes</strong>: Nodes that meet the scheduling requirements for a Pod are called feasible nodes. If no nodes are suitable, the Pod remains unscheduled.</li>
+<li><strong>Scoring</strong>: After filtering feasible Nodes, the scheduler scores them based on a set of functions and picks the Node with the highest score to run the Pod.</li>
+</ul>
+<h2 id="node-selection">Node Selection</h2>
+<p>Two-Step Operation: Node selection is done in two steps: Filtering and Scoring:  </p>
+<ol>
+<li><strong>Filtering</strong>: This step finds the set of Nodes where it's feasible to schedule the Pod. For example, it checks if a Node has enough resources to meet the Pod's requirements.</li>
+<li><strong>Scoring</strong>: In this step, the scheduler ranks the remaining Nodes based on active scoring rules.</li>
+</ol>
+<h2 id="configuring-the-scheduler">Configuring the Scheduler</h2>
+<ul>
+<li><strong>Scheduling Policies</strong>: These allow you to configure predicates for filtering and priorities for scoring.</li>
+<li><strong>Scheduling Profiles</strong>: These allow you to configure plugins that implement different scheduling stages like <code>QueueSort</code>, <code>Filter</code>, <code>Score</code>, <code>Bind</code>, <code>Reserve</code>, <code>Permit</code>, etc.</li>
+</ul>
 
 
 

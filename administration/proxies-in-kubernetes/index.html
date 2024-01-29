@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#kubectl-proxy" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2641,6 +2646,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Proxies
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2650,6 +2666,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubectl-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      kubectl proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apiserver-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      apiserver proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kube-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxyload-balancer-in-front-of-api-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy/Load-balancer in front of API server(s)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-load-balancers-on-external-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Load Balancers on external services
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2801,59 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubectl-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      kubectl proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apiserver-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      apiserver proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kube-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxyload-balancer-in-front-of-api-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy/Load-balancer in front of API server(s)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-load-balancers-on-external-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Load Balancers on external services
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2869,49 @@
 
   <h1>Proxies</h1>
 
-
+<h2 id="kubectl-proxy">kubectl proxy</h2>
+<ul>
+<li>Runs on a user's desktop or in a pod.</li>
+<li>Proxies from a localhost address to the Kubernetes API server.</li>
+<li>Uses HTTP for client-to-proxy communication.</li>
+<li>Uses HTTPS for proxy-to-API server communication.</li>
+<li>Locates the API server and adds authentication headers.</li>
+</ul>
+<h2 id="apiserver-proxy">apiserver proxy</h2>
+<ul>
+<li>Acts as a bastion built into the API server.</li>
+<li>Connects a user outside of the cluster to cluster IPs that might otherwise be unreachable.</li>
+<li>Runs in the API server processes.</li>
+<li>Uses HTTPS (or HTTP if configured) for client-to-proxy communication.</li>
+<li>Proxy-to-target may use HTTP or HTTPS, depending on available information.</li>
+<li>Can be used to reach a Node, Pod, or Service.</li>
+<li>Performs load balancing when used to reach a Service.</li>
+</ul>
+<h2 id="kube-proxy">kube proxy</h2>
+<ul>
+<li>Runs on each node.</li>
+<li>Proxies UDP, TCP, and SCTP.</li>
+<li>Does not understand HTTP.</li>
+<li>Provides load balancing.</li>
+<li>Used only to reach services.</li>
+</ul>
+<h2 id="proxyload-balancer-in-front-of-api-servers">Proxy/Load-balancer in front of API server(s)</h2>
+<ul>
+<li>Existence and implementation vary from cluster to cluster (e.g., nginx).</li>
+<li>Sits between all clients and one or more API servers.</li>
+<li>Acts as a load balancer if there are multiple API servers.</li>
+</ul>
+<h2 id="cloud-load-balancers-on-external-services">Cloud Load Balancers on external services</h2>
+<ul>
+<li>Provided by some cloud providers (e.g., AWS ELB, Google Cloud Load Balancer).</li>
+<li>Created automatically when the Kubernetes service has type LoadBalancer.</li>
+<li>Usually supports UDP/TCP only.</li>
+<li>SCTP support depends on the cloud provider's implementation.</li>
+</ul>
+<p><br/><br/></p>
+<div class="admonition note">
+<p class="admonition-title">Proxies have replaced redirect capabilities, which have been deprecated.</p>
+</div>
 
 
 

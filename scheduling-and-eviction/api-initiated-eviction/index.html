@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#api-initiated-evictions-vs-regular-deletion" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2429,6 +2434,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    API Initiated Eviction
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2438,6 +2454,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-initiated-evictions-vs-regular-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      API-Initiated Evictions vs Regular Deletion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-eviction-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating an Eviction Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Checks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-initiated-evictions-vs-regular-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      API-Initiated Evictions vs Regular Deletion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-eviction-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating an Eviction Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Checks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,33 @@
 
   <h1>API Initiated Eviction</h1>
 
-
+<h2 id="api-initiated-evictions-vs-regular-deletion">API-Initiated Evictions vs Regular Deletion</h2>
+<ul>
+<li><strong>Regular Deletion</strong>: When you delete a pod using <code>kubectl delete pod</code>, the pod is terminated immediately without any checks for ongoing processes or disruption budgets.</li>
+<li><strong>API-Initiated Evictions</strong>: When you use the Eviction API, Kubernetes respects the <code>PodDisruptionBudget</code> and <code>terminationGracePeriodSeconds</code> settings, ensuring that the pod is terminated in a way that minimizes disruption to your application.</li>
+</ul>
+<h2 id="creating-an-eviction-object">Creating an Eviction Object</h2>
+<ul>
+<li>To initiate an eviction, you create an Eviction object. This is similar to sending a <code>DELETE</code> request to the API server but with more control.</li>
+<li>The Eviction object specifies the pod to be evicted and can also include additional parameters like <code>deleteOptions</code>.</li>
+</ul>
+<h2 id="admission-checks">Admission Checks</h2>
+<ul>
+<li>When you request an eviction, the API server performs several checks to ensure that the eviction can proceed safely.</li>
+<li><strong>PodDisruptionBudget</strong>: Checks if the eviction would violate any configured <code>PodDisruptionBudgets</code>.</li>
+<li><strong>Node Conditions</strong>: Checks if the node on which the pod is running is in a condition to handle the eviction.
+<br/>
+Based on these checks, the API server may respond with:  </li>
+<li><code>200 OK</code>: Eviction can proceed.</li>
+<li><code>429 Too Many Requests</code>: Eviction cannot proceed due to <code>PodDisruptionBudget</code> violation.</li>
+<li><code>500 Internal Server Error</code>: Eviction cannot proceed due to an internal error.</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li><strong>Stuck Evictions</strong>: Sometimes, you may find that evictions are not proceeding and are stuck returning 429 or 500 responses.</li>
+<li><strong>Abort or Pause</strong>: You may need to abort or pause any automated operations that are causing the API server to be overwhelmed.</li>
+<li><strong>Direct Deletion</strong>: As a last resort, you can directly delete the pod, but this is not recommended as it bypasses all safety checks.</li>
+</ul>
 
 
 

@@ -71,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#networking-and-network-policy" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1742,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2681,6 +2686,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Installing Addons
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2690,6 +2706,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#networking-and-network-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Networking and Network Policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Discovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualization &amp; Control
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2721,6 +2790,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#networking-and-network-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Networking and Network Policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Discovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualization &amp; Control
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2736,7 +2849,38 @@
 
   <h1>Installing Addons</h1>
 
-
+<h2 id="networking-and-network-policy">Networking and Network Policy</h2>
+<ul>
+<li><strong>ACI</strong>: Integrated container networking and network security with Cisco ACI.</li>
+<li><strong>Antrea</strong>: Provides networking and security services, leveraging Open vSwitch. It's a CNCF project at the Sandbox level.</li>
+<li><strong>Calico</strong>: A networking and network policy provider with various networking options.</li>
+<li><strong>Canal</strong>: Unites Flannel and Calico.</li>
+<li><strong>Cilium</strong>: Offers networking, observability, and security with an eBPF-based data plane. It's a CNCF project at the Incubation level.</li>
+<li><strong>CNI-Genie</strong>: Allows Kubernetes to connect to multiple CNI plugins.</li>
+<li><strong>Contiv</strong>: Provides configurable networking and a rich policy framework.</li>
+<li><strong>Contrail</strong>: An open-source, multi-cloud network virtualization and policy management platform.</li>
+<li><strong>Flannel</strong>: An overlay network provider.</li>
+<li><strong>Knitter</strong>: Supports multiple network interfaces in a pod.</li>
+<li><strong>Multus</strong>: Supports multiple networks in Kubernetes.</li>
+<li><strong>OVN-Kubernetes</strong>: Based on OVN, provides an overlay-based networking implementation.</li>
+<li><strong>Nodus</strong>: An OVN-based CNI controller plugin for Service function chaining (SFC).</li>
+<li><strong>NSX-T Container Plug-in (NCP)</strong>: Integration between VMware NSX-T and Kubernetes.</li>
+<li><strong>Nuage</strong>: An SDN platform with policy-based networking.</li>
+<li><strong>Romana</strong>: A Layer 3 networking solution.</li>
+<li><strong>Weave Net</strong>: Provides networking and network policy.</li>
+</ul>
+<h2 id="service-discovery">Service Discovery</h2>
+<ul>
+<li><strong>CoreDNS</strong>: A flexible, extensible DNS server for in-cluster DNS for pods.</li>
+</ul>
+<h2 id="visualization-control">Visualization &amp; Control</h2>
+<ul>
+<li><strong>Dashboard</strong>: A web interface for Kubernetes. Weave Scope: A tool for visualizing containers, Pods, Services, etc.</li>
+</ul>
+<h2 id="infrastructure">Infrastructure</h2>
+<ul>
+<li><strong>KubeVirt</strong>: An add-on to run virtual machines on Kubernetes, usually on bare-metal clusters. Node Problem Detector: Reports system issues on Linux nodes.</li>
+</ul>
 
 
 

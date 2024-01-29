@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#x509-client-certificate-authentication" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1740,7 +1745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2709,6 +2714,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#x509-client-certificate-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      X.509 Client Certificate Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-token-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static Token File
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootstrap-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serviceaccount-secret-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      ServiceAccount Secret Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokenrequest-api-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenRequest API Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openid-connect-oidc-token-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenID Connect (OIDC) Token Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#webhook-token-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Webhook Token Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticating Proxy
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2724,7 +2809,47 @@
 
   <h1>Hardening guide auth mechanisms</h1>
 
-
+<h2 id="x509-client-certificate-authentication">X.509 Client Certificate Authentication</h2>
+<ul>
+<li>Used for system components like Kubelet to API Server.</li>
+<li>Not suitable for user authentication due to non-revocable certificates and other limitations.</li>
+</ul>
+<h2 id="static-token-file">Static Token File</h2>
+<ul>
+<li>Credentials are stored in clear text on control plane node disks.</li>
+<li>Not recommended for production due to security risks and lack of lockout mechanisms.</li>
+</ul>
+<h2 id="bootstrap-tokens">Bootstrap Tokens</h2>
+<ul>
+<li>Used for joining nodes to clusters.</li>
+<li>Not suitable for user authentication due to hard-coded group memberships and lack of lockout mechanisms.</li>
+</ul>
+<h2 id="serviceaccount-secret-tokens">ServiceAccount Secret Tokens</h2>
+<ul>
+<li>Used for workloads in the cluster to authenticate to the API server.</li>
+<li>Being replaced with TokenRequest API tokens.
+Unsuitable for user authentication for various reasons, including lack of expiry.</li>
+</ul>
+<h2 id="tokenrequest-api-tokens">TokenRequest API Tokens</h2>
+<ul>
+<li>Useful for short-lived service authentication.</li>
+<li>Not recommended for user authentication due to lack of revocation methods.</li>
+</ul>
+<h2 id="openid-connect-oidc-token-authentication">OpenID Connect (OIDC) Token Authentication</h2>
+<ul>
+<li>Allows integration with external identity providers.</li>
+<li>Requires careful setup and short token lifespan for security.</li>
+</ul>
+<h2 id="webhook-token-authentication">Webhook Token Authentication</h2>
+<ul>
+<li>Allows an external service to make authentication decisions via a webhook.</li>
+<li>Suitability depends on the software used for the authentication service.</li>
+</ul>
+<h2 id="authenticating-proxy">Authenticating Proxy</h2>
+<ul>
+<li>Uses a proxy to set specific header values for username and group memberships.</li>
+<li>Requires securely configured TLS and proper header security.</li>
+</ul>
 
 
 

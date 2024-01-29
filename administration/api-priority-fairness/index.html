@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#concepts" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1740,7 +1745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2709,6 +2714,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2724,7 +2773,74 @@
 
   <h1>Api priority fairness</h1>
 
+<h2 id="concepts">Concepts</h2>
+<ul>
+<li>
+<p><strong>Priority Level</strong>: This is a configuration that defines how requests that match the level are to be handled. It specifies things like the concurrency shares, the queue length, and the queuing discipline.</p>
+</li>
+<li>
+<p><strong>Flow Schema</strong>: This is used to classify incoming requests. It specifies conditions like the verbs (<code>GET</code>, <code>POST</code>, etc.), the resources (<code>Pods</code>, <code>Services</code>, etc.), and the namespaces that the requests are coming from. Once a request matches a Flow Schema, it is then handled according to its associated Priority Level.</p>
+</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p><strong>FlowSchema</strong>:<br />
+- <code>spec.matches</code>: Defines what requests will match this schema. You can specify multiple criteria like HTTP verbs, API groups, resources, etc.
+- <code>spec.priorityLevelConfiguration.name</code>: Specifies the name of the Priority Level to use for requests that match this schema.
+<br/><br/></p>
+<p><strong>PriorityLevelConfiguration</strong>:<br />
+- <code>spec.type</code>: Can be either "Exempt" (ignores all other fields and never queues) or "Limited" (respects other fields).
+- <code>spec.assuredConcurrencyShares</code>: For "Limited" type, this sets the weight of this priority level vs others.
+- <code>spec.queues</code>: For "Limited" type, this sets the number of queues for this priority level.
+- <code>spec.queueLengthLimit</code>: For "Limited" type, this sets the max size of each queue.
+- <code>spec.handSize</code>: For "Limited" type, this sets the number of less loaded queues that a given request is randomly assigned to.</p>
+<h2 id="example-configuration">Example Configuration</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># PriorityLevelConfiguration: \</span>
+<span class="l l-Scalar l-Scalar-Plain">Catch-all priority level</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flowcontrol.apiserver.\</span>
+<span class="l l-Scalar l-Scalar-Plain">k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PriorityLevelConfiguration</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">catch-all</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Limited</span>
+<span class="w">  </span><span class="nt">assuredConcurrencyShares</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">queues</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
+<span class="w">  </span><span class="nt">queueLengthLimit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">handSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
 
+<span class="nn">---</span>
+<span class="c1"># FlowSchema: Catch-all flow schema</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flowcontrol.apiserver \</span>
+<span class="l l-Scalar l-Scalar-Plain">.k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">FlowSchema</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">catch-all</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">priorityLevelConfiguration</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">catch-all</span>
+<span class="w">  </span><span class="nt">matchingPrecedence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">  </span><span class="c1"># a fairly \</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">low precedence</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">subjects</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Group</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system:masters</span>
+<span class="w">      </span><span class="nt">rule</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">verbs</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">        </span><span class="nt">apiGroups</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+</code></pre></div>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li>
+<p><strong>Be Cautious</strong>: Misconfiguration can lead to degraded API server performance. Therefore, it's crucial to test configurations under simulated conditions to understand their impact.</p>
+</li>
+<li>
+<p><strong>Monitoring</strong>: Keep an eye on the API server's performance metrics to ensure that the Priority and Fairness configurations are having the desired effect.</p>
+</li>
+</ul>
 
 
 

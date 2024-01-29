@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#organizing-resource-configurations" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2515,6 +2520,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Managing Resources
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2524,6 +2540,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#organizing-resource-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organizing Resource Configurations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bulk-operations-in-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk Operations in kubectl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#canary-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Canary Deployments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating Annotations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling-your-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scaling Your Application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-place-updates-of-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-place Updates of Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disruptive-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disruptive Updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-without-service-outage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating Without Service Outage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2828,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#organizing-resource-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organizing Resource Configurations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bulk-operations-in-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk Operations in kubectl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#canary-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Canary Deployments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating Annotations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling-your-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scaling Your Application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-place-updates-of-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-place Updates of Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disruptive-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disruptive Updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-without-service-outage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating Without Service Outage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2923,43 @@
 
   <h1>Managing Resources</h1>
 
-
+<h2 id="organizing-resource-configurations">Organizing Resource Configurations</h2>
+<ul>
+<li><strong>Multiple Resources in One File</strong>: You can include configurations for different resources like Pods, Services, and Deployments in a single YAML or JSON file. Each resource is separated by <code>--</code>.</li>
+<li><strong>Best Practices</strong>: It's recommended to group configurations for resources that are tightly coupled into the same file. This makes it easier to manage them as a unit.</li>
+</ul>
+<h2 id="bulk-operations-in-kubectl">Bulk Operations in kubectl</h2>
+<ul>
+<li><strong>Bulk Create</strong>: You can create multiple resources at once by specifying a directory with <code>kubectl apply -f /</code>.</li>
+<li><strong>Bulk Delete</strong>: Similarly, you can delete all resources in a directory with <code>kubectl delete -f /</code>.</li>
+<li><strong>Selectors</strong>: You can use label selectors to operate on a subset of resources that match the labels.</li>
+</ul>
+<h2 id="canary-deployments">Canary Deployments</h2>
+<ul>
+<li><strong>Concept</strong>: Canary deployments allow you to roll out a new version of an application alongside the stable version to test its performance and reliability.</li>
+<li><strong>Implementation</strong>: You can manage canary deployments using Kubernetes Deployments by controlling the number of replicas for the new and old versions.</li>
+</ul>
+<h2 id="updating-annotations">Updating Annotations</h2>
+<ul>
+<li>Annotations are key-value pairs that you can attach to objects but are not used for filtering and selecting objects.</li>
+<li>Usage: You can use kubectl annotate to add or update annotations. For example, <code>kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq</code>.</li>
+</ul>
+<h2 id="scaling-your-application">Scaling Your Application</h2>
+<ul>
+<li><strong>Manual Scaling</strong>: You can manually scale the number of pod replicas using kubectl scale. For example, <code>kubectl scale --replicas=3 rs/foo</code>.</li>
+<li><strong>Auto-Scaling</strong>: Kubernetes supports automatic scaling based on CPU usage or other select metrics through the Horizontal Pod Autoscaler.</li>
+</ul>
+<h2 id="in-place-updates-of-resources">In-place Updates of Resources</h2>
+<ul>
+<li><strong>Apply</strong>: The <code>kubectl apply</code> command is used to apply changes made to a resource in a non-disruptive way.</li>
+<li><strong>Edit and Patch</strong>: You can also use <code>kubectl edit</code> to edit resources directly or kubectl patch to apply partial updates.</li>
+</ul>
+<h2 id="disruptive-updates">Disruptive Updates</h2>
+<ul>
+<li><strong>Force Replace</strong>: If you need to replace a resource, you can use <code>kubectl replace --force</code>, but this will cause a service disruption.</li>
+</ul>
+<h2 id="updating-without-service-outage">Updating Without Service Outage</h2>
+<p><strong>Zero Downtime</strong>: Kubernetes Deployments enable you to update your application without any downtime by ensuring that at least a certain number of Pods are running at all times.</p>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#system-authentication-and-authorization" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1746,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1963,6 +1968,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Security Checklist
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1972,6 +1988,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#system-authentication-and-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Authentication and Authorization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Security
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Security
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs and Auditing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Placement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secrets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Images
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Controllers
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2828,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#system-authentication-and-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Authentication and Authorization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Security
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Security
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs and Auditing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Placement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secrets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Images
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Controllers
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2923,22 @@
 
   <h1>Security Checklist</h1>
 
-
+<h2 id="system-authentication-and-authorization">System Authentication and Authorization</h2>
+<p>Recommendations include not using the <code>system:masters</code> group for user or component authentication after bootstrapping and following Role-Based Access Control (RBAC) good practices.</p>
+<h2 id="network-security">Network Security</h2>
+<p>Suggestions include using CNI plugins that support network policies, applying ingress and egress network policies to all workloads, and not exposing the Kubernetes API, kubelet API, and etcd publicly on the Internet.</p>
+<h2 id="pod-security">Pod Security</h2>
+<p>The document advises setting RBAC rights only when necessary, applying appropriate Pod Security Standards policies, and setting memory and CPU limits for workloads.</p>
+<h2 id="logs-and-auditing">Logs and Auditing</h2>
+<p>It recommends protecting audit logs from general access and disabling the <code>/logs</code> API.</p>
+<h2 id="pod-placement">Pod Placement</h2>
+<p>Suggestions include isolating sensitive applications on specific nodes or using sandboxed runtimes.</p>
+<h2 id="secrets">Secrets</h2>
+<p>The checklist advises against using ConfigMaps for confidential data and recommends using encryption at rest for the Secret API.</p>
+<h2 id="images">Images</h2>
+<p>Recommendations include minimizing unnecessary content in container images, running images as an unprivileged user, and regularly scanning images for vulnerabilities.</p>
+<h2 id="admission-controllers">Admission Controllers</h2>
+<p>The document suggests enabling an appropriate selection of admission controllers and securely configuring the admission chain plugins and webhooks.</p>
 
 
 

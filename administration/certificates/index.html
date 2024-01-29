@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#easyrsa" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2494,6 +2499,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Certificates
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2503,6 +2519,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#easyrsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      easyrsa
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      openssl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cfssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      cfssl
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2783,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#easyrsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      easyrsa
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      openssl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cfssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      cfssl
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2833,28 @@
 
   <h1>Certificates</h1>
 
-
+<h2 id="easyrsa">easyrsa</h2>
+<ul>
+<li>Download and initialize easyrsa3.</li>
+<li>Generate a new Certificate Authority (CA).</li>
+<li>Generate the server certificate and key.</li>
+</ul>
+<h2 id="openssl">openssl</h2>
+<ul>
+<li>Generate a <code>ca.key</code> with 2048 bits.</li>
+<li>Create a <code>ca.crt</code> based on ca.key.</li>
+<li>Generate a <code>server.key</code> with 2048 bits.</li>
+<li>Create a config file for generating a Certificate Signing Request (CSR).</li>
+<li>Generate the certificate signing request based on the config file.</li>
+<li>Generate the server certificate using <code>ca.key</code>, <code>ca.crt</code>, and <code>server.csr</code>.</li>
+</ul>
+<h2 id="cfssl">cfssl</h2>
+<ul>
+<li>Download and prepare the command-line tools.</li>
+<li>Create a directory to hold the artifacts and initialize cfssl.</li>
+<li>Generate CA key (<code>ca-key.pem</code>) and certificate (<code>ca.pem</code>).</li>
+<li>Generate the key and certificate for the API server.</li>
+</ul>
 
 
 

@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#highly-coupled-container-to-container-communications" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2536,6 +2541,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Cluster Networking
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2545,6 +2561,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#highly-coupled-container-to-container-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Highly-coupled container-to-container communications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-to-pod-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod-to-Pod communications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-to-service-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod-to-Service communications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-to-service-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      External-to-Service communications
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#highly-coupled-container-to-container-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Highly-coupled container-to-container communications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-to-pod-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod-to-Pod communications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-to-service-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod-to-Service communications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-to-service-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      External-to-Service communications
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,18 @@
 
   <h1>Cluster Networking</h1>
 
-
+<h2 id="highly-coupled-container-to-container-communications">Highly-coupled container-to-container communications</h2>
+<p>In Kubernetes, tightly coupled application components can be packed into a Pod. Containers in the same Pod share the same network namespace, which means they can communicate with each other via localhost. This makes inter-container communication seamless.</p>
+<h2 id="pod-to-pod-communications">Pod-to-Pod communications</h2>
+<p>This is the core focus of the document. In Kubernetes, every Pod gets its own IP address, and there's no need for explicit links between Pods or mapping container ports to host ports. This makes it easier to run services that bind to specific ports without conflicts. The Pod-to-Pod communication is made possible through a networking model that may be implemented differently depending on the network plugin used.</p>
+<h2 id="pod-to-service-communications">Pod-to-Service communications</h2>
+<p>Kubernetes Services are an abstraction that defines a logical set of Pods and enables external traffic exposure, load balancing, and service discovery for those Pods. Services allow Pods to reliably communicate with each other without needing to know the IP address of the Pod they are talking to.</p>
+<h2 id="external-to-service-communications">External-to-Service communications</h2>
+<p>Kubernetes Services also allow for external traffic to enter the cluster. This is usually done through various types of Service types like ClusterIP, NodePort, and LoadBalancer, each serving a different use-case and environment.</p>
+<p><br/><br/>
+Container Network Interface (CNI) plugins are responsible for attaching Pods to the host network, and they come in various flavors. Some offer basic Pod networking, while others offer extended features like network policy enforcement, encryption, and more.</p>
+<p><br/><br/>
+There are ongoing efforts to improve networking, led by the Special Interest Group for Networking (SIG-Network). They are actively working on Kubernetes Enhancement Proposals (KEPs) to introduce new features and improvements in networking.</p>
 
 
 

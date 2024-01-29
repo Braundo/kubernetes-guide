@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-pod-overhead" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2219,6 +2224,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Pod Overhead
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2228,6 +2244,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-pod-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Pod Overhead?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Metrics
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2792,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-pod-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Pod Overhead?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admission-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admission Controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Metrics
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2851,56 @@
 
   <h1>Pod Overhead</h1>
 
-
+<h2 id="what-is-pod-overhead">What is Pod Overhead?</h2>
+<p>Pod Overhead is a feature in Kubernetes that accounts for the resources consumed by the Pod infrastructure on top of the container requests and limits. This is particularly useful when you're running Pods in a runtime that has additional overhead, such as Kata Containers or gVisor.</p>
+<h2 id="how-it-works">How It Works</h2>
+<p>PodOverhead Field: The <code>PodOverhead</code> field is added to the Pod specification under the <code>spec</code> section. This field specifies the additional overhead in terms of CPU and memory.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">overhead-demo</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">overhead</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;200m&quot;</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;120Mi&quot;</span>
+</code></pre></div>
+<br/></p>
+<ul>
+<li>
+<p><strong>Scheduler's Role</strong>: The Kubernetes scheduler takes into account this overhead when scheduling the Pod. This ensures that the Node has enough resources to accommodate not just the containers but also the Pod overhead.</p>
+</li>
+<li>
+<p><strong>Resource Accounting</strong>: The <code>kubelet</code> also includes the overhead when calculating the Pod's resource usage. This is reflected in metrics and used in eviction decisions.
+<br/><br/></p>
+</li>
+</ul>
+<h2 id="admission-controller">Admission Controller</h2>
+<ul>
+<li><strong>RuntimeClass</strong>: You can define the overhead in the <code>RuntimeClass</code> if you're using multiple runtimes in your cluster. This makes it easier to manage overhead settings across different types of Pods.</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">node.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RuntimeClass</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kata-fc</span>
+<span class="nt">handler</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kata-fc</span>
+<span class="nt">overhead</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">podFixed</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;250m&quot;</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;160Mi&quot;</span>
+</code></pre></div>
+<br/></p>
+<ul>
+<li><strong>Automatic Injection</strong>: When you create a Pod that specifies a RuntimeClass with Pod overhead defined, the overhead settings are automatically injected into the Pod spec.</li>
+</ul>
+<h2 id="monitoring-and-metrics">Monitoring and Metrics</h2>
+<ul>
+<li>
+<p><strong>Resource Metrics</strong>: Metrics related to CPU and memory usage will include the overhead, providing a more accurate representation of actual resource utilization.</p>
+</li>
+<li>
+<p><strong>Eviction</strong>: The <code>kubelet</code> considers the overhead when making eviction decisions, ensuring that it doesn't evict Pods based on inaccurate resource usage data.</p>
+</li>
+</ul>
 
 
 

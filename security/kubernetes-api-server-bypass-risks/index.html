@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#static-pods" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1740,7 +1745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2709,6 +2714,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#static-pods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubelet-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      The kubelet API
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-etcd-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      The etcd API
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-runtime-socket" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container runtime socket
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2724,7 +2809,37 @@
 
   <h1>Kubernetes api server bypass risks</h1>
 
-
+<h2 id="static-pods">Static Pods</h2>
+<p>Static Pods are managed directly by the kubelet on each node and are not controlled by the API server. An attacker with write access to the manifest directory could modify or introduce new static Pods.</p>
+<h2 id="mitigations">Mitigations</h2>
+<ul>
+<li>Enable kubelet static Pod manifest functionality only if required.</li>
+<li>Restrict filesystem access to the static Pod manifest directory.</li>
+<li>Regularly audit and report all access to directories hosting static Pod manifests.</li>
+</ul>
+<h2 id="the-kubelet-api">The kubelet API</h2>
+<p>The kubelet API is exposed on TCP port 10250 and allows for information disclosure and command execution in containers.</p>
+<h2 id="mitigations_1">Mitigations</h2>
+<ul>
+<li>Restrict access to sub-resources of the nodes API object using mechanisms like RBAC.</li>
+<li>Restrict access to the kubelet port to trusted IP ranges.</li>
+<li>Ensure kubelet authentication is set to webhook or certificate mode.</li>
+</ul>
+<h2 id="the-etcd-api">The etcd API</h2>
+<p>Kubernetes uses etcd as a datastore, and direct access to this API can lead to data disclosure or modification.</p>
+<h2 id="mitigations_2">Mitigations</h2>
+<ul>
+<li>Control access to the private key for the etcd server certificate.</li>
+<li>Restrict access to the etcd port at a network level.</li>
+</ul>
+<h2 id="container-runtime-socket">Container runtime socket</h2>
+<p>The container runtime exposes a Unix socket for interaction with containers. An attacker with access to this socket can launch or interact with containers.</p>
+<h2 id="mitigations_3">Mitigations</h2>
+<ul>
+<li>Control filesystem access to container runtime sockets.</li>
+<li>Isolate the kubelet from other components using mechanisms like Linux kernel namespaces.</li>
+<li>Restrict or forbid the use of hostPath mounts that include the container runtime socket.</li>
+</ul>
 
 
 

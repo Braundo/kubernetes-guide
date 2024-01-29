@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#node-pressure-eviction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2408,6 +2413,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Node Pressure Eviction
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2417,6 +2433,104 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#node-pressure-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node-Pressure Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-healing-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Healing Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eviction-signals-and-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eviction Signals and Thresholds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-eviction-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Eviction Thresholds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-selection-for-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Selection for Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Conditions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#good-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Good Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flags-and-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags and Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2837,95 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#node-pressure-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node-Pressure Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-healing-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Healing Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eviction-signals-and-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eviction Signals and Thresholds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-eviction-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Eviction Thresholds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-selection-for-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Selection for Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Conditions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#good-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Good Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flags-and-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags and Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2941,48 @@
 
   <h1>Node Pressure Eviction</h1>
 
-
+<h2 id="node-pressure-eviction">Node-Pressure Eviction</h2>
+<ul>
+<li><strong>Purpose</strong>: To proactively terminate pods to reclaim resources on nodes.</li>
+<li><strong>Monitored Resources</strong>: Memory, disk space, filesystem inodes.</li>
+<li><strong>Eviction Phases</strong>: Sets the phase for selected pods to <code>Failed</code> and terminates them.</li>
+<li><strong>Constraints</strong>: Doesn't respect <code>PodDisruptionBudget</code> or <code>terminationGracePeriodSeconds</code>.</li>
+</ul>
+<h2 id="self-healing-behavior">Self-Healing Behavior</h2>
+<ul>
+<li><strong>Workload Management</strong>: If pods are managed by objects like StatefulSet or Deployment, new pods replace the evicted ones.</li>
+<li><strong>Static Pods</strong>: <code>Kubelet</code> tries to create a replacement for evicted static pods.</li>
+</ul>
+<h2 id="eviction-signals-and-thresholds">Eviction Signals and Thresholds</h2>
+<ul>
+<li>E<strong>viction Signals</strong>: Current state of a particular resource.</li>
+<li><strong>Eviction Thresholds</strong>: Minimum amount of the resource that should be available.</li>
+<li><strong>Monitoring Intervals</strong>: Evaluated based on housekeeping-interval, default is 10s.</li>
+</ul>
+<h2 id="types-of-eviction-thresholds">Types of Eviction Thresholds</h2>
+<ul>
+<li><strong>Soft Eviction Thresholds</strong>: Have a grace period.</li>
+<li><strong>Hard Eviction Thresholds</strong>: No grace period, immediate termination.</li>
+</ul>
+<h2 id="pod-selection-for-eviction">Pod Selection for Eviction</h2>
+<ul>
+<li><strong>Criteria</strong>: Resource usage, Pod Priority, and resource usage relative to requests.</li>
+<li><strong>Eviction Order</strong>: BestEffort or Burstable pods where usage exceeds requests are evicted first.</li>
+</ul>
+<h2 id="node-conditions">Node Conditions</h2>
+<p><code>MemoryPressure</code>, <code>DiskPressure</code>, <code>PIDPressure</code>: Reflect that the node is under pressure.</p>
+<h2 id="known-issues">Known Issues</h2>
+<ul>
+<li><strong>Memory Pressure Observation</strong>: <code>Kubelet</code> may not observe memory pressure immediately.</li>
+<li><strong>Active File Memory</strong>: Not considered as available memory.</li>
+</ul>
+<h2 id="good-practices">Good Practices</h2>
+<ul>
+<li><strong>Schedulable Resources</strong>: Make sure the scheduler doesn't schedule pods that will trigger eviction.</li>
+<li><strong>DaemonSets</strong>: Give high enough priority to avoid eviction.</li>
+</ul>
+<h2 id="flags-and-configuration">Flags and Configuration</h2>
+<p>Various flags like <code>-eviction-hard</code>, <code>-system-reserved</code>, <code>-eviction-minimum-reclaim</code> etc. are used for fine-tuning.</p>
 
 
 

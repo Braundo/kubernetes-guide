@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#assigning-pods-to-nodes" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2198,6 +2203,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Assigning Pods to Nodes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2207,6 +2223,104 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#assigning-pods-to-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assigning Pods to Nodes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods-for-manual-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods for Manual Scheduling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeselector" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeSelector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#affinity-and-anti-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Affinity and Anti-affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-affinity-weight" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Affinity Weight
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inter-pod-affinity-and-anti-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inter-pod Affinity and Anti-affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Use-cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-redis-cache-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Redis Cache Deployment
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2837,95 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#assigning-pods-to-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assigning Pods to Nodes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods-for-manual-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods for Manual Scheduling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeselector" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeSelector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#affinity-and-anti-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Affinity and Anti-affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-affinity-weight" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node Affinity Weight
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inter-pod-affinity-and-anti-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inter-pod Affinity and Anti-affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Use-cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-redis-cache-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Redis Cache Deployment
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2941,37 @@
 
   <h1>Assigning Pods to Nodes</h1>
 
-
+<h2 id="assigning-pods-to-nodes">Assigning Pods to Nodes</h2>
+<p>Automatic Scheduling: By default, Kubernetes automatically schedules Pods to Nodes based on available resources. However, you can override this behavior for specific use-cases.</p>
+<h2 id="methods-for-manual-scheduling">Methods for Manual Scheduling</h2>
+<ul>
+<li><code>nodeSelector</code>: Simplest form, matches node labels.</li>
+<li><code>Affinity and Anti-affinity</code>: More expressive than nodeSelector.</li>
+<li><code>nodeName</code>: Directly specify the node.</li>
+<li><code>Pod Topology Spread Constraints</code>: Control how Pods are spread across your cluster.</li>
+</ul>
+<h2 id="node-labels">Node Labels</h2>
+<ul>
+<li>Nodes can have labels that you manually attach or that Kubernetes automatically populates.</li>
+<li>Labels can be used for node isolation and security.</li>
+</ul>
+<h2 id="nodeselector">NodeSelector</h2>
+<p>A field in the Pod spec that specifies node labels to match.</p>
+<h2 id="affinity-and-anti-affinity">Affinity and Anti-affinity</h2>
+<ul>
+<li><code>Node Affinity</code>: Similar to nodeSelector but more expressive.</li>
+<li><code>requiredDuringSchedulingIgnoredDuringExecution</code>: Hard requirement.</li>
+<li><code>preferredDuringSchedulingIgnoredDuringExecution</code>: Soft requirement.</li>
+<li><code>Inter-pod Affinity/Anti-affinity</code>: Allows you to specify rules based on labels of other Pods, not just node labels.</li>
+</ul>
+<h2 id="node-affinity-weight">Node Affinity Weight</h2>
+<p>You can assign weights to preferred rules. The scheduler uses these to score nodes.</p>
+<h2 id="inter-pod-affinity-and-anti-affinity">Inter-pod Affinity and Anti-affinity</h2>
+<p>Allows you to specify rules based on labels of other Pods that are already running on the node.</p>
+<h2 id="practical-use-cases">Practical Use-cases</h2>
+<p>Useful when used with higher-level objects like ReplicaSets, StatefulSets, and Deployments.</p>
+<h2 id="example-redis-cache-deployment">Example: Redis Cache Deployment</h2>
+<p>An example is given for a Redis cache where <code>podAntiAffinity</code> is used to ensure that no two replicas with the label <code>app=store</code> are scheduled on the same node.</p>
 
 
 

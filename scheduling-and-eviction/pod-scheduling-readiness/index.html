@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#schedulinggates" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2240,6 +2245,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Pod Scheduling Readiness
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2249,6 +2265,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schedulinggates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SchedulingGates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Observability
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutable-pod-scheduling-directives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutable Pod Scheduling Directives
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2783,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schedulinggates" class="md-nav__link">
+    <span class="md-ellipsis">
+      SchedulingGates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Observability
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutable-pod-scheduling-directives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutable Pod Scheduling Directives
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2833,39 @@
 
   <h1>Pod Scheduling Readiness</h1>
 
-
+<h2 id="schedulinggates">SchedulingGates</h2>
+<ul>
+<li>
+<p><strong>What It Is</strong>: <code>SchedulingGates</code> is a new field in the Pod specification. It's an array of strings, where each string represents a condition that the Pod must meet before it can be scheduled.</p>
+</li>
+<li>
+<p><strong>Immutability</strong>: Once a Pod is created with <code>SchedulingGates</code>, you can't add new gates to it. However, you can remove existing ones to make the Pod schedulable.</p>
+</li>
+<li>
+<p><strong>Use Case</strong>: Imagine you have a multi-stage deployment process where a Pod needs to pass some pre-conditions before it can be scheduled. You can use <code>SchedulingGates</code> to ensure that the Pod only gets scheduled after these conditions are met.</p>
+</li>
+</ul>
+<h2 id="observability">Observability</h2>
+<ul>
+<li>
+<p><strong>New Metrics Label</strong>: The <code>scheduler_pending_pods</code> metric now includes a "gated" label. This helps in monitoring Pods that are intentionally not being scheduled due to <code>SchedulingGates</code>.</p>
+</li>
+<li>
+<p><strong>Monitoring</strong>: This feature allows for better observability into why certain Pods are not being scheduled, making it easier to debug issues related to Pod scheduling.</p>
+</li>
+</ul>
+<h2 id="mutable-pod-scheduling-directives">Mutable Pod Scheduling Directives</h2>
+<ul>
+<li>
+<p><strong>What It Is</strong>: Starting from Kubernetes v1.27, you can change the scheduling directives of a Pod even if it has <code>SchedulingGates</code>.</p>
+</li>
+<li>
+<p><strong>Constraints</strong>: The catch is that you can only "tighten" the scheduling directives. This means you can make them more restrictive, but not more permissive. For example, if a Pod was initially set to be scheduled on nodes with a certain label, you can change it to only be scheduled on nodes with that label and an additional condition.</p>
+</li>
+<li>
+<p><strong>Use Case</strong>: This is useful in scenarios where you might need to adjust the scheduling conditions of a Pod due to changes in cluster state or workload requirements, without having to delete and recreate the Pod.</p>
+</li>
+</ul>
 
 
 

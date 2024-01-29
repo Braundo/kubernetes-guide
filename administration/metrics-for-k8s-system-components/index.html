@@ -1740,7 +1740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2724,7 +2724,23 @@
 
   <h1>Metrics for k8s system components</h1>
 
-
+<p><strong>Prometheus Format</strong>: Kubernetes components emit metrics in Prometheus format, which is structured plain text readable by both humans and machines.
+<br/><br/></p>
+<p><strong>Metrics Endpoint</strong>: Metrics are generally available on the <code>/metrics</code> endpoint of the HTTP server. For components that don't expose this endpoint by default, it can be enabled using the <code>-bind-address</code> flag.
+<br/><br/></p>
+<p><strong>Components</strong>: Metrics are available for various components like <code>kube-controller-manager</code>, <code>kube-proxy</code>, <code>kube-apiserver</code>, <code>kube-scheduler</code>, and <code>kubelet</code>.
+<br/><br/></p>
+<p><strong>RBAC Authorization</strong>: If your cluster uses RBAC, reading metrics requires authorization via a user, group, or ServiceAccount with a ClusterRole that allows accessing <code>/metrics</code>.
+<br/><br/></p>
+<p><strong>Metric Lifecycle</strong>: Metrics go through different stages Alpha, Stable, Deprecated, Hidden, and Deleted. Each stage has its own set of rules and stability guarantees.
+<br/><br/></p>
+<p><strong>Command-Line Flags</strong>: Admins can enable hidden metrics through a command-line flag on a specific binary, using the flag <code>show-hidden-metrics-for-version</code>.
+<br/><br/></p>
+<p><strong>Component Metrics</strong>: Specific metrics are available for the <code>kube-controller-manager</code> and <code>kube-scheduler</code>, providing insights into the performance and health of these components.
+<br/><br/></p>
+<p><strong>Disabling Metrics</strong>: Metrics can be turned off via the command-line flag <code>-disabled-metrics</code> if they are causing performance issues.
+<br/><br/></p>
+<p><strong>Metric Cardinality Enforcement</strong>: To limit resource use, you can use the <code>-allow-label-value</code> command-line option to dynamically configure an allow-list of label values for a metric.</p>
 
 
 

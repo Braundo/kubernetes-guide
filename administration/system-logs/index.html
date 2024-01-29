@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#klog-library" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1744,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/cloud-native-security.md" class="md-nav__link">
+      <a href="../../security/cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2599,6 +2604,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    System Logs
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2608,6 +2624,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#klog-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      Klog Library
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-redirection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Redirection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structured Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contextual-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contextual Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#json-log-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON Log Format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-verbosity-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Verbosity Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Query
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2828,86 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#klog-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      Klog Library
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-redirection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Redirection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structured Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contextual-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contextual Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#json-log-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON Log Format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-verbosity-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Verbosity Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Query
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2923,34 @@
 
   <h1>System Logs</h1>
 
-
+<h2 id="klog-library">Klog Library</h2>
+<ul>
+<li>Klog is the Kubernetes logging library used to generate log messages for system components.</li>
+<li>Kubernetes is in the process of simplifying logging, and certain klog command-line flags are deprecated starting with Kubernetes v1.23 and will be removed in v1.26.</li>
+</ul>
+<h2 id="output-redirection">Output Redirection</h2>
+<ul>
+<li>Output is generally written to <code>stderr</code> and is expected to be handled by the component invoking a Kubernetes component.</li>
+<li>For environments where traditional output redirection options are not available, kube-log-runner can be used as a wrapper to redirect output.</li>
+</ul>
+<h2 id="structured-logging">Structured Logging</h2>
+<ul>
+<li>Introduced in Kubernetes v1.23 (beta), structured logging allows for a uniform structure in log messages, making it easier to store and process logs.</li>
+<li>The default formatting is backward-compatible with traditional klog.</li>
+</ul>
+<h2 id="contextual-logging">Contextual Logging</h2>
+<ul>
+<li>Introduced in Kubernetes v1.24 (alpha), contextual logging builds on structured logging and allows developers to add additional information to log entries.</li>
+<li>It is currently gated behind the StructuredLogging feature gate and is disabled by default.</li>
+</ul>
+<h2 id="json-log-format">JSON Log Format</h2>
+<p>Available since Kubernetes v1.19 (alpha), the <code>-logging-format=json</code> flag changes the log format to JSON.</p>
+<h2 id="log-verbosity-level">Log Verbosity Level</h2>
+<p>Controlled by the <code>v</code> flag, increasing the value logs increasingly less severe events.</p>
+<h2 id="log-location">Log Location</h2>
+<p>Logs can be written to <code>journald</code> or <code>.log</code> files in the <code>/var/log</code> directory, depending on whether the system component runs in a container.</p>
+<h2 id="log-query">Log Query</h2>
+<p>Introduced in Kubernetes v1.27 (alpha), this feature allows viewing logs of services running on the node, provided certain feature gates and configuration options are enabled.</p>
 
 
 

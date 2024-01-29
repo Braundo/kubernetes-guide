@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1746,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-native-security.md" class="md-nav__link">
+      <a href="../cloud-native-security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1900,6 +1905,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Multi-Tenancy
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1909,6 +1925,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenges-in-multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Challenges in Multi-tenancy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Tenancy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hierarchical-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hierarchical Namespaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-based-resource-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policy-based Resource Isolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-plane-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control Plane Isolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soft-multi-tenancy-vs-hard-multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Soft Multi-tenancy vs Hard Multi-tenancy
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2723,6 +2819,77 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenges-in-multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Challenges in Multi-tenancy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Tenancy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hierarchical-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hierarchical Namespaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-based-resource-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policy-based Resource Isolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-plane-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control Plane Isolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soft-multi-tenancy-vs-hard-multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Soft Multi-tenancy vs Hard Multi-tenancy
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2738,7 +2905,23 @@
 
   <h1>Multi-Tenancy</h1>
 
-
+<h2 id="introduction">Introduction</h2>
+<p>Multi-tenancy in Kubernetes refers to the ability to divide a single Kubernetes cluster into isolated partitions, allowing multiple teams or customers to share the cluster's resources without interfering with each other.</p>
+<h2 id="challenges-in-multi-tenancy">Challenges in Multi-tenancy</h2>
+<p>The main challenges include ensuring resource isolation, data security, and equitable resource allocation among tenants. The document outlines that these challenges require both architectural and policy-based solutions.</p>
+<h2 id="namespace-tenancy">Namespace Tenancy</h2>
+<p>Namespaces act as a primary isolation mechanism. Each tenant can be allocated a namespace, within which they can create and manage resources. This provides a level of isolation and helps in resource tracking.</p>
+<h2 id="hierarchical-namespaces">Hierarchical Namespaces</h2>
+<p>This is an advanced feature that allows namespaces to be organized in a hierarchical fashion, inheriting policies and roles from parent namespaces. This is useful for large organizations where multiple departments or teams share a cluster but have different sub-teams requiring varying levels of access.</p>
+<h2 id="policy-based-resource-isolation">Policy-based Resource Isolation</h2>
+<p>Policies like Role-Based Access Control (RBAC), Network Policies, and PodSecurityPolicies can be applied at the namespace level to provide additional layers of security and isolation. For example, Network Policies can restrict communication between pods in different namespaces.</p>
+<h2 id="control-plane-isolation">Control Plane Isolation</h2>
+<p>The control plane is the set of components that manage the overall state of the cluster. Isolating the control plane ensures that tenants cannot interfere with these critical components, thereby maintaining cluster stability.</p>
+<h2 id="soft-multi-tenancy-vs-hard-multi-tenancy">Soft Multi-tenancy vs Hard Multi-tenancy</h2>
+<ul>
+<li><strong>Soft Multi-tenancy</strong>: Assumes that all users are trusted but still provides certain levels of isolation and security. Suitable for scenarios where all users belong to the same organization.</li>
+<li><strong>Hard Multi-tenancy</strong>: Assumes that not all users are trusted and provides strict isolation measures. Suitable for public or shared clusters where users are from different organizations.</li>
+</ul>
 
 
 
