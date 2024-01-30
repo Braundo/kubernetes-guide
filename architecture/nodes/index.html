@@ -1207,12 +1207,12 @@
 <ul>
 <li>Worker machines in a Kubernetes cluster.</li>
 <li>Run containerized applications managed by the Control Plane.</li>
-<li>Equipped with a Kubelet agent that communicates with the master components.</li>
+<li>Equipped with a <code>kubelet</code> agent that communicates with the master components.</li>
 </ul>
 <h2 id="control-plane-vs-worker-nodes">Control Plane vs Worker Nodes</h2>
 <ul>
-<li>Nodes are managed by master components, primarily the <em>Control Plane</em>.</li>
-<li>Operations include adding nodes, updating node software, and decommissioning nodes.
+<li>All nodes are managed by master components, collectively called the <em>Control Plane</em>.</li>
+<li>Control plane perations include adding nodes, updating node software, and decommissioning nodes.
 <pre class="mermaid"><code>stateDiagram-v2
     state control_plane {
         kube_apiserver
