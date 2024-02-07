@@ -1,110 +1,17 @@
-site_name: Kubernetes TLDR
+site_name: Kubernetes Guide
 nav:
   - Home: index.md
-  - Architecture:
-    - Nodes: architecture/nodes.md
-    - Node Communication: architecture/node-communication.md
-    - Controllers: architecture/controllers.md
-    - Leases: architecture/leases.md
-    - Cloud Controller Manager: architecture/cloud-controller-manager.md
-    - cgroup v2: architecture/cgroupv2.md
-    - Container Runtime Interface: architecture/cri.md
-    - Garbage Collection: architecture/garbage-collection.md
-    - Mixed Version Proxy: architecture/mixed-version-proxy.md
-  - Containers:
-    - Overview: containers/overview.md
-    - Images: containers/images.md
-    - Environment: containers/container-environment.md
-    - Runtime Class: containers/runtime-class.md
-    - Lifecycle Hooks: containers/container-lifecycle-hooks.md
-  - Pods:
-    - Overview: pods/overview.md
-    - Pod Lifecycle: pods/pod-lifecycle.md
-    - Init Containers: pods/init-containers.md
-    - Disruptions: pods/disruptions.md
-    - Ephemeral Containers: pods/ephemeral-containers.md
-    - QoS Classes: pods/qos-classes.md
-    - User Namespaces: pods/user-namespaces.md
-    - Downward API: pods/downward-api.md
-  - Workloads:
-    - Resources: workloads/resources.md
-    - Deployments: workloads/deployments.md
-    - ReplicaSets: workloads/replicaset.md
-    - DaemonSets: workloads/daemonsets.md
-    - Workloads: workloads/jobs.md
-    - ReplicationController: workloads/replicationcontroller.md
-  - Services & Networking:
-    - Overview: services-and-networking/network-overview.md
-    - Services: services-and-networking/service.md
-    - Ingress: services-and-networking/ingress.md
-    - Endpoint Slices: services-and-networking/endpoint-slices.md
-    - Network Policies: services-and-networking/network-policies.md
-    - DNS: services-and-networking/dns.md
-    - IPv4 - IPv6: services-and-networking/ipv4-ipv6.md
-    - Topology Aware Routing: services-and-networking/topology-aware-routing.md
-    - Service Networking: services-and-networking/service-networking.md
-  - Storage: 
-    - Volumes: storage/volumes.md
-    - Persistent Volumes: storage/persistent-volumes.md
-    - Projected Volumes: storage/projected-volumes.md
-    - Ephemeral Volumes: storage/ephemeral-volumes.md
-    - Storage Classes: storage/storage-classes.md
-    - Dynamic Volume Provisioning: storage/dynamic-volume-provisioning.md
-    - Volume Snapshots: storage/volume-snapshots.md
-    - Volume Snapshot Classes: storage/volume-snapshot-classes.md
-    - CSI Volume Cloning: storage/csi-volume-cloning.md
-    - Storage Capacity: storage/storage-capacity.md
-    - Node Specific Volume Limits: storage/node-specific-volume-limits.md
-    - Volume Health Monitoring: storage/volume-health-monitoring.md
-  - Configuration:
-    - Best Practices: configuration/best-practices.md
-    - ConfigMaps: configuration/configmaps.md
-    - Secrets: configuration/secrets.md
-    - Resource Management: configuration/resource-management.md
-    - Organizing Cluster Access: configuration/organizing-cluster-access.md
-  - Security:
-    - Cloud Native Security: security/cloud-native-security.md
-    - Pod Security Standards: security/pod-security-standards.md
-    - Service Accounts: security/service-accounts.md
-    - Pod Security Admission: security/pod-security-admission.md
-    - Controlling Access to K8s API: security/controlling-access-to-kubernetes-api.md
-    - RBAC Best Practices: security/rbac-best-practices.md
-    - Secrets Best Practices: security/kubernetes-secrets-best-practices.md
-    - Multi-Tenancy: security/multi-tenancy.md
-    - Hardening Guide: security/hardening-guide-auth.md
-    - API Server Bypass: security/kubernetes-api-server-bypass-risks.md
-    - Security Checklist: security/security-checklist.md
-  - Policies: 
-    - Overview: policies/policies-overview.md
-    - Limit Ranges: policies/limit-ranges.md
-    - Resource Quotas: policies/resource-quotas.md
-    - Process ID Limits: policies/process-id-limits.md
-    - Node Resource Managers: policies/node-resource-managers.md
-  - Scheduling & Eviction:
-    - Kubernetes Scheduler: scheduling-and-eviction/kubernetes-scheduler.md
-    - Assigning Pods to Nodes: scheduling-and-eviction/assigning-pods-to-nodes.md
-    - Pod Overhead: scheduling-and-eviction/pod-overhead.md
-    - Pod Scheduling Readiness: scheduling-and-eviction/pod-scheduling-readiness.md
-    - Pod Topology Spread Constraints: scheduling-and-eviction/pod-topology-spread-constraints.md
-    - Taints and Tolerations: scheduling-and-eviction/taints-and-tolerations.md
-    - Scheduling Framework: scheduling-and-eviction/scheduling-framework.md
-    - Dynamic Resource Allocation: scheduling-and-eviction/dynamic-resource-allocation.md
-    - Scheduler Performance Tuning: scheduling-and-eviction/scheduler-performance-tuning.md
-    - Resource Bin Packing: scheduling-and-eviction/resource-bin-packing.md
-    - Pod Priority and Preemption: scheduling-and-eviction/pod-priority-and-preemption.md
-    - Node Pressure Eviction: scheduling-and-eviction/node-pressure-eviction.md
-    - API Initiated Eviction: scheduling-and-eviction/api-initiated-eviction.md
-  - Administration:
-    - Certificates: administration/certificates.md
-    - Managing Resources: administration/managing-resources.md
-    - Cluster Networking: administration/cluster-networking.md
-    - Logging Architecture: administration/logging-architecture.md
-    - Metrics: administration/metrics-for-kubernetes-components.md
-    - System Logs: administration/system-logs.md
-    - Traces: administration/traces-for-kubernetes-components.md
-    - Proxies: administration/proxies-in-kubernetes.md
-    - API Priority and Fairness: administration/api-priority-and-fairness.md
-    - Installing Addons: administration/installing-addons.md
+  - Overview: overview.md
+  - Pods: pods.md
+  - Namespaces: namespaces.md
+  - Deployments: deployments.md
+  - Services: services.md
+  - Ingress: ingress.md
+  - DNS: dns.md
+  - Storage: storage.md
+  - ConfigMaps and Secrets: config-maps-secrets.md
+  - StatefulSets: statefulsets.md
+  - Security: security.md
 theme:
   name: material
   logo: assets/logo.svg
@@ -131,13 +38,24 @@ theme:
     - navigation.path
     - palette.toggle
     - toc.follow
+    - content.tooltips
 extra_css:
   - stylesheets/extra.css
 extra:
-  generator: false
+  generator: falseI did I
 markdown_extensions:
   - admonition
+  - abbr
   - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

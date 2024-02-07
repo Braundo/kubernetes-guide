@@ -1,9 +1,9 @@
 .md-header {
-    background: #44475A;
+    background: #326ce5;
 }
 
 .md-footer {
-    background: #44475A;
+    background: #326ce5;
 }
 
 .md-footer-meta {
@@ -11,16 +11,15 @@
 }
 
 .md-footer__button {
-    color: #BD93F9;
+    color: #ffffff;
 }
 
 .md-nav__link--active, .md-nav__link:hover, .md-nav__link:active {
-    color: #BD93F9 !important;
+    color: #326ce5 !important;
 }
 
-/* Override the color for active section headers in the sidebar */
 .md-nav__title--active {
-    color: #BD93F9 !important; /* Replace with your desired color */
+    color: #326ce5  !important;
 }
 
 
@@ -29,19 +28,8 @@
 }
 
 .md-nav__link:focus {
-    color: #BD93F9 !important;
+    color: #326ce5 !important;
 }
-
-.admonition {
-    border-color: #BD93F9 !important;
-    background-color: rgba(189, 147, 249, 0.20) !important;
-}
-
-.admonition-title::before {
-    background-color: #BD93F9 !important;
-}
-
-
 
 h1 {
     font-style: bold !important;
