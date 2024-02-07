@@ -20,7 +20,7 @@ theme:
     text: Ubuntu
     code: Fira Code
   palette:
-    - scheme: slate
+    - scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode

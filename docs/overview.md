@@ -22,7 +22,7 @@ The control plane, like many aspects of Kubernetes, exists in a *stateless* mann
 
 `etcd` is installed on every control plane node by default for high-availability. However, it does not tolerate split-brain scenarios and will prevent *updates* to the cluster in such states - but it will still allow applications to run in those scenarios.
 
-## Controller Manager
+## Controllers
 Kubernetes consists of many different *controllers*, which are essentially background loops that watch for changes to the cluster (and alert when things don't match up so other components can take action). All controllers are managed and implemented by a higher-level component called the *controller manager*. 
 
 The following logic is at the core of what Kubernetes is and how it works:  
