@@ -640,7 +640,7 @@
   <h1>Pods</h1>
 
 <p>Pods are the <abbr title="All or nothing.">atomic</abbr> unit of scheduling in Kubernetes. As virtual machines were in the VMware world, so are Pods in the world of Kubernetes. Every container running on Kubernetes must be wrapped up in a Pod. The most simple implementation of this are single-container Pods - one container inside one Pod. However there are certain instances where multi-container Pods make sense.</p>
-<p>It's important to note that when you scale up/down application in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.</p>
+<p>It's important to note that when you scale up/down applications in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.</p>
 <h2 id="atomic">Atomic</h2>
 <p>Pod deployment is <abbr title="All or nothing.">atomic</abbr> in nature - a Pod is only considered <strong>Ready</strong> when <em>all</em> of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't. - there are no partial states.</p>
 <h2 id="lifecycle">Lifecycle</h2>
