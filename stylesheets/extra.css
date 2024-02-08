@@ -14,21 +14,13 @@
     color: #ffffff;
 }
 
-.md-nav__link--active, .md-nav__link:hover, .md-nav__link:active {
-    color: #326ce5 !important;
+.md-nav__link:hover {
+    color:#326ce5 !important;
 }
 
-.md-nav__title--active {
-    color: #326ce5  !important;
-}
-
-
-.md-typeset .admonition.note .admonition-icon::before {
-    content: 'brightness_4';
-}
-
-.md-nav__link:focus {
-    color: #326ce5 !important;
+.md-nav__link--active {
+    font-weight: bold;
+    color:#326ce5 !important;
 }
 
 h1 {
@@ -39,15 +31,3 @@ h2 {
     color: #8f9bbd;
     font-weight: bold !important;
 }
-
-@keyframes account-hard-hat {
-    0%, 40%, 80%, 100% {
-      transform: scale(10);
-    }
-    20%, 60% {
-      transform: scale(15);
-    }
-  }
-  .account-hard-hat {
-    animation: account-hard-hat 10s infinite;
-  }
