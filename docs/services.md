@@ -35,6 +35,7 @@ flowchart LR
     SVC[<b>Service</b><tt><br>env=prod<br>app=shop] --> Pod1[<b>Pod</b><tt><br>env=prod<br>app=shop]
     SVC --> Pod2[<b>Pod</b><tt><br>env=prod<br>app=shop]
     SVC --> Pod3[<b>Pod</b><tt><br>env=prod<br>app=shop]
+Pod4[<b>Pod</b><tt><br>env=dev<br>app=shop]
 ```
 
 One thing to note is that Pods *can* have extra labels and still be managed by the Service if it's other labels still match. As a concrete example, both of the Pods below will still have traffic routed to them, even though one of them has a label that the Service does not.
