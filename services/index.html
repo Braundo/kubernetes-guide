@@ -382,7 +382,7 @@
     SVC[&lt;b&gt;Service&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop] --&gt; Pod1[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop]
     SVC --&gt; Pod2[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop]
     SVC --&gt; Pod3[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop]
-            Pod4[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=dev&lt;br&gt;app=shop]</code></pre>
+    SVC -- |X|Pod4[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=dev&lt;br&gt;app=shop]</code></pre>
 <p>One thing to note is that Pods <em>can</em> have extra labels and still be managed by the Service if it's other labels still match. As a concrete example, both of the Pods below will still have traffic routed to them, even though one of them has a label that the Service does not.</p>
 <pre class="mermaid"><code>flowchart LR
     SVC[&lt;b&gt;Service&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop] --&gt; Pod1[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop&lt;br&gt;cur=usd]
@@ -396,7 +396,7 @@
 <h4 id="nodeport">NodePort</h4>
 <p>Another type of Service that Kubernetes supports is called <strong>NodePort</strong>. This is very similar to ClusterIP but adds the ability for external access on a dedicated port on every node in the cluster. NodePort intentionally uses high-numbered ports (30000 - 32767) to avoid clashing with common ports. To access a NodePort Service from an external client, you simply direct traffic to the IP address of <em>any node</em> in the cluster on the given port. The Service will then route the request to the appropriate Pod based on it's list of healthy ones in it's EndpointSlice object.</p>
 <h4 id="loadbalancer">LoadBalancer</h4>
-<p>If you're running your Kubernetes cluster on a public cloud environment you can leverage a <strong>LoadBalancer</strong> Service. This will provision an internet-facing load-balance that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to <a href="https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer">the official Kubernetes documentation</a>.</p>
+<p>If you're running your Kubernetes cluster on a public cloud environment you can leverage a <strong>LoadBalancer</strong> Service. This will provision an internet-facing load-balancer that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to <a href="https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer">the official Kubernetes documentation</a>.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
