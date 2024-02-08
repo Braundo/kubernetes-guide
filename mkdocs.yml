@@ -16,7 +16,7 @@ nav:
 theme:
   name: material
   logo: assets/logo.svg
-  favicon: assets/logo.svg
+  favicon: assets/logo.png
   font:
     text: Ubuntu
     code: Fira Code
