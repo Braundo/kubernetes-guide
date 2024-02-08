@@ -47,6 +47,7 @@ extra:
 markdown_extensions:
   - admonition
   - abbr
+  - def_list
   - pymdownx.details
   - pymdownx.snippets
   - pymdownx.inlinehilite
