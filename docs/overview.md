@@ -30,13 +30,13 @@ The following logic is at the core of what Kubernetes is and how it works:
 ``` mermaid
 flowchart TD
     A(Obtain desired state) --> B(Observe current state)
-    B --> C{desired = current?}
+    B --> C{current = desired?}
     C -->|Yes| B
     C -->|No| E[Take action]
 ```
 
 ## Declarative Model
-At the core of Kubernetes is the concept of the *declarative model*. You tell Kubernetes how you want your application to look and run (how many replicas, which image to use, network settings, commands to run, how to perform updates, etc.), and it's Kubernetes job to ensure that happens. You "tell" Kubernetes through the use of manifest files written in YAML.  
+Key to truly mastering Kubernetes is the concept of the *declarative model*. You tell Kubernetes how you want your application to look and run (how many replicas, which image to use, network settings, commands to run, how to perform updates, etc.), and it's Kubernetes job to ensure that happens. You "tell" Kubernetes through the use of manifest files written in YAML.  
 
 You take those manifest files and `POST` them to the Kubernetes API server (typically through the use of `kubectl` commands). The API server will then authenticate the request, inspect the manifest for formatting, route the request to the appropriate controller (i.e. if you've defined a manifest file for a Deployment, it will send the request to the Deployments controller), and then it will record your desired state in the cluster store (remember, `etcd`). After this, the relevant controller will get started on performing any tasks necessary to get your application into it's desired state.  
 
