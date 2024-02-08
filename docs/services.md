@@ -9,7 +9,7 @@ This is where Services come in. Services provide stable, long-lived connection p
 
 ``` mermaid
 flowchart LR
-    Client --> SVC[Service]
+    client --> SVC[Service]
     SVC --> Pod1[Pod]
     SVC --> Pod2[Pod]
     SVC --> Pod3[Pod]
