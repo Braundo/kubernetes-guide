@@ -7,7 +7,7 @@ Pods are the atomic unit of scheduling in Kubernetes. As virtual machines were i
 It's important to note that when you scale up/down applications in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.
 
 ## Atomic
-Pod deployment is atomic in nature - a Pod is only considered **Ready** when *all* of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't. - there are no partial states.
+Pod deployment is atomic in nature - a Pod is only considered **Ready** when *all* of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't - there are no partial states.
 
 ## Lifecycle
 Pods are designed to be ephemeral in nature. Once a Pod dies, it's not meant to be restarted or revived. Instead, the intent to spin up a brand new Pod in the failed ones place (based off of your defined Manifest). Further, Pods are *immutable* and should not be changed once running. If you need to chance your application, you update the configuration via the manifest and deploy a new Pod.
