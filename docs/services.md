@@ -35,7 +35,7 @@ flowchart LR
     SVC[<b>Service</b><tt><br>env=prod<br>app=shop] --> Pod1[<b>Pod</b><tt><br>env=prod<br>app=shop]
     SVC --> Pod2[<b>Pod</b><tt><br>env=prod<br>app=shop]
     SVC --> Pod3[<b>Pod</b><tt><br>env=prod<br>app=shop]
-            Pod4[<b>Pod</b><tt><br>env=dev<br>app=shop]
+    SVC -- |X|Pod4[<b>Pod</b><tt><br>env=dev<br>app=shop]
 ```
 
 One thing to note is that Pods *can* have extra labels and still be managed by the Service if it's other labels still match. As a concrete example, both of the Pods below will still have traffic routed to them, even though one of them has a label that the Service does not.
@@ -59,4 +59,4 @@ Kubernetes supports different types of Services, but the default type is **Clust
 Another type of Service that Kubernetes supports is called **NodePort**. This is very similar to ClusterIP but adds the ability for external access on a dedicated port on every node in the cluster. NodePort intentionally uses high-numbered ports (30000 - 32767) to avoid clashing with common ports. To access a NodePort Service from an external client, you simply direct traffic to the IP address of *any node* in the cluster on the given port. The Service will then route the request to the appropriate Pod based on it's list of healthy ones in it's EndpointSlice object.
 
 #### LoadBalancer
-If you're running your Kubernetes cluster on a public cloud environment you can leverage a **LoadBalancer** Service. This will provision an internet-facing load-balance that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer).
+If you're running your Kubernetes cluster on a public cloud environment you can leverage a **LoadBalancer** Service. This will provision an internet-facing load-balancer that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer).
