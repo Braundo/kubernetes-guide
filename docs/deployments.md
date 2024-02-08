@@ -3,7 +3,7 @@ icon: material/reload
 ---
 
 ## Overview
-The main idea behind Deployments is that you tell Kubernetes the *desired* state of your application a looping controller watches your app and continuously attempts to reconcile the *actual* state of your app with the *desired* state.
+The main idea behind Deployments is that you tell Kubernetes the *desired* state of your application while a looping controller watches your app and continuously attempts to reconcile the *actual* state of your app with the *desired* state you previously defined.
 
 ## Deployment Spec
 The way you *tell* Kubernetes how you want your application to look is through the use of a YAML file (Deployment spec). When you POST the Deployment spec (via `kubectl`) to the API server, Kubernetes goes through the process of deploying your application to match the desired state and leverages a **Deployment controller** to continuously watch your application state.  
