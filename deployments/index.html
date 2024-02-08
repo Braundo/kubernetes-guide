@@ -365,7 +365,7 @@
         end
     end</code></pre>
 <h2 id="scaling-and-self-healing">Scaling and Self-Healing</h2>
-<p>If you deploy a pod by itself (either via a YAML file or <code>kubectl</code>), if it dies or fails, the Pod is lost forever.</p>
+<p>If you deploy a pod by itself (i.e. not via a Deployment), if it dies or fails, the Pod is lost forever.</p>
 <div class="admonition info">
 <p class="admonition-title">We never "revive" Pods; the appropriate way to "revive" a failed Pod is to create a new one to replace it.</p>
 </div>
