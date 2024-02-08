@@ -43,7 +43,7 @@ theme:
 extra_css:
   - stylesheets/extra.css
 extra:
-  generator: falseI did I
+  generator: false
 markdown_extensions:
   - admonition
   - abbr
