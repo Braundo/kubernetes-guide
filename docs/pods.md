@@ -10,7 +10,7 @@ It's important to note that when you scale up/down applications in Kubernetes, y
 Pod deployment is atomic in nature - a Pod is only considered **Ready** when *all* of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't - there are no partial states.
 
 ## Lifecycle
-Pods are designed to be ephemeral in nature. Once a Pod dies, it's not meant to be restarted or revived. Instead, the intent to spin up a brand new Pod in the failed ones place (based off of your defined Manifest). Further, Pods are *immutable* and should not be changed once running. If you need to chance your application, you update the configuration via the manifest and deploy a new Pod.
+Pods are designed to be ephemeral in nature. Once a Pod dies, it's not meant to be restarted or revived. Instead, the intent to spin up a brand new Pod in the failed ones place (based off of your defined manifest). Further, Pods are *immutable* and should not be changed once running. If you need to chance your application, you update the configuration via the manifest and deploy a new Pod.
 
 ## Multi-container Pods
 As mentioend above, the simplest way to run an app on Kubernetes is to run a single container inside of a single Pod. However, in situations where you need to tightly couple two or more functions you can co-locate multiple containers inside of the same pod. One such example would be leveraging the sidecar pattern for logging wherein the main container dumps logs to a supporting container that can sanitize and format the logs for consumption. This frees up the main container from having to worry about formatting logs.
