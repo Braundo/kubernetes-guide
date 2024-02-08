@@ -4,7 +4,7 @@ icon: material/package-variant-closed
 
 Pods are the atomic unit of scheduling in Kubernetes. As virtual machines were in the VMware world, so are Pods in the world of Kubernetes. Every container running on Kubernetes must be wrapped up in a Pod. The most simple implementation of this are single-container Pods - one container inside one Pod. However there are certain instances where multi-container Pods make sense.
 
-It's important to note that when you scale up/down application in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.
+It's important to note that when you scale up/down applications in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.
 
 ## Atomic
 Pod deployment is atomic in nature - a Pod is only considered **Ready** when *all* of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't. - there are no partial states.
