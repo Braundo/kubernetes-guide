@@ -10,10 +10,6 @@
     display: none;
 }
 
-.md-footer__button {
-    color: #ffffff;
-}
-
 .md-nav__link:hover {
     color:#4051b5 !important;
 }
@@ -28,6 +24,5 @@ h1 {
 }
 
 h2 {
-    color: #8f9bbd;
     font-weight: bold !important;
 }
