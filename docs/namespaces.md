@@ -2,14 +2,14 @@
 icon: material/vector-selection
 ---
 ## Overview
-Namespaces are used to partition Kubernetes clusters and provide easy ways to apply policies and quotas at a more granular level.  
+Namespaces are used to partition Kubernetes clusters and provide an easy way to apply policies and quotas at a more granular level.  
 
 !!! warning "Namespaces are not intended to be used for secure isolation"
     If you need secure isolation, the best practice is to use multiple clusters.
 
-Namespaces can be a useful construct for partitioning a single cluster among various environments for teams. For instance, the a single cluster might have development and production environments partitioned by Namespace.  
+Namespaces can be a useful construct for partitioning a single cluster among various environments for teams. For instance, a single cluster might have development and production environments partitioned by Namespace.  
 
-Kubernetes comes with a number of Namspaces already created. You can run the following command to view all namespaces on a cluster:  
+Kubernetes comes with a number of Namespaces already created. You can run the following command to view all Namespaces on a cluster:  
 
 ``` bash
 $ kubectl get namespaces
