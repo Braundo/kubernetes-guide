@@ -10,7 +10,7 @@ At a high-level, Kubernetes is responsible for deploying your applications and d
 
 Fundamentally, Kubernetes is a **cluster** - a group of machines, so to speak. These machines are called **nodes** in the Kubernetes world and can be cloud instances, virtual machines, physical servers, your laptop, etc.  
 
-A Kubernetes cluster consists of a **control plane** and any number of **worker nodes**. The control plane is the "brain" of Kubernetes and handles things such as scheduling workloads to nodes, implenting the API, and watching for changes that need to be responded to. The worker nodes handle the leg-work of actually running applications.
+A Kubernetes cluster consists of a **control plane** and any number of **worker nodes**. The control plane is the "brain" of Kubernetes and handles things such as scheduling workloads to nodes, implementing the API, and watching for changes that need to be responded to. The worker nodes handle the leg-work of actually running applications.
 
 ## API Server
 Speaking of, the API server is the central component for all communication for all components in Kubernetes.  
