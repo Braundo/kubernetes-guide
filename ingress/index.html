@@ -331,21 +331,20 @@
 <article class="md-content__inner md-typeset">
 <h1>Ingress</h1>
 <h2 id="overview">Overview</h2>
-<p>Ingress aims to bridge the gap that exists with NodePort and LoadBalancer Services. NodePorts are great, but must use a high port number and require you to know the FQDN or IP address of your nodes. LoadBalancer Services don't require this, but they are limited to one internal Service per load-balancer. So, if you have 50 applications you need exposed to the interent, you'd need 50 of your cloud provider's load-balancers instantiated - which would probably be cost prohibitive in most cases.  </p>
+<p><strong>Ingress</strong> aims to bridge the gap that exists with NodePort and LoadBalancer Services. NodePorts are great, but must use a high port number and require you to know the FQDN or IP address of your nodes. LoadBalancer Services don't require this, but they are limited to one internal Service per load-balancer. So, if you have 50 applications you need exposed to the interent, you'd need 50 of your cloud provider's load-balancers instantiated - which would probably be cost prohibitive in most cases.  </p>
 <p>Ingresses come into play here by allowing multiple Services to be "fronted" by a single cloud load-balancer. To accomplish this, Ingress will use a single LoadBalancer Service and use host-based or path-based routing to send traffic to the appropriate underlying Service.  </p>
 <pre class="mermaid"><code>flowchart LR
     CLD[cloud] --&gt; LBS
-    LBS[&lt;b&gt;LoadBalancer&lt;br&gt;Service] --&gt; ing1[Ingress controller]
-    ing[/routing rules&lt;br&gt;reading host &amp;&lt;br&gt;path names/] -.- ing1
-    ing1 --&gt; SVC1[&lt;b&gt;Service]
-    ing1 --&gt; SVC2[&lt;b&gt;Service]
-    ing1 --&gt; SVC3[&lt;b&gt;Service]</code></pre>
+    LBS[&lt;b&gt;LoadBalancer&lt;br&gt;Service] --&gt; ing1[&lt;b&gt;Ingress controller&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;- routing rules&lt;br&gt;- reading host &amp;&lt;br&gt;path names]
+    ing1 --&gt; SVC1[&lt;tt&gt;svc a]
+    ing1 --&gt; SVC2[&lt;tt&gt;svc b]
+    ing1 --&gt; SVC3[&lt;tt&gt;svc c]</code></pre>
 <h2 id="routing-examples">Routing Examples</h2>
 <h4 id="host-based-routing">Host-based Routing</h4>
 <p><pre class="mermaid"><code>flowchart LR
     CLD[client] --&gt; |ham.foo.bar| LBS
     CLD[client] --&gt; |eggs.foo.bar| LBS
-    LBS[&lt;b&gt;LoadBalancer&lt;br&gt;Service] --&gt; ing1[Ingress controller]
+    LBS[&lt;b&gt;LoadBalancer&lt;br&gt;Service] --&gt; ing1[&lt;b&gt;Ingress controller]
     ing1 --&gt; |ham.foo.bar|SVC1[&lt;b&gt;ham-svc]
     ing1 --&gt; |eggs.foo.bar|SVC2[&lt;b&gt;eggs-svc]</code></pre>
 <br/><br/><br/></p>
@@ -353,7 +352,7 @@
 <pre class="mermaid"><code>flowchart LR
     CLD[client] --&gt; |foo.bar/ham| LBS
     CLD[client] --&gt; |foo.bar/eggs| LBS
-    LBS[&lt;b&gt;LoadBalancer&lt;br&gt;Service] --&gt; ing1[Ingress controller]
+    LBS[&lt;b&gt;LoadBalancer&lt;br&gt;Service] --&gt; ing1[&lt;b&gt;Ingress controller]
     ing1 --&gt; |foo.bar/ham|SVC1[&lt;b&gt;ham-svc]
     ing1 --&gt; |foo.bar/eggs|SVC2[&lt;b&gt;eggs-svc]</code></pre>
 <h2 id="more-information">More Information</h2>

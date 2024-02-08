@@ -382,7 +382,7 @@
     SVC[&lt;b&gt;Service&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop] --&gt; Pod1[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop]
     SVC --&gt; Pod2[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop]
     SVC --&gt; Pod3[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop]
-    SVC -.- |X|Pod4[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=dev&lt;br&gt;app=shop]</code></pre>
+    SVC ~~~ Pod4[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=dev&lt;br&gt;app=shop]</code></pre>
 <p>One thing to note is that Pods <em>can</em> have extra labels and still be managed by the Service if it's other labels still match. As a concrete example, both of the Pods below will still have traffic routed to them, even though one of them has a label that the Service does not.</p>
 <pre class="mermaid"><code>flowchart LR
     SVC[&lt;b&gt;Service&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop] --&gt; Pod1[&lt;b&gt;Pod&lt;/b&gt;&lt;tt&gt;&lt;br&gt;env=prod&lt;br&gt;app=shop&lt;br&gt;cur=usd]
