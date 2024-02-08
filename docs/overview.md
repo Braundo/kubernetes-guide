@@ -1,5 +1,5 @@
 ---
-icon: material/text-box-search-outline
+icon: material/kubernetes
 ---
 
 ## History
