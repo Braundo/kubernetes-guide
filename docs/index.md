@@ -1,8 +1,6 @@
 ---
 icon: material/home
 ---
-!!! warning "Currently reworking the content and organization of the site."
-<br/>
 Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!  
 <br/><br/>
 Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.
