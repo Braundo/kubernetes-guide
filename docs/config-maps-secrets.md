@@ -186,4 +186,106 @@ Database to use is mysql-01
 ```
 
 #### Volumes
-To be populated shortly...
+The most flexible way to leverage ConfigMaps is with volumes. By using them with volumes you can reference entire configuration files and make live updates to them which will be reflected in *running* containers. The entire process can be summed up in the following steps:
+
+1. Create a ConfigMap
+1. Create a ConfigMap volume in your Pod spec
+1. Mount the ConfigMap volume into the container
+
+``` mermaid
+flowchart LR
+    subgraph ConfigMap
+        cm1[<tt>central = STL]
+        cm2[<tt>west = SF]
+    end
+
+    subgraph Pod
+        cmv[(ConfigMap<br>vol)]
+        subgraph container
+        fs["<b>/etc/regions</b><br><tt>-- central<br>-- west"]
+        end
+    end
+ConfigMap --> cmv
+cmv --> fs
+```
+
+Here's an example YAML file that would create a Pod called `configMapVol`, a volume called `volMap`, and mounts the `volMap` volume to `/etc/regions`:  
+
+``` yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configMapVol
+spec:
+  volumes:
+    - name: volMap
+      configMap:
+        name: my-cm
+  containers:
+    - name: container1
+      image: busybox
+      volumeMounts:
+        - name: volMap
+          mountPath: /etc/regions
+```
+
+If you were to deploy this Pod and exec into it, you could run an `ls` command to view the files we defined in the ConfigMap diagram above mounted at `/etc/regions`:  
+
+``` shell
+$ kubectl exec configMapVol -- ls /etc/regions
+central
+west
+```
+
+## Secrets
+Secrets are extremely similar in shape and function to ConfigMaps in that they hold configuration data that can be injected into containers at run-time. However, Secrets differ in the fact that they base-64 encode values and are made for storing sensitive data such as tokens, certificates, and passwords.
+
+!!! warning "These values are not encrypted by default and can easily be decoded."  
+
+A standard flow for implementing secrets looks like this:  
+
+``` mermaid
+flowchart TD
+    A[Create Secret and persist to cluster store - unencrypted] --> B[Pod is configured to use Secret]
+    B --> C[Secret data is transferred - unencrypted - to the node]
+    C --> D[Node kubelet starts the Pod and its containers]
+    D --> E[Secret is mounted into the container's temp filesystem and decoded into plain text]
+    E --> F[Application consumes Secret]
+    F --> G[Secret is deleted from the node once the Pod is deleted]
+```
+Additionally here is an example of how a YAML file might look for creating a Secret:
+
+``` yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  password: UGFzc3dvcmQxMjM=
+  user: dmlubnk=
+
+# rest of file omitted for simplicity
+```
+
+And here's an example of how to define a Pod and use the Secret as a volume:  
+
+``` yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  volumes:
+  - name: secret-vol
+    secret: 
+      secretName: my-secret
+  containers:
+  - name: my-container
+    image: busybox
+    volumeMounts:
+    - name: secret-vol
+      mountPath: /etc/secrets/
+```
+
+!!! info "Secrets are mounted as read-only objects in the containers to prevent accidental manipulation."
