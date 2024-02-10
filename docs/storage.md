@@ -49,7 +49,7 @@ flowchart LR
 ## Container Storage Interface (CSI)
 The CSI is [an open-source project](https://github.com/container-storage-interface/spec/blob/master/spec.md) that defines interfaces in a clear manner so that storage can be leveraged across Kubernetes (and other container orchestrators).
 
-While CSI is a critical piece of getting storage working in Kubernetes, unless you explicitly work on writing storage plugins you'll likely never interact with it. Most of your interaction with CSI will simply be referencing your relevant CSI plugin in YAML files.  
+While CSI is a critical piece of getting storage working in Kubernetes, unless you explicitly work on writing storage plugins you'll likely never interact with it directly. Most of your interaction with CSI will simply be referencing your relevant CSI plugin in YAML files.  
 
 ## Persistent Volumes
 At a high level, PVs are the way external storage objects are represented in Kubernetes.
