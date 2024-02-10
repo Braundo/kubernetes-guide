@@ -81,7 +81,7 @@ ClusterIPs exist on their own special Service network, so it takes a bit of work
 
 
 ## Namespaces
-A key point in understanding cluster DNS is knowing that Namespaces are able to partition a cluster's address space. Cluster address spaces are typically denoted as `cluster.local` and then have object names prepended to it. For instance, the `ham-svc` Service from above exists in the default Namespace and would have an FQDN of `ham-svc.default.svc.local`.  
+A key point in understanding cluster DNS is knowing that Namespaces are able to partition a cluster's address space. Cluster address spaces are typically denoted as `cluster.local` and then have object names prepended to it. For instance, the `ham-svc` Service from above exists in the default Namespace and would have an FQDN of `ham-svc.default.svc.cluster.local`.  
 
 Now imagine you wanted to partition the cluster domain further with `perf` and `qa` Namespaces. For a `ham-svc` Service in each of those Namespaces, the address would look as follows:
 
