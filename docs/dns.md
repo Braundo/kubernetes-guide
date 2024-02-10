@@ -8,7 +8,7 @@ As we saw in the previous sections, Kubernetes can be a very busy platform with 
 ### Service registration
 This is the process of an app on Kubernetes providing its connection details to a registry in order for other apps on the cluster to be able to find it. This happens automatically when Services are created.  
 
-As briefly mentioned in the previous section, Kubernetes provides its own DNS service (typically referred to as the *cluster DNS*). It's deployed as a series of Pods managed by a Deployment called `coredns`. These pods are behind a Service called `kube-dns`. All of these reside within the `kube-system` Namespace.  
+As briefly mentioned in the previous section, Kubernetes provides its own DNS service (typically referred to as the *cluster DNS*). It's deployed as a series of Pods managed by a Deployment called `coredns`. These Pods are behind a Service called `kube-dns`. All of these reside within the `kube-system` Namespace.  
 
 Every Service created on a Kubernetes cluster will automatically register itself with the cluster DNS to ensure that all Pods across the cluster can "find" it.
 
