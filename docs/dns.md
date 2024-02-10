@@ -15,7 +15,7 @@ Every Service created on a Kubernetes cluster will automatically register itself
 ``` mermaid
 flowchart LR
     SVC[<b>Service</b><br><tt>foo-svc<br>10.0.0.8]
-    SVC --> |1. Register Service| REG[<b>Service registry</b><br><tt>foo-svc: 10.0.0.8]
+    SVC --> |1. Service registered| REG[<b>Service registry</b><br><tt>foo-svc: 10.0.0.8]
     CON[<tt>app] --> |2. Discover Service| REG
     CON --> |3. Consume Service| SVC
 ```
@@ -27,7 +27,7 @@ flowchart LR
 1. EndpointSlices are created to maintain the list of healthy Pods which match the Service's label selector
 1. The Service's name and IP are registered with the cluster DNS.  
 
-It's worth noting that cluster DNS implements its own controller which constantly watches the API server for new Services being created. When a new one is observed, it automatically creates the DNS records mappings - meaning neither applications nor Services need to perform their own service registration.  
+It's worth noting that cluster DNS implements its own controller which constantly watches the API server for new Services being created. When a new one is observed, it automatically creates the DNS records mappings - meaning neither applications nor Services need to perform their own Service registration.  
 
 Every node's `kube-proxy` also watches the API server for new EndpointSlices and creates local networking rules when one is observed. This helps with redirecting ClusterIP traffic to Pod IPs.
 
