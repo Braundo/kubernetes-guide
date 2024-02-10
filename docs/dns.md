@@ -3,7 +3,7 @@ icon: material/dns
 ---
 
 ## Service Discovery
-As we saw in the previous section, Kubernetes can be a very busy platform with Pods constantly coming and going. Services help calm some of the storm by providing a stable endpoint for clients to connect to. But *how* do apps find other apps on a cluster? Through Service discovery! There are two main concepts that make up Service discovery as a whole: *Registration* and *Discovery*.
+As we saw in the previous sections, Kubernetes can be a very busy platform with Pods constantly coming and going. Services help calm some of the storm by providing a stable endpoint for clients to connect to. But *how* do apps find other apps on a cluster? Through Service discovery! There are two main concepts that make up Service discovery as a whole: *Registration* and *Discovery*.
 
 ### Service registration
 This is the process of an app on Kubernetes providing its connection details to a registry in order for other apps on the cluster to be able to find it. This happens automatically when Services are created.  
