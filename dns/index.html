@@ -377,7 +377,7 @@
 <li>The node kernel recognizes traffic intended for the service network (recall the <abbr title="IP Virtual Server">IPVS</abbr> rules) and routes the traffic to a healthy Pod that matches the label selector of the Service.  </li>
 </ol>
 <h2 id="namespaces">Namespaces</h2>
-<p>A key point in understanding cluster DNS is knowing that Namespaces are able to partition a cluster's address space. Cluster address spaces are typically denoted as <code>cluster.local</code> and then have object names prepended to it. For instance, the <code>ham-svc</code> Service from above exists in the default Namespace and would have an <abbr title="Fully Qualified Domain Name">FQDN</abbr> of <code>ham-svc.default.svc.local</code>.  </p>
+<p>A key point in understanding cluster DNS is knowing that Namespaces are able to partition a cluster's address space. Cluster address spaces are typically denoted as <code>cluster.local</code> and then have object names prepended to it. For instance, the <code>ham-svc</code> Service from above exists in the default Namespace and would have an <abbr title="Fully Qualified Domain Name">FQDN</abbr> of <code>ham-svc.default.svc.cluster.local</code>.  </p>
 <p>Now imagine you wanted to partition the cluster domain further with <code>perf</code> and <code>qa</code> Namespaces. For a <code>ham-svc</code> Service in each of those Namespaces, the address would look as follows:</p>
 <ul>
 <li><strong>Perf</strong>: <code>ham-svc.perf.svc.cluster.local</code></li>
