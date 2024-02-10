@@ -29,7 +29,7 @@ The only thing required for an external storage provider to be surfaced as a vol
 
 - **Persistent Volumes (PV)**: map to external storage objects
 - **Persistent Volume Claims (PVC)**: akin to "tickets" that authorize Pods to be able to use the relevant PV
-- **Storage Classes (PV)**: wrap the previous two in some automation
+- **Storage Classes (SC)**: wrap the previous two in some automation
 
 Take an example below where our cluster is running on GKE and we have a 2TB block of storage called `gce-pd`. We then create a PV called `k8s-vol` that will map to the `gce-pd` with the `pd.csi.storage.gke.io` CSI plugin. Here's how that might look visually:  
 
