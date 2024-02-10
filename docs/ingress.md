@@ -3,7 +3,7 @@ icon: material/shuffle-variant
 ---
 
 ## Overview
-**Ingress** aims to bridge the gap that exists with NodePort and LoadBalancer Services. NodePorts are great, but must use a high port number and require you to know the FQDN or IP address of your nodes. LoadBalancer Services don't require this, but they are limited to one internal Service per load-balancer. So, if you have 50 applications you need exposed to the interent, you'd need 50 of your cloud provider's load-balancers instantiated - which would probably be cost prohibitive in most cases.  
+**Ingress** aims to bridge the gap that exists with NodePort and LoadBalancer Services. NodePorts are great, but must use a high port number and require you to know the FQDN or IP address of your nodes. LoadBalancer Services don't require this, but they are limited to one internal Service per load-balancer. So, if you have 50 applications you need exposed to the internet, you'd need 50 of your cloud provider's load-balancers instantiated - which would probably be cost prohibitive in most cases.  
 
 Ingresses come into play here by allowing multiple Services to be "fronted" by a single cloud load-balancer. To accomplish this, Ingress will use a single LoadBalancer Service and use host-based or path-based routing to send traffic to the appropriate underlying Service.  
 
