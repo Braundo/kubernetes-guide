@@ -365,7 +365,7 @@
 <ul>
 <li><strong>Persistent Volumes (<abbr title="PersistentVolume">PV</abbr>)</strong>: map to external storage objects</li>
 <li><strong>Persistent Volume Claims (<abbr title="PersistentVolumeClaim">PVC</abbr>)</strong>: akin to "tickets" that authorize Pods to be able to use the relevant <abbr title="PersistentVolume">PV</abbr></li>
-<li><strong>Storage Classes (<abbr title="PersistentVolume">PV</abbr>)</strong>: wrap the previous two in some automation</li>
+<li><strong>Storage Classes (<abbr title="StorageClass">SC</abbr>)</strong>: wrap the previous two in some automation</li>
 </ul>
 <p>Take an example below where our cluster is running on <abbr title="Google Kubernetes Engine">GKE</abbr> and we have a 2TB block of storage called <code>gce-pd</code>. We then create a <abbr title="PersistentVolume">PV</abbr> called <code>k8s-vol</code> that will map to the <code>gce-pd</code> with the <code>pd.csi.storage.gke.io</code> CSI plugin. Here's how that might look visually:  </p>
 <pre class="mermaid"><code>flowchart LR
