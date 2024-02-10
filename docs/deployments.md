@@ -31,7 +31,7 @@ However, with the magic of Deployments, if a Pod that was created via Deployment
 ## Rolling Updates
 This same logic allows seamless, zero-downtime updates for your applications. Let's say you defined your application to have 5 Pods running and labeled it as being `v1.2`. Your team introduces some new features or implements some bug fixes and creates `v1.3` of your application. Your next step will be to go in and update your desired state (Deployment spec) from `v1.2` :material-arrow-right: `v1.3`. The Deployment controller will then recognize that the actual state (`v1.2`) no longer matches the desired state (`v1.3`) and begin the process of spinning down outdated Pods and spinning up new Pods with the new version.  
 
-Some things to keep in mind for this to work: your application(s) need(s) to maintain loose coupling and maintain backwards and forwards compatability (cloud native application design pattern). For upgrades or rollbacks to truly have zero-downtime, forward/backword compatibiloty is a must, as is having clearly defined API specs.
+Some things to keep in mind for this to work: your application(s) need(s) to maintain loose coupling and maintain backwards and forwards compatability (cloud native application design pattern). For upgrades or rollbacks to truly have zero-downtime, forward and backword compatibility is a must, as is having clearly defined API specs.
 
 There are different rolling update strategies you can employ that specify how to handle rollouts/rollbacks, how many can be spun up or down at once, etc. For more in-depth information on these strategies, refer to [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy).
 
