@@ -7,9 +7,18 @@ Namespaces are used to partition Kubernetes clusters and provide an easy way to 
 !!! warning "Namespaces are not intended to be used for secure isolation"
     If you need secure isolation, the best practice is to use multiple clusters.
 
-Namespaces can be a useful construct for partitioning a single cluster among various environments for teams. For instance, a single cluster might have development and production environments partitioned by Namespace.  
+## Common Uses for Namespaces
+Namespaces are frequently used to separate environments within a cluster, such as differentiating between development, staging, and production. They can also be used for resource management, applying specific policies or quotas to a subset of the cluster.
 
-Kubernetes comes with a number of Namespaces already created. You can run the following command to view all Namespaces on a cluster:  
+## Built-in Namespaces
+Kubernetes starts with several built-in Namespaces:
+
+- `default`: The space where objects are placed if no other Namespace is specified.
+- `kube-system`: For objects created by the Kubernetes system.
+- `kube-public`: Usually reserved for resources that should be visible and readable publicly throughout the whole cluster.
+- `kube-node-lease`: For lease objects associated with nodes which help the Kubelet in determining node health.  
+
+You can run the following command to view all Namespaces on a cluster:  
 
 ``` bash
 $ kubectl get namespaces
@@ -24,6 +33,29 @@ $ kubectl get namespaces
 > Your output will vary based on your environment.  
 
 ## Deploying Objects to Namespaces
-When deploying objects on Kubernetes you can specify the target Namespace imperatively by adding the `-n <Namespace>` flag to your command, or declaratively by specifying the Namespace in your YAML file.  
+When deploying objects on Kubernetes you can specify the target Namespace imperatively by adding the `-n <Namespace>` flag to your command, or declaratively by specifying the Namespace in your YAML file:  
 
-!!! info "If you don't explicitly define a Namespace, objects will be deployed to the `default` Namespace."
+``` yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  namespace: my-namespace
+...
+```
+
+## Namespace Creation
+Creating a new Namespace is as simple as applying a new YAML file:
+
+``` yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-new-namespace
+```  
+
+You can also create a Namespace with the kubectl command:
+
+``` shell
+kubectl create namespace my-new-namespace
+```
