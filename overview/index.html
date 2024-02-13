@@ -181,6 +181,13 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#primitives">
+<span class="md-ellipsis">
+      Primitives
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -328,6 +335,13 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#primitives">
+<span class="md-ellipsis">
+      Primitives
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -342,6 +356,29 @@
 <p>At a high-level, Kubernetes is responsible for deploying your applications and dynamically responding to changes to keep your applications running how you intended. Kubernetes runs on any cloud or on-premise datacenter, abstracting away all of the underlying infrastructure and letting you focus on application development. All applications running on Kubernetes must be containerized, and those containers must be running inside of a Pod.  </p>
 <p>Fundamentally, Kubernetes is a <strong>cluster</strong> - a group of machines, so to speak. These machines are called <strong>nodes</strong> in the Kubernetes world and can be cloud instances, virtual machines, physical servers, your laptop, etc.  </p>
 <p>A Kubernetes cluster consists of a <strong>control plane</strong> and any number of <strong>worker nodes</strong>. The control plane is the "brain" of Kubernetes and handles things such as scheduling workloads to nodes, implementing the API, and watching for changes that need to be responded to. The worker nodes handle the leg-work of actually running applications.</p>
+<pre class="mermaid"><code>graph TD;
+  subgraph Control Plane
+    kube-apiserver[API Server];
+    etcd[etcd];
+    kube-scheduler[Scheduler];
+    kube-controller-manager[Controller Manager];
+    cloud-controller-manager[Cloud Controller Manager];
+  end;
+  subgraph Node Components
+    kubelet[Kubelet];
+    kube-proxy[Kube Proxy];
+    container-runtime[Container Runtime];
+  end;
+  kube-apiserver --&gt; etcd;
+  kube-apiserver --&gt; kube-scheduler;
+  kube-apiserver --&gt; kube-controller-manager;
+  kube-apiserver --&gt; cloud-controller-manager;
+  kube-scheduler --&gt; kubelet;
+  kube-controller-manager --&gt; kubelet;
+  cloud-controller-manager --&gt; kubelet;
+  kubelet --&gt; kube-proxy;
+  kubelet --&gt; container-runtime;
+  kube-proxy --&gt; container-runtime;</code></pre>
 <h2 id="api-server">API Server</h2>
 <p>Speaking of, the API server is the central component for all communication for all components in Kubernetes.  </p>
 <p>Any communication inbound or outbound to/from the Kubernetes cluster must be routed through the API server.</p>
@@ -351,15 +388,58 @@
 <h2 id="controllers">Controllers</h2>
 <p>Kubernetes consists of many different <em>controllers</em>, which are essentially background loops that watch for changes to the cluster (and alert when things don't match up so other components can take action). All controllers are managed and implemented by a higher-level component called the <em>controller manager</em>. </p>
 <p>The following logic is at the core of what Kubernetes is and how it works:  </p>
-<pre class="mermaid"><code>flowchart TD
-    A(Obtain desired state) --&gt; B(Observe current state)
-    B --&gt; C{current = desired?}
-    C --&gt;|Yes| B
+<pre class="mermaid"><code>flowchart LR
+    subgraph ControlLoops
+    A(Obtain&lt;br&gt;&lt;b&gt;desired&lt;/b&gt; state)
+    B(Observe&lt;br&gt;&lt;b&gt;current&lt;/b&gt; state)
+    end
+    B -.-&gt; api(API Server)
+    A -.-&gt; etcd[(etcd)]
+    ControlLoops --&gt; C{current &lt;br&gt;=&lt;br&gt; desired?}
+    C --&gt;|Yes| ControlLoops
     C --&gt;|No| E[Take action]</code></pre>
 <h2 id="declarative-model">Declarative Model</h2>
 <p>Key to truly mastering Kubernetes is the concept of the <em>declarative model</em>. You tell Kubernetes how you want your application to look and run (how many replicas, which image to use, network settings, commands to run, how to perform updates, etc.), and it's Kubernetes job to ensure that happens. You "tell" Kubernetes through the use of manifest files written in YAML.  </p>
 <p>You take those manifest files and <code>POST</code> them to the Kubernetes API server (typically through the use of <code>kubectl</code> commands). The API server will then authenticate the request, inspect the manifest for formatting, route the request to the appropriate controller (i.e. if you've defined a manifest file for a Deployment, it will send the request to the Deployments controller), and then it will record your desired state in the cluster store (remember, <code>etcd</code>). After this, the relevant controller will get started on performing any tasks necessary to get your application into it's desired state.  </p>
 <p>After your application is up and running, controllers begin monitoring it's state in the background and ensuring it matches the desired state in <code>etcd</code> (see simple logic diagram above).</p>
+<h2 id="primitives">Primitives</h2>
+<p>Many of these primitives will not make sense until you read through the various sections of this guide; but this will be a good diagram to refer back to:  </p>
+<pre class="mermaid"><code>graph TB
+    subgraph Controllers
+        Deployment
+        ReplicaSet
+        StatefulSet
+    end
+    subgraph Services
+        Service
+        Ingress
+    end
+    subgraph Volumes
+        PersistentVolumeClaim
+        PersistentVolume
+    end
+    subgraph Config
+        ConfigMap
+        Secret
+    end
+    subgraph Policies
+        NetworkPolicy
+        HorizontalPodAutoscaler
+        RBAC
+    end
+    Pod["&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Pod&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;"]
+    Deployment --&gt;|manages| ReplicaSet
+    ReplicaSet --&gt;|controls| Pod
+    Service --&gt;|routes traffic to| Pod
+    PersistentVolumeClaim --&gt;|claims| PersistentVolume
+    Pod --&gt;|mounts| PersistentVolumeClaim
+    Ingress --&gt;|exposes| Service
+    Pod --&gt;|uses| ConfigMap
+    Pod --&gt;|uses| Secret
+    NetworkPolicy --&gt;|controls access to| Pod
+    HorizontalPodAutoscaler --&gt;|scales| Deployment
+    RBAC --&gt;|secures| Pod
+    StatefulSet --&gt;|manages|Pod</code></pre>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

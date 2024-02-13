@@ -335,9 +335,99 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#shared-resources-and-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shared Resources and Communication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multi-container-pods" class="md-nav__link">
     <span class="md-ellipsis">
       Multi-container Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#affinity-and-anti-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Affinity and Anti-affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-requests-and-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resource Requests and Limits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probes-readiness-and-liveness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probes: Readiness and Liveness
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#init-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Init Containers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-of-service-qos-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality of Service (QoS) Classes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-disruption-budgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Disruption Budgets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annotations-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Annotations and Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
     </span>
   </a>
   
@@ -614,9 +704,99 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#shared-resources-and-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shared Resources and Communication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multi-container-pods" class="md-nav__link">
     <span class="md-ellipsis">
       Multi-container Pods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#affinity-and-anti-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Affinity and Anti-affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-requests-and-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resource Requests and Limits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probes-readiness-and-liveness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probes: Readiness and Liveness
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#init-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Init Containers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-of-service-qos-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality of Service (QoS) Classes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pod-disruption-budgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pod Disruption Budgets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annotations-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Annotations and Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
     </span>
   </a>
   
@@ -639,14 +819,50 @@
 
   <h1>Pods</h1>
 
-<p>Pods are the <abbr title="All or nothing.">atomic</abbr> unit of scheduling in Kubernetes. As virtual machines were in the VMware world, so are Pods in the world of Kubernetes. Every container running on Kubernetes must be wrapped up in a Pod. The most simple implementation of this are single-container Pods - one container inside one Pod. However there are certain instances where multi-container Pods make sense.</p>
+<p>Pods are the <abbr title="All or nothing.">atomic</abbr> unit of scheduling in Kubernetes. As virtual machines were in the VMware world, so are Pods in the world of Kubernetes. Every container running on Kubernetes must be wrapped up in a Pod. Think of a Pod as a wrapper for your application’s container(s), similar to how a virtual machine encapsulates an entire operating system and its applications.  </p>
+<p>The most simple implementation of this are single-container Pods - one container inside one Pod. However there are certain instances where multi-container Pods make sense.</p>
 <p>It's important to note that when you scale up/down applications in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.</p>
 <h2 id="atomic">Atomic</h2>
 <p>Pod deployment is <abbr title="All or nothing.">atomic</abbr> in nature - a Pod is only considered <strong>Ready</strong> when <em>all</em> of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't - there are no partial states.</p>
 <h2 id="lifecycle">Lifecycle</h2>
-<p>Pods are designed to be <abbr title="Lasting for a very short time.">ephemeral</abbr> in nature. Once a Pod dies, it's not meant to be restarted or revived. Instead, the intent is to spin up a brand new Pod in the failed ones place (based off of your defined manifest). Further, Pods are <em>immutable</em> and should not be changed once running. If you need to change your application, you update the configuration via the manifest and deploy a new Pod.</p>
+<p>Pods are designed to be <abbr title="Lasting for a very short time.">ephemeral</abbr> in nature. Once a Pod dies, it's not meant to be restarted or revived. Instead, the intent is to spin up a brand new Pod in the failed ones place (based off of your defined manifest). Further, Pods are <em>immutable</em> and should not be changed once running. If you need to change your application, you update the configuration via the manifest and deploy a new Pod.  </p>
+<p>Pods also follow a defined restart policy in order to handle container failures:  </p>
+<ul>
+<li><code>Always</code>: The container is restarted even if it exits successfully.</li>
+<li><code>OnFailure</code>: The container is only restarted if it exits with an error.</li>
+<li><code>Never</code>: The container is never restarted, regardless of the exit status.</li>
+</ul>
+<h2 id="shared-resources-and-communication">Shared Resources and Communication</h2>
+<p>Containers within a Pod share an IP address and port space, allowing them to communicate using localhost. They can also share volumes, providing a common space for storage that persists across container restarts and simplifies data sharing.</p>
 <h2 id="multi-container-pods">Multi-container Pods</h2>
-<p>As mentioned above, the simplest way to run an app on Kubernetes is to run a single container inside of a single Pod. However, in situations where you need to tightly couple two or more functions you can co-locate multiple containers inside of the same pod. One such example would be leveraging the <abbr title="A Kubernetes side container is an additional container that runs alongside a primary application container within a Pod.">sidecar</abbr> pattern for logging wherein the main container dumps logs to a supporting container that can sanitize and format the logs for consumption. This frees up the main container from having to worry about formatting logs.</p>
+<p>As mentioned above, the simplest way to run an app on Kubernetes is to run a single container inside of a single Pod. However, in situations where you need to tightly couple two or more functions you can co-locate multiple containers inside of the same pod. One such example would be leveraging the <abbr title="A Kubernetes side container is an additional container that runs alongside a primary application container within a Pod.">sidecar</abbr> pattern for logging wherein the main container dumps logs to a supporting container that can sanitize and format the logs for consumption. This frees up the main container from having to worry about formatting logs.  </p>
+<h2 id="affinity-and-anti-affinity">Affinity and Anti-affinity</h2>
+<p>Kubernetes offers ways to control where Pods are placed relative to other Pods or to specific nodes. Pod affinity rules attract Pods to nodes with specific labels, while anti-affinity rules repel them, ensuring high availability and optimal resource utilization.</p>
+<h2 id="resource-requests-and-limits">Resource Requests and Limits</h2>
+<p>Pods can specify the amount of CPU and memory required (requests) and the maximum that can be consumed (limits). This helps Kubernetes make better scheduling decisions and manage system resources efficiently.</p>
+<h2 id="probes-readiness-and-liveness">Probes: Readiness and Liveness</h2>
+<p>Kubernetes uses readiness probes to know when a Pod is ready to start accepting traffic and liveness probes to know when to restart a container:</p>
+<ul>
+<li>Readiness probes protect your service’s availability by not sending traffic to Pods that aren’t ready.</li>
+<li>Liveness probes help maintain a healthy application state by restarting containers that fail the defined check.</li>
+</ul>
+<h2 id="init-containers">Init Containers</h2>
+<p>Init containers run before the application containers and are used to perform setup tasks or wait for some condition before the app starts. They run to completion and must exit before the main application containers start.</p>
+<h2 id="quality-of-service-qos-classes">Quality of Service (QoS) Classes</h2>
+<p>Pods are assigned QoS classes based on their resource requests and limits:</p>
+<ul>
+<li><code>Guaranteed</code>: Pods with defined and equal requests and limits, ensuring the highest priority.</li>
+<li><code>Burstable</code>: Pods with defined requests lower than limits, giving some flexibility.</li>
+<li><code>BestEffort</code>: Pods with no requests or limits, receiving the lowest priority.</li>
+</ul>
+<h2 id="pod-disruption-budgets">Pod Disruption Budgets</h2>
+<p>Pod Disruption Budgets (PDBs) allow you to ensure that a minimum number of Pods are always available during voluntary disruptions, such as node maintenance, safeguarding against outages.</p>
+<h2 id="annotations-and-labels">Annotations and Labels</h2>
+<p>Labels are key/value pairs for organizing and selecting groups of Pods, while annotations provide a way to store additional metadata to help manage applications.</p>
+<h2 id="service-accounts">Service Accounts</h2>
+<p>Pods use service accounts to authenticate to the Kubernetes API, which is crucial for Pods that need to interact with the API for automation and orchestration.</p>
+<h2 id="summary">Summary</h2>
+<p>Pods are the building blocks of a Kubernetes application. They ensure that containers run in a controlled, isolated, and secure environment with all the necessary configurations and resources. While Pods are inherently transient, their patterns and behaviors are foundational to how applications are designed and managed in Kubernetes. For more granular control and advanced features, refer to the official Kubernetes documentation.</p>
 
 
 
