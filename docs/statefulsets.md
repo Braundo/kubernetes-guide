@@ -45,7 +45,7 @@ flowchart LR
     pf -->|"replace failed Pod"| __
 ```
 
-Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and it's volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  
+Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  
 
 Below is a typical YAML file for defining a StatefulSet:  
 
