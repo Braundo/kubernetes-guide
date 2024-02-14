@@ -385,7 +385,7 @@ flowchart LR
     ss-pod2 -.- vb2
     end
     pf --&gt;|"replace failed Pod"| __</code></pre>
-<p>Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and it's volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  </p>
+<p>Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  </p>
 <p>Below is a typical YAML file for defining a StatefulSet:  </p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
