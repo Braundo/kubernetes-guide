@@ -393,8 +393,8 @@
     A(Obtain&lt;br&gt;&lt;b&gt;desired&lt;/b&gt; state)
     B(Observe&lt;br&gt;&lt;b&gt;current&lt;/b&gt; state)
     end
-    B -.-&gt; api(API Server)
-    A -.-&gt; etcd[(etcd)]
+    B &lt;-.-&gt; api(API Server)
+    A &lt;-.-&gt; etcd[(etcd)]
     ControlLoops --&gt; C{current &lt;br&gt;=&lt;br&gt; desired?}
     C --&gt;|Yes| ControlLoops
     C --&gt;|No| E[Take action]</code></pre>
