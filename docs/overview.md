@@ -44,7 +44,7 @@ Speaking of, the API server is the central component for all communication for a
 Any communication inbound or outbound to/from the Kubernetes cluster must be routed through the API server.
 
 ## Cluster Store
-The control plane, like many aspects of Kubernetes, exists in a *stateless* manner. However, the *cluster store* does not - it persistently stores the state of the cluster and other configuration data. As of Kubernetes v1.28, `etcd` is the distributed database that Kubernetes leverages for it's cluster store.  
+The control plane, like many aspects of Kubernetes, exists in a *stateless* manner. However, the *cluster store* does not - it persistently stores the state of the cluster and other configuration data. As of Kubernetes v1.28, `etcd` is the distributed database that Kubernetes leverages for its cluster store.  
 
 `etcd` is installed on every control plane node by default for high-availability. However, it does not tolerate split-brain scenarios and will prevent *updates* to the cluster in such states - but it will still allow applications to run in those scenarios.
 
