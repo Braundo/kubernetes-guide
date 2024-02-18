@@ -383,7 +383,7 @@
 <p>Speaking of, the API server is the central component for all communication for all components in Kubernetes.  </p>
 <p>Any communication inbound or outbound to/from the Kubernetes cluster must be routed through the API server.</p>
 <h2 id="cluster-store">Cluster Store</h2>
-<p>The control plane, like many aspects of Kubernetes, exists in a <em>stateless</em> manner. However, the <em>cluster store</em> does not - it persistently stores the state of the cluster and other configuration data. As of Kubernetes v1.28, <code>etcd</code> is the distributed databse that Kubernetes leverages for it's cluster store.  </p>
+<p>The control plane, like many aspects of Kubernetes, exists in a <em>stateless</em> manner. However, the <em>cluster store</em> does not - it persistently stores the state of the cluster and other configuration data. As of Kubernetes v1.28, <code>etcd</code> is the distributed database that Kubernetes leverages for it's cluster store.  </p>
 <p><code>etcd</code> is installed on every control plane node by default for high-availability. However, it does not tolerate split-brain scenarios and will prevent <em>updates</em> to the cluster in such states - but it will still allow applications to run in those scenarios.</p>
 <h2 id="controllers">Controllers</h2>
 <p>Kubernetes consists of many different <em>controllers</em>, which are essentially background loops that watch for changes to the cluster (and alert when things don't match up so other components can take action). All controllers are managed and implemented by a higher-level component called the <em>controller manager</em>. </p>
