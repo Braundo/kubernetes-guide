@@ -59,8 +59,8 @@ flowchart LR
     A(Obtain<br><b>desired</b> state)
     B(Observe<br><b>current</b> state)
     end
-    B -.-> api(API Server)
-    A -.-> etcd[(etcd)]
+    B <-.-> api(API Server)
+    A <-.-> etcd[(etcd)]
     ControlLoops --> C{current <br>=<br> desired?}
     C -->|Yes| ControlLoops
     C -->|No| E[Take action]
