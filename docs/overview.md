@@ -69,9 +69,9 @@ flowchart LR
 ## Declarative Model
 Key to truly mastering Kubernetes is the concept of the *declarative model*. You tell Kubernetes how you want your application to look and run (how many replicas, which image to use, network settings, commands to run, how to perform updates, etc.), and it's Kubernetes job to ensure that happens. You "tell" Kubernetes through the use of manifest files written in YAML.  
 
-You take those manifest files and `POST` them to the Kubernetes API server (typically through the use of `kubectl` commands). The API server will then authenticate the request, inspect the manifest for formatting, route the request to the appropriate controller (i.e. if you've defined a manifest file for a Deployment, it will send the request to the Deployments controller), and then it will record your desired state in the cluster store (remember, `etcd`). After this, the relevant controller will get started on performing any tasks necessary to get your application into it's desired state.  
+You take those manifest files and `POST` them to the Kubernetes API server (typically through the use of `kubectl` commands). The API server will then authenticate the request, inspect the manifest for formatting, route the request to the appropriate controller (i.e. if you've defined a manifest file for a Deployment, it will send the request to the Deployments controller), and then it will record your desired state in the cluster store (remember, `etcd`). After this, the relevant controller will get started on performing any tasks necessary to get your application into its desired state.  
 
-After your application is up and running, controllers begin monitoring it's state in the background and ensuring it matches the desired state in `etcd` (see simple logic diagram above).
+After your application is up and running, controllers begin monitoring its state in the background and ensuring it matches the desired state in `etcd` (see simple logic diagram above).
 
 ## Primitives
 Many of these primitives will not make sense until you read through the various sections of this guide; but this will be a good diagram to refer back to:  
