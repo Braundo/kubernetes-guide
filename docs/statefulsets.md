@@ -69,7 +69,7 @@ spec:
         - name: nginx-container
           image: nginx:latest
 
-# other sections omitted for simplicity
+...
 ```
 
 In this example, the name of the StatefulSet is `my-sts` and it defines 5 Pod replicas that will run the latest version of the NGINX image. Once you post this to the API server (via `kubectl`), the definition will be persisted to the cluster store (`etcd`), replicas will be assigned to nodes, and the StatefulSet controller will begin monitoring the state of the cluster to ensure observed = desired.  
