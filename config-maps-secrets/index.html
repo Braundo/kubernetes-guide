@@ -432,7 +432,7 @@
 <p>To inject data as environment variables, you created a ConfigMap and map its entries to environment variables inside of the Pod spec template. Once the Pod and underlying container start, the environment variables will appear as standard environment variables for the OS relevant to that container.  </p>
 <p>Here's how that might look when injecting some database information into a container using a ConfigMap called <code>myCM</code>:  </p>
 <p><code>myCM</code>:
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1">## rest of file omitted for simplicity</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nn">...</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">data</span><span class="p">:</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql-01</span>
 </span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">loc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STL</span>
@@ -477,7 +477,7 @@
 </span></code></pre></div>
 <h4 id="container-startup-commands">Container Startup Commands</h4>
 <p>This method of injecting data into containers from ConfigMaps is pretty straightforward. In your Pod template YAML, you specify a startup command and insert variables defined from your ConfigMap. Below is an example of inserting the database hostname from above into a startup command for the container. Here is how the Pod YAML might look:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># other sections omitted for simplicity</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nn">...</span>
 </span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">spec</span><span class="p">:</span>
 </span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
 </span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-container-1</span>
@@ -562,7 +562,7 @@ Additionally here is an example of how a YAML file might look for creating a Sec
 </span><span id="__span-9-7"><a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UGFzc3dvcmQxMjM=</span>
 </span><span id="__span-9-8"><a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dmlubnk=</span>
 </span><span id="__span-9-9"><a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a>
-</span><span id="__span-9-10"><a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="c1"># rest of file omitted for simplicity</span>
+</span><span id="__span-9-10"><a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="nn">...</span>
 </span></code></pre></div>
 <p>And here's an example of how to define a Pod and use the Secret as a volume:  </p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
