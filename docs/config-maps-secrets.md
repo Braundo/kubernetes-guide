@@ -106,7 +106,7 @@ Here's how that might look when injecting some database information into a conta
 
 `myCM`:
 ``` yaml
-## rest of file omitted for simplicity
+...
 data:
   database: mysql-01
   loc: STL
@@ -159,7 +159,7 @@ vinny
 This method of injecting data into containers from ConfigMaps is pretty straightforward. In your Pod template YAML, you specify a startup command and insert variables defined from your ConfigMap. Below is an example of inserting the database hostname from above into a startup command for the container. Here is how the Pod YAML might look:
 
 ``` yaml
-# other sections omitted for simplicity
+...
 spec:
   containers:
   - name: my-container-1
@@ -265,7 +265,7 @@ data:
   password: UGFzc3dvcmQxMjM=
   user: dmlubnk=
 
-# rest of file omitted for simplicity
+...
 ```
 
 And here's an example of how to define a Pod and use the Secret as a volume:  
