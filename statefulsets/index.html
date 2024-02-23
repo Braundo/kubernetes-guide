@@ -406,7 +406,7 @@ flowchart LR
 </span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-container</span>
 </span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
 </span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a>
-</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="c1"># other sections omitted for simplicity</span>
+</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="nn">...</span>
 </span></code></pre></div>
 <p>In this example, the name of the StatefulSet is <code>my-sts</code> and it defines 5 Pod replicas that will run the latest version of the NGINX image. Once you post this to the API server (via <code>kubectl</code>), the definition will be persisted to the cluster store (<code>etcd</code>), replicas will be assigned to nodes, and the StatefulSet controller will begin monitoring the state of the cluster to ensure observed = desired.  </p>
 <h2 id="naming">Naming</h2>
