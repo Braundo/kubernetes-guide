@@ -11,7 +11,7 @@ The way you *tell* Kubernetes how you want your application to look is through t
 It should be noted that every Deployment object will only manage a single Pod object. If you have an application with more than one Pod, you will need more than one Deployment object. *But*, a single Deployment object can manage any number of replicas of a given Pod.
 
 ## ReplicaSets
-Under the covers, Deployments actually leverage a different Kubernetes object to handle Pod scaling and reboots - the **RelpicaSet**. You should never be managing ReplicaSets directly, but it's good to know they exist and understand the hierarchy of control here. Containers will be wrapped in Pods, which have their scaling and self-healing managed by ReplicaSets, which in turn are managed by Deployments.
+Under the covers, Deployments actually leverage a different Kubernetes object to handle Pod scaling and reboots - the **ReplicaSet**. You should never be managing ReplicaSets directly, but it's good to know they exist and understand the hierarchy of control here. Containers will be wrapped in Pods, which have their scaling and self-healing managed by ReplicaSets, which in turn are managed by Deployments.
 
 ``` mermaid
 flowchart TB
