@@ -356,7 +356,7 @@
 <p>The way you <em>tell</em> Kubernetes how you want your application to look is through the use of a YAML file (Deployment spec). When you POST the Deployment spec (via <code>kubectl</code>) to the API server, Kubernetes goes through the process of deploying your application to match the desired state and leverages a <strong>Deployment controller</strong> to continuously watch your application state.  </p>
 <p>It should be noted that every Deployment object will only manage a single Pod object. If you have an application with more than one Pod, you will need more than one Deployment object. <em>But</em>, a single Deployment object can manage any number of replicas of a given Pod.</p>
 <h2 id="replicasets">ReplicaSets</h2>
-<p>Under the covers, Deployments actually leverage a different Kubernetes object to handle Pod scaling and reboots - the <strong>RelpicaSet</strong>. You should never be managing ReplicaSets directly, but it's good to know they exist and understand the hierarchy of control here. Containers will be wrapped in Pods, which have their scaling and self-healing managed by ReplicaSets, which in turn are managed by Deployments.</p>
+<p>Under the covers, Deployments actually leverage a different Kubernetes object to handle Pod scaling and reboots - the <strong>ReplicaSet</strong>. You should never be managing ReplicaSets directly, but it's good to know they exist and understand the hierarchy of control here. Containers will be wrapped in Pods, which have their scaling and self-healing managed by ReplicaSets, which in turn are managed by Deployments.</p>
 <pre class="mermaid"><code>flowchart TB
     subgraph Deployment
         subgraph ReplicaSet
