@@ -1,18 +1,36 @@
 site_name: Kubernetes Guide
 nav:
-  - Home: index.md
-  - Overview: overview.md
-  - Pods: pods.md
-  - Namespaces: namespaces.md
-  - Deployments: deployments.md
-  - Services: services.md
-  - Ingress: ingress.md
-  - DNS: dns.md
+  - Core Concepts:
+      - Overview: core-concepts/overview.md
+      - Container Runtime: core-concepts/container-runtime.md
+      - API Server: core-concepts/kubernetes-api.md
+      - Controllers: core-concepts/controllers.md
+      - Scheduler: core-concepts/scheduler.md
+      - Kubelet: core-concepts/kubelet.md
+      - Kube Proxy: core-concepts/kube-proxy.md
+      - Pods: core-concepts/pods.md
+      - Deployments: core-concepts/deployments.md
+      - StatefulSets: core-concepts/statefulsets.md
+      - Services: core-concepts/services.md
+      - Namespaces: core-concepts/namespaces.md
+      - Scheduling: core-concepts/scheduling.md
+      - ConfigMaps & Secrets: core-concepts/config-maps-secrets.md
+  - Security:
+    - Auth/RBAC: security/auth-rbac.md
+    - Certificates: security/certs.md
+    - Service Accounts: security/service-account.md
+    - Container Security: security/container-security.md
   - Storage: storage.md
-  - ConfigMaps and Secrets: config-maps-secrets.md
-  - StatefulSets: statefulsets.md
-  - Kubernetes API: kubernetes-api.md
-  - Security: security.md
+  - Networking:
+    - Overview: networking/overview.md
+    - DNS: networking/dns.md
+    - Ingress: networking/ingress.md
+  - Troubleshooting:
+    - test
+  - Misc. Topics:
+    - Upgrades: misc/upgrades.md
+    - Backup & Restore: misc/backup-restore.md
+    - Configuring HA: misc/ha.md
 theme:
   name: material
   logo: assets/logo.svg
@@ -31,6 +49,10 @@ theme:
         name: Switch to light mode
   features:
     - navigation.top
+    - navigation.indexes
+    - navigation.expand
+    - navigation.prune
+    - navigation.icons
     - navigation.footer
     - navigation.tracking
     - navigation.instant
@@ -51,6 +73,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.snippets
   - pymdownx.inlinehilite
+  - pymdownx.mark
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span

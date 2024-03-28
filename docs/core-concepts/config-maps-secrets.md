@@ -1,6 +1,7 @@
 ---
-icon: material/database-lock
+icon: material/circle-small
 ---
+
 ## Background
 Alongside the ability to store and retrieve data, another key capability for applications is the ability to be configured or instantiated via environment variables or commands.  
 
@@ -38,8 +39,10 @@ flowchart LR
     perf2 -->|deployed| perf3
     prod2 -->|deployed| prod3
 ```
+<br>
 
 A better way to handle this is by decoupling those configuration values from your application. You build and maintain a single application repository and build & run that single image in all environments. For this to be possible, your applications should be built as plain as possible with as little configuration necessary embedded. The configurations for each environment are then stored separately and applied to the various environments at runtime.  
+<br>
 
 In this manner, application code is updated in *one* repository, *one* image is used, and configurations are independently managed.
 

@@ -1,5 +1,5 @@
 ---
-icon: material/sitemap
+icon: material/circle-small
 ---
 
 ## Overview
@@ -56,7 +56,39 @@ Any new Pods that are created on the cluster that match a Service's label select
 Kubernetes supports different types of Services, but the default type is **ClusterIP**, which is only accessible from *inside* the cluster. Any time you create a Service in Kubernetes it will automatically get a ClusterIP that's registered in the cluster's internal DNS service (more on the DNS service in a different section). Every single Pod on a cluster leverages the cluster's DNS service - which results in all Pods being able to resolve Service names to ClusterIPs.  
 
 #### NodePort
-Another type of Service that Kubernetes supports is called **NodePort**. This is very similar to ClusterIP but adds the ability for external access on a dedicated port on every node in the cluster. NodePort intentionally uses high-numbered ports (30000 - 32767) to avoid clashing with common ports. To access a NodePort Service from an external client, you simply direct traffic to the IP address of *any node* in the cluster on the given port. The Service will then route the request to the appropriate Pod based on it's list of healthy ones in it's EndpointSlice object.
+Another type of Service that Kubernetes supports is called **NodePort**. This is very similar to ClusterIP but adds the ability for external access on a dedicated port on every node in the cluster. NodePort intentionally uses high-numbered ports (30000 - 32767) to avoid clashing with common ports. To access a NodePort Service from an external client, you simply direct traffic to the IP address of *any node* in the cluster on the given port. The Service will then route the request to the appropriate Pod based on it's list of healthy ones in it's EndpointSlice object.  
+
+Here's a sample definition file of a NodePort that's exposing an application on port 80 via NodePort:
+
+``` yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 80 # port exposed on the Pod/container
+    port: 80 # port exposed on the Service
+    nodePort: 30008 # port exposed on the Node
+  selector:
+    app: myapp
+    type: front-end
+```
+> Only **`port`** is required in the configuration for `spec.ports`. **`targetPort`** is assumed to be the same as port if not specified. **`nodePort`** is auto-assigned if not specified.
+
+``` mermaid
+graph LR
+    subgraph Node
+        NodePortService[<b>NodePort Service</b><br>NodePort: 30008<br>Port: 80]
+        Pod[<b>Pod</b><br>TargetPort: 80]
+        NodePortService -.-|port 80| Pod
+    end
+    User -.- |port 30008| NodePortService
+```
+
+
+<br><br>
 
 #### LoadBalancer
 If you're running your Kubernetes cluster on a public cloud environment you can leverage a **LoadBalancer** Service. This will provision an internet-facing load-balancer that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer).

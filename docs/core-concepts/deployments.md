@@ -1,5 +1,5 @@
 ---
-icon: material/reload
+icon: material/circle-small
 ---
 
 ## Overview

@@ -1,6 +1,7 @@
 ---
-icon: material/selection-multiple
+icon: material/circle-small
 ---
+
 ## Overview
 StatefulSets are a Kubernetes feature designed to manage applications that need to remember their state, such as databases or systems that keep data consistent across pod restarts. They offer each pod a stable identity and storage that sticks around even when pods are rescheduled to different machines in the cluster.  
 

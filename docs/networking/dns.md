@@ -1,5 +1,5 @@
 ---
-icon: material/dns
+icon: material/circle-small
 ---
 
 ## Service Discovery

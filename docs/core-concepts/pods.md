@@ -1,5 +1,5 @@
 ---
-icon: material/package-variant-closed
+icon: material/circle-small
 ---
 
 Pods are the atomic unit of scheduling in Kubernetes. As virtual machines were in the VMware world, so are Pods in the world of Kubernetes. Every container running on Kubernetes must be wrapped up in a Pod. Think of a Pod as a wrapper for your application’s container(s), similar to how a virtual machine encapsulates an entire operating system and its applications.  

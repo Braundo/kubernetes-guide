@@ -1,6 +1,7 @@
 ---
-icon: material/security
+icon: material/circle-small
 ---
+
 ## Overview
 In Kubernetes, everything from creating new resources to updating or deleting them involves making requests to the API server. This is true for everyone and everything in the Kubernetes ecosystem: from developers using `kubectl`, to the Pods running in your cluster, to the kubelets on each node, and the control plane services that oversee cluster operations.  
 

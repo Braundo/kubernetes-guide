@@ -1,6 +1,7 @@
 ---
-icon: material/vector-selection
+icon: material/circle-small
 ---
+
 ## Overview
 Namespaces are used to partition Kubernetes clusters and provide an easy way to apply policies and quotas at a more granular level.  
 

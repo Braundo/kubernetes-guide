@@ -1,5 +1,5 @@
 ---
-icon: material/api
+icon: material/circle-small
 ---
 
 ## Overview
@@ -31,25 +31,25 @@ When you make a request for an object, the API server springs into action, creat
 
 ``` mermaid
 sequenceDiagram
-    participant User
+    participant user
     participant kubectl
-    participant API_Server
-    participant Cluster_Store
+    participant api-server
+    participant etcd
 
-    User->>kubectl: Request Object Creation
-    kubectl->>API_Server: Create Object
-    API_Server->>Cluster_Store: Serialize and Persist Object
-    Cluster_Store-->>API_Server: Confirm Object Stored
-    API_Server-->>kubectl: Object Creation Watch
-    kubectl-->>User: Object Status Updates
-    Note over User,Cluster_Store: Object is now ready for use
+    user->>kubectl: Request Object Creation
+    kubectl->>api-server: Create Object
+    api-server->>etcd: Serialize and Persist Object
+    etcd-->>api-server: Confirm Object Stored
+    api-server-->>kubectl: Object Creation Watch
+    kubectl-->>user: Object Status Updates
+    Note over user,etcd: Object is now ready for use
 
-    User->>kubectl: Query Object State
-    kubectl->>API_Server: Get Object State
-    API_Server->>Cluster_Store: Retrieve Object Data
-    Cluster_Store-->>API_Server: Object Data
-    API_Server-->>kubectl: Object State
-    kubectl-->>User: Object State Response
+    user->>kubectl: Query Object State
+    kubectl->>api-server: Get Object State
+    api-server->>etcd: Retrieve Object Data
+    etcd-->>api-server: Object Data
+    api-server-->>kubectl: Object State
+    kubectl-->>user: Object State Response
 ```
 
 ## API Server
@@ -70,12 +70,15 @@ Typically, the API server is available on ports 443 or 6443, although these can 
 The follow command will show you the address and port your Kubernetes cluster is exposed on:  
 ``` shell
 $ kubectl cluster-info
-Kubernetes control plane is running at https://192.168.1.105:6443
-CoreDNS is running at https://192.168.1.105:6443/api/v1/namespaces/...
-Metrics-server is running at https://192.168.1.105:6443/api/v1/namespaces/...
+    Kubernetes control plane is running at https://192.168.1.105:6443
+    CoreDNS is running at https://192.168.1.105:6443/api/v1/namespaces/...
+    Metrics-server is running at https://192.168.1.105:6443/api/v1/namespaces/...
 ```  
 
 In essence, the Kubernetes API server serves as the gateway to the cluster, offering a secure, RESTful interface for interacting with the cluster's state. Operating from the control plane, it necessitates robust availability and performance to ensure swift and reliable handling of requests, embodying the critical link between the user's commands and the cluster's operational response.
+
+!!! warning "Note"
+    The API Server is the **only** component in Kubernetes that interacts directly with etcd.
 
 If you're unfamiliar with REST, [AWS has a great one-pager](https://aws.amazon.com/what-is/restful-api/) to get you up to speed.  
 

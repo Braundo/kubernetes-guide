@@ -1,13 +1,9 @@
----
-icon: material/database
----
-
 ## Overview
 Arguably the most important aspect of any application is the ability to persist and retrieve data. Thankfully, Kubernetes supports a wide variety of storage back-ends and also integrates with many third-party systems that provide things such as replication, snapshots, backup and more.  
 
 Kubernetes can also support different types of storage - anything from objects to files or blocks. However, regardless of the type of storage or where it's located (on-premise, cloud, etc.), Kubernetes will treat it as a **volume**.  
 
-Kubernetes is able to support so many different storage types and services by leveraging the **Container Storage Interface (CSI)**. The CSI is an established standard that provides a straightforward interface for Kubernetes.
+Kubernetes is able to support so many different storage types and services by leveraging the [**Container Storage Interface (CSI)**](https://github.com/container-storage-interface/spec/blob/master/spec.md). The CSI is an established standard that provides a straightforward interface for Kubernetes.
 
 ``` mermaid
 flowchart LR
@@ -141,3 +137,4 @@ When you define a **reclaim policy** on a volume, you tell Kubernetes how it sho
 *[PVC]: PersistentVolumeClaim
 *[SC]: StorageClass
 *[GKE]: Google Kubernetes Engine
+*[CSI]: Container Storage Interface
