@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../deployments/" rel="prev"/>
+<link href="../services/" rel="next"/>
+<link href="../../assets/logo.png" rel="icon"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.5.5" name="generator"/>
+<title>StatefulSets - Kubernetes Guide</title>
+<link href="../../assets/stylesheets/main.50c56a3b.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Ubuntu";--md-code-font:"Fira Code"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#overview">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Kubernetes Guide" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Kubernetes Guide">
+<img alt="logo" src="../../assets/logo.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Kubernetes Guide
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              StatefulSets
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+</label>
+</form>
+<script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Kubernetes Guide" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Kubernetes Guide">
+<img alt="logo" src="../../assets/logo.svg"/>
+</a>
+    Kubernetes Guide
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Core Concepts
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../overview/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Overview
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container-runtime/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Container Runtime
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../kubernetes-api/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    API Server
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../controllers/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Controllers
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../scheduler/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Scheduler
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../kubelet/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Kubelet
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../kube-proxy/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Kube Proxy
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pods/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Pods
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployments/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Deployments
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    StatefulSets
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    StatefulSets
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#naming">
+<span class="md-ellipsis">
+      Naming
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#order-of-creationdeletion">
+<span class="md-ellipsis">
+      Order of Creation/Deletion
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#statefulsets-and-volumes">
+<span class="md-ellipsis">
+      StatefulSets and Volumes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#handling-failures">
+<span class="md-ellipsis">
+      Handling Failures
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dns">
+<span class="md-ellipsis">
+      DNS
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary">
+<span class="md-ellipsis">
+      Summary
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../services/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Services
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../namespaces/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Namespaces
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../scheduling/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    Scheduling
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../config-maps-secrets/">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"></path></svg>
+<span class="md-ellipsis">
+    ConfigMaps &amp; Secrets
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+<a class="md-nav__link" href="../../security/auth-rbac/">
+<span class="md-ellipsis">
+    Security
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/">
+<span class="md-ellipsis">
+    Storage
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+<a class="md-nav__link" href="../../networking/overview/">
+<span class="md-ellipsis">
+    Networking
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+<a class="md-nav__link" href="../../test">
+<span class="md-ellipsis">
+    Troubleshooting
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+<a class="md-nav__link" href="../../misc/upgrades/">
+<span class="md-ellipsis">
+    Misc. Topics
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#naming">
+<span class="md-ellipsis">
+      Naming
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#order-of-creationdeletion">
+<span class="md-ellipsis">
+      Order of Creation/Deletion
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#statefulsets-and-volumes">
+<span class="md-ellipsis">
+      StatefulSets and Volumes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#handling-failures">
+<span class="md-ellipsis">
+      Handling Failures
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dns">
+<span class="md-ellipsis">
+      DNS
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary">
+<span class="md-ellipsis">
+      Summary
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>StatefulSets</h1>
+<h2 id="overview">Overview</h2>
+<p>StatefulSets are a Kubernetes feature designed to manage applications that need to remember their state, such as databases or systems that keep data consistent across pod restarts. They offer each pod a stable identity and storage that sticks around even when pods are rescheduled to different machines in the cluster.  </p>
+<p>It's easy to compare StatefulSets with Deployments given they are v1 API objects and follow the controller architecture - but there are notable differences. StatefulSets are Kubernetes tools for running and managing applications that need to remember who they are and what they know—think of them like memory keepers for your apps, such as databases that need to recall data after a reboot. Unlike Deployments that are more about stateless apps (think of them as forgetful but easily replaceable), StatefulSets make sure each of their Pods has a consistent name, network identity, and storage, even if they move around in the cluster. This makes StatefulSets perfect for when your app's individual identity and history are crucial for running smoothly.  </p>
+<p>StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:  </p>
+<p><pre class="mermaid"><code>---
+title: Node Replacement w/ Deployments
+---
+flowchart LR
+    subgraph _
+    dep-pod["&lt;b&gt;my-pod1&lt;/b&gt;&lt;br&gt;&lt;tt&gt;10.0.0.5"]
+    vb1[(&lt;b&gt;myVol)]
+    dep-pod -.- vb1
+    end
+    _ --&gt; pf[/"Pod/node failure"/]
+    subgraph __
+    dep-pod2["&lt;b&gt;my-pod2&lt;/b&gt;&lt;br&gt;&lt;tt&gt;10.0.0.9"]
+    end
+    pf --&gt;|"replace failed Pod"| __</code></pre>
+<br/></p>
+<pre class="mermaid"><code>---
+title: Node Replacement w/ StatefulSets
+---
+flowchart LR
+    subgraph _
+    ss-pod["&lt;b&gt;my-pod1&lt;/b&gt;&lt;br&gt;&lt;tt&gt;10.0.0.5"]
+    vb1[(&lt;b&gt;myVol)]
+    ss-pod -.- vb1
+    end
+    _ --&gt; pf[/"Pod/node failure"/]
+    subgraph __
+    ss-pod2["&lt;b&gt;my-pod1&lt;/b&gt;&lt;br&gt;&lt;tt&gt;10.0.0.5"]
+    vb2[(&lt;b&gt;myVol)]
+    ss-pod2 -.- vb2
+    end
+    pf --&gt;|"replace failed Pod"| __</code></pre>
+<p>Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  </p>
+<p>Below is a typical YAML file for defining a StatefulSet:  </p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-sts</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="s">"my-sts"</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span>
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">      </span><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">        </span><span class="nt">labels</span><span class="p">:</span>
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">          </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-16"><a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">        </span><span class="nt">containers</span><span class="p">:</span>
+</span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-container</span>
+</span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
+</span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="nn">...</span>
+</span></code></pre></div>
+<p>In this example, the name of the StatefulSet is <code>my-sts</code> and it defines 5 Pod replicas that will run the latest version of the NGINX image. Once you post this to the API server (via <code>kubectl</code>), the definition will be persisted to the cluster store (<code>etcd</code>), replicas will be assigned to nodes, and the StatefulSet controller will begin monitoring the state of the cluster to ensure observed = desired.  </p>
+<h2 id="naming">Naming</h2>
+<p>One nice feature of StatefulSets is that all Pods managed by them get a predictable name. The format of the names given to Pods managed by StatefulSets is <code>&lt;StatefulSet name&gt;-&lt;integer&gt;</code>. The integer begins with 0 and increases each time a new Pod from this StatefulSet is deployed. So in the example of <code>my-sts</code> above, the Pods would have the names of <code>my-sts-0</code>, <code>my-sts-1</code>, <code>my-sts-2</code>, <code>my-sts-3</code>, etc.</p>
+<div class="admonition info">
+<p class="admonition-title">StatefulSet names need to be valid DNS names</p>
+</div>
+<h2 id="order-of-creationdeletion">Order of Creation/Deletion</h2>
+<p>StatefulSets in Kubernetes are all about order and precision. They initiate and terminate Pods one at a time, following a strict sequence. This approach guarantees that each Pod is fully operational and ready to handle requests before the next Pod in the sequence is brought to life. Unlike the more free-form Deployments, which may initiate a bunch of Pods at once through a ReplicaSet—potentially tripping over themselves with race conditions—StatefulSets are the thoughtful orchestrators ensuring each Pod gets the attention it needs to start or stop without a rush.  </p>
+<pre class="mermaid"><code>---
+title: Deploying a StatefulSet
+---
+flowchart 
+    subgraph StatefulSet
+        pod1[&lt;b&gt;&lt;tt&gt;my-sts-0] --&gt; |"waiting for running and ready"|pod2[&lt;b&gt;&lt;tt&gt;my-sts-1] --&gt; |"waiting for running and ready"|pod3[&lt;b&gt;&lt;tt&gt;my-sts-2] --&gt; |"waiting for running and ready"|pod4[&lt;b&gt;&lt;tt&gt;...]
+    end</code></pre>
+<p>StatefulSets in Kubernetes not only ensure a methodical boot-up but also adhere to a careful scaling strategy, both up and down. For instance, when scaling from five to seven replicas, the StatefulSet will sequentially initiate each new Pod and ensure it's fully operational before moving on to the next. Conversely, during scale-down, the StatefulSet will remove Pods starting from the highest index, allowing each to decommission completely before proceeding. This step-by-step approach is critical for applications like databases, where simultaneous termination could lead to data loss.  </p>
+<p>StatefulSets also offer mechanisms like the <code>terminationGracePeriodSeconds</code> to fine-tune this process, ensuring no data is compromised. Moreover, unlike Deployments which rely on a ReplicaSet for managing replicas, StatefulSet controllers handle scaling and self-healing autonomously, ensuring stateful applications maintain their integrity and data throughout their lifecycle.  </p>
+<div class="admonition warning">
+<p class="admonition-title">Deleting a StatefulSet does not terminate Pods in order</p>
+<p>If you want to terminate StatefulSet Pods in order, consider scaling to 0 replicas before deleting the StatefulSet.</p>
+</div>
+<h2 id="statefulsets-and-volumes">StatefulSets and Volumes</h2>
+<p>StatefulSets in Kubernetes are intrinsically tied to their volumes, which form an integral part of the Pods' state. Each Pod in a StatefulSet is bound to its distinct volumes, which are created simultaneously with the Pod and bear unique identifiers linking them directly to their respective Pods. Thanks to the Persistent Volume Claim (PVC) system, these volumes enjoy a separate lifecycle from the Pods, ensuring their preservation across Pod failures and deletions. When a StatefulSet Pod is terminated or fails, its volumes remain intact, ready to be reattached to any new Pod that takes its place, even if that Pod spins up on a different node within the cluster.  </p>
+<p>Scaling down a StatefulSet doesn't affect the existence of these volumes. If a Pod is removed during a scale-down, its dedicated volume waits patiently to be reconnected to a new Pod that may be created during a scale-up, ensuring data persistence and consistency. This feature is particularly crucial for safeguarding data in stateful applications; even if you mistakenly delete a Pod, the data is not lost, as the underlying volume can be reattached to a new Pod, effectively rescuing the situation.  </p>
+<h2 id="handling-failures">Handling Failures</h2>
+<p>The StatefulSet controller in Kubernetes meticulously monitors the cluster's status, making sure the current state aligns with the intended setup. Consider a StatefulSet with five replicas; if one, say <code>my-sts-4</code>, goes down, the controller promptly replaces it, ensuring it retains the same name and rebinds it to the original volumes. </p>
+<p>But, complications arise if the failed Pod makes a comeback post-replacement and suddenly you've got twin Pods vying for the same volume. To avoid this, the StatefulSet controller handles failures with extra caution.</p>
+<p>When it comes to node failures, the controller faces a tricky challenge. If a node goes silent, it's hard to tell if it's down for good or just temporarily unreachable due to network issues, a kubelet crash, or a reboot. Since the controller can't guarantee that a termination command will reach a Pod on an unresponsive node, it hesitates to substitute Pods until it's certain of the node's fate. This precaution means that when a node appears to be down, manual intervention is usually necessary before Kubernetes will venture to replace any Pods that were running on it. This cautious approach ensures data integrity at the cost of requiring human oversight in ambiguous failure scenarios.</p>
+<h2 id="dns">DNS</h2>
+<p>StatefulSets cater to applications that demand reliability and persistence in their Pods. This predictability extends to other applications and services that might need to establish direct connections with specific Pods. To enable these direct connections, StatefulSets employ a headless Service, which provides a stable DNS entry for each Pod based on its unique, predictable hostname. As a result, other components within the ecosystem can retrieve the entire roster of Pod hostnames via DNS queries, allowing for precise and direct Pod communications.  </p>
+<p>Below is a snippet of YAML that shows a headless Service being defined:  </p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">clusterIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span><span class="w">  </span><span class="c1"># this is the headless Service</span>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="nn">---</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
+</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sts-mysql</span>
+</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">  </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span><span class="w">  </span><span class="c1"># this is the governing Service</span>
+</span></code></pre></div>
+<p>Headless Services in Kubernetes are essentially standard Service objects that lack a dedicated IP address, achieved by setting <code>spec.clusterIP</code> to <code>None</code>. This Service transforms into what is known as a governing Service for a StatefulSet when it is referenced in the StatefulSet's configuration under <code>spec.serviceName</code>.</p>
+<p>Linking a headless Service to a StatefulSet in this way prompts the Service to create DNS SRV records for each Pod that fits the headless Service's label selector criteria. This setup allows other Pods and applications within the cluster to discover and connect to the StatefulSet's Pods by querying the DNS for the headless Service's name. To leverage this feature, applications will need to be specifically coded to perform such DNS lookups and handle connections to the StatefulSet members dynamically.</p>
+<h2 id="summary">Summary</h2>
+<p>This section contained a lot of "in the weeds" information and probably warrants a quick summary. StatefulSets within Kubernetes serve as a robust solution for deploying and managing state-persistent applications. StatefulSets are equipped with the ability to self-repair, scale both upwards and downwards, and conduct orderly rollouts - although <em>rollbacks</em> typically require a manual process.</p>
+<p>StatefulSets provide each of their Pod replicas with consistent and enduring identities. This includes predictable names, DNS hostnames, and a unique set of volumes that remain associated through the Pod's lifecycle, encompassing failures, restarts, and rescheduling events. These persistent identities are not just superficial labels; they are fundamental to the StatefulSet's scaling mechanics and their interaction with persistent storage.</p>
+<p>To conclude, it's important to recognize that StatefulSets offer a structural blueprint rather than a complete solution. They set the stage for resilience and consistency, but it's up to the applications themselves to be architecturally compatible with the StatefulSet paradigm to fully harness its benefits.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Deployments" class="md-footer__link md-footer__link--prev" href="../deployments/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                Deployments
+              </div>
+</div>
+</a>
+<a aria-label="Next: Services" class="md-footer__link md-footer__link--next" href="../services/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Next
+              </span>
+<div class="md-ellipsis">
+                Services
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<div class="md-progress" data-md-component="progress" role="progressbar"></div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.icons", "navigation.footer", "navigation.tracking", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "palette.toggle", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
+</body>
+</html>

@@ -9,21 +9,23 @@
       
       
       
+        <link rel="prev" href="../backup-restore/">
       
       
-      <link rel="icon" href="assets/logo.png">
+      
+      <link rel="icon" href="../../assets/logo.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
     
     
       
-        <title>Kubernetes Guide</title>
+        <title>Configuring HA - Kubernetes Guide</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -42,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#configuring-ha" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -81,9 +88,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Kubernetes Guide" class="md-header__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
+    <a href="../.." title="Kubernetes Guide" class="md-header__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
       
-  <img src="assets/logo.svg" alt="logo">
+  <img src="../../assets/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -100,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Configuring HA
             
           </span>
         </div>
@@ -201,9 +208,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Kubernetes Guide" class="md-nav__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
+    <a href="../.." title="Kubernetes Guide" class="md-nav__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
       
-  <img src="assets/logo.svg" alt="logo">
+  <img src="../../assets/logo.svg" alt="logo">
 
     </a>
     Kubernetes Guide
@@ -260,7 +267,7 @@
         
   
   
-    <a href="core-concepts/overview/" class="md-nav__link">
+    <a href="../../core-concepts/overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -308,7 +315,7 @@
         
   
   
-    <a href="security/auth-rbac/" class="md-nav__link">
+    <a href="../../security/auth-rbac/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -334,7 +341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="storage/" class="md-nav__link">
+      <a href="../../storage/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -374,7 +381,7 @@
         
   
   
-    <a href="networking/overview/" class="md-nav__link">
+    <a href="../../networking/overview/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -416,7 +423,7 @@
         
   
   
-    <a href="test" class="md-nav__link">
+    <a href="../../test" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -439,6 +446,8 @@
       
   
   
+    
+  
   
   
     
@@ -454,28 +463,159 @@
     
     
     
-      
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
-  
-  
-    <a href="misc/upgrades/" class="md-nav__link">
-      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
   
   <span class="md-ellipsis">
     Misc. Topics
   </span>
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Misc. Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrades/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Upgrades
+  </span>
   
 
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup-restore/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Backup & Restore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Configuring HA
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Configuring HA
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-ha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring HA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcd-in-ha" class="md-nav__link">
+    <span class="md-ellipsis">
+      ETCD in HA
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -499,6 +639,32 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-ha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring HA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcd-in-ha" class="md-nav__link">
+    <span class="md-ellipsis">
+      ETCD in HA
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -512,23 +678,58 @@
                   
 
 
-  <h1>Home</h1>
+  <h1>Configuring HA</h1>
 
-<p>Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!<br />
-<br/><br/>
-Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.</p>
-<p><br/><br/><br/><br/><br/><br/><br/><br/></p>
-<blockquote>
-<p><strong>Legal discalimer</strong>:  </p>
+<h2 id="configuring-ha">Configuring HA</h2>
 <ul>
 <li>
-<p>"Kubernetes", "K8s" and the Kubernetes logo are trademarks or registered trademarks of the Linux Foundation.  </p>
+<p>If you lose a Master node, your applications will remain running on worker nodes and users can still access those applications</p>
+<ul>
+<li>However, Pods won’t restart or update as part of Deployment because there will be no controllers
+<br><br></li>
+</ul>
 </li>
 <li>
-<p>Neither myself nor this site are officially associated with the Linux Foundation.  </p>
+<p>The <strong>API Server</strong> can be run in an <code>Active</code>-<code>Active</code> mode on multiple masters because they process one request at a time and simply pass information to other services which take action</p>
+<ul>
+<li>With multiple masters you can point your Kubeconfig to a loadbalancer on port 6443 in front of the masters to distribute traffic between the underlying API Servers
+<br><br></li>
+</ul>
+</li>
+<li>
+<p>The <strong>Controller Manager</strong> and <strong>Scheduler</strong> watch the cluster for changes and taking necessary actions</p>
+<ul>
+<li>These must be run in an <code>Active</code>-<code>Standby</code> mode to ensure that actions are duplicated</li>
+<li>Leader election process picks the <code>Active</code> one</li>
+</ul>
 </li>
 </ul>
-</blockquote>
+<h2 id="etcd-in-ha">ETCD in HA</h2>
+<ul>
+<li><strong>ETCD</strong> can be configured in two topologies:<ul>
+<li><strong>Stacked Topology:</strong> running on Kubernetes master nodes</li>
+<li><strong>External Topology:</strong> running on dedicated servers external to the cluster</li>
+<li>Remember the API Server is the only component that talks to ETCD<ul>
+<li>And must be configured to point to the servers, if hosted externally
+<br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>How does <strong>ETCD</strong> stay consistent when it allows you to read or write from any instance?</p>
+<ul>
+<li>With <em>reads</em>, the same data is available across all nodes so it’s straight forward</li>
+<li>With <em>writes</em>, <strong>etcd</strong> ensures that only one instance is responsible for <strong><em>PROCESSING</em></strong> the writes via leader election<ul>
+<li>The leader then ensures the followers are sent a copy of the data</li>
+</ul>
+</li>
+<li>Writes that come in to an instance other than the leader, they are forwarded to the leader</li>
+<li>A write is only considered complete once the data has been copied to a <strong><em>majority of the instances</em></strong><ul>
+<li>If an instance goes offline during a write, but the majority copy it - the data will be copied over to the node if/when it comes back online</li>
+</ul>
+</li>
+</ul>
 
 
 
@@ -563,6 +764,28 @@ Feel free to pick and choose any section in any order, but you'll likely be best
         <footer class="md-footer">
   
     
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../backup-restore/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Backup &amp; Restore">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Backup & Restore
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -583,10 +806,10 @@ Feel free to pick and choose any section in any order, but you'll likely be best
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.icons", "navigation.footer", "navigation.tracking", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "palette.toggle", "toc.follow", "content.tooltips"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.icons", "navigation.footer", "navigation.tracking", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "palette.toggle", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
     
   </body>
