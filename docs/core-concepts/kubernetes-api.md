@@ -68,8 +68,7 @@ The "RESTful" part of the API means it adheres to a modern web API structure tha
 Typically, the API server is available on ports 443 or 6443, although these can be configured to suit specific needs. The flexibility of the API server ensures that it can cater to different environments while maintaining strict security and reliable service.  
 
 The follow command will show you the address and port your Kubernetes cluster is exposed on:  
-``` shell
-$ kubectl cluster-info
+``` shell title="$ kubectl cluster-info"
     Kubernetes control plane is running at https://192.168.1.105:6443
     CoreDNS is running at https://192.168.1.105:6443/api/v1/namespaces/...
     Metrics-server is running at https://192.168.1.105:6443/api/v1/namespaces/...
@@ -112,8 +111,7 @@ This division enhances the API's scalability and navigability, facilitating the 
 
 The `kubectl api-resources` command is a great way to see which API resources are available on your cluster, as well as useful information about them:  
 
-``` shell
-$ kubectl api-resources
+``` shell title="$ kubectl api-resources"
 NAME                              SHORTNAMES   APIVERSION     NAMESPACED
 bindings                                       v1             true
 componentstatuses                 cs           v1             false

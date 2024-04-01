@@ -21,8 +21,7 @@ Kubernetes starts with several built-in Namespaces:
 
 You can run the following command to view all Namespaces on a cluster:  
 
-``` bash
-$ kubectl get namespaces
+``` bash title="$ kubectl get namespaces"
     NAME              STATUS   AGE
     default           Active   22h
     gmp-public        Active   22h

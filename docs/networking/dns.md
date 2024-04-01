@@ -34,8 +34,7 @@ Every node's `kube-proxy` also watches the API server for new EndpointSlices and
 ### Service Discovery
 The best way to explain discovery is likely through an example. So let's assume we have two applications on the same cluster - `ham` and `eggs`. Each application has their Pods fronted by a Service, which in turn each has their own ClusterIP.
 
-``` shell
-$ kubectl get svc
+``` shell title="$ kubectl get svc"
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 ham-svc   ClusterIP     192.168.1.200               443/TCP   5d19h
 eggs-svc  ClusterIP     192.168.1.208               443/TCP   5d19h

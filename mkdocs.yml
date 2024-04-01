@@ -1,5 +1,6 @@
 site_name: Kubernetes Guide
 nav:
+  - Home: index.md
   - Core Concepts:
       - Overview: core-concepts/overview.md
       - Container Runtime: core-concepts/container-runtime.md
@@ -52,6 +53,8 @@ theme:
     - navigation.tracking
     - palette.toggle
     - content.tooltips
+    - content.code.copy
+    - content.code.select
 extra_css:
   - stylesheets/extra.css
 extra:
