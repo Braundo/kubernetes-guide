@@ -18,4 +18,10 @@ graph TB
 > 
 * "Kubernetes", "K8s" and the Kubernetes logo are trademarks or registered trademarks of the Linux Foundation.  
 >  
-> * Neither myself nor this site are officially associated with the Linux Foundation.  
+> * Neither myself nor this site are officially associated with the Linux Foundation. 
+
+<br><br>
+
+[:material-linkedin: Connect with me](https://www.linkedin.com/in/aaronbraundmeier/)
+
+[:material-github: Suggest changes](https://github.com/Braundo/kubernetes-guide)
