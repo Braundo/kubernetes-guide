@@ -47,18 +47,10 @@ theme:
         name: Switch to light mode
   features:
     - navigation.top
-    - navigation.indexes
     - navigation.expand
-    - navigation.prune
-    - navigation.icons
     - navigation.footer
     - navigation.tracking
-    - navigation.instant
-    - navigation.instant.prefetch
-    - navigation.instant.progress
-    - navigation.path
     - palette.toggle
-    - toc.follow
     - content.tooltips
 extra_css:
   - stylesheets/extra.css
