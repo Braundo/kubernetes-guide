@@ -1,6 +1,8 @@
 ---
 icon: material/circle-small
 ---
+We'll dive into many of these topics in greater detail later on, but for now here is a primer on Kubernetes to get you started.  
+
 
 ## History
 Kubernetes itself was born out of Google's experience running billions of containers at scale and managing them with proprietary systems called Borg and Omega. In 2014 Google donated Kubernetes as an open-source project to the Cloud Native Computing Foundation (CNCF).
@@ -44,11 +46,11 @@ Speaking of, the API server is the central component for all communication for a
 Any communication inbound or outbound to/from the Kubernetes cluster must be routed through the API server.
 
 ## etcd
-The control plane, like many aspects of Kubernetes, exists in a *stateless* manner. However, the **etcd** does not - it persistently stores the state of the cluster and other configuration data.  
+The control plane, like many aspects of Kubernetes, exists in a *stateless* manner. However, `etcd` does not - it persistently stores the state of the cluster and other configuration data.  
 
 `etcd` is installed on every control plane node by default for high-availability. However, it does not tolerate split-brain scenarios and will prevent *updates* to the cluster in such states - but it will still allow applications to run in those scenarios.
 
-Every result you see when you a run `kubectl get` command is return from etcd.
+Every result you see when you a run `kubectl get` command is actually data returned from `etcd` (via the API Server).
 
 ## Controllers
 Kubernetes consists of many different *controllers*, which are essentially background loops that watch for changes to the cluster (and alert when things don't match up so other components can take action). All controllers are managed and implemented by a higher-level component called the *controller manager*. 
