@@ -520,6 +520,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Overview</h1>
+<p>We'll dive into many of these topics in greater detail later on, but for now here is a primer on Kubernetes to get you started.  </p>
 <h2 id="history">History</h2>
 <p>Kubernetes itself was born out of Google's experience running billions of containers at scale and managing them with proprietary systems called Borg and Omega. In 2014 Google donated Kubernetes as an open-source project to the Cloud Native Computing Foundation (CNCF).</p>
 <h2 id="20k-foot-view">20K-foot View</h2>
@@ -553,9 +554,9 @@
 <p>Speaking of, the API server is the central component for all communication for all components in Kubernetes.  </p>
 <p>Any communication inbound or outbound to/from the Kubernetes cluster must be routed through the API server.</p>
 <h2 id="etcd">etcd</h2>
-<p>The control plane, like many aspects of Kubernetes, exists in a <em>stateless</em> manner. However, the <strong>etcd</strong> does not - it persistently stores the state of the cluster and other configuration data.  </p>
+<p>The control plane, like many aspects of Kubernetes, exists in a <em>stateless</em> manner. However, <code>etcd</code> does not - it persistently stores the state of the cluster and other configuration data.  </p>
 <p><code>etcd</code> is installed on every control plane node by default for high-availability. However, it does not tolerate split-brain scenarios and will prevent <em>updates</em> to the cluster in such states - but it will still allow applications to run in those scenarios.</p>
-<p>Every result you see when you a run <code>kubectl get</code> command is return from etcd.</p>
+<p>Every result you see when you a run <code>kubectl get</code> command is actually data returned from <code>etcd</code> (via the API Server).</p>
 <h2 id="controllers">Controllers</h2>
 <p>Kubernetes consists of many different <em>controllers</em>, which are essentially background loops that watch for changes to the cluster (and alert when things don't match up so other components can take action). All controllers are managed and implemented by a higher-level component called the <em>controller manager</em>. </p>
 <p>The following logic is at the core of what Kubernetes is and how it works:  </p>
