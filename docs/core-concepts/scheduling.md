@@ -33,7 +33,7 @@ spec:
 ## Node Selectors
 
 * Node selectors specify which Node you want a Pod to run on based on labels you place on the Node itself
-    * i.e. if you label a Pod as `disktype=ssd` you can specify in the Pod definition YAML:
+    * i.e. if you label a Pod as `disktype=ssd`, implying it can only be scheduled on Nodes with that label, you can specify in the Pod definition YAML:
     
 ```yaml
 apiVersion: v1
