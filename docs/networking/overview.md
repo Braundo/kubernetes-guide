@@ -10,7 +10,7 @@ icon: material/circle-small
     - Every Pod should be able to communicate with every other Pod on other nodes *without* NAT
 <br><br>
 
-- There are any networking solutions that solve this for you:
+- There mare any networking solutions that solve this for you:
     - weave, calico, flannel, etc.
 
 ## CNI in Kubernetes
