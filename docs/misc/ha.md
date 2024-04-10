@@ -11,8 +11,8 @@ icon: material/circle-small
     - With multiple masters you can point your Kubeconfig to a loadbalancer on port 6443 in front of the masters to distribute traffic between the underlying API Servers
 <br><br>
 
-- The **Controller Manager** and **Scheduler** watch the cluster for changes and taking necessary actions
-    - These must be run in an `Active`-`Standby` mode to ensure that actions are duplicated
+- The **Controller Manager** and **Scheduler** watch the cluster for changes and take necessary actions based on those changes
+    - These must be run in an `Active`-`Standby` mode to ensure that actions are not duplicated
     - Leader election process picks the `Active` one
 
 ## ETCD in HA
