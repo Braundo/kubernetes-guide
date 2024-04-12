@@ -1,0 +1,1435 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../config-maps-secrets/">
+      
+      
+        <link rel="next" href="../../security/auth-rbac/">
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
+    
+    
+      
+        <title>Storage - Kubernetes Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kubernetes Guide" class="md-header__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kubernetes Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kubernetes Guide" class="md-nav__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Kubernetes Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../container-runtime/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Container Runtime
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubernetes-api/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    API Server
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../controllers/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scheduler/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Scheduler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubelet/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Kubelet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kube-proxy/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Kube Proxy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pods/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Pods
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployments/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Deployments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statefulsets/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    StatefulSets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../namespaces/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Namespaces
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scheduling/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Scheduling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config-maps-secrets/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    ConfigMaps & Secrets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Storage
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Storage
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-storage-interface-csi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Storage Interface (CSI)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistent Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Classes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Storage Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reclaim-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclaim Policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/auth-rbac/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Auth/RBAC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/certs/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/service-account/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Service Accounts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/container-security/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Container Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Networking
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Networking
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/overview/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/dns/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    DNS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/ingress/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Ingress
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc. Topics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Misc. Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/upgrades/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Upgrades
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/backup-restore/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Backup & Restore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/ha/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Configuring HA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-storage-interface-csi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Storage Interface (CSI)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistent Volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Classes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Storage Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reclaim-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclaim Policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Storage</h1>
+
+<h2 id="overview">Overview</h2>
+<p>Arguably the most important aspect of any application is the ability to persist and retrieve data. Thankfully, Kubernetes supports a wide variety of storage back-ends and also integrates with many third-party systems that provide things such as replication, snapshots, backup and more.  </p>
+<p>Kubernetes can also support different types of storage - anything from objects to files or blocks. However, regardless of the type of storage or where it's located (on-premise, cloud, etc.), Kubernetes will treat it as a <strong>volume</strong>.  </p>
+<p>Kubernetes is able to support so many different storage types and services by leveraging the <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md"><strong>Container Storage Interface (<abbr title="Container Storage Interface">CSI</abbr>)</strong></a>. The <abbr title="Container Storage Interface">CSI</abbr> is an established standard that provides a straightforward interface for Kubernetes.</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Do not edit this file with editors other than draw.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<p><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1452px" height="787px" viewBox="-0.5 -0.5 1452 787" content="&lt;mxfile host=&quot;Electron&quot; modified=&quot;2024-04-12T16:22:24.974Z&quot; agent=&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36&quot; etag=&quot;qbtTppaupyEFz-zV3r-X&quot; version=&quot;24.1.0&quot; type=&quot;device&quot; pages=&quot;5&quot; scale=&quot;1&quot; border=&quot;0&quot;&gt;&#10;  &lt;diagram name=&quot;overview&quot; id=&quot;sj2MKdZwLT8FJqBdDNxV&quot;&gt;&#10;    &lt;mxGraphModel dx=&quot;1514&quot; dy=&quot;769&quot; grid=&quot;0&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;0&quot; pageScale=&quot;1&quot; pageWidth=&quot;850&quot; pageHeight=&quot;1100&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&#10;      &lt;root&gt;&#10;        &lt;mxCell id=&quot;0&quot; /&gt;&#10;        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-4&quot; value=&quot;&amp;lt;b&amp;gt;&amp;lt;font style=&amp;quot;font-size: 19px;&amp;quot;&amp;gt;Control Plane&amp;lt;/font&amp;gt;&amp;lt;/b&amp;gt;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;arcSize=11;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;verticalAlign=top;fontFamily=Helvetica;align=left;spacingLeft=21;fillOpacity=35;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-207&quot; y=&quot;101&quot; width=&quot;683&quot; height=&quot;233&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-11&quot; value=&quot;&amp;lt;b&amp;gt;&amp;lt;font style=&amp;quot;font-size: 19px;&amp;quot;&amp;gt;Worker Node&amp;lt;/font&amp;gt;&amp;lt;/b&amp;gt;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;arcSize=11;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;verticalAlign=top;fontFamily=Helvetica;align=left;spacingLeft=21;fillOpacity=35;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-207&quot; y=&quot;380&quot; width=&quot;683&quot; height=&quot;233&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-17&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-6&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-7&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-18&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-6&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-9&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-19&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-6&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-8&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-6&quot; value=&quot;API Server&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=20;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;48.5&quot; y=&quot;158&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-7&quot; value=&quot;etcd&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=17;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-154.5&quot; y=&quot;262&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-21&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-8&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-12&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-8&quot; value=&quot;Scheduler&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=17;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;48.5&quot; y=&quot;262&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-20&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-9&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-12&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-9&quot; value=&quot;Controller Manager&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=17;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;251.5&quot; y=&quot;262&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-22&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-12&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-13&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-24&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-12&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-14&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-12&quot; value=&quot;Kubelet&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=17;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;48.5&quot; y=&quot;429&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-23&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;flowAnimation=1;strokeColor=#9e9e9e;fontFamily=Helvetica;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6VgzBhZcH02O_3_5HXAT-13&quot; target=&quot;6VgzBhZcH02O_3_5HXAT-14&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-13&quot; value=&quot;Kube Proxy&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=17;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-64&quot; y=&quot;540&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6VgzBhZcH02O_3_5HXAT-14&quot; value=&quot;Container Runtime&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=17;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;161&quot; y=&quot;540&quot; width=&quot;172&quot; height=&quot;47&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;      &lt;/root&gt;&#10;    &lt;/mxGraphModel&gt;&#10;  &lt;/diagram&gt;&#10;  &lt;diagram id=&quot;Xm5KxT5CkdcPxyIBSOZR&quot; name=&quot;control-loops&quot;&gt;&#10;    &lt;mxGraphModel dx=&quot;1168&quot; dy=&quot;930&quot; grid=&quot;0&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;0&quot; pageScale=&quot;1&quot; pageWidth=&quot;850&quot; pageHeight=&quot;1100&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&#10;      &lt;root&gt;&#10;        &lt;mxCell id=&quot;0&quot; /&gt;&#10;        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--8&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#9E9E9E;flowAnimation=1;fontColor=#9E9E9E;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;MTnTEgT1lGnWUFgt_2z--1&quot; target=&quot;MTnTEgT1lGnWUFgt_2z--6&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--1&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=api&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-245&quot; y=&quot;18&quot; width=&quot;150&quot; height=&quot;144&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--2&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=etcd&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;42&quot; y=&quot;18&quot; width=&quot;150&quot; height=&quot;144&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--3&quot; value=&quot;store desired state&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;strokeColor=#9E9E9E;flowAnimation=1;fontColor=#9E9E9E;fontStyle=1;labelBackgroundColor=none;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;MTnTEgT1lGnWUFgt_2z--1&quot; target=&quot;MTnTEgT1lGnWUFgt_2z--2&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-0.0027&quot; y=&quot;8&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;Array as=&quot;points&quot;&gt;&#10;              &lt;mxPoint x=&quot;-170&quot; y=&quot;-22&quot; /&gt;&#10;              &lt;mxPoint x=&quot;117&quot; y=&quot;-22&quot; /&gt;&#10;            &lt;/Array&gt;&#10;            &lt;mxPoint as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--4&quot; value=&quot;get current state&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.005;exitY=0.63;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.995;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;strokeColor=#9E9E9E;flowAnimation=1;fontColor=#9E9E9E;fontStyle=1;labelBackgroundColor=none;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;MTnTEgT1lGnWUFgt_2z--2&quot; target=&quot;MTnTEgT1lGnWUFgt_2z--1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-0.0361&quot; y=&quot;-8&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;mxPoint as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--11&quot; value=&quot;NO&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontStyle=1;fontColor=#CC0000;strokeWidth=2;flowAnimation=1;strokeColor=#CC0000;labelBackgroundColor=none;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;MTnTEgT1lGnWUFgt_2z--6&quot; target=&quot;MTnTEgT1lGnWUFgt_2z--9&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-0.34&quot; y=&quot;7&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;mxPoint as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--6&quot; value=&quot;current state =&amp;lt;div&amp;gt;desired state?&amp;lt;/div&amp;gt;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fillOpacity=35;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-230&quot; y=&quot;244&quot; width=&quot;120&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--9&quot; value=&quot;take action&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-10&quot; y=&quot;244&quot; width=&quot;120&quot; height=&quot;60&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--10&quot; value=&quot;YES&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#00CC00;strokeWidth=2;flowAnimation=1;fontColor=#00CC00;fontStyle=1;labelBackgroundColor=none;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;MTnTEgT1lGnWUFgt_2z--6&quot; target=&quot;MTnTEgT1lGnWUFgt_2z--1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-0.7707&quot; y=&quot;-7&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;Array as=&quot;points&quot;&gt;&#10;              &lt;mxPoint x=&quot;-294&quot; y=&quot;274&quot; /&gt;&#10;              &lt;mxPoint x=&quot;-294&quot; y=&quot;109&quot; /&gt;&#10;            &lt;/Array&gt;&#10;            &lt;mxPoint as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;MTnTEgT1lGnWUFgt_2z--12&quot; value=&quot;&amp;lt;i&amp;gt;keep&amp;lt;/i&amp;gt;&amp;lt;div&amp;gt;&amp;lt;i&amp;gt;checking&amp;lt;/i&amp;gt;&amp;lt;/div&amp;gt;&quot; style=&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#9e9e9e;labelBackgroundColor=none;&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;MTnTEgT1lGnWUFgt_2z--10&quot;&gt;&#10;          &lt;mxGeometry x=&quot;0.4141&quot; y=&quot;-2&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;mxPoint x=&quot;21&quot; y=&quot;-16&quot; as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;      &lt;/root&gt;&#10;    &lt;/mxGraphModel&gt;&#10;  &lt;/diagram&gt;&#10;  &lt;diagram id=&quot;a4-zso-C5uF89AswZnRx&quot; name=&quot;node-replace-deploy&quot;&gt;&#10;    &lt;mxGraphModel dx=&quot;3985&quot; dy=&quot;2323&quot; grid=&quot;0&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;0&quot; pageScale=&quot;1&quot; pageWidth=&quot;850&quot; pageHeight=&quot;1100&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&#10;      &lt;root&gt;&#10;        &lt;mxCell id=&quot;0&quot; /&gt;&#10;        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-46&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=8;fillOpacity=35;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-504&quot; y=&quot;-221.5&quot; width=&quot;908&quot; height=&quot;726&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-35&quot; value=&quot;NetApp&quot; style=&quot;shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=6;fontSize=39;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-989&quot; y=&quot;-225&quot; width=&quot;258&quot; height=&quot;203&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-36&quot; value=&quot;Azure&quot; style=&quot;shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=6;fontSize=39;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-989&quot; y=&quot;40&quot; width=&quot;258&quot; height=&quot;203&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-37&quot; value=&quot;misc.&quot; style=&quot;shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=6;fontSize=39;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-989&quot; y=&quot;305&quot; width=&quot;258&quot; height=&quot;203&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-39&quot; value=&quot;&quot; style=&quot;editableCssRules=.*;html=1;shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnY9Imh0dHBzOi8vdmVjdGEuaW8vbmFubyIgd2lkdGg9IjcwMi44NDYzMTM0NzY1NjI1IiBoZWlnaHQ9IjY4MS45NjcxMDIwNTA3ODEyIiB2aWV3Qm94PSIxMC4wMDEwMjYxNTM1NjQ0NTMgMTAuMDAwOTMzNjQ3MTU1NzYyIDcwMi44NDYzMTM0NzY1NjI1IDY4MS45NjcxMDIwNTA3ODEyIj4mI3hhOwk8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiYjeGE7CS5zdDB7ZmlsbDojMzI2Y2U1O30mI3hhOwkuc3Qxe2ZpbGw6I2ZmZjt9JiN4YTsJPC9zdHlsZT4mI3hhOwk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzU4Ljk4NyAxMC4wNmMtNi4yMTMuMzEzLTEyLjMwMSAxLjg1NC0xNy45MDYgNC41MzFMOTYuNzM3IDEzMS4zNDJjLTEyLjgxMSA2LjExOC0yMi4xMTYgMTcuNjg5LTI1LjI4MSAzMS40MzhsLTYwLjI4MSAyNjIuMjVjLTIuODEyIDEyLjIwNy0uNTI0IDI1LjAyNCA2LjM0NCAzNS41MzFhNDYuMzUgNDYuMzUgMCAwIDAgMi42NTYgMy42ODhsMTY5LjEyNSAyMTAuMjgxYzguODY4IDExLjAyMiAyMi4zMTMgMTcuNDQgMzYuNTMxIDE3LjQzOGwyNzEuMjE5LS4wNjJjMTQuMjEyLjAxIDI3LjY1Ny02LjM5NiAzNi41MzEtMTcuNDA2bDE2OS4wNjMtMjEwLjMxM2M4Ljg3My0xMS4wMjggMTIuMTk3LTI1LjQ2NCA5LjAzMS0zOS4yMTlsLTYwLjM3NS0yNjIuMjVjLTMuMTY1LTEzLjc0OC0xMi40Ny0yNS4zMTktMjUuMjgxLTMxLjQzN0wzODEuNjQzIDE0LjU5MmMtNy4wNS0zLjM2OC0xNC44NDEtNC45MjYtMjIuNjU2LTQuNTMxeiIvPiYjeGE7CTxwYXRoIGNsYXNzPSJzdDEgc3QyIiBkPSJNMzYxLjQwOCA5OS4zMDhjLTguMDc3LjAwMS0xNC42MjYgNy4yNzYtMTQuNjI1IDE2LjI1IDAgLjEzOC4wMjguMjY5LjAzMS40MDYtLjAxMiAxLjIxOS0uMDcxIDIuNjg4LS4wMzEgMy43NS4xOTMgNS4xNzYgMS4zMjEgOS4xMzcgMiAxMy45MDYgMS4yMyAxMC4yMDcgMi4yNjEgMTguNjY3IDEuNjI1IDI2LjUzMS0uNjE5IDIuOTY1LTIuODAzIDUuNjc3LTQuNzUgNy41NjNsLS4zNDQgNi4xODhjLTguNzc3LjcyNy0xNy42MTIgMi4wNTktMjYuNDM3IDQuMDYzLTM3Ljk3NSA4LjYyMi03MC42NyAyOC4xODMtOTUuNTYyIDU0LjU5NC0xLjYxNS0xLjEwMi00LjQ0MS0zLjEyOS01LjI4MS0zLjc1LTIuNjExLjM1My01LjI1IDEuMTU4LTguNjg3LS44NDQtNi41NDUtNC40MDYtMTIuNTA2LTEwLjQ4Ny0xOS43MTktMTcuODEyLTMuMzA1LTMuNTA0LTUuNjk4LTYuODQxLTkuNjI1LTEwLjIxOS0uODkyLS43NjctMi4yNTMtMS44MDUtMy4yNS0yLjU5NC0zLjA3LTIuNDQ4LTYuNjkxLTMuNzI0LTEwLjE4Ny0zLjg0NC00LjQ5Ni0uMTU0LTguODI0IDEuNjA0LTExLjY1NiA1LjE1Ni01LjAzNSA2LjMxNS0zLjQyMyAxNS45NjggMy41OTQgMjEuNTYzLjA3MS4wNTcuMTQ3LjEwMS4yMTkuMTU2Ljk2NC43ODIgMi4xNDUgMS43ODMgMy4wMzEgMi40MzggNC4xNjcgMy4wNzcgNy45NzMgNC42NTEgMTIuMTI1IDcuMDk0IDguNzQ3IDUuNDAyIDE1Ljk5OCA5Ljg4MSAyMS43NSAxNS4yODEgMi4yNDYgMi4zOTQgMi42MzkgNi42MTMgMi45MzggOC40MzhsNC42ODggNC4xODhjLTI1LjA5MyAzNy43NjQtMzYuNzA3IDg0LjQwOS0yOS44NDQgMTMxLjkzOGwtNi4xMjUgMS43ODFjLTEuNjE0IDIuMDg1LTMuODk1IDUuMzY1LTYuMjgxIDYuMzQ0LTcuNTI1IDIuMzctMTUuOTk0IDMuMjQxLTI2LjIxOSA0LjMxMy00LjguMzk5LTguOTQyLjE2MS0xNC4wMzEgMS4xMjUtMS4xMi4yMTItMi42ODEuNjE5LTMuOTA2LjkwNi0uMDQzLjAwOS0uMDgyLjAyMi0uMTI1LjAzMS0uMDY3LjAxNS0uMTU1LjA0OC0uMjE5LjA2My04LjYyIDIuMDgzLTE0LjE1OCAxMC4wMDYtMTIuMzc1IDE3LjgxM3MxMC4yMDMgMTIuNTU3IDE4Ljg3NSAxMC42ODhjLjA2My0uMDE0LjE1NC0uMDE3LjIxOS0uMDMxLjA5OC0uMDIyLjE4NC0uMDcuMjgxLS4wOTQgMS4yMDktLjI2NSAyLjcyNC0uNTYxIDMuNzgxLS44NDQgNS4wMDMtMS4zNCA4LjYyNy0zLjMwOCAxMy4xMjUtNS4wMzEgOS42NzctMy40NzEgMTcuNjkyLTYuMzcgMjUuNS03LjUgMy4yNjEtLjI1NSA2LjY5NyAyLjAxMiA4LjQwNiAyLjk2OWw2LjM3NS0xLjA5NGMxNC42NyA0NS40ODMgNDUuNDE0IDgyLjI0NSA4NC4zNDQgMTA1LjMxMmwtMi42NTYgNi4zNzVjLjk1NyAyLjQ3NSAyLjAxMyA1LjgyNSAxLjMgOC4yNjktMi44MzkgNy4zNjEtNy43MDEgMTUuMTMxLTEzLjIzOCAyMy43OTMtMi42ODEgNC4wMDItNS40MjUgNy4xMDgtNy44NDQgMTEuNjg4LS41NzkgMS4wOTYtMS4zMTYgMi43NzktMS44NzUgMy45MzgtMy43NTkgOC4wNDItMS4wMDIgMTcuMzA1IDYuMjE5IDIwLjc4MSA3LjI2NiAzLjQ5OCAxNi4yODQtLjE5MSAyMC4xODctOC4yNS4wMDYtLjAxMS4wMjYtLjAyLjAzMS0uMDMxcy0uMDA0LS4wMjMgMC0uMDMxYy41NTYtMS4xNDMgMS4zNDQtMi42NDQgMS44MTMtMy43MTkgMi4wNzItNC43NDcgMi43NjItOC44MTUgNC4yMTktMTMuNDA2IDMuODctOS43MiA1Ljk5Ni0xOS45MTkgMTEuMzIzLTI2LjI3NCAxLjQ1OS0xLjc0IDMuODM3LTIuNDA5IDYuMzAyLTMuMDdsMy4zMTMtNmMzMy45MzggMTMuMDI3IDcxLjkyNyAxNi41MjIgMTA5Ljg3NSA3LjkwNmExODkuNzcgMTg5Ljc3IDAgMCAwIDI1LjA5NC03LjU2MmwzLjEyNSA1LjYyNWMyLjUwNi44MTUgNS4yNCAxLjIzNiA3LjQ2OSA0LjUzMSAzLjk4NSA2LjgwOSA2LjcxMSAxNC44NjQgMTAuMDMxIDI0LjU5NCAxLjQ1NyA0LjU5MSAyLjE3OCA4LjY1OSA0LjI1IDEzLjQwNi40NzIgMS4wODIgMS4yNTYgMi42MDUgMS44MTMgMy43NSAzLjg5NSA4LjA4NSAxMi45NDIgMTEuNzg3IDIwLjIxOSA4LjI4MSA3LjIxOS0zLjQ3OCA5Ljk4LTEyLjc0IDYuMjE5LTIwLjc4MWwtMS45MDYtMy45MzdjLTIuNDE5LTQuNTgtNS4xNjMtNy42NTQtNy44NDQtMTEuNjU2LTUuNTM3LTguNjYyLTEwLjEzLTE1Ljg1OC0xMi45NjktMjMuMjE5LTEuMTg3LTMuNzk3LjItNi4xNTggMS4xMjUtOC42MjUtLjU1NC0uNjM1LTEuNzM5LTQuMjItMi40MzctNS45MDYgNDAuNDU3LTIzLjg4OCA3MC4yOTktNjIuMDIxIDg0LjMxMy0xMDYuMDYyIDEuODkyLjI5NyA1LjE4Mi44NzkgNi4yNSAxLjA5NCAyLjItMS40NTEgNC4yMjItMy4zNDQgOC4xODgtMy4wMzEgNy44MDggMS4xMjkgMTUuODIzIDQuMDMgMjUuNSA3LjUgNC40OTggMS43MjMgOC4xMjIgMy43MjMgMTMuMTI1IDUuMDYzIDEuMDU3LjI4MyAyLjU3Mi41NDcgMy43ODEuODEzLjA5Ny4wMjQuMTgzLjA3MS4yODEuMDk0LjA2NS4wMTUuMTU2LjAxNy4yMTkuMDMxIDguNjcyIDEuODY3IDE3LjA5NC0yLjg3OSAxOC44NzUtMTAuNjg3cy0zLjc1NC0xNS43MzItMTIuMzc1LTE3LjgxMmMtMS4yNTQtLjI4NS0zLjAzMi0uNzY5LTQuMjUtMS01LjA4OS0uOTY0LTkuMjMxLS43MjYtMTQuMDMxLTEuMTI1LTEwLjIyNS0xLjA3MS0xOC42OTMtMS45NDMtMjYuMjE5LTQuMzEyLTMuMDY4LTEuMTktNS4yNTEtNC44NDEtNi4zMTMtNi4zNDRsLTUuOTA2LTEuNzE5YzMuMDYyLTIyLjE1NCAyLjIzNy00NS4yMTEtMy4wNjItNjguMjgxLTUuMzQ4LTIzLjI4NS0xNC44LTQ0LjU4MS0yNy40MDYtNjMuMzQ0bDUuMTg4LTQuNjU2Yy4yMzctMi42MjQuMDMzLTUuMzc2IDIuNzUtOC4yODEgNS43NTEtNS40MDEgMTMuMDAzLTkuODc5IDIxLjc1LTE1LjI4MSA0LjE1Mi0yLjQ0MyA3Ljk5LTQuMDE3IDEyLjE1Ni03LjA5NC45NDItLjY5NiAyLjIyOS0xLjc5OCAzLjIxOS0yLjU5NCA3LjAxNS01LjU5NiA4LjYzMS0xNS4yNDggMy41OTQtMjEuNTYycy0xNC43OTctNi45MDktMjEuODEyLTEuMzEyYy0uOTk5Ljc5MS0yLjM1NCAxLjgyMy0zLjI1IDIuNTk0LTMuOTI3IDMuMzc4LTYuMzUxIDYuNzE0LTkuNjU2IDEwLjIxOS03LjIxMiA3LjMyNi0xMy4xNzQgMTMuNDM4LTE5LjcxOSAxNy44NDQtMi44MzYgMS42NTEtNi45OSAxLjA4LTguODc1Ljk2OWwtNS41NjIgMy45NjljLTMxLjcxOS0zMy4yNjEtNzQuOTA1LTU0LjUyNS0xMjEuNDA2LTU4LjY1NmwtLjM0NC02LjUzMWMtMS45MDQtMS44MjItNC4yMDMtMy4zNzctNC43ODEtNy4zMTItLjYzNi03Ljg2NC40MjYtMTYuMzI1IDEuNjU2LTI2LjUzMS42NzktNC43NjkgMS44MDctOC43MyAyLTEzLjkwNi4wNDQtMS4xNzctLjAyNi0yLjg4NC0uMDMxLTQuMTU2LS4wMDEtOC45NzQtNi41NDgtMTYuMjUxLTE0LjYyNS0xNi4yNXptLTE4LjMxMiAxMTMuNDM4bC00LjM0NCA3Ni43MTktLjMxMi4xNTZjLS4yOTEgNi44NjMtNS45NCAxMi4zNDQtMTIuODc1IDEyLjM0NGExMi44MiAxMi44MiAwIDAgMS03LjU5NC0yLjQ2OWwtLjEyNS4wNjMtNjIuOTA2LTQ0LjU5NGMxOS4zMzQtMTkuMDExIDQ0LjA2My0zMy4wNiA3Mi41NjItMzkuNTMxIDUuMjA2LTEuMTgyIDEwLjQxLTIuMDU5IDE1LjU5NC0yLjY4N3ptMzYuNjU2IDBjMzMuMjczIDQuMDkyIDY0LjA0NSAxOS4xNTkgODcuNjI1IDQyLjI1bC02Mi41IDQ0LjMxMy0uMjE5LS4wOTRhMTIuOTEgMTIuOTEgMCAwIDEtMTcuNjg3LTIuMzc1Yy0xLjc3MS0yLjIyMS0yLjcwMS00LjgzMi0yLjgxMi03LjQ2OWwtLjA2Mi0uMDMxek0yMzIuMTI2IDI4My42Mmw1Ny40MzcgNTEuMzc1LS4wNjIuMzEzYTEyLjg4IDEyLjg4IDAgMCAxIDEuNjI1IDE3Ljc1IDEyLjg5IDEyLjg5IDAgMCAxLTYuNjg3IDQuNDA2bC0uMDYyLjI1LTczLjYyNSAyMS4yNWMtMy43NDctMzQuMjY1IDQuMzI5LTY3LjU3NCAyMS4zNzUtOTUuMzQ0em0yNTguMTU2LjAzMWM4LjUzNCAxMy44MzMgMTQuOTk3IDI5LjI4MiAxOC44NDQgNDYuMDMxIDMuODAxIDE2LjU0OCA0Ljc1NSAzMy4wNjcgMy4xODggNDkuMDMxbC03NC0yMS4zMTItLjA2Mi0uMzEyYy02LjYyNy0xLjgxMS0xMC42OTktOC41NTItOS4xNTYtMTUuMzEyLjYzMi0yLjc3IDIuMTAyLTUuMTEzIDQuMDk0LTYuODQ0bC0uMDMxLS4xNTYgNTcuMTI1LTUxLjEyNXptLTE0MC42NTYgNTUuMzEzaDIzLjUzMWwxNC42MjUgMTguMjgxLTUuMjUgMjIuODEzLTIxLjEyNSAxMC4xNTYtMjEuMTg3LTEwLjE4Ny01LjI1LTIyLjgxMnptNzUuNDM4IDYyLjU2M2ExMi44MyAxMi44MyAwIDAgMSAyLjk2OS4yMTlsLjEyNS0uMTU2IDc2LjE1NiAxMi44NzVjLTExLjE0NiAzMS4zMTMtMzIuNDczIDU4LjQ0LTYwLjk2OSA3Ni41OTRsLTI5LjU2Mi03MS40MDYuMDk0LS4xMjVjLTIuNzE2LTYuMzEuMDAyLTEzLjcxIDYuMjUtMTYuNzE5IDEuNi0uNzcgMy4yNzEtMS4xOTcgNC45MzgtMS4yODF6bS0xMjcuOTA2LjMxM2ExMi45IDEyLjkgMCAwIDEgMTIuMzc1IDEwLjAzMSAxMi43NyAxMi43NyAwIDAgMS0uNzE5IDcuOTM4bC4yMTkuMjgxLTI5LjI1IDcwLjY4OGMtMjcuMzQ3LTE3LjU0OS00OS4xMjktNDMuODI0LTYwLjc4MS03Ni4wNjJsNzUuNS0xMi44MTIuMTI1LjE1NmMuODQ1LS4xNTUgMS43MDEtLjIzIDIuNTMxLS4yMTl6bTYzLjc4MSAzMC45NjljMi4wMjQtLjA3NCA0LjA3OS4zNDEgNi4wMzEgMS4yODEgMi41NiAxLjIzMyA0LjUzNyAzLjE3MyA1Ljc4MSA1LjVoLjI4MWwzNy4yMTkgNjcuMjVjLTQuODMgMS42MTktOS43OTYgMy4wMDMtMTQuODc1IDQuMTU2LTI4LjQ2NSA2LjQ2My01Ni44MzkgNC41MDUtODIuNTMxLTQuMjVsMzcuMTI1LTY3LjEyNWguMDYzYTEyLjkxIDEyLjkxIDAgMCAxIDEwLjkwNi02LjgxMnoiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIuMjUiLz4mI3hhOzwvc3ZnPg==;fontColor=default;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;310&quot; y=&quot;-276&quot; width=&quot;150&quot; height=&quot;142.5&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-43&quot; value=&quot;&quot; style=&quot;group&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;53&quot; y=&quot;36&quot; width=&quot;177.08&quot; height=&quot;170&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-41&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=ns&quot; vertex=&quot;1&quot; parent=&quot;6RXEsa6qddyFaDkBpaeR-43&quot;&gt;&#10;          &lt;mxGeometry width=&quot;177.08&quot; height=&quot;170&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-42&quot; value=&quot;PV&amp;lt;div style=&amp;quot;font-size: 25px;&amp;quot;&amp;gt;subsystem&amp;lt;/div&amp;gt;&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#2775e2;fontSize=25;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;6RXEsa6qddyFaDkBpaeR-43&quot;&gt;&#10;          &lt;mxGeometry x=&quot;34&quot; y=&quot;40&quot; width=&quot;110&quot; height=&quot;97&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-44&quot; value=&quot;&quot; style=&quot;group&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-393&quot; y=&quot;36&quot; width=&quot;177.08000000000004&quot; height=&quot;170&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-38&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=ns&quot; vertex=&quot;1&quot; parent=&quot;6RXEsa6qddyFaDkBpaeR-44&quot;&gt;&#10;          &lt;mxGeometry width=&quot;177.08&quot; height=&quot;170&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-40&quot; value=&quot;CSI&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#2775e2;fontSize=59;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;6RXEsa6qddyFaDkBpaeR-44&quot;&gt;&#10;          &lt;mxGeometry x=&quot;34&quot; y=&quot;40&quot; width=&quot;110&quot; height=&quot;97&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-48&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=6;strokeColor=#9e9e9e;flowAnimation=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6RXEsa6qddyFaDkBpaeR-35&quot; target=&quot;6RXEsa6qddyFaDkBpaeR-38&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-50&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=6;strokeColor=#9e9e9e;flowAnimation=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6RXEsa6qddyFaDkBpaeR-36&quot; target=&quot;6RXEsa6qddyFaDkBpaeR-38&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-52&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=6;strokeColor=#9e9e9e;flowAnimation=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6RXEsa6qddyFaDkBpaeR-37&quot; target=&quot;6RXEsa6qddyFaDkBpaeR-38&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;6RXEsa6qddyFaDkBpaeR-53&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.995;exitY=0.63;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=6;strokeColor=#9e9e9e;flowAnimation=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;6RXEsa6qddyFaDkBpaeR-38&quot; target=&quot;6RXEsa6qddyFaDkBpaeR-41&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;      &lt;/root&gt;&#10;    &lt;/mxGraphModel&gt;&#10;  &lt;/diagram&gt;&#10;  &lt;diagram name=&quot;node-replace-ss&quot; id=&quot;bsnDco8C1U9HzIzZduJu&quot;&gt;&#10;    &lt;mxGraphModel dx=&quot;1037&quot; dy=&quot;839&quot; grid=&quot;0&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;0&quot; pageScale=&quot;1&quot; pageWidth=&quot;850&quot; pageHeight=&quot;1100&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&#10;      &lt;root&gt;&#10;        &lt;mxCell id=&quot;1w5OD2iwsgBUME0IrEZj-0&quot; /&gt;&#10;        &lt;mxCell id=&quot;1w5OD2iwsgBUME0IrEZj-1&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-0&quot; /&gt;&#10;        &lt;mxCell id=&quot;1w5OD2iwsgBUME0IrEZj-3&quot; value=&quot;my-sts&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;arcSize=7;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fillOpacity=35;verticalAlign=top;labelBackgroundColor=none;align=left;spacingLeft=4;&quot; vertex=&quot;1&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-191&quot; y=&quot;-58&quot; width=&quot;376&quot; height=&quot;99&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;LOr5YIHMm2pQsJ9AVWSa-2&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=sts&quot; vertex=&quot;1&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;157&quot; y=&quot;-80&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-7&quot; value=&quot;&quot; style=&quot;group&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;118&quot; y=&quot;-22&quot; width=&quot;52.079999999999984&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-4&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=pod&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-7&quot;&gt;&#10;          &lt;mxGeometry width=&quot;52.08&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-5&quot; value=&quot;&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#2775e2;&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-7&quot;&gt;&#10;          &lt;mxGeometry x=&quot;15&quot; y=&quot;34&quot; width=&quot;22&quot; height=&quot;10&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-6&quot; value=&quot;my-sts-2&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-7&quot;&gt;&#10;          &lt;mxGeometry x=&quot;9.539999999999992&quot; y=&quot;29&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-8&quot; value=&quot;&quot; style=&quot;group&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-32&quot; y=&quot;-22&quot; width=&quot;52.08&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-1&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=pod&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-8&quot;&gt;&#10;          &lt;mxGeometry width=&quot;52.08&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-2&quot; value=&quot;&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#2775e2;&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-8&quot;&gt;&#10;          &lt;mxGeometry x=&quot;15&quot; y=&quot;34&quot; width=&quot;22&quot; height=&quot;10&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-3&quot; value=&quot;my-sts-1&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-8&quot;&gt;&#10;          &lt;mxGeometry x=&quot;9.539999999999992&quot; y=&quot;29&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-9&quot; value=&quot;&quot; style=&quot;group&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-182&quot; y=&quot;-22&quot; width=&quot;52.079999999999984&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;1w5OD2iwsgBUME0IrEZj-5&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=pod&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-9&quot;&gt;&#10;          &lt;mxGeometry width=&quot;52.08&quot; height=&quot;50&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-0&quot; value=&quot;&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#2775e2;&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-9&quot;&gt;&#10;          &lt;mxGeometry x=&quot;15&quot; y=&quot;34&quot; width=&quot;22&quot; height=&quot;10&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;1w5OD2iwsgBUME0IrEZj-6&quot; value=&quot;my-sts-0&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-9&quot;&gt;&#10;          &lt;mxGeometry x=&quot;9.539999999999992&quot; y=&quot;29&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-10&quot; value=&quot;&amp;lt;font style=&amp;quot;font-size: 9px;&amp;quot;&amp;gt;running + ready?&amp;lt;/font&amp;gt;&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.995;exitY=0.63;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=default;labelBackgroundColor=none;flowAnimation=1;strokeWidth=1;dashed=1;&quot; edge=&quot;1&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot; source=&quot;1w5OD2iwsgBUME0IrEZj-5&quot; target=&quot;4sTF1LRuNKHdGhzHEzuE-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-0.0211&quot; y=&quot;9&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;mxPoint y=&quot;1&quot; as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-11&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.995;exitY=0.63;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.005;entryY=0.63;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=default;labelBackgroundColor=none;flowAnimation=1;strokeWidth=1;dashed=1;&quot; edge=&quot;1&quot; parent=&quot;1w5OD2iwsgBUME0IrEZj-1&quot; source=&quot;4sTF1LRuNKHdGhzHEzuE-1&quot; target=&quot;4sTF1LRuNKHdGhzHEzuE-4&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;4sTF1LRuNKHdGhzHEzuE-12&quot; value=&quot;&amp;lt;span style=&amp;quot;font-size: 9px;&amp;quot;&amp;gt;running + ready?&amp;lt;/span&amp;gt;&quot; style=&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];&quot; vertex=&quot;1&quot; connectable=&quot;0&quot; parent=&quot;4sTF1LRuNKHdGhzHEzuE-11&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-0.2562&quot; y=&quot;1&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;mxPoint x=&quot;7&quot; y=&quot;-7&quot; as=&quot;offset&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;      &lt;/root&gt;&#10;    &lt;/mxGraphModel&gt;&#10;  &lt;/diagram&gt;&#10;  &lt;diagram name=&quot;deploy-ss&quot; id=&quot;pcO5cjPFttZVDzo3fQgP&quot;&gt;&#10;    &lt;mxGraphModel dx=&quot;1037&quot; dy=&quot;839&quot; grid=&quot;0&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;0&quot; pageScale=&quot;1&quot; pageWidth=&quot;850&quot; pageHeight=&quot;1100&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&#10;      &lt;root&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-0&quot; /&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-0&quot; /&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-2&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#CC0000;flowAnimation=1;&quot; edge=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot; source=&quot;wUGYb5W8Os_sopvGtL4L-3&quot; target=&quot;wUGYb5W8Os_sopvGtL4L-15&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-3&quot; value=&quot;my-deployment&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;arcSize=7;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fillOpacity=35;verticalAlign=top;labelBackgroundColor=none;align=left;spacingLeft=4;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-191&quot; y=&quot;-58&quot; width=&quot;136&quot; height=&quot;173&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-4&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=pod&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-182&quot; y=&quot;-22&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-5&quot; value=&quot;my-pod&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-173.5&quot; y=&quot;7&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-6&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=vol&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-182&quot; y=&quot;60&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-7&quot; value=&quot;my-vol&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-173.5&quot; y=&quot;90&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-8&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;strokeColor=#9e9e9e;dashed=1;&quot; edge=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot; source=&quot;wUGYb5W8Os_sopvGtL4L-4&quot; target=&quot;wUGYb5W8Os_sopvGtL4L-6&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-9&quot; value=&quot;&amp;lt;b&amp;gt;10.0.0.5&amp;lt;/b&amp;gt;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Courier New;fillOpacity=75;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-130&quot; y=&quot;-6&quot; width=&quot;66&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-10&quot; value=&quot;my-deployment&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;arcSize=7;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fillOpacity=35;verticalAlign=top;labelBackgroundColor=none;align=left;spacingLeft=4;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;90&quot; y=&quot;-58&quot; width=&quot;136&quot; height=&quot;173&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-11&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=pod&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;99&quot; y=&quot;-22&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-12&quot; value=&quot;my-pod&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;107.5&quot; y=&quot;7&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-13&quot; value=&quot;&amp;lt;b&amp;gt;10.0.0.5&amp;lt;/b&amp;gt;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Courier New;fillOpacity=75;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;151&quot; y=&quot;-6&quot; width=&quot;66&quot; height=&quot;16&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-14&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#CC0000;flowAnimation=1;&quot; edge=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot; source=&quot;wUGYb5W8Os_sopvGtL4L-15&quot; target=&quot;wUGYb5W8Os_sopvGtL4L-10&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-15&quot; value=&quot;Pod/Node&amp;lt;div&amp;gt;failure&amp;lt;/div&amp;gt;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;glass=0;comic=0;enumerate=0;treeMoving=0;treeFolding=0;backgroundOutline=0;metaEdit=0;container=0;fixDash=0;allowArrows=1;fillOpacity=75;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-17&quot; y=&quot;14.5&quot; width=&quot;76&quot; height=&quot;28&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-16&quot; value=&quot;!&quot; style=&quot;ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=none;fillColor=#CC0000;fontColor=#FFFFFF;fontSize=9;fontStyle=1&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;52&quot; y=&quot;8.5&quot; width=&quot;12&quot; height=&quot;12&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-17&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=vol&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;99&quot; y=&quot;60&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-18&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;strokeColor=#9e9e9e;dashed=1;&quot; edge=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot; target=&quot;wUGYb5W8Os_sopvGtL4L-17&quot;&gt;&#10;          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&#10;            &lt;mxPoint x=&quot;124&quot; y=&quot;26&quot; as=&quot;sourcePoint&quot; /&gt;&#10;          &lt;/mxGeometry&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-19&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=sts&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;-83&quot; y=&quot;-81&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-20&quot; value=&quot;&quot; style=&quot;aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;kubernetesLabel=1;prIcon=sts&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;200&quot; y=&quot;-81&quot; width=&quot;50&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;        &lt;mxCell id=&quot;wUGYb5W8Os_sopvGtL4L-21&quot; value=&quot;my-vol&quot; style=&quot;text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;labelBackgroundColor=#2775e2;fontColor=#FFFFFF;&quot; vertex=&quot;1&quot; parent=&quot;wUGYb5W8Os_sopvGtL4L-1&quot;&gt;&#10;          &lt;mxGeometry x=&quot;107.5&quot; y=&quot;90&quot; width=&quot;33&quot; height=&quot;15&quot; as=&quot;geometry&quot; /&gt;&#10;        &lt;/mxCell&gt;&#10;      &lt;/root&gt;&#10;    &lt;/mxGraphModel&gt;&#10;  &lt;/diagram&gt;&#10;&lt;/mxfile&gt;&#10;"><defs><style>@keyframes ge-flow-animation-ODqDc68bp3PnMKAe7DL- {&#xa;  to {&#xa;    stroke-dashoffset: 0;&#xa;  }&#xa;}</style><style type="text/css">@import url(https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;500);&#xa;@import url(https://fonts.googleapis.com/css2?family=Architects+Daughter:wght@400;500);&#xa;</style></defs><g><g><rect x="488" y="54.5" width="908" height="726" rx="58.08" ry="58.08" fill-opacity="0.35" fill="#dae8fc" stroke="#6c8ebf" stroke-width="8" pointer-events="all"/></g><g><path d="M 3 66 C 3 57.72 60.76 51 132 51 C 166.21 51 199.02 52.58 223.22 55.39 C 247.41 58.21 261 62.02 261 66 L 261 239 C 261 247.28 203.24 254 132 254 C 60.76 254 3 247.28 3 239 Z" fill="#dae8fc" stroke="#6c8ebf" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/><path d="M 261 66 C 261 74.28 203.24 81 132 81 C 60.76 81 3 74.28 3 66" fill="none" stroke="#6c8ebf" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g><g><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 256px; height: 1px; padding-top: 165px; margin-left: 4px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 39px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">NetApp</div></div></div></foreignObject><text x="132" y="177" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="39px" text-anchor="middle">NetApp</text></switch></g></g><g><path d="M 3 331 C 3 322.72 60.76 316 132 316 C 166.21 316 199.02 317.58 223.22 320.39 C 247.41 323.21 261 327.02 261 331 L 261 504 C 261 512.28 203.24 519 132 519 C 60.76 519 3 512.28 3 504 Z" fill="#dae8fc" stroke="#6c8ebf" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/><path d="M 261 331 C 261 339.28 203.24 346 132 346 C 60.76 346 3 339.28 3 331" fill="none" stroke="#6c8ebf" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g><g><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 256px; height: 1px; padding-top: 430px; margin-left: 4px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 39px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">Azure</div></div></div></foreignObject><text x="132" y="442" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="39px" text-anchor="middle">Azure</text></switch></g></g><g><path d="M 3 596 C 3 587.72 60.76 581 132 581 C 166.21 581 199.02 582.58 223.22 585.39 C 247.41 588.21 261 592.02 261 596 L 261 769 C 261 777.28 203.24 784 132 784 C 60.76 784 3 777.28 3 769 Z" fill="#dae8fc" stroke="#6c8ebf" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/><path d="M 261 596 C 261 604.28 203.24 611 132 611 C 60.76 611 3 604.28 3 596" fill="none" stroke="#6c8ebf" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g><g><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 256px; height: 1px; padding-top: 695px; margin-left: 4px;"><div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 39px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">misc.</div></div></div></foreignObject><text x="132" y="707" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="39px" text-anchor="middle">misc.</text></switch></g></g><g><svg viewBox="10.001026153564453 10.000933647155762 702.8463134765625 681.9671020507812" height="142.5" width="150" xmlns="http://www.w3.org/2000/svg" id="svg-image-TxHSxAZAzOinuj5BXwIt" x="1301.5" y="-0.5" style="font-family: initial;">&#xa;  <style type="text/css">#svg-image-TxHSxAZAzOinuj5BXwIt .st0 { fill: rgb(50, 108, 229); }&#xa;#svg-image-TxHSxAZAzOinuj5BXwIt .st1 { fill: rgb(255, 255, 255); }&#xa;</style>&#xa;   <path d="M358.987 10.06c-6.213.313-12.301 1.854-17.906 4.531L96.737 131.342c-12.811 6.118-22.116 17.689-25.281 31.438l-60.281 262.25c-2.812 12.207-.524 25.024 6.344 35.531a46.35 46.35 0 0 0 2.656 3.688l169.125 210.281c8.868 11.022 22.313 17.44 36.531 17.438l271.219-.062c14.212.01 27.657-6.396 36.531-17.406l169.063-210.313c8.873-11.028 12.197-25.464 9.031-39.219l-60.375-262.25c-3.165-13.748-12.47-25.319-25.281-31.437L381.643 14.592c-7.05-3.368-14.841-4.926-22.656-4.531z" class="st0"/>&#xa;   <path stroke-width=".25" stroke="none" d="M361.408 99.308c-8.077.001-14.626 7.276-14.625 16.25 0 .138.028.269.031.406-.012 1.219-.071 2.688-.031 3.75.193 5.176 1.321 9.137 2 13.906 1.23 10.207 2.261 18.667 1.625 26.531-.619 2.965-2.803 5.677-4.75 7.563l-.344 6.188c-8.777.727-17.612 2.059-26.437 4.063-37.975 8.622-70.67 28.183-95.562 54.594-1.615-1.102-4.441-3.129-5.281-3.75-2.611.353-5.25 1.158-8.687-.844-6.545-4.406-12.506-10.487-19.719-17.812-3.305-3.504-5.698-6.841-9.625-10.219-.892-.767-2.253-1.805-3.25-2.594-3.07-2.448-6.691-3.724-10.187-3.844-4.496-.154-8.824 1.604-11.656 5.156-5.035 6.315-3.423 15.968 3.594 21.563.071.057.147.101.219.156.964.782 2.145 1.783 3.031 2.438 4.167 3.077 7.973 4.651 12.125 7.094 8.747 5.402 15.998 9.881 21.75 15.281 2.246 2.394 2.639 6.613 2.938 8.438l4.688 4.188c-25.093 37.764-36.707 84.409-29.844 131.938l-6.125 1.781c-1.614 2.085-3.895 5.365-6.281 6.344-7.525 2.37-15.994 3.241-26.219 4.313-4.8.399-8.942.161-14.031 1.125-1.12.212-2.681.619-3.906.906-.043.009-.082.022-.125.031-.067.015-.155.048-.219.063-8.62 2.083-14.158 10.006-12.375 17.813s10.203 12.557 18.875 10.688c.063-.014.154-.017.219-.031.098-.022.184-.07.281-.094 1.209-.265 2.724-.561 3.781-.844 5.003-1.34 8.627-3.308 13.125-5.031 9.677-3.471 17.692-6.37 25.5-7.5 3.261-.255 6.697 2.012 8.406 2.969l6.375-1.094c14.67 45.483 45.414 82.245 84.344 105.312l-2.656 6.375c.957 2.475 2.013 5.825 1.3 8.269-2.839 7.361-7.701 15.131-13.238 23.793-2.681 4.002-5.425 7.108-7.844 11.688-.579 1.096-1.316 2.779-1.875 3.938-3.759 8.042-1.002 17.305 6.219 20.781 7.266 3.498 16.284-.191 20.187-8.25.006-.011.026-.02.031-.031s-.004-.023 0-.031c.556-1.143 1.344-2.644 1.813-3.719 2.072-4.747 2.762-8.815 4.219-13.406 3.87-9.72 5.996-19.919 11.323-26.274 1.459-1.74 3.837-2.409 6.302-3.07l3.313-6c33.938 13.027 71.927 16.522 109.875 7.906a189.77 189.77 0 0 0 25.094-7.562l3.125 5.625c2.506.815 5.24 1.236 7.469 4.531 3.985 6.809 6.711 14.864 10.031 24.594 1.457 4.591 2.178 8.659 4.25 13.406.472 1.082 1.256 2.605 1.813 3.75 3.895 8.085 12.942 11.787 20.219 8.281 7.219-3.478 9.98-12.74 6.219-20.781l-1.906-3.937c-2.419-4.58-5.163-7.654-7.844-11.656-5.537-8.662-10.13-15.858-12.969-23.219-1.187-3.797.2-6.158 1.125-8.625-.554-.635-1.739-4.22-2.437-5.906 40.457-23.888 70.299-62.021 84.313-106.062 1.892.297 5.182.879 6.25 1.094 2.2-1.451 4.222-3.344 8.188-3.031 7.808 1.129 15.823 4.03 25.5 7.5 4.498 1.723 8.122 3.723 13.125 5.063 1.057.283 2.572.547 3.781.813.097.024.183.071.281.094.065.015.156.017.219.031 8.672 1.867 17.094-2.879 18.875-10.687s-3.754-15.732-12.375-17.812c-1.254-.285-3.032-.769-4.25-1-5.089-.964-9.231-.726-14.031-1.125-10.225-1.071-18.693-1.943-26.219-4.312-3.068-1.19-5.251-4.841-6.313-6.344l-5.906-1.719c3.062-22.154 2.237-45.211-3.062-68.281-5.348-23.285-14.8-44.581-27.406-63.344l5.188-4.656c.237-2.624.033-5.376 2.75-8.281 5.751-5.401 13.003-9.879 21.75-15.281 4.152-2.443 7.99-4.017 12.156-7.094.942-.696 2.229-1.798 3.219-2.594 7.015-5.596 8.631-15.248 3.594-21.562s-14.797-6.909-21.812-1.312c-.999.791-2.354 1.823-3.25 2.594-3.927 3.378-6.351 6.714-9.656 10.219-7.212 7.326-13.174 13.438-19.719 17.844-2.836 1.651-6.99 1.08-8.875.969l-5.562 3.969c-31.719-33.261-74.905-54.525-121.406-58.656l-.344-6.531c-1.904-1.822-4.203-3.377-4.781-7.312-.636-7.864.426-16.325 1.656-26.531.679-4.769 1.807-8.73 2-13.906.044-1.177-.026-2.884-.031-4.156-.001-8.974-6.548-16.251-14.625-16.25zm-18.312 113.438l-4.344 76.719-.312.156c-.291 6.863-5.94 12.344-12.875 12.344a12.82 12.82 0 0 1-7.594-2.469l-.125.063-62.906-44.594c19.334-19.011 44.063-33.06 72.562-39.531 5.206-1.182 10.41-2.059 15.594-2.687zm36.656 0c33.273 4.092 64.045 19.159 87.625 42.25l-62.5 44.313-.219-.094a12.91 12.91 0 0 1-17.687-2.375c-1.771-2.221-2.701-4.832-2.812-7.469l-.062-.031zM232.126 283.62l57.437 51.375-.062.313a12.88 12.88 0 0 1 1.625 17.75 12.89 12.89 0 0 1-6.687 4.406l-.062.25-73.625 21.25c-3.747-34.265 4.329-67.574 21.375-95.344zm258.156.031c8.534 13.833 14.997 29.282 18.844 46.031 3.801 16.548 4.755 33.067 3.188 49.031l-74-21.312-.062-.312c-6.627-1.811-10.699-8.552-9.156-15.312.632-2.77 2.102-5.113 4.094-6.844l-.031-.156 57.125-51.125zm-140.656 55.313h23.531l14.625 18.281-5.25 22.813-21.125 10.156-21.187-10.187-5.25-22.812zm75.438 62.563a12.83 12.83 0 0 1 2.969.219l.125-.156 76.156 12.875c-11.146 31.313-32.473 58.44-60.969 76.594l-29.562-71.406.094-.125c-2.716-6.31.002-13.71 6.25-16.719 1.6-.77 3.271-1.197 4.938-1.281zm-127.906.313a12.9 12.9 0 0 1 12.375 10.031 12.77 12.77 0 0 1-.719 7.938l.219.281-29.25 70.688c-27.347-17.549-49.129-43.824-60.781-76.062l75.5-12.812.125.156c.845-.155 1.701-.23 2.531-.219zm63.781 30.969c2.024-.074 4.079.341 6.031 1.281 2.56 1.233 4.537 3.173 5.781 5.5h.281l37.219 67.25c-4.83 1.619-9.796 3.003-14.875 4.156-28.465 6.463-56.839 4.505-82.531-4.25l37.125-67.125h.063a12.91 12.91 0 0 1 10.906-6.812z" class="st1 st2"/>&#xa;</svg></g><g/><g><path d="M 1132.91 312.1 C 1131.36 312.19 1129.8 312.58 1128.44 313.26 L 1067.57 342.29 C 1064.37 343.84 1062.04 346.76 1061.26 350.16 L 1046.21 415.5 C 1045.53 418.5 1046.11 421.71 1047.76 424.33 C 1048.05 424.62 1048.25 424.91 1048.44 425.3 L 1090.58 477.63 C 1092.81 480.35 1096.21 482 1099.71 482 L 1167.28 482 C 1170.77 482 1174.17 480.35 1176.4 477.63 L 1218.54 425.2 C 1220.68 422.49 1221.55 418.89 1220.77 415.5 L 1205.72 350.16 C 1204.95 346.76 1202.62 343.84 1199.41 342.29 L 1138.54 313.26 C 1136.79 312.39 1134.85 312 1132.91 312.1 Z" fill="#ffffff" stroke="none" pointer-events="all"/><path d="M 1132.95 317.19 C 1131.49 317.28 1130.03 317.65 1128.75 318.29 L 1071.53 345.57 C 1068.52 347.03 1066.33 349.77 1065.6 352.97 L 1051.45 414.39 C 1050.81 417.21 1051.36 420.23 1052.91 422.69 C 1053.18 422.96 1053.37 423.24 1053.55 423.6 L 1093.16 472.79 C 1095.26 475.35 1098.45 476.9 1101.74 476.9 L 1165.25 476.9 C 1168.54 476.9 1171.73 475.35 1173.83 472.79 L 1213.44 423.51 C 1215.45 420.96 1216.27 417.58 1215.54 414.39 L 1201.39 352.97 C 1200.66 349.77 1198.47 347.03 1195.46 345.57 L 1138.24 318.29 C 1136.6 317.47 1134.77 317.1 1132.95 317.19 Z" fill="#2875e2" stroke="none" pointer-events="all"/><path d="M 1087.1 352.22 L 1087.1 356.86 L 1082.54 356.86 L 1082.54 366.98 L 1087.59 366.98 L 1087.59 357.28 L 1097.19 357.28 L 1097.19 352.22 Z M 1102.25 352.22 L 1102.25 357.28 L 1112.37 357.28 L 1112.37 352.22 Z M 1117.42 352.22 L 1117.42 357.28 L 1127.51 357.28 L 1127.51 352.22 Z M 1132.57 352.22 L 1132.57 357.28 L 1142.69 357.28 L 1142.69 352.22 Z M 1147.73 352.22 L 1147.73 357.28 L 1157.85 357.28 L 1157.85 352.22 Z M 1162.9 352.22 L 1162.9 357.28 L 1172.99 357.28 L 1172.99 352.22 Z M 1178.05 352.22 L 1178.05 357.28 L 1179.47 357.28 L 1179.47 360.9 L 1184.53 360.9 L 1184.53 354.76 C 1184.53 353.37 1183.42 352.24 1182.03 352.22 Z M 1179.47 365.94 L 1179.47 376.06 L 1184.53 376.06 L 1184.53 365.94 Z M 1082.54 372.03 L 1082.54 382.12 L 1087.59 382.12 L 1087.59 372.03 Z M 1179.49 381.11 L 1179.49 391.21 L 1184.54 391.21 L 1184.54 381.11 Z M 1082.54 387.18 L 1082.54 397.3 L 1087.59 397.3 L 1087.59 387.18 Z M 1179.49 396.26 L 1179.49 406.38 L 1184.54 406.38 L 1184.54 396.26 Z M 1082.54 402.34 L 1082.54 412.46 L 1087.59 412.46 L 1087.59 402.34 Z M 1179.49 411.45 L 1179.49 421.54 L 1184.54 421.54 L 1184.54 411.45 Z M 1082.54 417.51 L 1082.54 427.6 L 1087.59 427.6 L 1087.59 417.51 Z M 1179.49 426.59 L 1179.49 436.71 L 1184.54 436.71 L 1184.54 426.59 Z M 1082.54 432.66 L 1082.54 439.26 C 1082.54 439.93 1082.81 440.58 1083.29 441.05 C 1083.77 441.52 1084.41 441.78 1085.08 441.78 L 1088.58 441.78 L 1088.58 436.75 L 1087.59 436.75 L 1087.59 432.66 Z M 1093.64 436.75 L 1093.64 441.78 L 1103.74 441.78 L 1103.74 436.75 Z M 1108.79 436.75 L 1108.79 441.78 L 1118.91 441.78 L 1118.91 436.75 Z M 1123.94 436.75 L 1123.94 441.78 L 1134.06 441.78 L 1134.06 436.75 Z M 1139.11 436.75 L 1139.11 441.78 L 1149.21 441.78 L 1149.21 436.75 Z M 1154.26 436.75 L 1154.26 441.78 L 1164.38 441.78 L 1164.38 436.75 Z M 1169.43 436.75 L 1169.43 441.78 L 1179.52 441.78 L 1179.52 436.75 Z" fill="#ffffff" stroke="none" pointer-events="all"/></g><g><rect x="1079" y="352" width="110" height="97" fill="#2775e2" stroke="none" pointer-events="all"/></g><g><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 401px; margin-left: 1080px;"><div data-drawio-colors="color: #FFFFFF; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 25px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><abbr title="PersistentVolume">PV</abbr><div style="font-size: 25px;">subsystem</div></div></div></div></foreignObject><text x="1134" y="408" fill="#FFFFFF" font-family="Helvetica" font-size="25px" text-anchor="middle"><abbr title="PersistentVolume">PV</abbr>...</text></switch></g></g><g/><g><path d="M 686.91 312.1 C 685.36 312.19 683.8 312.58 682.44 313.26 L 621.57 342.29 C 618.37 343.84 616.04 346.76 615.26 350.16 L 600.21 415.5 C 599.53 418.5 600.11 421.71 601.76 424.33 C 602.05 424.62 602.25 424.91 602.44 425.3 L 644.58 477.63 C 646.81 480.35 650.21 482 653.71 482 L 721.28 482 C 724.77 482 728.17 480.35 730.4 477.63 L 772.54 425.2 C 774.68 422.49 775.55 418.89 774.77 415.5 L 759.72 350.16 C 758.95 346.76 756.62 343.84 753.41 342.29 L 692.54 313.26 C 690.79 312.39 688.85 312 686.91 312.1 Z" fill="#ffffff" stroke="none" pointer-events="all"/><path d="M 686.95 317.19 C 685.49 317.28 684.03 317.65 682.75 318.29 L 625.53 345.57 C 622.52 347.03 620.33 349.77 619.6 352.97 L 605.45 414.39 C 604.81 417.21 605.36 420.23 606.91 422.69 C 607.18 422.96 607.37 423.24 607.55 423.6 L 647.16 472.79 C 649.26 475.35 652.45 476.9 655.74 476.9 L 719.25 476.9 C 722.54 476.9 725.73 475.35 727.83 472.79 L 767.44 423.51 C 769.45 420.96 770.27 417.58 769.54 414.39 L 755.39 352.97 C 754.66 349.77 752.47 347.03 749.46 345.57 L 692.24 318.29 C 690.6 317.47 688.77 317.1 686.95 317.19 Z" fill="#2875e2" stroke="none" pointer-events="all"/><path d="M 641.1 352.22 L 641.1 356.86 L 636.54 356.86 L 636.54 366.98 L 641.59 366.98 L 641.59 357.28 L 651.19 357.28 L 651.19 352.22 Z M 656.25 352.22 L 656.25 357.28 L 666.37 357.28 L 666.37 352.22 Z M 671.42 352.22 L 671.42 357.28 L 681.51 357.28 L 681.51 352.22 Z M 686.57 352.22 L 686.57 357.28 L 696.69 357.28 L 696.69 352.22 Z M 701.73 352.22 L 701.73 357.28 L 711.85 357.28 L 711.85 352.22 Z M 716.9 352.22 L 716.9 357.28 L 726.99 357.28 L 726.99 352.22 Z M 732.05 352.22 L 732.05 357.28 L 733.47 357.28 L 733.47 360.9 L 738.53 360.9 L 738.53 354.76 C 738.53 353.37 737.42 352.24 736.03 352.22 Z M 733.47 365.94 L 733.47 376.06 L 738.53 376.06 L 738.53 365.94 Z M 636.54 372.03 L 636.54 382.12 L 641.59 382.12 L 641.59 372.03 Z M 733.49 381.11 L 733.49 391.21 L 738.54 391.21 L 738.54 381.11 Z M 636.54 387.18 L 636.54 397.3 L 641.59 397.3 L 641.59 387.18 Z M 733.49 396.26 L 733.49 406.38 L 738.54 406.38 L 738.54 396.26 Z M 636.54 402.34 L 636.54 412.46 L 641.59 412.46 L 641.59 402.34 Z M 733.49 411.45 L 733.49 421.54 L 738.54 421.54 L 738.54 411.45 Z M 636.54 417.51 L 636.54 427.6 L 641.59 427.6 L 641.59 417.51 Z M 733.49 426.59 L 733.49 436.71 L 738.54 436.71 L 738.54 426.59 Z M 636.54 432.66 L 636.54 439.26 C 636.54 439.93 636.81 440.58 637.29 441.05 C 637.77 441.52 638.41 441.78 639.08 441.78 L 642.58 441.78 L 642.58 436.75 L 641.59 436.75 L 641.59 432.66 Z M 647.64 436.75 L 647.64 441.78 L 657.74 441.78 L 657.74 436.75 Z M 662.79 436.75 L 662.79 441.78 L 672.91 441.78 L 672.91 436.75 Z M 677.94 436.75 L 677.94 441.78 L 688.06 441.78 L 688.06 436.75 Z M 693.11 436.75 L 693.11 441.78 L 703.21 441.78 L 703.21 436.75 Z M 708.26 436.75 L 708.26 441.78 L 718.38 441.78 L 718.38 436.75 Z M 723.43 436.75 L 723.43 441.78 L 733.52 441.78 L 733.52 436.75 Z" fill="#ffffff" stroke="none" pointer-events="all"/></g><g><rect x="633" y="352" width="110" height="97" fill="#2775e2" stroke="none" pointer-events="all"/></g><g><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 401px; margin-left: 634px;"><div data-drawio-colors="color: #FFFFFF; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 59px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><abbr title="Container Storage Interface">CSI</abbr></div></div></div></foreignObject><text x="688" y="418" fill="#FFFFFF" font-family="Helvetica" font-size="59px" text-anchor="middle"><abbr title="Container Storage Interface">CSI</abbr></text></switch></g></g><g><path d="M 261 152.5 L 430 152.5 L 430 419 L 584.18 419.09" fill="none" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="stroke" stroke-dasharray="8" style="animation: 500ms linear 0s infinite normal none running ge-flow-animation-ODqDc68bp3PnMKAe7DL-; stroke-dashoffset: 16;"/><path d="M 593.18 419.1 L 581.17 425.09 L 584.18 419.09 L 581.18 413.09 Z" fill="#9e9e9e" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g><g><path d="M 261 417.5 L 430 417.5 L 584.18 418.95" fill="none" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="stroke" stroke-dasharray="8" style="animation: 500ms linear 0s infinite normal none running ge-flow-animation-ODqDc68bp3PnMKAe7DL-; stroke-dashoffset: 16;"/><path d="M 593.18 419.04 L 581.12 424.92 L 584.18 418.95 L 581.23 412.92 Z" fill="#9e9e9e" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g><g><path d="M 261 682.5 L 430 682.5 L 430 419 L 584.18 419.09" fill="none" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="stroke" stroke-dasharray="8" style="animation: 500ms linear 0s infinite normal none running ge-flow-animation-ODqDc68bp3PnMKAe7DL-; stroke-dashoffset: 16;"/><path d="M 593.18 419.1 L 581.17 425.09 L 584.18 419.09 L 581.18 413.09 Z" fill="#9e9e9e" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g><g><path d="M 775.19 419.1 L 1030.18 419.1" fill="none" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="stroke" stroke-dasharray="8" style="animation: 500ms linear 0s infinite normal none running ge-flow-animation-ODqDc68bp3PnMKAe7DL-; stroke-dashoffset: 16;"/><path d="M 1039.18 419.1 L 1027.18 425.1 L 1030.18 419.1 L 1027.18 413.1 Z" fill="#9e9e9e" stroke="#9e9e9e" stroke-width="6" stroke-miterlimit="10" pointer-events="all"/></g></g></svg></p>
+<p>The only thing required for an external storage provider to be surfaced as a volume in Kubernetes is for it to have a <abbr title="Container Storage Interface">CSI</abbr> plugin. On the right side of the diagram you'll also notice three Kubernetes API objects:  </p>
+<ul>
+<li><strong>Persistent Volumes (<abbr title="PersistentVolume">PV</abbr>)</strong>: map to external storage objects</li>
+<li><strong>Persistent Volume Claims (<abbr title="PersistentVolumeClaim">PVC</abbr>)</strong>: akin to "tickets" that authorize Pods to be able to use the relevant <abbr title="PersistentVolume">PV</abbr></li>
+<li><strong>Storage Classes (<abbr title="StorageClass">SC</abbr>)</strong>: wrap the previous two in some automation</li>
+</ul>
+<p>Take an example below where our cluster is running on <abbr title="Google Kubernetes Engine">GKE</abbr> and we have a 2TB block of storage called <code>gce-pd</code>. We then create a <abbr title="PersistentVolume">PV</abbr> called <code>k8s-vol</code> that will map to the <code>gce-pd</code> with the <code>pd.csi.storage.gke.io</code> <abbr title="Container Storage Interface">CSI</abbr> plugin.</p>
+<div class="admonition warning">
+<p class="admonition-title">Multiple Pods cannot access the same volume.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">You cannot map an external storage volume to multiple PVs.</p>
+</div>
+<h2 id="container-storage-interface-csi">Container Storage Interface (<abbr title="Container Storage Interface">CSI</abbr>)</h2>
+<p>The <abbr title="Container Storage Interface">CSI</abbr> is <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">an open-source project</a> that defines interfaces in a clear manner so that storage can be leveraged across Kubernetes (and other container orchestrators).</p>
+<p>While <abbr title="Container Storage Interface">CSI</abbr> is a critical piece of getting storage working in Kubernetes, unless you explicitly work on writing storage plugins you'll likely never interact with it directly. Most of your interaction with <abbr title="Container Storage Interface">CSI</abbr> will simply be referencing your relevant <abbr title="Container Storage Interface">CSI</abbr> plugin in YAML files.  </p>
+<h2 id="persistent-volumes">Persistent Volumes</h2>
+<p>At a high level, PVs are the way external storage objects are represented in Kubernetes.</p>
+<h2 id="storage-classes">Storage Classes</h2>
+<p>StorageClasses (SCs) allow you to define different types of storage. How they are defined depends on the type of storage you're using. For example, if you're using Google Cloud Storage you have classes such as Standard, Nearline, Coldline, and Archive. You may also have simpler/more straightforward classes at your disposal such as SSD and HDD. When you create a <abbr title="StorageClass">SC</abbr> you map both of those definitions so Pods in your cluster can use either or.</p>
+<table>
+<thead>
+<tr>
+<th>External Type</th>
+<th>K8s StorageClass</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSD</td>
+<td>sc-fast</td>
+</tr>
+<tr>
+<td>HDD</td>
+<td>sc-slow</td>
+</tr>
+</tbody>
+</table>
+<p>Below is an example of how a StorageClass YAML definition may look for leveraging Google Cloud Storage:  </p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StorageClass</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssd</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd.csi.storage.gke.io</span><span class="w">  </span><span class="c1"># Google Cloud CSI plugin</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">volumeBindingMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WaitForFirstConsumer</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">allowVolumeExpansion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd-ssd</span><span class="w">  </span><span class="c1"># Google Cloud SSD drives</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">provisioned-iops-on-create</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10000&#39;</span>
+</span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">StorageClass objects are immutable. You cannot modify them after they are deployed.</p>
+</div>
+<p>Below is the high-level flow for creating and using StorageClasses:</p>
+<ol>
+<li>Ensure you have a storage back-end (cloud, on-prem, etc.)</li>
+<li>Have a running Kubernetes cluster</li>
+<li>Install and setup the <abbr title="Container Storage Interface">CSI</abbr> storage plugin to connect to Kubernetes</li>
+<li>Create at least one StorageClass on Kubernetes</li>
+<li>Deploy Pods with PVCs that reference those Storage classes</li>
+</ol>
+<p>Below is an example YAML file that ties <abbr title="StorageClass">SC</abbr>, <abbr title="PersistentVolumeClaim">PVC</abbr>, and Pods together so you can see how they all interact:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StorageClass</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssd</span><span class="w">  </span><span class="c1"># this will be referenced by the PVC below</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd.csi.storage.gke.io</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd-ssd</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nn">---</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypvc</span><span class="w">  </span><span class="c1"># this will be referenced by the Pod below</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Gi</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssd</span><span class="w">  </span><span class="c1"># matches the name of the SC above</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="nn">---</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypod</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">        </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypvc</span><span class="w">  </span><span class="c1"># matches the name of the PVC above</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="nn">...</span>
+</span></code></pre></div>
+<blockquote>
+<p>This YAML is only partially complete - it's mainly for showing the relationships between these objects via metadata.</p>
+</blockquote>
+<h4 id="access-mode">Access Mode</h4>
+<p>Kubernetes StorageClasses support three different types of volume access modes:</p>
+<ol>
+<li><strong>ReadWriteOnce(RWO)</strong>: <abbr title="PersistentVolume">PV</abbr> can only be bound as read/write by a single <abbr title="PersistentVolumeClaim">PVC</abbr> (or Pod)</li>
+<li><strong>ReadWriteMany</strong>: <abbr title="PersistentVolume">PV</abbr> can be bound as read/write by multiple PVCs (or Pods)</li>
+<li><strong>ReadOnlyMany</strong>: <abbr title="PersistentVolume">PV</abbr> can be bound as read-only by multiple PVCs (or Pods)</li>
+</ol>
+<h4 id="reclaim-policy">Reclaim Policy</h4>
+<p>When you define a <strong>reclaim policy</strong> on a volume, you tell Kubernetes how it should deal with a <abbr title="PersistentVolume">PV</abbr> after the relevant <abbr title="PersistentVolumeClaim">PVC</abbr> is released. There are two options that can be selected:  </p>
+<ol>
+<li><strong>Delete</strong>: Default option that will delete the <abbr title="PersistentVolume">PV</abbr> and any underlying storage resources on the external system itself once the <abbr title="PersistentVolumeClaim">PVC</abbr> is released.</li>
+<li><strong>Retain</strong>: This will keep the <abbr title="PersistentVolume">PV</abbr> object as well as any underlying data on the external system. However, no PVCs can use it going forward. </li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../config-maps-secrets/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ConfigMaps &amp; Secrets">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                ConfigMaps & Secrets
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../security/auth-rbac/" class="md-footer__link md-footer__link--next" aria-label="Next: Auth/RBAC">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Auth/RBAC
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.expand", "navigation.footer", "navigation.tracking", "palette.toggle", "content.tooltips", "content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      
+    
+  </body>
+</html>
