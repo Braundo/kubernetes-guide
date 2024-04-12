@@ -34,29 +34,6 @@ ham-svc   ClusterIP     192.168.1.200               443/TCP   5d19h
 eggs-svc  ClusterIP     192.168.1.208               443/TCP   5d19h
 ```
 
-Visually depicted as follows:  
-
-``` mermaid
-flowchart
-	subgraph ham app
-        direction TB
-		ham-svc["<b>ham-svc</b>\n<tt>name: ham\nIP: 192.168.1.200\nPort: 443"] --- Pod1["Pod"]
-		ham-svc --- Pod2["Pod"]
-		ham-svc --- Pod3["Pod"]
-	end
-    subgraph kube-dns
-        direction TB
-		dns-svc["Cluster DNS"]
-		dns-svc --- svc-reg["<b>registry</b><br><tt>eggs: 192.168.1.208<br>ham: 192.168.1.200"]
-	end
-    subgraph eggs app
-        direction TB
-		eggs-svc["<b>eggs-svc</b>\n<tt>name: eggs\nIP: 192.168.1.208\nPort: 443"] --- Pod4["Pod"]
-		eggs-svc --- Pod5["Pod"]
-		eggs-svc --- Pod6["Pod"]
-	end
-```
-
 In order for the `ham` application to communicate with the `eggs` application, it needs to know two things:  
 
 1. The *name* of the `eggs` application's Service (`eggs-svc`)
@@ -83,22 +60,7 @@ Now imagine you wanted to partition the cluster domain further with `perf` and `
 
 Objects within the **same Namespace** can connect to each other using short names. However, cross-Namespace communication must use the FQDN. To visualize this, take the following setup where we have a Service in each Namespace fronting a few Pods:
 
-``` mermaid
-flowchart
-	subgraph qa Namespace
-        direction TB
-		eggs-svc["<tt>eggs-svc</b>"] --- Pod1["<tt>scrambled"]
-		eggs-svc --- Pod2["<tt>fried"]
-		eggs-svc --- Pod3["<tt>poached"]
-	end
-    subgraph perf Namespace
-        direction TB
-		ham-svc["<tt>ham-svc</b>"] --- Pod4["<tt>bacon"]
-		ham-svc --- Pod5["<tt>sausage"]
-		ham-svc -.-|<tt>ham-svc| Pod6["<tt>salt"]
-        eggs-svc -.-|<tt>eggs-svc.qa.svc.cluster.local| Pod6["<tt>salt"]
-	end
-```
+![service](../../images/dns.svg)
 
 For the `salt` Pod to communicate with the `ham-svc` Service, it can simply reference it by it's short name (`ham-svc`) since they are within the *same* `perf` Namespace.  
 

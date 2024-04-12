@@ -22,9 +22,8 @@ nav:
     - Certificates: security/certs.md
     - Service Accounts: security/service-account.md
     - Container Security: security/container-security.md
-  - Storage: storage.md
   - Networking:
-    - Overview: networking/overview.md
+    - Networking Overview: networking/overview.md
     - DNS: networking/dns.md
     - Ingress: networking/ingress.md
   - Misc. Topics:
@@ -33,8 +32,8 @@ nav:
     - Configuring HA: misc/ha.md
 theme:
   name: material
-  logo: assets/logo.svg
-  favicon: assets/logo.png
+  logo: logo.png
+  favicon: logo.png
   font:
     text: Ubuntu
     code: Fira Code
@@ -49,7 +48,6 @@ theme:
         name: Switch to light mode
   features:
     - navigation.top
-    - navigation.expand
     - navigation.footer
     - navigation.tracking
     - palette.toggle

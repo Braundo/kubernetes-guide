@@ -5,37 +5,16 @@ icon: material/circle-small
 
 Ingresses come into play here by allowing multiple Services to be "fronted" by a single cloud load-balancer. To accomplish this, Ingress will use a single LoadBalancer Service and use host-based or path-based routing to send traffic to the appropriate underlying Service.  
 
-``` mermaid
-flowchart LR
-    CLD[cloud] --> LBS
-    LBS[<b>LoadBalancer<br>Service] --> ing1[<b>Ingress controller</b><br><br><i>- routing rules<br>- reading host &<br>path names]
-    ing1 --> SVC1[<tt>svc a]
-    ing1 --> SVC2[<tt>svc b]
-    ing1 --> SVC3[<tt>svc c]
-```
+![service](../../images/ingress-1.svg)
 
 ## Routing Examples
 
 #### Host-based Routing
-``` mermaid
-flowchart LR
-    CLD[client] --> |ham.foo.bar| LBS
-    CLD[client] --> |eggs.foo.bar| LBS
-    LBS[<b>LoadBalancer<br>Service] --> ing1[<b>Ingress controller]
-    ing1 --> |ham.foo.bar|SVC1[<b>ham-svc]
-    ing1 --> |eggs.foo.bar|SVC2[<b>eggs-svc]
-```
-<br/><br/><br/>
+![service](../../images/ingress-2.svg)
+<br/><br/><br/><br><br>
 
 #### Path-based Routing
-``` mermaid
-flowchart LR
-    CLD[client] --> |foo.bar/ham| LBS
-    CLD[client] --> |foo.bar/eggs| LBS
-    LBS[<b>LoadBalancer<br>Service] --> ing1[<b>Ingress controller]
-    ing1 --> |foo.bar/ham|SVC1[<b>ham-svc]
-    ing1 --> |foo.bar/eggs|SVC2[<b>eggs-svc]
-```
+![service](../../images/ingress-3.svg)
 <br><br>
 
 !!! warning "Kubernetes does not come with an Ingress controller by default"
