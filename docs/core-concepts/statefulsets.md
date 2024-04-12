@@ -8,43 +8,12 @@ StatefulSets are a Kubernetes feature designed to manage applications that need 
 It's easy to compare StatefulSets with Deployments given they are v1 API objects and follow the controller architecture - but there are notable differences. StatefulSets are Kubernetes tools for running and managing applications that need to remember who they are and what they know—think of them like memory keepers for your apps, such as databases that need to recall data after a reboot. Unlike Deployments that are more about stateless apps (think of them as forgetful but easily replaceable), StatefulSets make sure each of their Pods has a consistent name, network identity, and storage, even if they move around in the cluster. This makes StatefulSets perfect for when your app's individual identity and history are crucial for running smoothly.  
 
 StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:  
+#### Node/Pod Failure with Deployments
+![control-loops](../../images/node-fail-deploy.svg)
+<br><br><br>
 
-``` mermaid
----
-title: Node Replacement w/ Deployments
----
-flowchart LR
-    subgraph _
-    dep-pod["<b>my-pod1</b><br><tt>10.0.0.5"]
-    vb1[(<b>myVol)]
-    dep-pod -.- vb1
-    end
-    _ --> pf[/"Pod/node failure"/]
-    subgraph __
-    dep-pod2["<b>my-pod2</b><br><tt>10.0.0.9"]
-    end
-    pf -->|"replace failed Pod"| __
-```
-<br/>
-
-``` mermaid
----
-title: Node Replacement w/ StatefulSets
----
-flowchart LR
-    subgraph _
-    ss-pod["<b>my-pod1</b><br><tt>10.0.0.5"]
-    vb1[(<b>myVol)]
-    ss-pod -.- vb1
-    end
-    _ --> pf[/"Pod/node failure"/]
-    subgraph __
-    ss-pod2["<b>my-pod1</b><br><tt>10.0.0.5"]
-    vb2[(<b>myVol)]
-    ss-pod2 -.- vb2
-    end
-    pf -->|"replace failed Pod"| __
-```
+#### Node/Pod Failure with StatefulSets
+![control-loops](../../images/node-fail-deploy.svg)
 
 Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  
 

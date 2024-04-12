@@ -2,16 +2,7 @@ Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kube
 <br/><br/>
 Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.
 <br><br><br>
-<center>
-``` mermaid
-graph TB
-    cc[Core Concepts] -->
-    Security -->
-    Storage -->
-    Networking -->
-    misc[Misc. Topics]
-```
-</center>
+
 <br/><br/><br/><br/><br/><br/><br/><br/>
 > **Legal discalimer**:  
 >  
