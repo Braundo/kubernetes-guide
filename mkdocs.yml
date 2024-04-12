@@ -16,6 +16,7 @@ nav:
       - Namespaces: core-concepts/namespaces.md
       - Scheduling: core-concepts/scheduling.md
       - ConfigMaps & Secrets: core-concepts/config-maps-secrets.md
+      - Storage: core-concepts/storage.md
   - Security:
     - Auth/RBAC: security/auth-rbac.md
     - Certificates: security/certs.md

@@ -15,30 +15,7 @@ In the traditional monolithic application days, environment variables and config
 
 Let's take a look at an example from point #1 there. Imagine you have an application that runs in 3 different environments: `dev`, `perf`, and `prod`. Each environment has different configurations such as credentials, network policies, security policies, etc. In the old world, if you were to package those configurations with the application, you'd end up with three separate images stored in three separate repositories. Any time a developer needs to make an update to the application, they must ensure they update it across all three repos, rebuild all three images, and redeploy all three images.
 
-``` mermaid
-flowchart LR
-    subgraph app repos
-        dev[(<b>dev</b><br><tt>- dev credentials<br>- dev network policy<br>- dev security policy)]
-        perf[(<b>perf</b><br><tt>- perf credentials<br>- perf network policy<br>- perf security policy)]
-        prod[(<b>prod</b><br><tt>- prod credentials<br>- prod network policy<br>- prod security policy)]
-    end
-    subgraph app images
-        dev2[<b>dev image]
-        perf2[<b>perf image]
-        prod2[<b>prod image]
-    end
-    subgraph environments
-        dev3[<b>dev]
-        perf3[<b>perf]
-        prod3[<b>prod]
-    end
-    dev -->|builds| dev2
-    perf -->|builds| perf2
-    prod -->|builds| prod2
-    dev2 -->|deployed| dev3
-    perf2 -->|deployed| perf3
-    prod2 -->|deployed| prod3
-```
+![service](../../images/cm-1.svg)
 <br>
 
 A better way to handle this is by decoupling those configuration values from your application. You build and maintain a single application repository and build & run that single image in all environments. For this to be possible, your applications should be built as plain as possible with as little configuration necessary embedded. The configurations for each environment are then stored separately and applied to the various environments at runtime.  
@@ -46,32 +23,7 @@ A better way to handle this is by decoupling those configuration values from you
 
 In this manner, application code is updated in *one* repository, *one* image is used, and configurations are independently managed.
 
-``` mermaid
-flowchart LR
-    subgraph app repo
-        app[(<b>app source code</b>)]
-    end
-    subgraph app image
-        app2[<b>app image]
-    end
-    subgraph environments
-        dev[<b>dev]
-        perf[<b>perf]
-        prod[<b>prod]
-    end
-    subgraph ConfigMaps
-    dev1[("dev CM")]
-    perf1[("perf CM")]
-    prod1[("prod CM")]
-    end
-    app -->|builds| app2
-    app2 -->|apply config| dev1
-    app2 -->|apply config| perf1
-    app2 -->|apply config| prod1
-    dev1 --> |deployed| dev
-    perf1 --> |deployed| perf
-    prod1 --> |deployed| prod
-```
+![service](../../images/cm-2.svg)
 
 ## ConfigMaps
 Kubernetes allows this to happen through the use of a **ConfigMap (CM)**. ConfigMaps are used to store non-sensitive information and configuration data such as:  
@@ -194,23 +146,7 @@ The most flexible way to leverage ConfigMaps is with volumes. By using them with
 1. Create a ConfigMap
 1. Create a ConfigMap volume in your Pod spec
 1. Mount the ConfigMap volume into the container
-
-``` mermaid
-flowchart LR
-    subgraph ConfigMap
-        cm1[<tt>central = STL]
-        cm2[<tt>west = SF]
-    end
-
-    subgraph Pod
-        cmv[(ConfigMap<br>vol)]
-        subgraph container
-        fs["<b>/etc/regions</b><br><tt>-- central<br>-- west"]
-        end
-    end
-ConfigMap --> cmv
-cmv --> fs
-```
+<br><br>
 
 Here's an example YAML file that would create a Pod called `configMapVol`, a volume called `volMap`, and mounts the `volMap` volume to `/etc/regions`:  
 

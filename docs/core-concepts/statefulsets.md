@@ -52,15 +52,8 @@ One nice feature of StatefulSets is that all Pods managed by them get a predicta
 ## Order of Creation/Deletion
 StatefulSets in Kubernetes are all about order and precision. They initiate and terminate Pods one at a time, following a strict sequence. This approach guarantees that each Pod is fully operational and ready to handle requests before the next Pod in the sequence is brought to life. Unlike the more free-form Deployments, which may initiate a bunch of Pods at once through a ReplicaSet—potentially tripping over themselves with race conditions—StatefulSets are the thoughtful orchestrators ensuring each Pod gets the attention it needs to start or stop without a rush.  
 
-``` mermaid
----
-title: Deploying a StatefulSet
----
-flowchart 
-    subgraph StatefulSet
-        pod1[<b><tt>my-sts-0] --> |"waiting for running and ready"|pod2[<b><tt>my-sts-1] --> |"waiting for running and ready"|pod3[<b><tt>my-sts-2] --> |"waiting for running and ready"|pod4[<b><tt>...]
-    end
-```  
+#### Deploying a StatefulSet
+![control-loops](../../images/order-creation-sts.svg)
 
 StatefulSets in Kubernetes not only ensure a methodical boot-up but also adhere to a careful scaling strategy, both up and down. For instance, when scaling from five to seven replicas, the StatefulSet will sequentially initiate each new Pod and ensure it's fully operational before moving on to the next. Conversely, during scale-down, the StatefulSet will remove Pods starting from the highest index, allowing each to decommission completely before proceeding. This step-by-step approach is critical for applications like databases, where simultaneous termination could lead to data loss.  
 

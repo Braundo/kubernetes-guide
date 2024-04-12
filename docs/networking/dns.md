@@ -12,13 +12,7 @@ As briefly mentioned in the previous section, Kubernetes provides its own DNS se
 
 Every Service created on a Kubernetes cluster will automatically register itself with the cluster DNS to ensure that all Pods across the cluster can "find" it.
 
-``` mermaid
-flowchart LR
-    SVC[<b>Service</b><br><tt>foo-svc<br>10.0.0.8]
-    SVC --> |1. Service registered| REG[<b>Service registry</b><br><tt>foo-svc: 10.0.0.8]
-    CON[<tt>app] --> |2. Discover Service| REG
-    CON --> |3. Consume Service| SVC
-```
+![service](../../images/svc-2.svg)
 <br/><br/><br/>
 **The high-level flow of Service registration is as follows:**  
 

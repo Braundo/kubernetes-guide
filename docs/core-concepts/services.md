@@ -7,21 +7,7 @@ As mentioned in the [Deployments section](./deployments.md), Pods will likely be
 
 This is where Services come in. Services provide stable, long-lived connection points for clients to connect to. They also maintain a list of Pods to route to and provide basic load-balancing capabilities. With Services, the underlying Pods can come and go, but any client should be able to maintain open communication with the application as the Service provides the logic to know which Pods are healthy and where to route traffic.  
 
-``` mermaid
-flowchart LR
-    client --> SVC[Service]
-    SVC --> Pod1[Pod]
-    SVC --> Pod2[Pod]
-    SVC --> Pod3[Pod]
-    SVC --> Pod4[Pod]
-
-    subgraph Deployment
-        Pod1
-        Pod2
-        Pod3
-        Pod4
-    end
-```
+![service](../../images/svc.svg)
 
 ## Labels and Selectors
 So how does that work? How do Services know which Pods they should be sending traffic to? The short answer is **labels** and **selectors**. In essence, when you define a Service, you specify labels and selectors that - when matched with the same ones on Pods - will route traffic to them.  
@@ -30,21 +16,11 @@ As an example, image you want to put a stable Service in front of series of Pods
 
 Similar to other Kubernetes objects, the Services controller will continually monitor new Pods labels and continually update it's "list" (more on that list later) of Pods to route to.  
 
-``` mermaid
-flowchart LR
-    SVC[<b>Service</b><tt><br>env=prod<br>app=shop] --> Pod1[<b>Pod</b><tt><br>env=prod<br>app=shop]
-    SVC --> Pod2[<b>Pod</b><tt><br>env=prod<br>app=shop]
-    SVC --> Pod3[<b>Pod</b><tt><br>env=prod<br>app=shop]
-    SVC ~~~ Pod4[<b>Pod</b><tt><br>env=dev<br>app=shop]
-```
+![service](../../images/svc-label-1.svg)
 
 One thing to note is that Pods *can* have extra labels and still be managed by the Service if it's other labels still match. As a concrete example, both of the Pods below will still have traffic routed to them, even though one of them has a label that the Service does not.
 
-``` mermaid
-flowchart LR
-    SVC[<b>Service</b><tt><br>env=prod<br>app=shop] --> Pod1[<b>Pod</b><tt><br>env=prod<br>app=shop<br>cur=usd]
-    SVC --> Pod2[<b>Pod</b><tt><br>env=prod<br>app=shop]
-```
+![service](../../images/svc-label-2.svg)
 
 ## EndpointSlices
 As mentioned above, as Pods are spinning up and down, the Service will keep an updated list of Pods with the given labels and selectors. How it does this is through the use of **EndpointSlices**, which are effectively just dynamic lists of healthy Pods that match a given label selector.  
@@ -76,17 +52,6 @@ spec:
     type: front-end
 ```
 > Only **`port`** is required in the configuration for `spec.ports`. **`targetPort`** is assumed to be the same as port if not specified. **`nodePort`** is auto-assigned if not specified.
-
-``` mermaid
-graph LR
-    subgraph Node
-        NodePortService[<b>NodePort Service</b><br>NodePort: 30008<br>Port: 80]
-        Pod[<b>Pod</b><br>TargetPort: 80]
-        NodePortService -.-|port 80| Pod
-    end
-    User -.- |port 30008| NodePortService
-```
-
 
 <br><br>
 

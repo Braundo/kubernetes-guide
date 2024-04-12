@@ -1,3 +1,6 @@
+---
+icon: material/circle-small
+---
 ## Overview
 Arguably the most important aspect of any application is the ability to persist and retrieve data. Thankfully, Kubernetes supports a wide variety of storage back-ends and also integrates with many third-party systems that provide things such as replication, snapshots, backup and more.  
 
@@ -5,21 +8,7 @@ Kubernetes can also support different types of storage - anything from objects t
 
 Kubernetes is able to support so many different storage types and services by leveraging the [**Container Storage Interface (CSI)**](https://github.com/container-storage-interface/spec/blob/master/spec.md). The CSI is an established standard that provides a straightforward interface for Kubernetes.
 
-``` mermaid
-flowchart LR
-    subgraph external storage
-        netapp[(NetApp)]
-        azureblock[(Azure)]
-        etc[(etc)]
-    end
-    netapp --> CSI
-    azureblock --> CSI
-    etc --> CSI
-    subgraph Kubernetes cluster
-    CSI -->
-    subsystem["<b>Persistent Volume subsystem</b><br><tt>pv, pvc, sc"]
-    end
-```
+![service](../../images/storage-1.svg)
 
 The only thing required for an external storage provider to be surfaced as a volume in Kubernetes is for it to have a CSI plugin. On the right side of the diagram you'll also notice three Kubernetes API objects:  
 
@@ -27,17 +16,7 @@ The only thing required for an external storage provider to be surfaced as a vol
 - **Persistent Volume Claims (PVC)**: akin to "tickets" that authorize Pods to be able to use the relevant PV
 - **Storage Classes (SC)**: wrap the previous two in some automation
 
-Take an example below where our cluster is running on GKE and we have a 2TB block of storage called `gce-pd`. We then create a PV called `k8s-vol` that will map to the `gce-pd` with the `pd.csi.storage.gke.io` CSI plugin. Here's how that might look visually:  
-
-``` mermaid
-flowchart LR
-    storage[(<tt>gce-pd)] --- |pd.csi.storage.gke.io|k8s["Kubernetes cluster"]
-    pv["<b>k8s-vol</b><br><tt>pv"]
-    k8s --- pv
-    pv -.- storage
-    pv --- pvc["pvc fa:fa-ticket"]
-    pvc --- pod
-```
+Take an example below where our cluster is running on GKE and we have a 2TB block of storage called `gce-pd`. We then create a PV called `k8s-vol` that will map to the `gce-pd` with the `pd.csi.storage.gke.io` CSI plugin.
 
 !!! warning "Multiple Pods cannot access the same volume."
 !!! warning "You cannot map an external storage volume to multiple PVs."
