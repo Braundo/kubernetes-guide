@@ -12,7 +12,6 @@ nav:
       - Pods: core-concepts/pods.md
       - Deployments: core-concepts/deployments.md
       - StatefulSets: core-concepts/statefulsets.md
-      - Services: core-concepts/services.md
       - Namespaces: core-concepts/namespaces.md
       - Scheduling: core-concepts/scheduling.md
       - ConfigMaps & Secrets: core-concepts/config-maps-secrets.md
@@ -23,6 +22,7 @@ nav:
     - Service Accounts: security/service-account.md
     - Container Security: security/container-security.md
   - Networking:
+    - Services: networking/services.md
     - Networking Overview: networking/overview.md
     - DNS: networking/dns.md
     - Ingress: networking/ingress.md

@@ -3,7 +3,7 @@ icon: material/circle-small
 ---
 
 ## Overview
-As mentioned in the [Deployments section](./deployments.md), Pods will likely be spinning up and down *a lot* in your environment throughout the course of updates, rollbacks, failures, etc. As such, it's never a good idea for any client to connect directly to a Pod. Pods are there one minute, gone the next - awfully unreliable in and of themselves.  
+As mentioned in the [Deployments section](../core-concepts/deployments.md), Pods will likely be spinning up and down *a lot* in your environment throughout the course of updates, rollbacks, failures, etc. As such, it's never a good idea for any client to connect directly to a Pod. Pods are there one minute, gone the next - awfully unreliable in and of themselves.  
 
 This is where Services come in. Services provide stable, long-lived connection points for clients to connect to. They also maintain a list of Pods to route to and provide basic load-balancing capabilities. With Services, the underlying Pods can come and go, but any client should be able to maintain open communication with the application as the Service provides the logic to know which Pods are healthy and where to route traffic.  
 

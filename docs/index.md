@@ -1,9 +1,11 @@
 <center>
-<img src="logo.png" class="shine-effect" width="45%">
+<img src="logo.png" width="30%">
 </center>
 <br><br>
 Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!  
 <br/><br/>
+The initial focus of this guide is to cover topics to help you pass the Kubernetes Certified Administrator (CKA) exam. As time goes on, I will add more study content here to help prepare for other Kubernetes-related topics.
+<br><br>
 
 Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.
 <br><br><br>
