@@ -2,7 +2,7 @@
 icon: material/circle-small
 ---
 ## Overview
-Arguably the most important aspect of any application is the ability to persist and retrieve data. Thankfully, Kubernetes supports a wide variety of storage back-ends and also integrates with many third-party systems that provide things such as replication, snapshots, backup and more.  
+Arguably the most important aspect of any application is the ability to persist and retrieve data. TKubernetes supports a diverse array of storage back-ends, ranging from local storage on nodes to network-attached storage (NAS) and cloud-based storage solutions. It integrates seamlessly with many third-party systems to offer features like replication, snapshots, and backups, enhancing data durability and availability.   
 
 Kubernetes can also support different types of storage - anything from objects to files or blocks. However, regardless of the type of storage or where it's located (on-premise, cloud, etc.), Kubernetes will treat it as a **volume**.  
 
@@ -22,7 +22,9 @@ Take an example below where our cluster is running on GKE and we have a 2TB bloc
 !!! warning "You cannot map an external storage volume to multiple PVs."
 
 ## Container Storage Interface (CSI)
-The CSI is [an open-source project](https://github.com/container-storage-interface/spec/blob/master/spec.md) that defines interfaces in a clear manner so that storage can be leveraged across Kubernetes (and other container orchestrators).
+The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems (COS) like Kubernetes. CSI allows for the consistent configuration and management of storage solutions across various container orchestration systems. 
+
+CSI enables storage providers to develop a standardized plugin once and have it work across a multitude of container orchestration systems without requiring changes. This simplifies the process of adding new storage capabilities to Kubernetes clusters and ensures compatibility and extendibility.
 
 While CSI is a critical piece of getting storage working in Kubernetes, unless you explicitly work on writing storage plugins you'll likely never interact with it directly. Most of your interaction with CSI will simply be referencing your relevant CSI plugin in YAML files.  
 
@@ -111,6 +113,24 @@ When you define a **reclaim policy** on a volume, you tell Kubernetes how it sho
 1. **Delete**: Default option that will delete the PV and any underlying storage resources on the external system itself once the PVC is released.
 1. **Retain**: This will keep the PV object as well as any underlying data on the external system. However, no PVCs can use it going forward. 
 
+#### Dynamic Provisioning
+Storage Classes in Kubernetes abstract the details of how storage is provided from how it is consumed. They enable dynamic provisioning of storage resources as needed, which is particularly useful in cloud environments where storage can be requested and scaled programmatically.
+
+For example, a StorageClass can define the type of storage (e.g., standard, high-speed SSD, etc.), the replication factor, and the region. When a PVC that references this StorageClass is created, Kubernetes automatically provisions the required storage according to the specifications and binds it to the PVC.
+
+Here's an example YAML definition of a StorageClass that uses a Google Cloud persistent disk with high-performance SSD:
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-storage
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
+  replication-type: none
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+```
 
 *[PV]: PersistentVolume
 *[PVC]: PersistentVolumeClaim

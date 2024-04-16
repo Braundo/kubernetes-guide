@@ -26,13 +26,14 @@ In this manner, application code is updated in *one* repository, *one* image is 
 ![service](../../images/cm-2.svg)
 
 ## ConfigMaps
-Kubernetes allows this to happen through the use of a **ConfigMap (CM)**. ConfigMaps are used to store non-sensitive information and configuration data such as:  
+**ConfigMaps** are used within Kubernetes to store non-sensitive, configuration data that containers in your Pods may need to consume. Common uses include: 
 
-1. Hostnames
-1. Server configurations
-1. Database configurations
-1. Account names
-1. Environment variables
+- **Hostnames**: Names of other services that the application may need to communicate with.
+- **Server Configurations**: External server configurations like server names or IP addresses.
+- **Database Configurations**: Database connection details except passwords, which should be stored in Secrets.
+- **Account Names**: Usernames or other account identifiers.
+- **Environment Variables**: Other miscellaneous settings as key-value pairs that your application uses to modify its behavior in different environments.
+
 
 !!! warning "You should not use ConfigMaps to store sensitive data such as passwords. Secrets should be used for that purpose."  
 
@@ -177,7 +178,26 @@ west
 ```
 
 ## Secrets
-Secrets are extremely similar in shape and function to ConfigMaps in that they hold configuration data that can be injected into containers at run-time. However, Secrets differ in the fact that they base-64 encode values and are made for storing sensitive data such as tokens, certificates, and passwords.
+**Secrets** are extremely similar in shape and function to ConfigMaps in that they hold configuration data that can be injected into containers at run-time. However, Secrets differ in the fact that they base-64 encode values. 
+
+**Secrets** are crucial for managing sensitive data such as passwords, tokens, and keys within Kubernetes. Unlike ConfigMaps, Secrets are intended to hold confidential information and offer a mechanism to reduce the risk of exposure:
+
+- **Encoding Data**: Secrets store data in Base64 encoded format, which does not encrypt data but merely encodes it to obfuscate clear text.
+- **Usage in Pods**: Secrets can be mounted as data volumes or exposed as environment variables to be used by a Pod without exposing the information in the Pod's definition or source code.
+- **Security Practices**: It's essential to secure access to Secrets using Kubernetes RBAC policies to ensure that only authorized Pods and users can retrieve them.
+
+Here's how you might define a Secret and use it within a Pod:
+
+``` yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  password: UGFzc3dvcmQxMjM=  # Base64 encoded "Password123"
+  user: dmlubnk=              # Base64 encoded "vinny"
+```
 
 !!! warning "These values are not encrypted by default and can easily be decoded."  
 
@@ -191,20 +211,6 @@ flowchart TD
     D --> E[Secret is mounted into the container's temp filesystem and decoded into plain text]
     E --> F[Application consumes Secret]
     F --> G[Secret is deleted from the node once the Pod is deleted]
-```
-Additionally here is an example of how a YAML file might look for creating a Secret:
-
-``` yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: my-secret
-type: Opaque
-data:
-  password: UGFzc3dvcmQxMjM=
-  user: dmlubnk=
-
-...
 ```
 
 And here's an example of how to define a Pod and use the Secret as a volume:  
