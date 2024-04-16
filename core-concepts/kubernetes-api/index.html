@@ -516,7 +516,7 @@
 <article class="md-content__inner md-typeset">
 <h1>API Server</h1>
 <h2 id="overview">Overview</h2>
-<p>Kubernetes revolves entirely around its API, which serves as the central nervous system of the platform. Every interaction within Kubernetes—whether it's creating, reading, updating, or deleting resources like Pods and Services—occurs through requests made to the API and processed by the API server.  </p>
+<p>The Kubernetes API serves as the central nervous system of the platform, orchestrating all interactions within the system. Every operation within Kubernetes, from creating and reading to updating and deleting resources such as Pods and Services, is conducted through requests to the API, which are then processed by the API server. </p>
 <p>While <code>kubectl</code> is the go-to command-line tool for sending these requests, they can also be composed programmatically or via specialized API development tools. Regardless of how they're formulated, all requests are funneled to the API server, where they undergo authentication and authorization checks. Once verified, these requests are actioned within the cluster. For instance, a request to create a resource results in its deployment to the cluster, and the object's configuration is then stored in the cluster's datastore. This API-centric design ensures a consistent and secure method for managing the cluster's state and operations.  </p>
 <pre class="mermaid"><code>---
 title: API request flow
@@ -527,7 +527,8 @@ flowchart LR
     api{{"&lt;tt&gt;API"}} --&gt;
     sched{{"&lt;tt&gt;Scheduler"}} --&gt;
     etcd{{"&lt;tt&gt;Cluster&lt;br&gt;store"}}</code></pre>
-<p>In Kubernetes, the intricate dance of communication is choreographed with serialization, where objects like Pods and Services are transformed into JSON strings for transmission over HTTP. This transformation occurs both ways: clients such as <code>kubectl</code> serialize objects to JSON when making requests to the API server, and the API server does the same when sending back responses. What's more, Kubernetes captures the serialized state of these objects in the cluster's persistent storage, commonly etcd, ensuring the cluster's state is maintained and recoverable.  </p>
+<p>Communication within Kubernetes relies on serialization, the process of converting objects like Pods and Services into JSON strings for HTTP transmission. This conversion is bidirectional: clients, including kubectl, serialize objects into JSON to make requests, and the API server does likewise when responding. Moreover, Kubernetes stores these serialized states in persistent storage, typically etcd, ensuring the cluster’s state is both maintained and recoverable. 
+<br/></p>
 <p><abbr title="the process of converting a data object into a byte stream">Serialization</abbr> in Kubernetes isn't limited to JSON; it also embraces <abbr title="cross-platform data format used to serialize structured data">Protobuf</abbr>, a schema known for its speed and efficiency, outpacing JSON in performance and scalability. However, <abbr title="cross-platform data format used to serialize structured data">Protobuf</abbr>'s complexity makes it less accessible for direct inspection and debugging, which is why it's primarily utilized for internal communications within the cluster, while JSON remains the go-to format for external client interactions.  </p>
 <p>To smooth out the serialization process, clients specify their supported formats using the Content-Type header in their HTTP requests. For instance, a client that only understands JSON will declare <code>Content-Type: application/json</code>, prompting Kubernetes to respond with data serialized in JSON, adhering to the client's capabilities and preferences.  </p>
 <p>Kubernetes is a world of API-defined objects, ranging from the familiar Pods and Services to the traffic-managing Ingresses. All these elements are accessible via the API server, which acts as the gateway for interaction with the cluster. You typically use <code>kubectl</code>, the command-line interface, to make requests for these objects. The beauty of Kubernetes extends to its extensibility, allowing third parties to define custom resources that are just as accessible through <code>kubectl</code> and the API server.  </p>
@@ -563,11 +564,11 @@ flowchart LR
 <p>At its core, the API server's role is to make the Kubernetes API accessible, both to clients within the cluster and to those outside. It secures client connections with TLS encryption and applies various authentication and authorization protocols to vet and process only legitimate requests. All requests, no matter their origin, are subject to the same stringent auth checks.  </p>
 <p>The "RESTful" part of the API means it adheres to a modern web API structure that deals with CRUD-style (Create, Read, Update, Delete) requests via standard HTTP methods like <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>PATCH</code>, and <code>DELETE</code>.  </p>
 <p>Typically, the API server is available on ports 443 or 6443, although these can be configured to suit specific needs. The flexibility of the API server ensures that it can cater to different environments while maintaining strict security and reliable service.  </p>
-<p>The following command will show you the address and port your Kubernetes cluster is exposed on:<br/>
+<p>The following command will show you the address and port your Kubernetes cluster is exposed on:<br>
 <div class="language-shell highlight"><span class="filename">$ kubectl cluster-info</span><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="w">    </span>Kubernetes<span class="w"> </span>control<span class="w"> </span>plane<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://192.168.1.105:6443
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span>CoreDNS<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://192.168.1.105:6443/api/v1/namespaces/...
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span>Metrics-server<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://192.168.1.105:6443/api/v1/namespaces/...
-</span></code></pre></div></p>
+</span></code></pre></div></br></p>
 <p>In essence, the Kubernetes API server serves as the gateway to the cluster, offering a secure, RESTful interface for interacting with the cluster's state. Operating from the control plane, it necessitates robust availability and performance to ensure swift and reliable handling of requests, embodying the critical link between the user's commands and the cluster's operational response.</p>
 <div class="admonition warning">
 <p class="admonition-title">Note</p>
@@ -668,13 +669,13 @@ flowchart LR
 <p><strong>Extending Kubernetes with Custom Resources and Controllers</strong><br/>
 A vivid example of such extensibility can be observed in the storage domain, where third-party vendors integrate advanced functionalities—like snapshot scheduling—directly into Kubernetes through custom resources. While Kubernetes natively supports storage operations through StorageClasses and PersistentVolumeClaims, these custom resources enable the exposure of vendor-specific features within the same Kubernetes ecosystem.</p>
 <p><strong>The Extension Blueprint</strong><br/>
-Extending the Kubernetes API typically involves two key steps:</p>
+Extending the Kubernetes API usually involves:</p>
 <ol>
 <li>
-<p><strong>Creating a Custom Controller</strong>: This involves developing a controller that operates on your custom logic, watching for changes to your custom resources and ensuring the desired state is achieved within the cluster.  </p>
+<p><strong>Creating a Custom Controller</strong>: Develop a controller that uses your custom logic to monitor changes to your resources, ensuring the cluster achieves and maintains the desired state.</p>
 </li>
 <li>
-<p><strong>Defining a Custom Resource</strong>: Kubernetes facilitates this through the CustomResourceDefinition (CRD) API object. CRDs allow you to define new types of resources that integrate seamlessly with the Kubernetes API, complete with their own RESTful paths. Once defined, these custom resources can be managed via <code>kubectl</code> just like built-in resources, offering a native Kubernetes experience for your custom logic.  </p>
+<p><strong>Defining a Custom Resource</strong>: Utilize Kubernetes' CustomResourceDefinition (CRD) API object to create new resource types. CRDs integrate seamlessly with the Kubernetes API and include their own RESTful paths. Once established, manage these resources with kubectl as you would with standard resources, thus maintaining a consistent Kubernetes experience.</p>
 </li>
 </ol>
 <p>This approach not only enriches the Kubernetes ecosystem with new functionalities but also maintains the uniformity and coherence of the Kubernetes API, ensuring that custom resources are as accessible and manageable as the built-in ones. Through CRDs, Kubernetes embraces an extendable architecture, empowering developers to innovate and expand the platform's capabilities to meet their unique operational requirements.  </p>
