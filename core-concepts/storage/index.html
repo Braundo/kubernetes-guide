@@ -685,6 +685,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dynamic-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Provisioning
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1170,6 +1179,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dynamic-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Provisioning
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1193,7 +1211,7 @@
   <h1>Storage</h1>
 
 <h2 id="overview">Overview</h2>
-<p>Arguably the most important aspect of any application is the ability to persist and retrieve data. Thankfully, Kubernetes supports a wide variety of storage back-ends and also integrates with many third-party systems that provide things such as replication, snapshots, backup and more.  </p>
+<p>Arguably the most important aspect of any application is the ability to persist and retrieve data. TKubernetes supports a diverse array of storage back-ends, ranging from local storage on nodes to network-attached storage (NAS) and cloud-based storage solutions. It integrates seamlessly with many third-party systems to offer features like replication, snapshots, and backups, enhancing data durability and availability.   </p>
 <p>Kubernetes can also support different types of storage - anything from objects to files or blocks. However, regardless of the type of storage or where it's located (on-premise, cloud, etc.), Kubernetes will treat it as a <strong>volume</strong>.  </p>
 <p>Kubernetes is able to support so many different storage types and services by leveraging the <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md"><strong>Container Storage Interface (<abbr title="Container Storage Interface">CSI</abbr>)</strong></a>. The <abbr title="Container Storage Interface">CSI</abbr> is an established standard that provides a straightforward interface for Kubernetes.</p>
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1214,7 +1232,8 @@
 <p class="admonition-title">You cannot map an external storage volume to multiple PVs.</p>
 </div>
 <h2 id="container-storage-interface-csi">Container Storage Interface (<abbr title="Container Storage Interface">CSI</abbr>)</h2>
-<p>The <abbr title="Container Storage Interface">CSI</abbr> is <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">an open-source project</a> that defines interfaces in a clear manner so that storage can be leveraged across Kubernetes (and other container orchestrators).</p>
+<p>The <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">Container Storage Interface</a> (<abbr title="Container Storage Interface">CSI</abbr>) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems (COS) like Kubernetes. <abbr title="Container Storage Interface">CSI</abbr> allows for the consistent configuration and management of storage solutions across various container orchestration systems. </p>
+<p><abbr title="Container Storage Interface">CSI</abbr> enables storage providers to develop a standardized plugin once and have it work across a multitude of container orchestration systems without requiring changes. This simplifies the process of adding new storage capabilities to Kubernetes clusters and ensures compatibility and extendibility.</p>
 <p>While <abbr title="Container Storage Interface">CSI</abbr> is a critical piece of getting storage working in Kubernetes, unless you explicitly work on writing storage plugins you'll likely never interact with it directly. Most of your interaction with <abbr title="Container Storage Interface">CSI</abbr> will simply be referencing your relevant <abbr title="Container Storage Interface">CSI</abbr> plugin in YAML files.  </p>
 <h2 id="persistent-volumes">Persistent Volumes</h2>
 <p>At a high level, PVs are the way external storage objects are represented in Kubernetes.</p>
@@ -1309,6 +1328,21 @@
 <li><strong>Delete</strong>: Default option that will delete the <abbr title="PersistentVolume">PV</abbr> and any underlying storage resources on the external system itself once the <abbr title="PersistentVolumeClaim">PVC</abbr> is released.</li>
 <li><strong>Retain</strong>: This will keep the <abbr title="PersistentVolume">PV</abbr> object as well as any underlying data on the external system. However, no PVCs can use it going forward. </li>
 </ol>
+<h4 id="dynamic-provisioning">Dynamic Provisioning</h4>
+<p>Storage Classes in Kubernetes abstract the details of how storage is provided from how it is consumed. They enable dynamic provisioning of storage resources as needed, which is particularly useful in cloud environments where storage can be requested and scaled programmatically.</p>
+<p>For example, a StorageClass can define the type of storage (e.g., standard, high-speed SSD, etc.), the replication factor, and the region. When a <abbr title="PersistentVolumeClaim">PVC</abbr> that references this StorageClass is created, Kubernetes automatically provisions the required storage according to the specifications and binds it to the <abbr title="PersistentVolumeClaim">PVC</abbr>.</p>
+<p>Here's an example YAML definition of a StorageClass that uses a Google Cloud persistent disk with high-performance SSD:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StorageClass</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fast-storage</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/gce-pd</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd-ssd</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="nt">replication-type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nt">allowVolumeExpansion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nt">volumeBindingMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WaitForFirstConsumer</span>
+</span></code></pre></div></p>
 
 
 

@@ -1199,7 +1199,7 @@
   <h1>Scheduling</h1>
 
 <ul>
-<li>Every Pod spec definition has a <code>nodeName</code> field that is typically not set, but Kubernetes adds it automatically when the Pod is created</li>
+<li>Every Pod specification includes an optional <code>nodeName</code> field, which is typically left unset. When a Pod is created without a specific <code>nodeName</code>, Kubernetes' scheduler automatically assigns the Pod to an appropriate node, populating the <code>nodeName</code> field with the selected node's name. </li>
 <li>When the <strong>Scheduler</strong> reviews Pods, it finds Pods that do not have that field set and those are the candidates for scheduling</li>
 <li>It then runs the scheduling algorithm to determine which Node to place the Pod on and populates the <code>nodeName</code> field</li>
 </ul>
@@ -1221,6 +1221,12 @@
 <p>The <code>nodeName</code> field cannot be updated once the Pod is running. If you want to update the Node a running Pod resides on, you have to create a <code>Binding</code> object and send a POST request to the Binding API of the Pod,</p>
 </blockquote>
 <h2 id="taints-and-tolerations">Taints and Tolerations</h2>
+<p>Taints and tolerations work together to ensure that Pods are not scheduled onto inappropriate nodes. Taints are applied to nodes and can repel Pods that do not have a corresponding toleration. </p>
+<ul>
+<li><strong>Taints</strong> are markers applied to nodes that denote special behavior. For example, a node might have a taint that indicates it should not host any Pods that do not explicitly tolerate the taint. </li>
+<li><strong>Tolerations</strong> are applied to Pods and allow them to "ignore" taints on nodes, thus enabling them to be scheduled onto nodes with those taints.</li>
+</ul>
+<p>Together, taints and tolerations provide a powerful way to ensure that Pods are only scheduled onto suitable nodes. For instance, you might taint a node to only allow database Pods that require high I/O performance, ensuring that other workloads do not disrupt database operations. </p>
 <ul>
 <li><span style="color: #FF0000"><strong>Taints</strong></span> are specific to <span style="color: #FF0000"><strong>Nodes</strong></span></li>
 <li><span style="color: #4287f5"><strong>Tolerations</strong></span> are specific to <span style="color: #4287f5"><strong>Pods</strong></span></li>
@@ -1252,6 +1258,12 @@
 <p>Note there are limitations here as you cannot use complex operators like <code>IS NOT</code> , <code>OR</code> , <code>EXISTS</code> , etc.</p>
 </blockquote>
 <h2 id="node-affinity">Node Affinity</h2>
+<p>Node affinity is a set of rules that the scheduler uses to determine where a Pod can be placed based on labels on nodes. Unlike simple node selectors, node affinity allows for more complex expressions:</p>
+<ul>
+<li><strong>Required rules</strong> must be met for a Pod to be scheduled on a node.</li>
+<li><strong>Preferred rules</strong> suggest preferences but do not strictly enforce them.</li>
+</ul>
+<p>This feature allows you to specify that certain Pods should or should not be placed in specific ways relative to other Pods or based on node attributes, enhancing the scheduler's ability to distribute workloads optimally. </p>
 <ul>
 <li>Node affinity <strong><em>does</em></strong> let you use complex operators</li>
 <li>Node affinity is <strong>a set of rules used by the Scheduler to determine where a Pod can be placed</strong>.</li>
@@ -1424,6 +1436,8 @@
 </span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">         </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring-agent-software</span>
 </span></code></pre></div>
 <h2 id="multiple-schedulers">Multiple Schedulers</h2>
+<p>Kubernetes allows the deployment of multiple scheduler instances to handle Pod placement according to various customized scheduling policies. You can specify which scheduler to use for each Pod if you have special scheduling needs that the default scheduler does not support.</p>
+<p>For example, you might deploy a custom scheduler that optimizes for GPU-intensive applications and use it alongside the default Kubernetes scheduler. </p>
 <ul>
 <li>You can write your own Scheduler program and deploy it as the default scheduler or supplemental schedulers</li>
 <li>When defining and deploying a Pod, you can instruct it to leverage a specific Scheduler</li>
