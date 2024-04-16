@@ -3,7 +3,7 @@ icon: material/circle-small
 ---
 
 ## Overview
-Kubernetes revolves entirely around its API, which serves as the central nervous system of the platform. Every interaction within Kubernetes—whether it's creating, reading, updating, or deleting resources like Pods and Services—occurs through requests made to the API and processed by the API server.  
+The Kubernetes API serves as the central nervous system of the platform, orchestrating all interactions within the system. Every operation within Kubernetes, from creating and reading to updating and deleting resources such as Pods and Services, is conducted through requests to the API, which are then processed by the API server. 
 
 While `kubectl` is the go-to command-line tool for sending these requests, they can also be composed programmatically or via specialized API development tools. Regardless of how they're formulated, all requests are funneled to the API server, where they undergo authentication and authorization checks. Once verified, these requests are actioned within the cluster. For instance, a request to create a resource results in its deployment to the cluster, and the object's configuration is then stored in the cluster's datastore. This API-centric design ensures a consistent and secure method for managing the cluster's state and operations.  
 
@@ -19,7 +19,8 @@ flowchart LR
     etcd{{"<tt>Cluster<br>store"}}
 ```  
 
-In Kubernetes, the intricate dance of communication is choreographed with serialization, where objects like Pods and Services are transformed into JSON strings for transmission over HTTP. This transformation occurs both ways: clients such as `kubectl` serialize objects to JSON when making requests to the API server, and the API server does the same when sending back responses. What's more, Kubernetes captures the serialized state of these objects in the cluster's persistent storage, commonly etcd, ensuring the cluster's state is maintained and recoverable.  
+Communication within Kubernetes relies on serialization, the process of converting objects like Pods and Services into JSON strings for HTTP transmission. This conversion is bidirectional: clients, including kubectl, serialize objects into JSON to make requests, and the API server does likewise when responding. Moreover, Kubernetes stores these serialized states in persistent storage, typically etcd, ensuring the cluster’s state is both maintained and recoverable. 
+<br>
 
 Serialization in Kubernetes isn't limited to JSON; it also embraces Protobuf, a schema known for its speed and efficiency, outpacing JSON in performance and scalability. However, Protobuf's complexity makes it less accessible for direct inspection and debugging, which is why it's primarily utilized for internal communications within the cluster, while JSON remains the go-to format for external client interactions.  
 
@@ -148,11 +149,12 @@ Kubernetes offers a powerful framework for managing and automating containerized
 A vivid example of such extensibility can be observed in the storage domain, where third-party vendors integrate advanced functionalities—like snapshot scheduling—directly into Kubernetes through custom resources. While Kubernetes natively supports storage operations through StorageClasses and PersistentVolumeClaims, these custom resources enable the exposure of vendor-specific features within the same Kubernetes ecosystem.
 
 **The Extension Blueprint**  
-Extending the Kubernetes API typically involves two key steps:
+Extending the Kubernetes API usually involves:
 
-1. **Creating a Custom Controller**: This involves developing a controller that operates on your custom logic, watching for changes to your custom resources and ensuring the desired state is achieved within the cluster.  
+1. **Creating a Custom Controller**: Develop a controller that uses your custom logic to monitor changes to your resources, ensuring the cluster achieves and maintains the desired state.
 
-2. **Defining a Custom Resource**: Kubernetes facilitates this through the CustomResourceDefinition (CRD) API object. CRDs allow you to define new types of resources that integrate seamlessly with the Kubernetes API, complete with their own RESTful paths. Once defined, these custom resources can be managed via `kubectl` just like built-in resources, offering a native Kubernetes experience for your custom logic.  
+2. **Defining a Custom Resource**: Utilize Kubernetes' CustomResourceDefinition (CRD) API object to create new resource types. CRDs integrate seamlessly with the Kubernetes API and include their own RESTful paths. Once established, manage these resources with kubectl as you would with standard resources, thus maintaining a consistent Kubernetes experience.
+
 
 This approach not only enriches the Kubernetes ecosystem with new functionalities but also maintains the uniformity and coherence of the Kubernetes API, ensuring that custom resources are as accessible and manageable as the built-in ones. Through CRDs, Kubernetes embraces an extendable architecture, empowering developers to innovate and expand the platform's capabilities to meet their unique operational requirements.  
 
