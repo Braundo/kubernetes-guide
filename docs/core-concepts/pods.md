@@ -9,7 +9,10 @@ The most simple implementation of this are single-container Pods - one container
 It's important to note that when you scale up/down applications in Kubernetes, you're not doing so by adding/removing containers directly - you do so by adding/removing Pods.
 
 ## Atomic
-Pod deployment is atomic in nature - a Pod is only considered **Ready** when *all* of its containers are up and running. Either the entire Pod comes up successfully and is running, or the entire thing doesn't - there are no partial states.
+Pods are atomic units in the sense that they are deployed, scaled, and terminated together. This makes them a fundamental component for deploying applications in Kubernetes:
+
+- **Single-container Pods**: The simplest form, containing only one container.
+- **Multi-container Pods**: These contain multiple containers that need to work closely together.
 
 ## Lifecycle
 Pods are designed to be ephemeral in nature. Once a Pod dies, it's not meant to be restarted or revived. Instead, the intent is to spin up a brand new Pod in the failed ones place (based off of your defined manifest). Further, Pods are *immutable* and should not be changed once running. If you need to change your application, you update the configuration via the manifest and deploy a new Pod.  
@@ -21,7 +24,10 @@ Pods also follow a defined restart policy in order to handle container failures:
 - `Never`: The container is never restarted, regardless of the exit status.
 
 ## Shared Resources and Communication
-Containers within a Pod share an IP address and port space, allowing them to communicate using localhost. They can also share volumes, providing a common space for storage that persists across container restarts and simplifies data sharing.
+Containers within a Pod share networking and volumes:
+
+- **Networking**: Containers in a Pod share the same IP address and port space.
+- **Volumes**: Allows sharing of storage between containers within a Pod.
 
 ## Multi-container Pods
 As mentioned above, the simplest way to run an app on Kubernetes is to run a single container inside of a single Pod. However, in situations where you need to tightly couple two or more functions you can co-locate multiple containers inside of the same pod. One such example would be leveraging the sidecar pattern for logging wherein the main container dumps logs to a supporting container that can sanitize and format the logs for consumption. This frees up the main container from having to worry about formatting logs.  
@@ -33,10 +39,10 @@ Kubernetes offers ways to control where Pods are placed relative to other Pods o
 Pods can specify the amount of CPU and memory required (requests) and the maximum that can be consumed (limits). This helps Kubernetes make better scheduling decisions and manage system resources efficiently.
 
 ## Probes: Readiness and Liveness
-Kubernetes uses readiness probes to know when a Pod is ready to start accepting traffic and liveness probes to know when to restart a container:
+Kubernetes uses probes to manage the lifecycle of containers within Pods:
 
-- Readiness probes protect your service’s availability by not sending traffic to Pods that aren’t ready.
-- Liveness probes help maintain a healthy application state by restarting containers that fail the defined check.
+- **Readiness Probes**: Ensure traffic is not sent to a Pod until it is ready to handle it.
+- **Liveness Probes**: Help to keep applications healthy by restarting containers that fail the defined checks.
 
 ## Init Containers
 Init containers run before the application containers and are used to perform setup tasks or wait for some condition before the app starts. They run to completion and must exit before the main application containers start.
