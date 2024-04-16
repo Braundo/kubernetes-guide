@@ -26,28 +26,3 @@ h1 {
 h2 {
     font-weight: bold !important;
 }
-
-@keyframes shine {
-    0% {
-      background-position: -500%;
-    }
-    100% {
-      background-position: 500%;
-    }
-  }
-  
-  .shine-effect {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    background: linear-gradient(
-      to right, 
-      rgba(255, 255, 255, 0.2) 0%, 
-      rgba(255, 255, 255, 0.8) 50%, 
-      rgba(255, 255, 255, 0.2) 100%
-    );
-    background-repeat: no-repeat;
-    background-size: 200% auto;
-    animation: shine 5s linear infinite;
-  }
-  
