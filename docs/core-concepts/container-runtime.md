@@ -4,26 +4,26 @@ icon: material/circle-small
 
 ## History
 
-- Originally, Docker was the most popular and thus defacto container runtime that Kubernetes was built to orchestrate
-<br><br>
-
-- As Kubernetes grew in popularity, Kubernetes introduced the [Container Runtime Interface](https://kubernetes.io/docs/concepts/architecture/cri/) (CRI) which allowed any runtime to be used as long as they adhered to the [Open Container Initiative](https://opencontainers.org/) (OCI). There are two main specs to be aware of: 
-    - **`imagespec`** - how an image should be built
-    - **`runtimespec`** - how a container runtime should be developed  
+Initially, Docker was the predominant container runtime, integral to Kubernetes' orchestration capabilities. To accommodate a broader range of container technologies, Kubernetes later introduced the Container Runtime Interface (CRI), facilitating integration with any runtime conforming to the Open Container Initiative (OCI) standards, notably the `imagespec` for building images and the `runtimespec` for developing runtimes.
 <br>
 
-- Docker did not support CRI because it was built before the CRI standard was developed<br><br>
-- Docker introduced the Docker Shim, which was a “hacky” way to support Docker on Kubernetes without using the CRI<br><br>
-- Docker also includes a lot of other features - but notably includes containerd, which *is* OCI compliant and can be run without Docker<br><br>
+Despite its popularity, Docker did not initially support CRI, as it predated the standard. To bridge this gap, Docker developed the Docker Shim—a provisional solution for integrating Docker with Kubernetes without full CRI compliance. Docker's ecosystem also includes `containerd`, an OCI-compliant runtime capable of operating independently of Docker.
+<br>
 
+Starting with Kubernetes version 1.24, support for Docker Shim was phased out in favor of `containerd`, which became the default runtime. Nonetheless, Docker images remain compatible with Kubernetes due to their adherence to the `imagespec` OCI standard, ensuring seamless operation with `containerd`.
+<br>
 
-- As of Kubernetes version `1.24`, Docker Shim support was removed completely, and containerd was used as the default
-    - However, all Docker *images* do follow the **`imagespec`** OCI standard, so they can continue to be used on Kubernetes with the containerd runtime
+As Kubernetes grew in popularity, Kubernetes introduced the [Container Runtime Interface](https://kubernetes.io/docs/concepts/architecture/cri/) (CRI) which allowed any runtime to be used as long as they adhered to the [Open Container Initiative](https://opencontainers.org/) (OCI). There are two main specs to be aware of: 
+- **`imagespec`** - how an image should be built
+- **`runtimespec`** - how a container runtime should be developed  
+<br>
 
 ## containerd
 
-- Graduated status member of CNCF that can be installed without Docker itself
-- Comes with a CLI tool called `ctr` which is not very user-friendly and mainly used for debugging containerd
+`containerd` has achieved graduated status within the CNCF, highlighting its maturity and stability as a container runtime. It can be installed independently of Docker, providing a streamlined, Docker-free deployment option. While `containerd` includes a command-line tool called `ctr`, this tool is primarily intended for debugging purposes and may not be as user-friendly for general usage. 
+<br>
+
+`containerd` also comes with a CLI tool called `ctr` which is not very user-friendly and mainly used for debugging containerd.
 
 
 *[OCI]: Open Container Initiative
