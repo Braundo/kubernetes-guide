@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#kubernetes-scheduler-overview" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -380,6 +385,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Scheduler
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -391,6 +409,41 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-scheduler-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Scheduler Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-example-using-node-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Example: Using Node Affinity
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1014,6 +1067,32 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-scheduler-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Scheduler Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-example-using-node-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Example: Using Node Affinity
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1029,26 +1108,62 @@
 
   <h1>Scheduler</h1>
 
+<h3 id="kubernetes-scheduler-overview">Kubernetes Scheduler Overview</h3>
+<p>The <strong>Scheduler</strong> in Kubernetes is a critical component responsible for assigning Pods to Nodes in the cluster. While the Scheduler decides the placement of Pods, it is the Kubelet on each node that actually places the Pod onto the Node.</p>
+<h4>Responsibilities of the Scheduler</h4>
+
+<p>The primary function of the Scheduler is to:
+- Evaluate the resource requirements of each Pod.
+- Assess the current availability and conditions of the Nodes.
+- Assign the Pod to a Node that best meets the Pod’s needs.</p>
+<h4>Decision-Making Criteria</h4>
+
+<p>The Scheduler uses a variety of criteria to determine the most suitable Node for a Pod, including:</p>
 <ul>
-<li>
-<p>The <strong>Scheduler</strong> is only responsible for deciding which Pods go on which nodes</p>
-<ul>
-<li>It doesn’t actually place the Pods on the Nodes (the Kubelet does that)
-<br><br></li>
+<li><strong>Resource Requirements</strong>: Checks if nodes have the CPU, memory, and storage to meet the Pod's requirements.</li>
+<li><strong>Application Requirements</strong>: Considers specific demands such as GPU needs or data locality.</li>
+<li><strong>Quality of Service (QoS)</strong>: Prioritizes Pods based on their QoS class (Guaranteed, Burstable, BestEffort).</li>
 </ul>
+<h4>Scheduling Algorithm</h4>
+
+<p>The Scheduler employs a two-phase process consisting of filtering and scoring:</p>
+<ol>
+<li><strong>Filtering Phase</strong>: The Scheduler filters out nodes that do not satisfy the Pod’s requirements. Factors considered include:</li>
+<li>Node capacity.</li>
+<li>Resource availability.</li>
+<li>Taints and tolerations.</li>
+<li>
+<p>Affinity and anti-affinity specifications.</p>
 </li>
 <li>
-<p>There are various criteria that the Scheduler uses to determine which Node to place a Pod on:</p>
+<p><strong>Scoring Phase</strong>: Nodes that pass the filtering phase are scored on a scale from 0 to 10 based on how well they meet the requirements. The Scheduler considers:</p>
+</li>
+<li>Resource utilization and availability.</li>
+<li>Affinity rules specified in the Pod configuration.</li>
+<li>Other custom policies that may be configured.</li>
+</ol>
+<p>The node with the highest score is selected for the Pod placement. If multiple nodes have the same score, the Scheduler selects one at random.</p>
+<h4>Advanced Scheduling</h4>
+
+<p>Advanced scheduling features allow for more complex decision-making:</p>
 <ul>
-<li>Resource requirements</li>
-<li>Application requirements
-<br><br> </li>
+<li><strong>Node Affinity/Anti-Affinity</strong>: Allows specifying rules that a node must or must not meet to host a Pod.</li>
+<li><strong>Pod Affinity/Anti-Affinity</strong>: Enables placing Pods in proximity to other Pods to meet various operational requirements.</li>
+<li><strong>Taints and Tolerations</strong>: Nodes can be "tainted" to repel Pods unless they "tolerate" the taint.</li>
 </ul>
-</li>
-<li>
-<p>The Scheduler uses a ranking system (0-10) to determine which Node is best; taking into account resources, taints, tolerations, affinity, etc.</p>
-</li>
-</ul>
+<h3 id="practical-example-using-node-affinity">Practical Example: Using Node Affinity</h3>
+<p>To leverage node affinity, define it in your Pod spec. For instance, to schedule a Pod on a node with a specific feature (like SSDs), your Pod spec might include:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nn">...</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">affinity</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">nodeAffinity</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">requiredDuringSchedulingIgnoredDuringExecution</span><span class="p">:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">nodeSelectorTerms</span><span class="p">:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/ebs-volume</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">              </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">              </span><span class="nt">values</span><span class="p">:</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssd</span>
+</span></code></pre></div>
 
 
 
