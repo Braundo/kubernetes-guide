@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tls" class="md-skip">
+        <a href="#tls-transport-layer-security" class="md-skip">
           Skip to content
         </a>
       
@@ -721,9 +721,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tls" class="md-nav__link">
+  <a href="#tls-transport-layer-security" class="md-nav__link">
     <span class="md-ellipsis">
-      TLS
+      TLS (Transport Layer Security)
     </span>
   </a>
   
@@ -740,9 +740,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#creating-certificates" class="md-nav__link">
+  <a href="#creating-ca-certs" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating Certificates
+      Creating CA certs:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-client-certs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating client certs:
     </span>
   </a>
   
@@ -1107,9 +1116,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tls" class="md-nav__link">
+  <a href="#tls-transport-layer-security" class="md-nav__link">
     <span class="md-ellipsis">
-      TLS
+      TLS (Transport Layer Security)
     </span>
   </a>
   
@@ -1126,9 +1135,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#creating-certificates" class="md-nav__link">
+  <a href="#creating-ca-certs" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating Certificates
+      Creating CA certs:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-client-certs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating client certs:
     </span>
   </a>
   
@@ -1172,24 +1190,29 @@
                   
 
 
-<h2 id="tls">TLS</h2>
+<h2 id="tls-transport-layer-security">TLS (Transport Layer Security)</h2>
+<p>TLS is essential for securing data in transit. It provides encryption, integrity, and authentication to ensure that communications between Kubernetes components (like nodes, pods, and the API server) remain confidential and secure from tampering.</p>
+<p><strong>Role of Asymmetric Encryption:</strong></p>
+<p>Asymmetric encryption, a fundamental component of TLS, involves a pair of keys:</p>
 <ul>
-<li>A certificate is used to guarantee trust between two parties during a transaction</li>
-<li>Asymmetrical encryption is where generate <strong>private</strong> and <strong>public</strong> keys<ul>
-<li>You keep the <strong>private</strong> key with you</li>
-<li>The public key can, in theory, be shared out anywhere</li>
-<li>Even if an attacker has the <strong>public</strong> key (i.e. lock), they can’t actually decrypt the data, access the server, etc. unless they have the <strong>private</strong> key to do so</li>
+<li><strong>Private Key</strong>: Kept secret and used to decrypt data and sign digital signatures.</li>
+<li><strong>Public Key</strong>: Distributed openly and used to encrypt data and verify signatures.</li>
 </ul>
-</li>
-</ul>
+<p>When a Kubernetes component, such as a user or another cluster component, needs to establish a trusted connection, it presents a certificate containing its public key. This certificate acts as a "digital passport" to prove its identity to another party in the transaction. The trust is established through a Certificate Authority (CA) that signs these certificates. Even if a malicious actor intercepts the public key, they cannot decrypt the communications or impersonate the certificate holder without the corresponding private key.
+<br><br></p>
+<p><strong>Certificate Usage in Kubernetes:</strong></p>
+<p>In Kubernetes, TLS certificates are used to secure the connections between:
+- Nodes and the API server
+- Users and the API server
+- Inter-pod communications when configured</p>
+<p>This security mechanism ensures that sensitive data such as API tokens, application data, and administrative commands are transmitted securely over the network, preventing unauthorized access and ensuring data integrity.
+<br><br></p>
+<p><strong>Practical Implications:</strong></p>
+<p>By utilizing TLS, Kubernetes enhances the overall security posture of your cluster, safeguarding your infrastructure against interception and ensuring that only authorized users and services can communicate with sensitive components. Proper management of these certificates—including regular updates and revocations as necessary—is critical to maintaining the security integrity of the entire system.</p>
 <h2 id="certificates">Certificates</h2>
-<ul>
-<li>Every component in Kubernetes communicates via secure communications</li>
-<li>Kubernetes requires <strong>at least one</strong> Certificate Authority (CA) per cluster</li>
-</ul>
-<h3 id="creating-certificates">Creating Certificates</h3>
-<p><strong>For creating the certificates for the CA:</strong>
-<br></p>
+<p>Every component in Kubernetes communicates via secure communications. </p>
+<p>Kubernetes requires at least one Certificate Authority (CA) to anchor the trust in the cluster. This CA is responsible for issuing certificates for all of the Kubernetes components and can also sign the certificates for the users. Having a dedicated CA within the cluster allows for a managed and secure mechanism to handle encryption and authentication across all communications within the cluster.</p>
+<h3 id="creating-ca-certs">Creating CA certs:</h3>
 <p>Generate keys:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>ca.key<span class="w"> </span><span class="m">2048</span>
 </span></code></pre></div>
@@ -1202,8 +1225,7 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>ca.csr<span class="w"> </span>-signkey<span class="w"> </span>ca.key<span class="w"> </span>-out<span class="w"> </span>ca.crt
 </span></code></pre></div>
 <br></p>
-<p><strong>Generating client certificates (i.e. admin user here)</strong>
-<br></p>
+<h3 id="creating-client-certs">Creating client certs:</h3>
 <p>Generate keys:  <br />
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>admin.key<span class="w"> </span><span class="m">2048</span>
 </span></code></pre></div></p>
@@ -1285,7 +1307,7 @@ Another easy thing to do is to include them in a <strong>kubeconfig</strong> fil
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nt">clusters</span><span class="p">:</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-kube-playground</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="nt">cluster</span><span class="p">:</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="nt">certificate-authority-data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNZekNDQWN5Z0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRVUZBREF1TVFzd0NRWURWUVFHRXdKVlV6RU0gCk1Bb0dBMVVFQ2hNRFNVSk5NUkV3RHdZRFZRUUxFd2hNYjJOaGJDQkRRVEFlRncwNU9URXlNakl3TlRBd01EQmEgCkZ3MHdNREV5TWpNd05EVTVOVGxhTUM0eEN6QUpCZ05WQkFZVEFsVlRNUXd3Q2dZRFZRUUtFd05KUWsweEVUQVAgCkJnTlZCQXNUQ0V4dlkyRnNJRU5CTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEMmJaRW8gCjd4R2FYMi8wR0hrck5GWnZseEJvdTl2MUptdC9QRGlUTVB2ZThyOUZlSkFRMFFkdkZTVC8wSlBRWUQyMHJIMGIgCmltZERMZ05kTnlubXlSb1MyUy9JSW5mcG1mNjlpeWMyRzBUUHlSdm1ISWlPWmJkQ2QrWUJIUWkxYWRrajE3TkQgCmNXajZTMTR0VnVyRlg3M3p4MHNOb01TNzlxM3R1WEtyRHN4ZXV3SURBUUFCbzRHUU1JR05NRXNHQ1ZVZER3R0cgCitFSUJEUVErRXp4SFpXNWxjbUYwWldRZ1lua2dkR2hsSUZObFkzVnlaVmRoZVNCVFpXTjFjbWwwZVNCVFpYSjIgClpYSWdabTl5SUU5VEx6TTVNQ0FvVWtGRFJpa3dEZ1lEVlIwUEFRSC9CQVFEQWdBR01BOEdBMVVkRXdFQi93UUYgCk1BTUJBZjh3SFFZRFZSME9CQllFRkozK29jUnlDVEp3MDY3ZExTd3IvbmFseDZZTU1BMEdDU3FHU0liM0RRRUIgCkJRVUFBNEdCQU1hUXp0K3phajFHVTc3eXpscjhpaU1CWGdkUXJ3c1paV0pvNWV4bkF1Y0pBRVlRWm1PZnlMaU0gCkQ2b1lxK1puZnZNMG44Ry9ZNzlxOG5od3Z1eHBZT25SU0FYRnA2eFNrcklPZVp0Sk1ZMWgwMExLcC9KWDNOZzEgCnN2WjJhZ0UxMjZKSHNRMGJoek41VEtzWWZid2ZUd2ZqZFdBR3k2VmYxbllpL3JPK3J5TU8KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLSA=</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="nt">certificate-authority-data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0....</span>
 </span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="nn">...</span>
 </span></code></pre></div></p>

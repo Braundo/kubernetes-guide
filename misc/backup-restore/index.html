@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#backup-strategies-in-kubernetes" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -949,6 +954,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2 2 2 0 0 0 2 2c1.11 0 2-.89 2-2a2 2 0 0 0-2-2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Backup & Restore
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -960,6 +978,41 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#backup-strategies-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup Strategies in Kubernetes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-from-an-etcd-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restore from an etcd Snapshot
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1014,6 +1067,32 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#backup-strategies-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup Strategies in Kubernetes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-from-an-etcd-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restore from an etcd Snapshot
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1029,71 +1108,59 @@
 
   <h1>Backup & Restore</h1>
 
-<ul>
-<li>
-<p>You can save many objects on the cluster by querying the API Server and exporting it to YAML by running:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>all<span class="w"> </span>--all-namespaces<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>all-deploy-services.yaml
+<h2 id="backup-strategies-in-kubernetes">Backup Strategies in Kubernetes</h2>
+<p>One straightforward method to back up Kubernetes objects is to query the API server and export all significant resources to a YAML file. This can be done using the <code>kubectl</code> command:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>all<span class="w"> </span>--all-namespaces<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>all-resources-backup.yaml
 </span></code></pre></div>
 <br></p>
-</li>
-<li>
-<p>Instead of backing up resources, you can back up the etcd server itself - etcd comes with a built-in snapshot solution:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>etcdctl<span class="w"> </span>snapshot<span class="w"> </span>save<span class="w"> </span>/opt/snapshot-pre-boot.db
+<p>For a more comprehensive backup, you can directly back up the etcd database, which holds all state and configuration data of your Kubernetes cluster. etcdctl, the CLI tool for etcd, provides a built-in solution to snapshot the database:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>etcdctl<span class="w"> </span>snapshot<span class="w"> </span>save<span class="w"> </span>/opt/snapshot-pre-boot.db<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>--endpoints<span class="o">=</span>https://127.0.0.1:2379<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>--cacert<span class="o">=</span>/etc/kubernetes/pki/etcd/ca.crt<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>--cert<span class="o">=</span>/etc/kubernetes/pki/etcd/server.crt<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>--key<span class="o">=</span>/etc/kubernetes/pki/etcd/server.key
 </span></code></pre></div>
-<br></p>
-</li>
-<li>
-<p>You can view the status of a snapshot by running:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>etcdctl<span class="w"> </span>snapshot<span class="w"> </span>status<span class="w"> </span>snapshot.db
+This snapshot includes all Kubernetes states and can be used to restore the entire cluster to the point in time when the snapshot was taken.</p>
+<p>You can view the status of a snapshot by running:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>etcdctl<span class="w"> </span>snapshot<span class="w"> </span>status<span class="w"> </span>snapshot.db
 </span></code></pre></div>
 <br></p>
-</li>
+<h2 id="restore-from-an-etcd-snapshot">Restore from an etcd Snapshot</h2>
+<p>Restoring your Kubernetes cluster from an etcd snapshot involves several critical steps:</p>
+<ol>
 <li>
-<p>Here are the generalized steps to restore from etcd from a backup:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># first stop the API Server</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>service<span class="w"> </span>kube-apiserver<span class="w"> </span>stop
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># then restore</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># note the new directory being used by etcd</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>etcdctl<span class="w"> </span>snapshot<span class="w"> </span>restore<span class="w"> </span>snapshot.db<span class="w"> </span>--data-dir<span class="w"> </span>/var/lib/etcd-from-backup
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># edit etcd service to use new directory</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>vi<span class="w"> </span>/etc/kubernetes/manifests/etcd.yaml
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># restart the etcd service</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>systemctl<span class="w"> </span>daemon-reload
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1"># wait 1-2 minutes for pods to come back up</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>service<span class="w"> </span>etcd<span class="w"> </span>restart
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1"># start API Server</span>
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>service<span class="w"> </span>kube-apiserver<span class="w"> </span>start
-</span></code></pre></div>
-<br></p>
-</li>
-<li>
-<p>An easy way to view etcd servers for a cluster is by inspecting the API Server pod running in the <code>kube-system</code> Namespace</p>
-<ul>
-<li>It will have a field called <code>--etcd-servers</code> under the <code>command</code> field
-<br><br></li>
-</ul>
-</li>
-<li>
-<p>To view details about the etcd server you can also run:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ps<span class="w"> </span>-ef<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
-</span></code></pre></div>
-<br></p>
-</li>
-<li>
-<p>You can edit the etcd service at:
-    <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>vi<span class="w"> </span>/etc/systemd/system/etcd.service
+<p><strong>Stop the Kubernetes API Server:</strong>
+   To begin the restoration, you need to stop the API server to prevent any changes to the cluster state during the restore process:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>service<span class="w"> </span>kube-apiserver<span class="w"> </span>stop
 </span></code></pre></div></p>
 </li>
-</ul>
+<li>
+<p><strong>Restore the etcd Snapshot:</strong>
+Use <code>etcdctl</code> to restore the snapshot to a new data directory. This helps prevent corruption of the existing data during the restore process:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>etcdctl<span class="w"> </span>snapshot<span class="w"> </span>restore<span class="w"> </span>/opt/snapshot-pre-boot.db<span class="w"> </span>--data-dir<span class="w"> </span>/var/lib/etcd-from-backup
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Update the etcd Pod Specification:</strong>
+Modify the etcd manifest to use the new data directory. This usually involves editing the etcd pod definition in the Kubernetes manifests directory:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>vi<span class="w"> </span>/etc/kubernetes/manifests/etcd.yaml
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Change the data directory to /var/lib/etcd-from-backup</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Restart etcd and Kubernetes API Server:</strong>
+Reload the systemd daemon to apply the changes and restart the etcd service:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>systemctl<span class="w"> </span>daemon-reload
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>service<span class="w"> </span>etcd<span class="w"> </span>restart
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Wait for etcd to become fully operational</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>service<span class="w"> </span>kube-apiserver<span class="w"> </span>start
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Monitoring the Restoration:</strong>
+After restarting the services, monitor the cluster's logs and status to ensure that all components are functioning correctly and the state has been restored as expected.</p>
+</li>
+</ol>
 
 
 

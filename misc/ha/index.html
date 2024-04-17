@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configuring-ha" class="md-skip">
+        <a href="#understanding-high-availability-ha-in-kubernetes" class="md-skip">
           Skip to content
         </a>
       
@@ -1014,18 +1014,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configuring-ha" class="md-nav__link">
+  <a href="#understanding-high-availability-ha-in-kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuring HA
+      Understanding High Availability (HA) in Kubernetes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#etcd-in-ha" class="md-nav__link">
+  <a href="#high-availability-components" class="md-nav__link">
     <span class="md-ellipsis">
-      ETCD in HA
+      High Availability Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcd-high-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      ETCD High Availability
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-a-load-balancer-for-ha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring a Load Balancer for HA
     </span>
   </a>
   
@@ -1072,18 +1090,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configuring-ha" class="md-nav__link">
+  <a href="#understanding-high-availability-ha-in-kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuring HA
+      Understanding High Availability (HA) in Kubernetes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#etcd-in-ha" class="md-nav__link">
+  <a href="#high-availability-components" class="md-nav__link">
     <span class="md-ellipsis">
-      ETCD in HA
+      High Availability Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcd-high-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      ETCD High Availability
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-a-load-balancer-for-ha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring a Load Balancer for HA
     </span>
   </a>
   
@@ -1106,56 +1142,39 @@
 
   <h1>Configuring HA</h1>
 
-<h2 id="configuring-ha">Configuring HA</h2>
+<h2 id="understanding-high-availability-ha-in-kubernetes">Understanding High Availability (HA) in Kubernetes</h2>
+<p><strong>Impact of Losing a Master Node:</strong></p>
+<p>In a Kubernetes cluster, the loss of a Master node impacts the control plane's ability to manage workloads. While applications running on worker nodes will continue to operate, there will be no capability to start new Pods, restart failed Pods, or perform rolling updates until the control plane is restored. This limitation underscores the need for a High Availability (HA) configuration to ensure continuous management capabilities.</p>
+<h2 id="high-availability-components">High Availability Components</h2>
+<p><strong>API Server in Active-Active Mode:</strong></p>
+<p>The API Server, the core component that receives all REST requests for modifications and queries to the cluster state, can operate in an Active-Active configuration across multiple master nodes. This setup enhances availability and load balancing by distributing API requests among several servers.
+<br><br></p>
+<p><strong>Controller Manager and Scheduler:</strong></p>
+<p>These critical components, which observe cluster state changes and make decisions to manage the workload, typically run in an Active-Standby mode to prevent dual operations which could lead to conflicts or duplicated efforts. Kubernetes uses a leader election mechanism to determine which node should be active, ensuring that only one instance of each component makes decisions at any time.</p>
+<h2 id="etcd-high-availability">ETCD High Availability</h2>
+<p><strong>ETCD Topologies:</strong></p>
 <ul>
-<li>
-<p>If you lose a Master node, your applications will remain running on worker nodes and users can still access those applications</p>
-<ul>
-<li>However, Pods won’t restart or update as part of Deployment because there will be no controllers
+<li><strong>Stacked Topology</strong>: In this configuration, ETCD runs directly on the master nodes, alongside other control plane components. This setup simplifies management but can increase the risk of resource contention.</li>
+<li><strong>External Topology</strong>: Alternatively, ETCD can operate on dedicated external servers. This arrangement isolates ETCD from the Kubernetes control plane, potentially enhancing performance and reliability by reducing load on the master nodes.
 <br><br></li>
 </ul>
-</li>
-<li>
-<p>The <strong>API Server</strong> can be run in an <code>Active</code>-<code>Active</code> mode on multiple masters because they process one request at a time and simply pass information to other services which take action</p>
+<p><strong>ETCD Consistency Model:</strong></p>
+<p>ETCD, a key-value store that holds the cluster's state, ensures data consistency across its instances through a leader election process. When write operations occur:</p>
 <ul>
-<li>With multiple masters you can point your Kubeconfig to a loadbalancer on port 6443 in front of the masters to distribute traffic between the underlying API Servers
-<br><br></li>
+<li>Only the leader node processes the write initially.</li>
+<li>The leader then replicates the data to follower nodes.</li>
+<li>A write is considered successful only once a majority of nodes have stored the update.</li>
 </ul>
-</li>
-<li>
-<p>The <strong>Controller Manager</strong> and <strong>Scheduler</strong> watch the cluster for changes and take necessary actions based on those changes</p>
-<ul>
-<li>These must be run in an <code>Active</code>-<code>Standby</code> mode to ensure that actions are not duplicated</li>
-<li>Leader election process picks the <code>Active</code> one</li>
-</ul>
-</li>
-</ul>
-<h2 id="etcd-in-ha">ETCD in HA</h2>
-<ul>
-<li><strong>ETCD</strong> can be configured in two topologies:<ul>
-<li><strong>Stacked Topology:</strong> running on Kubernetes master nodes</li>
-<li><strong>External Topology:</strong> running on dedicated servers external to the cluster</li>
-<li>Remember the API Server is the only component that talks to ETCD<ul>
-<li>And must be configured to point to the servers, if hosted externally
-<br><br></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>How does <strong>ETCD</strong> stay consistent when it allows you to read or write from any instance?</p>
-<ul>
-<li>With <em>reads</em>, the same data is available across all nodes so it’s straight forward</li>
-<li>With <em>writes</em>, <strong>etcd</strong> ensures that only one instance is responsible for <strong><em>PROCESSING</em></strong> the writes via leader election<ul>
-<li>The leader then ensures the followers are sent a copy of the data</li>
-</ul>
-</li>
-<li>Writes that come in to an instance other than the leader, they are forwarded to the leader</li>
-<li>A write is only considered complete once the data has been copied to a <strong><em>majority of the instances</em></strong><ul>
-<li>If an instance goes offline during a write, but the majority copy it - the data will be copied over to the node if/when it comes back online</li>
-</ul>
-</li>
-</ul>
+<p>This model helps maintain data integrity and state consistency, even if individual ETCD nodes experience disruptions.</p>
+<h2 id="configuring-a-load-balancer-for-ha">Configuring a Load Balancer for HA</h2>
+<p>To achieve HA for the API Servers, it is common practice to place a load balancer in front of the API server endpoints. The load balancer distributes incoming traffic across all available API servers to ensure even load distribution and improve fault tolerance. When configuring your <code>kubeconfig</code>, you should point to the load balancer's IP or DNS name instead of individual API servers:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">clusters</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cluster</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">certificate-authority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca.crt</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://&lt;load-balancer-DNS&gt;:6443</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes-cluster</span>
+</span></code></pre></div>
+This setup ensures that the Kubernetes client (kubectl) and other components always connect through the highly available load balancer.</p>
 
 
 
