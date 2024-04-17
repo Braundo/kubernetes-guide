@@ -7,18 +7,6 @@ The Kubernetes API serves as the central nervous system of the platform, orchest
 
 While `kubectl` is the go-to command-line tool for sending these requests, they can also be composed programmatically or via specialized API development tools. Regardless of how they're formulated, all requests are funneled to the API server, where they undergo authentication and authorization checks. Once verified, these requests are actioned within the cluster. For instance, a request to create a resource results in its deployment to the cluster, and the object's configuration is then stored in the cluster's datastore. This API-centric design ensures a consistent and secure method for managing the cluster's state and operations.  
 
-``` mermaid
----
-title: API request flow
----
-flowchart LR
-    client["<b>client"] -->
-    id1{{"API server<br>auth"}} -->
-    api{{"<tt>API"}} -->
-    sched{{"<tt>Scheduler"}} -->
-    etcd{{"<tt>Cluster<br>store"}}
-```  
-
 Communication within Kubernetes relies on serialization, the process of converting objects like Pods and Services into JSON strings for HTTP transmission. This conversion is bidirectional: clients, including kubectl, serialize objects into JSON to make requests, and the API server does likewise when responding. Moreover, Kubernetes stores these serialized states in persistent storage, typically etcd, ensuring the cluster’s state is both maintained and recoverable. 
 <br>
 

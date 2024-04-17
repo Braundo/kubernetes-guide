@@ -13,15 +13,7 @@ It should be noted that while each Deployment object is configured primarily aro
 ## ReplicaSets
 Under the covers, Deployments actually leverage a different Kubernetes object to handle Pod scaling and reboots - the **ReplicaSet**. You should never be managing ReplicaSets directly, but it's good to know they exist and understand the hierarchy of control here. Containers will be wrapped in Pods, which have their scaling and self-healing managed by ReplicaSets, which in turn are managed by Deployments.
 
-``` mermaid
-flowchart TB
-    subgraph Deployment
-        subgraph ReplicaSet
-            Pod1[Pod]
-            Pod2[Pod]
-        end
-    end
-```
+![deploy](../../images/deploy-rs-pod.svg)
 
 ## Scaling and Self-Healing
 If you deploy a pod by itself (i.e. not via a Deployment), if it dies or fails, the Pod is lost forever.
