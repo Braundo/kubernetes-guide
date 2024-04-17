@@ -2,22 +2,43 @@
 icon: material/circle-small
 ---
 
-## TLS
-- A certificate is used to guarantee trust between two parties during a transaction
-- Asymmetrical encryption is where generate **private** and **public** keys
-    - You keep the **private** key with you
-    - The public key can, in theory, be shared out anywhere
-    - Even if an attacker has the **public** key (i.e. lock), they can’t actually decrypt the data, access the server, etc. unless they have the **private** key to do so
+
+## TLS (Transport Layer Security)
+TLS is essential for securing data in transit. It provides encryption, integrity, and authentication to ensure that communications between Kubernetes components (like nodes, pods, and the API server) remain confidential and secure from tampering.
+
+**Role of Asymmetric Encryption:**
+
+Asymmetric encryption, a fundamental component of TLS, involves a pair of keys:
+
+- **Private Key**: Kept secret and used to decrypt data and sign digital signatures.
+- **Public Key**: Distributed openly and used to encrypt data and verify signatures.
+
+When a Kubernetes component, such as a user or another cluster component, needs to establish a trusted connection, it presents a certificate containing its public key. This certificate acts as a "digital passport" to prove its identity to another party in the transaction. The trust is established through a Certificate Authority (CA) that signs these certificates. Even if a malicious actor intercepts the public key, they cannot decrypt the communications or impersonate the certificate holder without the corresponding private key.
+<br><br>
+
+**Certificate Usage in Kubernetes:**
+
+In Kubernetes, TLS certificates are used to secure the connections between:
+- Nodes and the API server
+- Users and the API server
+- Inter-pod communications when configured
+
+This security mechanism ensures that sensitive data such as API tokens, application data, and administrative commands are transmitted securely over the network, preventing unauthorized access and ensuring data integrity.
+<br><br>
+
+**Practical Implications:**
+
+By utilizing TLS, Kubernetes enhances the overall security posture of your cluster, safeguarding your infrastructure against interception and ensuring that only authorized users and services can communicate with sensitive components. Proper management of these certificates—including regular updates and revocations as necessary—is critical to maintaining the security integrity of the entire system.
+
 
 
 ## Certificates
-- Every component in Kubernetes communicates via secure communications
-- Kubernetes requires **at least one** Certificate Authority (CA) per cluster
+Every component in Kubernetes communicates via secure communications. 
 
-### Creating Certificates
+Kubernetes requires at least one Certificate Authority (CA) to anchor the trust in the cluster. This CA is responsible for issuing certificates for all of the Kubernetes components and can also sign the certificates for the users. Having a dedicated CA within the cluster allows for a managed and secure mechanism to handle encryption and authentication across all communications within the cluster.
 
-**For creating the certificates for the CA:**
-<br>
+
+### Creating CA certs:
 
 Generate keys:
     
@@ -39,8 +60,7 @@ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
 ```
 <br>
 
-**Generating client certificates (i.e. admin user here)**
-<br>
+### Creating client certs:
 
 Generate keys:    
 ```bash
@@ -141,7 +161,7 @@ kind: Config
 clusters:
 - name: my-kube-playground
   cluster:
-    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNZekNDQWN5Z0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRVUZBREF1TVFzd0NRWURWUVFHRXdKVlV6RU0gCk1Bb0dBMVVFQ2hNRFNVSk5NUkV3RHdZRFZRUUxFd2hNYjJOaGJDQkRRVEFlRncwNU9URXlNakl3TlRBd01EQmEgCkZ3MHdNREV5TWpNd05EVTVOVGxhTUM0eEN6QUpCZ05WQkFZVEFsVlRNUXd3Q2dZRFZRUUtFd05KUWsweEVUQVAgCkJnTlZCQXNUQ0V4dlkyRnNJRU5CTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEMmJaRW8gCjd4R2FYMi8wR0hrck5GWnZseEJvdTl2MUptdC9QRGlUTVB2ZThyOUZlSkFRMFFkdkZTVC8wSlBRWUQyMHJIMGIgCmltZERMZ05kTnlubXlSb1MyUy9JSW5mcG1mNjlpeWMyRzBUUHlSdm1ISWlPWmJkQ2QrWUJIUWkxYWRrajE3TkQgCmNXajZTMTR0VnVyRlg3M3p4MHNOb01TNzlxM3R1WEtyRHN4ZXV3SURBUUFCbzRHUU1JR05NRXNHQ1ZVZER3R0cgCitFSUJEUVErRXp4SFpXNWxjbUYwWldRZ1lua2dkR2hsSUZObFkzVnlaVmRoZVNCVFpXTjFjbWwwZVNCVFpYSjIgClpYSWdabTl5SUU5VEx6TTVNQ0FvVWtGRFJpa3dEZ1lEVlIwUEFRSC9CQVFEQWdBR01BOEdBMVVkRXdFQi93UUYgCk1BTUJBZjh3SFFZRFZSME9CQllFRkozK29jUnlDVEp3MDY3ZExTd3IvbmFseDZZTU1BMEdDU3FHU0liM0RRRUIgCkJRVUFBNEdCQU1hUXp0K3phajFHVTc3eXpscjhpaU1CWGdkUXJ3c1paV0pvNWV4bkF1Y0pBRVlRWm1PZnlMaU0gCkQ2b1lxK1puZnZNMG44Ry9ZNzlxOG5od3Z1eHBZT25SU0FYRnA2eFNrcklPZVp0Sk1ZMWgwMExLcC9KWDNOZzEgCnN2WjJhZ0UxMjZKSHNRMGJoek41VEtzWWZid2ZUd2ZqZFdBR3k2VmYxbllpL3JPK3J5TU8KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLSA=
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0....
     
 ...
 ```

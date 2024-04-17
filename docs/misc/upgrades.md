@@ -2,52 +2,74 @@
 icon: material/circle-small
 ---
 
-## OS Upgrades
+## OS Upgrades on Kubernetes Nodes
 
-- By default, Nodes has 5 minutes to come back up before their Pods are killed
-- When performing an OS upgrade, it’s best to `drain` the Node before upgrading, because it may take longer than 5 minutes
-    - Use the `--ignore-daemonsets` flag
-- Once the Node comes back up, you’ll have to `uncordon` the Node to make it available to schedule Pods again
-- The `cordon` command simply marks the Node as un-schedulable (but does not drain the Pods from the Node)
+**Node Downtime Handling:**
 
-## Cluster Upgrade Process
+Kubernetes nodes are given a default grace period of 5 minutes to reboot during updates or maintenance before the system starts evicting Pods. This is crucial to ensure that services remain available even when nodes are temporarily down.
+<br>
 
-- It is ***not*** mandatory for all components to have the same version numbers
-    - However, no components should have a *higher* version than the API Server
-    - Controller Manager can be **one** version lower
-    - Scheduler can be **one** version lower
-    - Kubelet and Kube Proxy can each be **two** versions lower
-    - Kubectl can be **one** version higher *OR* lower
+**Draining Nodes:**
 
-
-- Kubernetes supports up to the **latest 3 minor versions**
-
-- The recommended approach to upgrade is **one minor version at a time**
-
-- Upgrade master nodes first
-
-- Kubeadm **does not** manage Kubelets, which must be upgraded manually
-
-- The output of `kubectl get nodes` shows the versions of the **Kubelets** on each node
-
-Generalized steps for upgrading:
-
+To minimize disruption during an OS upgrade, it is advisable to proactively drain the node. This process safely evicts all pods from the node and marks it as unschedulable, ensuring that no new pods are assigned to it during the upgrade:
 ```bash
-# show recommended version to ugprade to
-kubeadm upgrade plan
+kubectl drain <node-name> --ignore-daemonsets
+```
 
-# upgrade the kudeadm tool
-apt-get upgrade -y kubeadm=<version>
+**Uncordoning Nodes:**
 
-# on the master node, upgrade control plane services
-kubeadm upgrade apply v<version>
+After the node reboots and is ready to resume work, you must make it schedulable again by uncordoning it: 
+``` bash
+kubectl uncordon <node-name>
+```
 
-# upgrade the kubelet
-apt-get upgrade -y kubelet=<version>
+### Cluster Upgrade Process
+In a Kubernetes cluster, it's vital to maintain version compatibility among components. The API Server, as the central component accepting and processing all requests, should always be upgraded first and must not be of a lower version than any other cluster components:
 
-# upgrade the node
-kubeadm upgrade node
+- **Controller Manager and Scheduler** can be at most one minor version behind the API Server.
+- **Kubelet and Kube Proxy** can lag behind up to two minor versions.
+- **Kubectl** (the command line tool) can be one version higher or lower than your cluster, giving some flexibility during the upgrade process.
+<br><br>
 
-# restart the kubelet
+**Version Skew Policy:**
+
+Kubernetes supports version skew of up to three minor versions between the master and node components. Always ensure that your upgrade process respects these limits to prevent compatibility issues.
+<br><br>
+
+**Recommended Upgrade Strategy:**
+
+The safest approach to upgrading a Kubernetes cluster is to proceed one minor version at a time. This step-wise progression helps in managing dependencies and reducing the risk of significant disruptions:
+<br><br>
+
+**Step-by-Step Upgrade Guide Using Kubeadm:**
+
+1. **Plan Your Upgrade:**
+Use `kubeadm upgrade plan` to check the available versions and plan the upgrade steps.
+
+2. **Upgrade Kubeadm:**
+Update the kubeadm tool itself to the desired version:
+```bash
+apt-get upgrade -y kubeadm=<new-version>
+```
+
+3. **Upgrade the Control Plane Nodes:**
+Apply the upgrade to the master nodes using kubeadm:
+``` bash
+kubeadm upgrade apply v<new-version>
+```
+
+4. **Upgrade Kubelet on Each Node:**
+After upgrading the master, upgrade kubelet on each node:
+``` bash
+apt-get upgrade -y kubelet=<new-version>
 systemctl restart kubelet
 ```
+
+5. **Update Node Components:**
+Complete the node upgrade by running:
+``` bash
+kubeadm upgrade node
+```
+
+6. **Monitoring Upgrades:**
+Always monitor the cluster's status and component health via `kubectl get nodes` to ensure all nodes are at the correct version and fully operational post-upgrade.

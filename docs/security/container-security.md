@@ -2,29 +2,25 @@
 icon: material/circle-small
 ---
 
-## Image Security
-- Generally, it's best-practice to only use container images from repositories that you trust - either one's internal to your company, your own private repo, or Docker's verified registry (although you should still be careful with these).
+## Image Security in Kubernetes
+
+**Trusted Repositories:**
+
+It is a security best practice to use container images only from trusted repositories. These can include internal repositories managed within your organization, your private repositories, or reputable public repositories with verified content such as Docker Hub’s certified repositories.
 <br><br>
 
-- If you don’t specify a registry in the `image` name in your manifest, it’s assumed to be Docker’s default registry - `docker.io`
-    - i.e. putting `image: nginx` will assume it’s *actually* `image: docker.io/library/nginx`
+**Default Registry:**
+
+When specifying an image in Kubernetes without a registry, the default is Docker Hub (`docker.io`). For example, specifying `image: nginx` in your Pod definition translates to `image: docker.io/library/nginx`. It's crucial to be aware of this default behavior to avoid unintentional deployments from unverified sources.
 <br><br>
 
-- Another popular container repo is `gcr.io` - Google’s container repository where a lot of Kubernetes core images reside
+**Alternative Registries:**
 
-## Security in Docker
+Another trusted source is Google Container Registry (`gcr.io`), which hosts many of the core images used by Kubernetes itself. Utilizing such reputable sources can reduce the risk of incorporating vulnerabilities from less secure registries.
 
-- By default, Docker runs processes in containers as `root`
-    - You can change this though
-<br><br>
 
-- Processes running in a container are also visible as running processes on the host itself
-<br><br>
-
-- The `root` user in the container is not the same as the `root` user on the host
-    - It’s limited in it’s ability to impact the host or other processes on the host
-
-## Security Contexts
+## Minimizing Privileges
+Running containers as the root user can pose significant security risks, particularly if the container environment is breached. It is possible, and recommended, to run containers as a non-root user to mitigate potential damage. This is achieved by specifying a non-root user in the container’s security context:
 
 ```yaml
 apiVersion: v1
@@ -32,13 +28,15 @@ kind: Pod
 metadata:
   name: web-pod
 spec:
+  securityContext:
+    runAsUser: 1000
+    readOnlyRootFilesystem: true
   containers:
-  - name: ubuntu
-    image: ubuntu
-	  securityContext:
-	    runAsUser: 1000
-	    capabilities:
-	      add: ["MAC_ADMIN"]
+  - name: web-container
+    image: nginx
+    securityContext:
+      capabilities:
+        add: ["NET_BIND_SERVICE"]
 ```
 In the snippet above, we configure security context for a Pod, including:
 
@@ -46,9 +44,9 @@ In the snippet above, we configure security context for a Pod, including:
 - and Linux capabilities to give the Pod
 <br><br>
 
-- You can specify the `runAsUser` at the container *or* Pod level - but `capabilities` is **not** supported at the Pod level
+You can specify the `runAsUser` at the container *or* Pod level - but `capabilities` is **not** supported at the Pod level.
 <br><br>
-- You can find out the user that is used to execute in a container by running:
+You can find out the user that is used to execute in a container by running:
     ```bash
     kubectl exec <pod-name> -- whoami
     ```

@@ -2,67 +2,60 @@
 icon: material/circle-small
 ---
 
-- You can save many objects on the cluster by querying the API Server and exporting it to YAML by running:
-    
-    ```bash
-    kubectl get all --all-namespaces -o yaml > all-deploy-services.yaml
-    ```
+## Backup Strategies in Kubernetes
+One straightforward method to back up Kubernetes objects is to query the API server and export all significant resources to a YAML file. This can be done using the `kubectl` command:
+```bash
+kubectl get all --all-namespaces -o yaml > all-resources-backup.yaml
+```
 <br>
 
-- Instead of backing up resources, you can back up the etcd server itself - etcd comes with a built-in snapshot solution:
+For a more comprehensive backup, you can directly back up the etcd database, which holds all state and configuration data of your Kubernetes cluster. etcdctl, the CLI tool for etcd, provides a built-in solution to snapshot the database:
+```bash
+ETCDCTL_API=3 etcdctl snapshot save /opt/snapshot-pre-boot.db \
+--endpoints=https://127.0.0.1:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key
+```
+This snapshot includes all Kubernetes states and can be used to restore the entire cluster to the point in time when the snapshot was taken.
 
-    ```bash
-    etcdctl snapshot save /opt/snapshot-pre-boot.db
-    --endpoints=https://127.0.0.1:2379 \
-    --cacert=/etc/kubernetes/pki/etcd/ca.crt \
-    --cert=/etc/kubernetes/pki/etcd/server.crt \
-    --key=/etc/kubernetes/pki/etcd/server.key
-    ```
+You can view the status of a snapshot by running:
+```bash
+etcdctl snapshot status snapshot.db
+```
 <br>
 
-- You can view the status of a snapshot by running:
 
-    ```bash
-    etcdctl snapshot status snapshot.db
-    ```
-<br>
+## Restore from an etcd Snapshot
+Restoring your Kubernetes cluster from an etcd snapshot involves several critical steps:
 
-- Here are the generalized steps to restore from etcd from a backup:
-    
-    ```bash
-    # first stop the API Server
-    service kube-apiserver stop
+1. **Stop the Kubernetes API Server:**
+   To begin the restoration, you need to stop the API server to prevent any changes to the cluster state during the restore process:
+```bash
+service kube-apiserver stop
+```
 
-    # then restore
-    # note the new directory being used by etcd
-    etcdctl snapshot restore snapshot.db --data-dir /var/lib/etcd-from-backup
+2. **Restore the etcd Snapshot:**
+Use `etcdctl` to restore the snapshot to a new data directory. This helps prevent corruption of the existing data during the restore process:
+``` bash
+etcdctl snapshot restore /opt/snapshot-pre-boot.db --data-dir /var/lib/etcd-from-backup
+```
+3. **Update the etcd Pod Specification:**
+Modify the etcd manifest to use the new data directory. This usually involves editing the etcd pod definition in the Kubernetes manifests directory:
+```bash
+vi /etc/kubernetes/manifests/etcd.yaml
+# Change the data directory to /var/lib/etcd-from-backup
+```
 
-    # edit etcd service to use new directory
-    vi /etc/kubernetes/manifests/etcd.yaml
+4. **Restart etcd and Kubernetes API Server:**
+Reload the systemd daemon to apply the changes and restart the etcd service:
+``` bash
+systemctl daemon-reload
+service etcd restart
+# Wait for etcd to become fully operational
+service kube-apiserver start
+```
 
-    # restart the etcd service
-    systemctl daemon-reload
+5. **Monitoring the Restoration:**
+After restarting the services, monitor the cluster's logs and status to ensure that all components are functioning correctly and the state has been restored as expected.
 
-    # wait 1-2 minutes for pods to come back up
-    service etcd restart
-
-    # start API Server
-    service kube-apiserver start
-    ```
-<br>
-
-- An easy way to view etcd servers for a cluster is by inspecting the API Server pod running in the `kube-system` Namespace
-    - It will have a field called `--etcd-servers` under the `command` field
-<br><br>
-
-- To view details about the etcd server you can also run:
-    
-    ```bash
-    ps -ef | grep etcd
-    ```
-<br>
-
-- You can edit the etcd service at:
-    ``` bash
-    vi /etc/systemd/system/etcd.service
-    ```
