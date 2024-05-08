@@ -26,13 +26,15 @@ The Scheduler uses a variety of criteria to determine the most suitable Node for
 
 The Scheduler employs a two-phase process consisting of filtering and scoring:
 
-1. **Filtering Phase**: The Scheduler filters out nodes that do not satisfy the Pod’s requirements. Factors considered include:
+1. **Filtering Phase**: The Scheduler filters out nodes that do not satisfy the Pod’s requirements. Factors considered include: 
+
    - Node capacity.
    - Resource availability.
    - Taints and tolerations.
    - Affinity and anti-affinity specifications.
 
-2. **Scoring Phase**: Nodes that pass the filtering phase are scored on a scale from 0 to 10 based on how well they meet the requirements. The Scheduler considers:
+2. **Scoring Phase**: Nodes that pass the filtering phase are scored on a scale from 0 to 10 based on how well they meet the requirements. The Scheduler considers: 
+
    - Resource utilization and availability.
    - Affinity rules specified in the Pod configuration.
    - Other custom policies that may be configured.
