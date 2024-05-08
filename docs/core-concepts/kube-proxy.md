@@ -22,7 +22,8 @@ Kube Proxy maintains network rules on nodes. These rules allow network communica
 
 <h4>Forwarding Rules and Load Balancing</h4>
 
-Kube Proxy can operate in different modes, each affecting how network traffic is handled:
+Kube Proxy can operate in different modes, each affecting how network traffic is handled: 
+
 - **User space mode**: Traffic is forwarded using space switching.
 - **iptables mode**: Uses native Linux iptables to route traffic, which is less resource-intensive and faster.
 - **IPVS mode**: Supports more advanced load balancing features.
