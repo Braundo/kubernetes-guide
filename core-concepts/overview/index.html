@@ -1210,7 +1210,7 @@
 <h2 id="etcd">etcd</h2>
 <p>The Control Plane, like many aspects of Kubernetes, exists in a <em>stateless</em> manner. However, <strong>etcd</strong> does not - it persistently stores the state of the cluster and other configuration data.<br />
 <br></p>
-<p><strong>etcd</strong> plays a critical role in Kubernetes by persistently storing the state of the cluster and other configuration data. For high-availability setups 
+<p><strong>etcd</strong> plays a critical role in Kubernetes by persistently storing the state of the cluster and other configuration data.
 <br></p>
 <p><strong>etcd</strong> is not merely installed on every control plane node; it is commonly configured externally or runs in a clustered mode across several nodes. This configuration helps avoid single points of failure and ensures that the cluster remains operational even if one or more <strong>etcd</strong> instances fail. It's important to note that while <strong>etcd</strong> can handle network partitions or "split-brain" scenarios by preventing state updates, it will still allow the running applications to operate, thus ensuring service continuity.
 <br></p>
