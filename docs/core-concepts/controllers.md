@@ -14,7 +14,7 @@ In Kubernetes, a **controller** is a background process that constantly monitors
 
 <h4>Other Essential Controllers</h4>
 
-- **Deployment Controller**: Manages the life cycle of deployments by updating Pods and ReplicaSets.
+- **Deployment Controller**: Manages the lifecycle of deployments by updating Pods and ReplicaSets.
 - **Namespace Controller**: Handles namespace creation, updating, and deletion.
 - **Endpoint Controller**: Populates the Endpoints object (that is, joins Services & Pods).
 - **CronJob Controller**: Manages time-based jobs, ensuring they run at specified times.
