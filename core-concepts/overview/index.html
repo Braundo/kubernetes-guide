@@ -1212,7 +1212,7 @@
 <br></p>
 <p><strong>etcd</strong> plays a critical role in Kubernetes by persistently storing the state of the cluster and other configuration data.
 <br></p>
-<p>For high-availability setups, <strong>etcd</strong> is not installed on control plane node(s); instead it is commonly configured externally. This configuration helps avoid single points of failure and ensures that the cluster remains operational even if one or more <strong>etcd</strong> instances fail. It's important to note that while <strong>etcd</strong> can handle network partitions or "split-brain" scenarios by preventing state updates, it will still allow the running applications to operate, thus ensuring service continuity.
+<p>For high-availability setups, <strong>etcd</strong> is not installed on control plane node(s); instead it is commonly configured externally. This configuration helps avoid single points of failure and ensures that the cluster remains operational even if one or more <strong>etcd</strong> instances fail. It's important to note that when <strong>etcd</strong> encounters network partitions or "split-brain" scenarios it will prevent cluster state updates, however it will still allow the running applications to operate, thus ensuring service continuity.
 <br></p>
 <p>Every result you see when you a run <code>kubectl get</code> command is actually data returned from <strong>etcd</strong> (via the API Server).</p>
 <h2 id="controllers">Controllers</h2>
