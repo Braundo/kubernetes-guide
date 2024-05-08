@@ -1112,10 +1112,12 @@
 <p>The <strong>Scheduler</strong> in Kubernetes is a critical component responsible for assigning Pods to Nodes in the cluster. While the Scheduler decides the placement of Pods, it is the Kubelet on each node that actually places the Pod onto the Node.</p>
 <h4>Responsibilities of the Scheduler</h4>
 
-<p>The primary function of the Scheduler is to:
-- Evaluate the resource requirements of each Pod.
-- Assess the current availability and conditions of the Nodes.
-- Assign the Pod to a Node that best meets the Pod’s needs.</p>
+<p>The primary function of the Scheduler is to: </p>
+<ul>
+<li>Evaluate the resource requirements of each Pod.</li>
+<li>Assess the current availability and conditions of the Nodes.</li>
+<li>Assign the Pod to a Node that best meets the Pod’s needs.</li>
+</ul>
 <h4>Decision-Making Criteria</h4>
 
 <p>The Scheduler uses a variety of criteria to determine the most suitable Node for a Pod, including:</p>
