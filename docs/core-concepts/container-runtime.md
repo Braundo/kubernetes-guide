@@ -23,8 +23,6 @@ When Kubernetes introduced the [Container Runtime Interface](https://kubernetes.
 `containerd` has achieved graduated status within the CNCF, highlighting its maturity and stability as a container runtime. It can be installed independently of Docker, providing a streamlined, Docker-free deployment option. While `containerd` includes a command-line tool called `ctr`, this tool is primarily intended for debugging purposes and may not be as user-friendly for general usage. 
 <br>
 
-`containerd` also comes with a CLI tool called `ctr` which is not very user-friendly and mainly used for debugging containerd.
-
 
 *[OCI]: Open Container Initiative
 *[CRI]: Container Runtime Interface
