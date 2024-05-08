@@ -1127,10 +1127,12 @@
 </ul>
 <h4>Forwarding Rules and Load Balancing</h4>
 
-<p>Kube Proxy can operate in different modes, each affecting how network traffic is handled:
-- <strong>User space mode</strong>: Traffic is forwarded using space switching.
-- <strong>iptables mode</strong>: Uses native Linux iptables to route traffic, which is less resource-intensive and faster.
-- <strong>IPVS mode</strong>: Supports more advanced load balancing features.</p>
+<p>Kube Proxy can operate in different modes, each affecting how network traffic is handled: </p>
+<ul>
+<li><strong>User space mode</strong>: Traffic is forwarded using space switching.</li>
+<li><strong>iptables mode</strong>: Uses native Linux iptables to route traffic, which is less resource-intensive and faster.</li>
+<li><strong>IPVS mode</strong>: Supports more advanced load balancing features.</li>
+</ul>
 <p>The choice of mode can affect the performance and capabilities of the network, with IPVS mode providing the best performance for large-scale, high-throughput systems.</p>
 <h3 id="practical-example-monitoring-kube-proxy-activity">Practical Example: Monitoring Kube Proxy Activity</h3>
 <p>Monitoring Kube Proxy is important for diagnosing network issues and ensuring that the routing of traffic to services is efficient. Here are some metrics you might consider monitoring:</p>
