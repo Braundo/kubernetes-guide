@@ -13,7 +13,7 @@ Despite its popularity, Docker did not initially support CRI, as it predated the
 Starting with Kubernetes version 1.24, support for Docker Shim was phased out in favor of `containerd`, which became the default runtime. Nonetheless, Docker images remain compatible with Kubernetes due to their adherence to the `imagespec` OCI standard, ensuring seamless operation with `containerd`.
 <br>
 
-As Kubernetes grew in popularity, Kubernetes introduced the [Container Runtime Interface](https://kubernetes.io/docs/concepts/architecture/cri/) (CRI) which allowed any runtime to be used as long as they adhered to the [Open Container Initiative](https://opencontainers.org/) (OCI). There are two main specs to be aware of: 
+When Kubernetes introduced the [Container Runtime Interface](https://kubernetes.io/docs/concepts/architecture/cri/) (CRI) it allowed any runtime to be used as long as they adhered to the [Open Container Initiative](https://opencontainers.org/) (OCI). There are two main specs to be aware of: 
 - **`imagespec`** - how an image should be built
 - **`runtimespec`** - how a container runtime should be developed  
 <br>
