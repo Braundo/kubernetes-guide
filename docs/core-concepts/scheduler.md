@@ -8,7 +8,8 @@ The **Scheduler** in Kubernetes is a critical component responsible for assignin
 
 <h4>Responsibilities of the Scheduler</h4>
 
-The primary function of the Scheduler is to:
+The primary function of the Scheduler is to: 
+
 - Evaluate the resource requirements of each Pod.
 - Assess the current availability and conditions of the Nodes.
 - Assign the Pod to a Node that best meets the Pod’s needs.
