@@ -76,9 +76,7 @@ The Kubernetes API is expansive and RESTful, structured to define all Kubernetes
 
 **Core API Group:** This group houses the original, fundamental resources such as Pods, Nodes, and Services, accessible under `/api/v1`. These objects, crucial from the early Kubernetes days, have paths that may vary based on whether they are namespaced (e.g., Pods within a specific namespace) or cluster-wide (e.g., Nodes).  
 
-**Named Groups:** Representing the evolution and expansion of the Kubernetes API, named groups contain newer resources organized by functionality. For instance, the "apps" group includes workload-related resources like Deployments and StatefulSets, while "networking.k8s.io" focuses on network aspects such as Ingresses. Unlike the core group, resources in named groups are found under `/apis/{group-name}/{version}/`, reflecting their categorization and versioning.  
-
-This division enhances the API's scalability and navigability, facilitating the introduction of new resources. To explore available resources and their groupings, `kubectl api-resources` provides a comprehensive overview, indicating whether resources are namespaced or cluster-scoped, alongside their shortnames and API group affiliations. This command is instrumental in understanding the API's layout and the scope of resources within a Kubernetes cluster.  
+**Named Groups:** Representing the evolution and expansion of the Kubernetes API, named groups contain newer resources organized by functionality. For instance, the "apps" group includes workload-related resources like Deployments and StatefulSets, while "networking.k8s.io" focuses on network aspects such as Ingresses. Unlike the core group, resources in named groups are found under `/apis/{group-name}/{version}/`, reflecting their categorization and versioning. This division enhances the API's scalability and navigability, facilitating the introduction of new resources.  
 
 #### Core Group
 | Resource | REST Path |
