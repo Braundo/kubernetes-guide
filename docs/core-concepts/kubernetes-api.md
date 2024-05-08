@@ -126,7 +126,6 @@ In Kubernetes discussions, you might hear "resources," "objects," and "primitive
 
 **Scope of Resources:** Kubernetes differentiates between namespaced and cluster-scoped resources. Namespaced resources must reside within a specific Namespace, tailoring their scope and impact to that Namespace. For instance, Pods and Services require a Namespace to exist. Conversely, cluster-scoped resources either span multiple Namespaces or operate outside the Namespace system altogether. Nodes, for example, are cluster-scoped resources existing beyond Namespace boundaries, while ClusterRoles can be tied to specific Namespaces through RoleBindings to apply permissions across the cluster.  
 
-To get a grip on the resources available in your cluster and their scope, `kubectl api-resources` is an invaluable command. It provides a snapshot of all resources, highlighting whether they are namespaced or cluster-scoped, thereby offering insight into how Kubernetes structures and manages its diverse set of resources.  
 
 ## Extending the API
 Kubernetes offers a powerful framework for managing and automating containerized applications, largely through its predefined set of resources and controllers that observe and manage the state of objects within the cluster. Yet, one of Kubernetes' most compelling features is its extensibility, allowing you to tailor the system to your specific needs by introducing custom resources and controllers.  
