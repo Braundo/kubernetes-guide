@@ -16,7 +16,7 @@ Under the covers, Deployments actually leverage a different Kubernetes object to
 ![deploy](../../images/deploy-rs-pod.svg)
 
 ## Scaling and Self-Healing
-If you deploy a pod by itself (i.e. not via a Deployment), if it dies or fails, the Pod is lost forever.
+If you deploy a Pod by itself (i.e. not via a Deployment), if it dies or fails, the Pod is lost forever.
 !!! info "We never "revive" Pods; the appropriate way to "revive" a failed Pod is to create a new one to replace it."
 However, with the magic of Deployments, if a Pod that was created via Deployment fails, it will be replaced. Remember that Deployment controllers continuously watch for deviations from your desired state; so if you specified that your application should run 3 Pods and one of the Pods fails, the controller will recognize that actual state (2 Pods) no longer matches desired state (3 Pods), and it will kick off a series of actions to deploy another Pod.
 
