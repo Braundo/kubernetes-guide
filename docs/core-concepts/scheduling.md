@@ -119,7 +119,7 @@ spec:
     
 
 - By default, a Pod **has no limits on the amount of resources it can consume from a Node**
-- You can also specify a *limit* how many resources your Pod can consume when defining it
+- You can also specify a *limit* on how many resources your Pod can consume when defining it
     
 ```yaml
 apiVersion: v1
