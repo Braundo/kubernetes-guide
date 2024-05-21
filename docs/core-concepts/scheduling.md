@@ -2,7 +2,7 @@
 icon: material/circle-small
 ---
 
-- Every Pod specification includes an optional `nodeName` field, which is typically left unset. When a Pod is created without a specific `nodeName`, Kubernetes' scheduler automatically assigns the Pod to an appropriate node, populating the `nodeName` field with the selected node's name. 
+- Every Pod specification includes an optional `nodeName` field, which is typically left unset. When a Pod is created without a specific `nodeName`, Kubernetes' scheduler automatically assigns the Pod to an appropriate Node, populating the `nodeName` field with the selected Node's name. 
 - When the **Scheduler** reviews Pods, it finds Pods that do not have that field set and those are the candidates for scheduling
 - It then runs the scheduling algorithm to determine which Node to place the Pod on and populates the `nodeName` field
 
@@ -24,12 +24,12 @@ spec:
 > The `nodeName` field cannot be updated once the Pod is running. If you want to update the Node a running Pod resides on, you have to create a `Binding` object and send a POST request to the Binding API of the Pod,
 
 ## Taints and Tolerations
-Taints and tolerations work together to ensure that Pods are not scheduled onto inappropriate nodes. Taints are applied to nodes and can repel Pods that do not have a corresponding toleration. 
+Taints and tolerations work together to ensure that Pods are not scheduled onto inappropriate Nodes. Taints are applied to Nodes and can repel Pods that do not have a corresponding toleration. 
 
-- **Taints** are markers applied to nodes that denote special behavior. For example, a node might have a taint that indicates it should not host any Pods that do not explicitly tolerate the taint. 
-- **Tolerations** are applied to Pods and allow them to "ignore" taints on nodes, thus enabling them to be scheduled onto nodes with those taints.
+- **Taints** are markers applied to Nodes that denote special behavior. For example, a Node might have a taint that indicates it should not host any Pods that do not explicitly tolerate the taint. 
+- **Tolerations** are applied to Pods and allow them to "ignore" taints on Nodes, thus enabling them to be scheduled onto Nodes with those taints.
 
-Together, taints and tolerations provide a powerful way to ensure that Pods are only scheduled onto suitable nodes. For instance, you might taint a node to only allow database Pods that require high I/O performance, ensuring that other workloads do not disrupt database operations. 
+Together, taints and tolerations provide a powerful way to ensure that Pods are only scheduled onto suitable Nodes. For instance, you might taint a Node to only allow database Pods that require high I/O performance, ensuring that other workloads do not disrupt database operations. 
 
 - <span style="color: #FF0000">**Taints**</span> are specific to <span style="color: #FF0000">**Nodes**</span>
 - <span style="color: #4287f5">**Tolerations**</span> are specific to <span style="color: #4287f5">**Pods**</span>
@@ -59,12 +59,12 @@ spec:
 > Note there are limitations here as you cannot use complex operators like `IS NOT` , `OR` , `EXISTS` , etc.
 
 ## Node Affinity
-Node affinity is a set of rules that the scheduler uses to determine where a Pod can be placed based on labels on nodes. Unlike simple node selectors, node affinity allows for more complex expressions:
+Node affinity is a set of rules that the scheduler uses to determine where a Pod can be placed based on labels on Nodes. Unlike simple Node selectors, Node affinity allows for more complex expressions:
 
-- **Required rules** must be met for a Pod to be scheduled on a node.
+- **Required rules** must be met for a Pod to be scheduled on a Node.
 - **Preferred rules** suggest preferences but do not strictly enforce them.
 
-This feature allows you to specify that certain Pods should or should not be placed in specific ways relative to other Pods or based on node attributes, enhancing the scheduler's ability to distribute workloads optimally. 
+This feature allows you to specify that certain Pods should or should not be placed in specific ways relative to other Pods or based on Node attributes, enhancing the scheduler's ability to distribute workloads optimally. 
 
 - Node affinity ***does*** let you use complex operators
 - Node affinity is **a set of rules used by the Scheduler to determine where a Pod can be placed**.
