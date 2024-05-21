@@ -1310,7 +1310,7 @@
 </span><span id="__span-7-14"><a href="#__codelineno-7-14" id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volMap</span>
 </span><span id="__span-7-15"><a href="#__codelineno-7-15" id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/regions</span>
 </span></code></pre></div>
-<p>If you were to deploy this Pod and exec into it, you could run an <code>ls</code> command to view the files we defined in the ConfigMap diagram above mounted at <code>/etc/regions</code>:  </p>
+<p>If you were to deploy this Pod and exec into it, you could run an <code>ls</code> command to view the files defined in the ConfigMap which are mounted at <code>/etc/regions</code>:  </p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>configMapVol<span class="w"> </span>--<span class="w"> </span>ls<span class="w"> </span>/etc/regions
 </span><span id="__span-8-2"><a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>central
 </span><span id="__span-8-3"><a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>west
