@@ -12,7 +12,7 @@ Namespaces in Kubernetes are like virtual clusters within a physical cluster. Th
 Namespaces are commonly used to separate environments within a single Kubernetes cluster. This separation helps in managing different deployment stages such as development, testing, staging, and production within the same cluster but without interference. Each environment can have its own set of permissions, limits, and policies, ensuring that resources are not accidentally shared or overwritten across different team functions. 
 
 ## Network and Namespace Policies
-Network policies in Kubernetes provide an additional layer of security when using namespaces. By default, pods within a namespace can communicate freely. Network policies allow you to define rules for inbound and outbound traffic between pods across different namespaces, helping to enforce a stricter communication policy and prevent unauthorized access.
+Network policies in Kubernetes provide an additional layer of security when using namespaces. By default, Pods within a namespace can communicate freely. Network policies allow you to define rules for inbound and outbound traffic between pods across different namespaces, helping to enforce a stricter communication policy and prevent unauthorized access.
 
 For example, you can create a network policy that only allows traffic from the 'development' namespace to the 'testing' namespace, enhancing the security and isolation between different deployment stages.
 
