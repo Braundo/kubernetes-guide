@@ -215,7 +215,7 @@ spec:
 
 - The `kube-proxy` is actually a DaemonSet as well
 
-- DaemonSets ensures a Pod runs on every single Node in the cluster by using Node Affinity rules
+- DaemonSets ensure a Pod runs on every single Node in the cluster by using Node Affinity rules
 
 ```yaml
 apiVersion: apps/v1
