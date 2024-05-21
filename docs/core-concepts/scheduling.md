@@ -172,18 +172,18 @@ spec:
 apiVersion: v1
 kind: LimitRange
 metadata:
-name: memory-resource-constraint
+  name: memory-resource-constraint
 spec:
-limits:
-- default: # limit
-  memory: 1Gi
-defaultRequest: # request
-  memory: 1Gi
-max: # limit
-  memory: 1Gi
-min: # request
-  memory: 500Mi
-type: Container
+  limits:
+  - default: # limit
+    memory: 1Gi
+  defaultRequest: # request
+    memory: 1Gi
+  max: # limit
+    memory: 1Gi
+  min: # request
+    memory: 500Mi
+  type: Container
 ```
 !!! warning "Changing a LimitRange will not affect running Pods - only newly created ones"
 
