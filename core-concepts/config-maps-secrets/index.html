@@ -1218,7 +1218,7 @@
 </ol>
 <p>These methods are all transparent to the application - it has no idea the ConfigMap is even a thing, it just knows it's data is where it's supposed to be. How it got there is an irrelevant mystery.</p>
 <h4 id="environment-variables">Environment Variables</h4>
-<p>To inject data as environment variables, you created a ConfigMap and map its entries to environment variables inside of the Pod spec template. Once the Pod and underlying container start, the environment variables will appear as standard environment variables for the OS relevant to that container.  </p>
+<p>To inject data as environment variables, you create a ConfigMap and map its entries to environment variables inside of the Pod spec template. Once the Pod and underlying container start, the environment variables will appear as standard environment variables for the OS relevant to that container.  </p>
 <p>Here's how that might look when injecting some database information into a container using a ConfigMap called <code>myCM</code>:  </p>
 <p><code>myCM</code>:
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nn">...</span>
