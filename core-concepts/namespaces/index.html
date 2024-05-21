@@ -1184,13 +1184,13 @@
 <p>Namespaces in Kubernetes are like virtual clusters within a physical cluster. They help partition resources among multiple users and teams, enabling a more organized deployment environment. Namespaces provide a mechanism to scope resource names, simplify resource management, and facilitate the application of specific access controls, resource quotas, and policies at a granular level. </p>
 <div class="admonition warning">
 <p class="admonition-title">Namespaces are not intended to be used for secure isolation</p>
-<p>While namespaces help in organizing and managing access to resources, they do not provide a strong security boundary capable of preventing all forms of resource access or interference between namespaces. For scenarios requiring stringent security isolation, such as multi-tenant environments with strict compliance requirements, the best practice is to use multiple Kubernetes clusters. </p>
+<p>While Namespaces help in organizing and managing access to resources, they do not provide a strong security boundary capable of preventing all forms of resource access or interference between Namespaces. For scenarios requiring stringent security isolation, such as multi-tenant environments with strict compliance requirements, the best practice is to use multiple Kubernetes clusters. </p>
 </div>
 <h2 id="common-uses-for-namespaces">Common Uses for Namespaces</h2>
 <p>Namespaces are commonly used to separate environments within a single Kubernetes cluster. This separation helps in managing different deployment stages such as development, testing, staging, and production within the same cluster but without interference. Each environment can have its own set of permissions, limits, and policies, ensuring that resources are not accidentally shared or overwritten across different team functions. </p>
 <h2 id="network-and-namespace-policies">Network and Namespace Policies</h2>
-<p>Network policies in Kubernetes provide an additional layer of security when using namespaces. By default, Pods within a namespace can communicate freely. Network policies allow you to define rules for inbound and outbound traffic between pods across different namespaces, helping to enforce a stricter communication policy and prevent unauthorized access.</p>
-<p>For example, you can create a network policy that only allows traffic from the 'development' namespace to the 'testing' namespace, enhancing the security and isolation between different deployment stages.</p>
+<p>Network policies in Kubernetes provide an additional layer of security when using Namespaces. By default, Pods within a Namespace can communicate freely. Network policies allow you to define rules for inbound and outbound traffic between Pods across different Namespaces, helping to enforce a stricter communication policy and prevent unauthorized access.</p>
+<p>For example, you can create a network policy that only allows traffic from the 'development' Namespace to the 'testing' Namespace, enhancing the security and isolation between different deployment stages.</p>
 <h2 id="built-in-namespaces">Built-in Namespaces</h2>
 <p>Kubernetes starts with several built-in Namespaces:</p>
 <ul>
@@ -1199,8 +1199,8 @@
 <li><code>kube-public</code>: Usually reserved for resources that should be visible and readable publicly throughout the whole cluster.</li>
 <li><code>kube-node-lease</code>: For lease objects associated with nodes which help the Kubelet in determining node health.  </li>
 </ul>
-<p>To view all the namespaces in your cluster and verify their status, you can use the <code>kubectl get namespaces</code> command. This command lists all namespaces, providing a quick overview of the operational scope within your cluster: </p>
-<div class="language-bash highlight"><span class="filename">$ kubectl get namespaces</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span>NAME<span class="w">              </span>STATUS<span class="w">   </span>AGE
+<p>To view all the Namespaces in your cluster and verify their status, you can use the <code>kubectl get Namespaces</code> command. This command lists all Namespaces, providing a quick overview of the operational scope within your cluster: </p>
+<div class="language-bash highlight"><span class="filename">$ kubectl get Namespaces</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span>NAME<span class="w">              </span>STATUS<span class="w">   </span>AGE
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>default<span class="w">           </span>Active<span class="w">   </span>22h
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>gmp-public<span class="w">        </span>Active<span class="w">   </span>22h
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>gmp-system<span class="w">        </span>Active<span class="w">   </span>22h
@@ -1217,7 +1217,7 @@
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-pod</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-namespace</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">Namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-Namespace</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nn">...</span>
 </span></code></pre></div>
 <h2 id="namespace-creation">Namespace Creation</h2>
@@ -1225,10 +1225,10 @@
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespace</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-new-namespace</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-new-Namespace</span>
 </span></code></pre></div>
 <p>You can also create a Namespace with the kubectl command:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>my-new-namespace
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>Namespace<span class="w"> </span>my-new-Namespace
 </span></code></pre></div>
 
 
