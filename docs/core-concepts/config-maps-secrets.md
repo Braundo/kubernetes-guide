@@ -169,7 +169,7 @@ spec:
           mountPath: /etc/regions
 ```
 
-If you were to deploy this Pod and exec into it, you could run an `ls` command to view the files we defined in the ConfigMap diagram above mounted at `/etc/regions`:  
+If you were to deploy this Pod and exec into it, you could run an `ls` command to view the files defined in the ConfigMap which are mounted at `/etc/regions`:  
 
 ``` shell
 $ kubectl exec configMapVol -- ls /etc/regions
