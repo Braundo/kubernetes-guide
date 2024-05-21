@@ -56,7 +56,7 @@ Data stored in ConfigMaps can be injected into a container in a number of ways:
 These methods are all transparent to the application - it has no idea the ConfigMap is even a thing, it just knows it's data is where it's supposed to be. How it got there is an irrelevant mystery.
 
 #### Environment Variables
-To inject data as environment variables, you created a ConfigMap and map its entries to environment variables inside of the Pod spec template. Once the Pod and underlying container start, the environment variables will appear as standard environment variables for the OS relevant to that container.  
+To inject data as environment variables, you create a ConfigMap and map its entries to environment variables inside of the Pod spec template. Once the Pod and underlying container start, the environment variables will appear as standard environment variables for the OS relevant to that container.  
 
 Here's how that might look when injecting some database information into a container using a ConfigMap called `myCM`:  
 
