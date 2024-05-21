@@ -22,7 +22,7 @@ Kubernetes starts with several built-in Namespaces:
 - `default`: The space where objects are placed if no other Namespace is specified.
 - `kube-system`: For objects created by the Kubernetes system.
 - `kube-public`: Usually reserved for resources that should be visible and readable publicly throughout the whole cluster.
-- `kube-node-lease`: For lease objects associated with nodes which help the Kubelet in determining node health.  
+- `kube-node-lease`: For lease objects associated with Nodes which help the Kubelet in determining Node health.  
 
 To view all the Namespaces in your cluster and verify their status, you can use the `kubectl get Namespaces` command. This command lists all Namespaces, providing a quick overview of the operational scope within your cluster: 
 
