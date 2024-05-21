@@ -11,8 +11,11 @@ The initial focus of this guide is to cover topics to help you pass the Kubernet
 <br><br>
 
 Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.
-<br><br><br>
+
+<br><br>
+
 One thing to note about text formatting in this guide: you'll notice some terms always start with a capital letter (i.e. Node, Pod, etc.). This is intentional and an attempt to adhere to standard formatting as laid out in the official Kubernetes documentation. Kubernetes API objects (like the ones just mentioned) should start with a capital letter.
+
 <br><br>
 
 <br/><br/><br/><br/><br/><br/><br/><br/>
