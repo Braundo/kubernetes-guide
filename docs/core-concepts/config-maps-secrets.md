@@ -206,11 +206,11 @@ A standard flow for implementing secrets looks like this:
 ``` mermaid
 flowchart TD
     A[Create Secret and persist to cluster store - unencrypted] --> B[Pod is configured to use Secret]
-    B --> C[Secret data is transferred - unencrypted - to the node]
+    B --> C[Secret data is transferred - unencrypted - to the Node]
     C --> D[Node kubelet starts the Pod and its containers]
     D --> E[Secret is mounted into the container's temp filesystem and decoded into plain text]
     E --> F[Application consumes Secret]
-    F --> G[Secret is deleted from the node once the Pod is deleted]
+    F --> G[Secret is deleted from the Node once the Pod is deleted]
 ```
 
 And here's an example of how to define a Pod and use the Secret as a volume:  
