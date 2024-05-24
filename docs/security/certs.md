@@ -4,7 +4,7 @@ icon: material/circle-small
 
 
 ## TLS (Transport Layer Security)
-TLS is essential for securing data in transit. It provides encryption, integrity, and authentication to ensure that communications between Kubernetes components (like nodes, pods, and the API server) remain confidential and secure from tampering.
+TLS is essential for securing data in transit. It provides encryption, integrity, and authentication to ensure that communications between Kubernetes components (like Nodes, Pods, and the API server) remain confidential and secure from tampering.
 
 **Role of Asymmetric Encryption:**
 
