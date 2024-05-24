@@ -26,7 +26,7 @@ It's worth noting that cluster DNS implements its own controller which constantl
 Every Node's `kube-proxy` also watches the API server for new EndpointSlices and creates local networking rules when one is observed. This helps with redirecting ClusterIP traffic to Pod IPs.
 
 ### Service Discovery
-The best way to explain discovery is likely through an example. So let's assume we have two applications on the same cluster - `ham` and `eggs`. Each application has their Pods fronted by a Service, which in turn each has their own ClusterIP.
+The best way to explain discovery is likely through an example. So let's assume we have two applications on the same cluster - `ham` and `eggs`. Each application has their Pods fronted by a Service, which in turn each have their own ClusterIP.
 
 ``` shell title="$ kubectl get svc"
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
