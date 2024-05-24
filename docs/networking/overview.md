@@ -75,7 +75,7 @@ spec:
 <br><br>
 
 
-You do **not** need to allow egress for a response to ingress. For example, imagine an API pod hitting a DB pod. The DB can **allow** **ingress** from the API server and not have to specify to **allow egress** for the API server to get results - the response is allowed back by default
+You do **not** need to allow egress for a response to ingress. For example, imagine an API Pod hitting a DB Pod. The DB can **allow** **ingress** from the API server and not have to specify to **allow egress** for the API server to get results - the response is allowed back by default
 
 - i.e. when you’re determining rules, you only need to be concerned with *where the traffic originates*, not responses
 <br><br>
