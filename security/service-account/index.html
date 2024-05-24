@@ -1148,7 +1148,7 @@
 <p>Kubernetes distinguishes between two primary types of accounts used for interacting with the cluster:</p>
 <ol>
 <li><strong>User Accounts</strong>: These are meant for humans or administrators of the cluster, managing authentication and authorization from an operational perspective.</li>
-<li><strong>Service Accounts</strong>: Intended for processes running in pods that need to interact with the Kubernetes API. Unlike user accounts, service accounts are managed entirely by Kubernetes and are designed to provide an identity for processes to carry out automated actions within the cluster.</li>
+<li><strong>Service Accounts</strong>: Intended for processes running in Pods that need to interact with the Kubernetes API. Unlike user accounts, service accounts are managed entirely by Kubernetes and are designed to provide an identity for processes to carry out automated actions within the cluster.</li>
 </ol>
 <p><br><br></p>
 <h2 id="creating-and-managing-service-accounts">Creating and Managing Service Accounts</h2>
@@ -1172,7 +1172,7 @@
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-service-account</span>
 </span></code></pre></div></p>
 <h2 id="permissions-and-role-based-access-control-rbac">Permissions and Role-Based Access Control (RBAC)</h2>
-<p>By default, service accounts have limited permissions, which restrict their operations within the cluster to basic activities. This default behavior ensures that pods cannot perform actions that affect the entire cluster, thereby enhancing the security. However, you can grant more extensive permissions to a service account by associating it with specific roles or cluster roles through RoleBindings or ClusterRoleBindings. This mechanism allows you to finely control what each service account can and cannot do within your cluster. </p>
+<p>By default, service accounts have limited permissions, which restrict their operations within the cluster to basic activities. This default behavior ensures that Pods cannot perform actions that affect the entire cluster, thereby enhancing the security. However, you can grant more extensive permissions to a service account by associating it with specific roles or cluster roles through RoleBindings or ClusterRoleBindings. This mechanism allows you to finely control what each service account can and cannot do within your cluster. </p>
 
 
 
