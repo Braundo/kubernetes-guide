@@ -23,7 +23,7 @@ Every Service created on a Kubernetes cluster will automatically register itself
 
 It's worth noting that cluster DNS implements its own controller which constantly watches the API server for new Services being created. When a new one is observed, it automatically creates the DNS records mappings - meaning neither applications nor Services need to perform their own Service registration.  
 
-Every node's `kube-proxy` also watches the API server for new EndpointSlices and creates local networking rules when one is observed. This helps with redirecting ClusterIP traffic to Pod IPs.
+Every Node's `kube-proxy` also watches the API server for new EndpointSlices and creates local networking rules when one is observed. This helps with redirecting ClusterIP traffic to Pod IPs.
 
 ### Service Discovery
 The best way to explain discovery is likely through an example. So let's assume we have two applications on the same cluster - `ham` and `eggs`. Each application has their Pods fronted by a Service, which in turn each has their own ClusterIP.
@@ -43,11 +43,11 @@ In the case of #1, it's the responsibility of the application developers to know
 
 As mentioned above, Kubernetes automatically configures each container in the cluster to be able to resolve the IP address of the *cluster DNS Service*. It also appends any relevant search domains to unqualified names. It performs these actions by populating the `/etc/resolv.conf` on every container.  
 
-ClusterIPs exist on their own special Service network, so it takes a bit of work for traffic to get there. One thing to note is that every node in a cluster has a `kube-proxy` controller that creates IPVS rules any time a new Service is created. The steps that occur after an application attempts to communicate with another application on the cluster is a series of routing steps that can be summarized as follows:
+ClusterIPs exist on their own special Service network, so it takes a bit of work for traffic to get there. One thing to note is that every Node in a cluster has a `kube-proxy` controller that creates IPVS rules any time a new Service is created. The steps that occur after an application attempts to communicate with another application on the cluster is a series of routing steps that can be summarized as follows:
 
-1. The application container's default gateway routes the traffic to the **node** it is running on.
-1. The node itself does not have a route to the Service network so it routes the traffic to the **node kernel**.
-1. The node kernel recognizes traffic intended for the service network (recall the IPVS rules) and routes the traffic to a healthy Pod that matches the label selector of the Service.  
+1. The application container's default gateway routes the traffic to the **Node** it is running on.
+1. The Node itself does not have a route to the Service network so it routes the traffic to the **node kernel**.
+1. The Node kernel recognizes traffic intended for the service network (recall the IPVS rules) and routes the traffic to a healthy Pod that matches the label selector of the Service.  
 
 
 ## Namespaces
