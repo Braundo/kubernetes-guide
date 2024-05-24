@@ -99,7 +99,7 @@ On Docker Desktop, for instance, the `NodeRestriction` admission controller is e
 A notable example is the `AlwaysPullImages` controller, a mutating type that ensures Pods always pull their container images from a registry, preventing the use of potentially unsafe local images and ensuring only Nodes with proper registry credentials can pull and run containers.
 
 ### Admission Control's Role
-If any admission controller rejects a request, it stops there—no further processing occurs. But if a request gets the green light from all controllers, it's saved to the cluster store and deployed.
+If any admission controller rejects a request, it stops there—no further processing occurs. But if a request gets the green light from all admission controllers, it's saved to the cluster store and deployed.
 
 Admission controllers are increasingly crucial for maintaining the security and integrity of production clusters, given their power to enforce policies directly on incoming requests.
 
