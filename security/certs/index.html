@@ -1201,10 +1201,12 @@
 <p>When a Kubernetes component, such as a user or another cluster component, needs to establish a trusted connection, it presents a certificate containing its public key. This certificate acts as a "digital passport" to prove its identity to another party in the transaction. The trust is established through a Certificate Authority (CA) that signs these certificates. Even if a malicious actor intercepts the public key, they cannot decrypt the communications or impersonate the certificate holder without the corresponding private key.
 <br><br></p>
 <p><strong>Certificate Usage in Kubernetes:</strong></p>
-<p>In Kubernetes, TLS certificates are used to secure the connections between:
-- Nodes and the API server
-- Users and the API server
-- Inter-pod communications when configured</p>
+<p>In Kubernetes, TLS certificates are used to secure the connections between:</p>
+<ul>
+<li>Nodes and the API server</li>
+<li>Users and the API server</li>
+<li>Inter-pod communications when configured</li>
+</ul>
 <p>This security mechanism ensures that sensitive data such as API tokens, application data, and administrative commands are transmitted securely over the network, preventing unauthorized access and ensuring data integrity.
 <br><br></p>
 <p><strong>Practical Implications:</strong></p>
@@ -1267,13 +1269,15 @@ Another easy thing to do is to include them in a <strong>kubeconfig</strong> fil
 <p>By default, <code>kubectl</code> will look for a <strong>kubeconfig</strong> file at <code>$HOME/.kube/config</code></p>
 </blockquote>
 <p><br></p>
-<p>A <strong>kubeconfig</strong> file consists of three specific parts:
-1. <strong>clusters</strong>: specification of the cluster you want to connect to (i.e. dev, production, etc.)
-2. <strong>users</strong>: the user account you will use to run commands(i.e. admin, dev, etc.)
-3. <strong>contexts</strong> the "marrying" of a cluster and a user (i.e. dev user on production cluster)</p>
-<blockquote>
+<p>A <strong>kubeconfig</strong> file consists of three specific parts:</p>
+<ol>
+<li><strong>clusters</strong>: specification of the cluster you want to connect to (i.e. dev, production, etc.)</li>
+<li><strong>users</strong>: the user account you will use to run commands(i.e. admin, dev, etc.)</li>
+<li><strong>contexts</strong> the "marrying" of a cluster and a user (i.e. dev user on production cluster)<blockquote>
 <p>Under each <strong>cluster</strong> and <strong>user</strong> specs, you can list out the necessary certificates required for access</p>
 </blockquote>
+</li>
+</ol>
 <p><br>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Config</span>
