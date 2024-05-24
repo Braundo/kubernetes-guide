@@ -1429,7 +1429,7 @@
 <p>Imagine you have a policy requiring all objects to include an <code>app=shop</code> label. A mutating controller could automatically add this label if it's missing from a request, whereas a validating controller would reject any request lacking the label.</p>
 <h3 id="admission-control-on-a-cluster">Admission Control on a Cluster</h3>
 <p>On Docker Desktop, for instance, the <code>NodeRestriction</code> admission controller is enabled by default, limiting what nodes can modify within their scope. Real-world clusters typically enable a broader set of controllers for comprehensive policy enforcement.</p>
-<p>A notable example is the <code>AlwaysPullImages</code> controller, a mutating type that ensures Pods always pull their container images from a registry, preventing the use of potentially unsafe local images and ensuring only nodes with proper registry credentials can pull and run containers.</p>
+<p>A notable example is the <code>AlwaysPullImages</code> controller, a mutating type that ensures Pods always pull their container images from a registry, preventing the use of potentially unsafe local images and ensuring only Nodes with proper registry credentials can pull and run containers.</p>
 <h3 id="admission-controls-role">Admission Control's Role</h3>
 <p>If any admission controller rejects a request, it stops there—no further processing occurs. But if a request gets the green light from all controllers, it's saved to the cluster store and deployed.</p>
 <p>Admission controllers are increasingly crucial for maintaining the security and integrity of production clusters, given their power to enforce policies directly on incoming requests.</p>
