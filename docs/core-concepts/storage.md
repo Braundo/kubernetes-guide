@@ -114,7 +114,7 @@ When you define a **reclaim policy** on a volume, you tell Kubernetes how it sho
 1. **Retain**: This will keep the PV object as well as any underlying data on the external system. However, no PVCs can use it going forward. 
 
 #### Dynamic Provisioning
-Storage Classes in Kubernetes abstract the details of how storage is provided from how it is consumed. They enable dynamic provisioning of storage resources as needed, which is particularly useful in cloud environments where storage can be requested and scaled programmatically.
+StorageClasses in Kubernetes abstract the details of how storage is provided from how it is consumed. They enable dynamic provisioning of storage resources as needed, which is particularly useful in cloud environments where storage can be requested and scaled programmatically.
 
 For example, a StorageClass can define the type of storage (e.g., standard, high-speed SSD, etc.), the replication factor, and the region. When a PVC that references this StorageClass is created, Kubernetes automatically provisions the required storage according to the specifications and binds it to the PVC.
 
