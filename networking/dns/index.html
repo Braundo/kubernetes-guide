@@ -1175,7 +1175,7 @@
 <li>The Service's name and IP are registered with the cluster DNS.  </li>
 </ol>
 <p>It's worth noting that cluster DNS implements its own controller which constantly watches the API server for new Services being created. When a new one is observed, it automatically creates the DNS records mappings - meaning neither applications nor Services need to perform their own Service registration.  </p>
-<p>Every node's <code>kube-proxy</code> also watches the API server for new EndpointSlices and creates local networking rules when one is observed. This helps with redirecting ClusterIP traffic to Pod IPs.</p>
+<p>Every Node's <code>kube-proxy</code> also watches the API server for new EndpointSlices and creates local networking rules when one is observed. This helps with redirecting ClusterIP traffic to Pod IPs.</p>
 <h3 id="service-discovery_1">Service Discovery</h3>
 <p>The best way to explain discovery is likely through an example. So let's assume we have two applications on the same cluster - <code>ham</code> and <code>eggs</code>. Each application has their Pods fronted by a Service, which in turn each has their own ClusterIP.</p>
 <div class="language-shell highlight"><span class="filename">$ kubectl get svc</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>NAME<span class="w">         </span>TYPE<span class="w">        </span>CLUSTER-IP<span class="w">   </span>EXTERNAL-IP<span class="w">   </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">   </span>AGE
@@ -1189,11 +1189,11 @@
 </ol>
 <p>In the case of #1, it's the responsibility of the application developers to know which applications they need to communicate with. Kubernetes internal DNS handles point #2.  </p>
 <p>As mentioned above, Kubernetes automatically configures each container in the cluster to be able to resolve the IP address of the <em>cluster DNS Service</em>. It also appends any relevant search domains to unqualified names. It performs these actions by populating the <code>/etc/resolv.conf</code> on every container.  </p>
-<p>ClusterIPs exist on their own special Service network, so it takes a bit of work for traffic to get there. One thing to note is that every node in a cluster has a <code>kube-proxy</code> controller that creates <abbr title="IP Virtual Server">IPVS</abbr> rules any time a new Service is created. The steps that occur after an application attempts to communicate with another application on the cluster is a series of routing steps that can be summarized as follows:</p>
+<p>ClusterIPs exist on their own special Service network, so it takes a bit of work for traffic to get there. One thing to note is that every Node in a cluster has a <code>kube-proxy</code> controller that creates <abbr title="IP Virtual Server">IPVS</abbr> rules any time a new Service is created. The steps that occur after an application attempts to communicate with another application on the cluster is a series of routing steps that can be summarized as follows:</p>
 <ol>
-<li>The application container's default gateway routes the traffic to the <strong>node</strong> it is running on.</li>
-<li>The node itself does not have a route to the Service network so it routes the traffic to the <strong>node kernel</strong>.</li>
-<li>The node kernel recognizes traffic intended for the service network (recall the <abbr title="IP Virtual Server">IPVS</abbr> rules) and routes the traffic to a healthy Pod that matches the label selector of the Service.  </li>
+<li>The application container's default gateway routes the traffic to the <strong>Node</strong> it is running on.</li>
+<li>The Node itself does not have a route to the Service network so it routes the traffic to the <strong>node kernel</strong>.</li>
+<li>The Node kernel recognizes traffic intended for the service network (recall the <abbr title="IP Virtual Server">IPVS</abbr> rules) and routes the traffic to a healthy Pod that matches the label selector of the Service.  </li>
 </ol>
 <h2 id="namespaces">Namespaces</h2>
 <p>A key point in understanding cluster DNS is knowing that Namespaces are able to partition a cluster's address space. Cluster address spaces are typically denoted as <code>cluster.local</code> and then have object names prepended to it. For instance, the <code>ham-svc</code> Service from above exists in the default Namespace and would have an <abbr title="Fully Qualified Domain Name">FQDN</abbr> of <code>ham-svc.default.svc.cluster.local</code>.  </p>
