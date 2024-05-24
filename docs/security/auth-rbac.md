@@ -3,7 +3,7 @@ icon: material/circle-small
 ---
 
 ## Overview
-In Kubernetes, everything from creating new resources to updating or deleting them involves making requests to the API server. This is true for everyone and everything in the Kubernetes ecosystem: from developers using `kubectl`, to the Pods running in your cluster, to the kubelets on each node, and the control plane services that oversee cluster operations.  
+In Kubernetes, everything from creating new resources to updating or deleting them involves making requests to the API server. This is true for everyone and everything in the Kubernetes ecosystem: from developers using `kubectl`, to the Pods running in your cluster, to the kubelets on each Node, and the control plane services that oversee cluster operations.  
 
 Let's take an example: imagine a user named "vinny" wants to deploy a new application using a Deployment named "treats" in the "petropolis" Namespace. vinny runs a `kubectl apply` command, which sends a request to the API server. This request is securely sent over TLS, carrying vinny's credentials. The API server first authenticates vinny, making sure they are who they claim to be. Next, it checks if vinny has the permissions (via RBAC) to create Deployments in the petropolis Namespace. If vinny passes these checks, the request goes through admission control for any additional policy checks before being executed on the cluster.
 
