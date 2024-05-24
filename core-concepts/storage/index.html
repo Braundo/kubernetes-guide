@@ -1329,7 +1329,7 @@
 <li><strong>Retain</strong>: This will keep the <abbr title="PersistentVolume">PV</abbr> object as well as any underlying data on the external system. However, no PVCs can use it going forward. </li>
 </ol>
 <h4 id="dynamic-provisioning">Dynamic Provisioning</h4>
-<p>Storage Classes in Kubernetes abstract the details of how storage is provided from how it is consumed. They enable dynamic provisioning of storage resources as needed, which is particularly useful in cloud environments where storage can be requested and scaled programmatically.</p>
+<p>StorageClasses in Kubernetes abstract the details of how storage is provided from how it is consumed. They enable dynamic provisioning of storage resources as needed, which is particularly useful in cloud environments where storage can be requested and scaled programmatically.</p>
 <p>For example, a StorageClass can define the type of storage (e.g., standard, high-speed SSD, etc.), the replication factor, and the region. When a <abbr title="PersistentVolumeClaim">PVC</abbr> that references this StorageClass is created, Kubernetes automatically provisions the required storage according to the specifications and binds it to the <abbr title="PersistentVolumeClaim">PVC</abbr>.</p>
 <p>Here's an example YAML definition of a StorageClass that uses a Google Cloud persistent disk with high-performance SSD:
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
