@@ -19,6 +19,7 @@ When a Kubernetes component, such as a user or another cluster component, needs 
 **Certificate Usage in Kubernetes:**
 
 In Kubernetes, TLS certificates are used to secure the connections between:
+
 - Nodes and the API server
 - Users and the API server
 - Inter-pod communications when configured
@@ -116,6 +117,7 @@ A **kubeconfig** file lets you specify certificate information without having to
 <br>
 
 A **kubeconfig** file consists of three specific parts:
+
 1. **clusters**: specification of the cluster you want to connect to (i.e. dev, production, etc.)
 2. **users**: the user account you will use to run commands(i.e. admin, dev, etc.)
 3. **contexts** the "marrying" of a cluster and a user (i.e. dev user on production cluster)
