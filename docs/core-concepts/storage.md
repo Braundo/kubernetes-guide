@@ -2,7 +2,7 @@
 icon: material/circle-small
 ---
 ## Overview
-Arguably the most important aspect of any application is the ability to persist and retrieve data. TKubernetes supports a diverse array of storage back-ends, ranging from local storage on nodes to network-attached storage (NAS) and cloud-based storage solutions. It integrates seamlessly with many third-party systems to offer features like replication, snapshots, and backups, enhancing data durability and availability.   
+Arguably the most important aspect of any application is the ability to persist and retrieve data. Kubernetes supports a diverse array of storage back-ends, ranging from local storage on nodes to network-attached storage (NAS) and cloud-based storage solutions. It integrates seamlessly with many third-party systems to offer features like replication, snapshots, and backups, enhancing data durability and availability.   
 
 Kubernetes can also support different types of storage - anything from objects to files or blocks. However, regardless of the type of storage or where it's located (on-premise, cloud, etc.), Kubernetes will treat it as a **volume**.  
 
