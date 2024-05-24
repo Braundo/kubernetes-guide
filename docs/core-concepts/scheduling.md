@@ -241,7 +241,7 @@ Kubernetes allows the deployment of multiple scheduler instances to handle Pod p
 
 For example, you might deploy a custom scheduler that optimizes for GPU-intensive applications and use it alongside the default Kubernetes scheduler. 
 
-- You can write your own Scheduler program and deploy it as the default scheduler or supplemental schedulers
+- You can write your own Scheduler program and deploy it as the default scheduler or as a supplemental scheduler
 - When defining and deploying a Pod, you can instruct it to leverage a specific Scheduler
     
 ```yaml
