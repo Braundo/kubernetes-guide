@@ -39,7 +39,7 @@ StorageClasses (SCs) allow you to define different types of storage. How they ar
 | SSD | sc-fast |
 | HDD | sc-slow |
 
-Below is an example of how a StorageClass YAML definition may look for leveraging Google Cloud Storage:  
+Below is an example of how a StorageClass YAML definition may look for leveraging SSDs with Google Cloud Storage:  
 
 ``` yaml
 apiVersion: storage.k8s.io/v1
