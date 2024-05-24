@@ -96,7 +96,7 @@ Imagine you have a policy requiring all objects to include an `app=shop` label. 
 ### Admission Control on a Cluster
 On Docker Desktop, for instance, the `NodeRestriction` admission controller is enabled by default, limiting what nodes can modify within their scope. Real-world clusters typically enable a broader set of controllers for comprehensive policy enforcement.
 
-A notable example is the `AlwaysPullImages` controller, a mutating type that ensures Pods always pull their container images from a registry, preventing the use of potentially unsafe local images and ensuring only nodes with proper registry credentials can pull and run containers.
+A notable example is the `AlwaysPullImages` controller, a mutating type that ensures Pods always pull their container images from a registry, preventing the use of potentially unsafe local images and ensuring only Nodes with proper registry credentials can pull and run containers.
 
 ### Admission Control's Role
 If any admission controller rejects a request, it stops there—no further processing occurs. But if a request gets the green light from all controllers, it's saved to the cluster store and deployed.
