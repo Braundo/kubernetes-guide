@@ -83,3 +83,4 @@ markdown_extensions:
 plugins:
   - mermaid2
   - search
+  - inline-svg

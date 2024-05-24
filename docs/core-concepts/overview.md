@@ -25,7 +25,7 @@ The **Control Plane** is the brain of the Kubernetes cluster. It makes global de
 - **Kubelet**: Ensures that containers are running in a Pod.
 - **Kube-proxy**: Maintains network rules.
 
-![overview](overview.svg)
+![overview](../../images/overview.svg)
 
 Understanding these components and their interactions is crucial for effectively managing and troubleshooting a Kubernetes cluster.
 
