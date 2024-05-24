@@ -1439,7 +1439,7 @@
 <p>Kubernetes allows the deployment of multiple scheduler instances to handle Pod placement according to various customized scheduling policies. You can specify which scheduler to use for each Pod if you have special scheduling needs that the default scheduler does not support.</p>
 <p>For example, you might deploy a custom scheduler that optimizes for GPU-intensive applications and use it alongside the default Kubernetes scheduler. </p>
 <ul>
-<li>You can write your own Scheduler program and deploy it as the default scheduler or supplemental schedulers</li>
+<li>You can write your own Scheduler program and deploy it as the default scheduler or as a supplemental scheduler</li>
 <li>When defining and deploying a Pod, you can instruct it to leverage a specific Scheduler</li>
 </ul>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubescheduler.config.k8s.io/v1</span>
