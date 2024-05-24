@@ -12,7 +12,7 @@ This is where Services come in. Services provide stable, long-lived connection p
 ## Labels and Selectors
 So how does that work? How do Services know which Pods they should be sending traffic to? The short answer is **labels** and **selectors**. In essence, when you define a Service, you specify labels and selectors that - when matched with the same ones on Pods - will route traffic to them.  
 
-As an example, image you want to put a stable Service in front of series of Pods that make up your shopping application. When you defined the Deployment of the application you listed the following labels and selectors for the Pods: `env=prod` and `app=shop`. Now, when you set up this new Service, you used those same labels in it's YAML definition. The new Service will find all Pods on the cluster with those same labels and is now in charge of routing traffic to them.  
+As an example, imagine you want to put a stable Service in front of series of Pods that make up your shopping application. When you defined the Deployment of the application you listed the following labels and selectors for the Pods: `env=prod` and `app=shop`. Now, when you set up this new Service, you used those same labels in it's YAML definition. The new Service will find all Pods on the cluster with those same labels and is now in charge of routing traffic to them.  
 
 Similar to other Kubernetes objects, the Services controller will continually monitor new Pods labels and continually update it's "list" (more on that list later) of Pods to route to.  
 
