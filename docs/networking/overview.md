@@ -7,7 +7,7 @@ icon: material/circle-small
 - Kubernetes does not come with a built-in solution for Pod networking, but it does have clear expectations:
     - Every Pod should have it’s own unique IP address
     - Every Pod should be able to communicate with every other Pod on the same Node
-    - Every Pod should be able to communicate with every other Pod on other nodes *without* NAT
+    - Every Pod should be able to communicate with every other Pod on other Nodes *without* NAT
 <br><br>
 
 - There mare any networking solutions that solve this for you:
@@ -67,6 +67,7 @@ spec:
 <br><br>
 
 - Kubernetes networking solutions that support NetworkPolicies:
+
     - Kube-router
     - Calico
     - Romana
