@@ -29,7 +29,7 @@ metadata:
   name: web-pod
 spec:
   securityContext:
-    runAsUser: 1000
+    runAsUser: 1000 # non-root user
     readOnlyRootFilesystem: true
   containers:
   - name: web-container
@@ -41,7 +41,7 @@ spec:
 In the snippet above, we configure security context for a Pod, including:
 
 - what user to run as
-- and Linux capabilities to give the Pod
+- what Linux capabilities to give the Pod
 <br><br>
 
 You can specify the `runAsUser` at the container *or* Pod level - but `capabilities` is **not** supported at the Pod level.
