@@ -83,7 +83,7 @@ You do **not** need to allow egress for a response to ingress. For example, imag
 - You can omit the `podSelector` and just use `namespaceSelector` to allow all traffic within the Namespace to connect
 <br><br>
 
-You can specify resources *outside* of the Kubernetes by IP addresses as well with the `ipBlock.cidr` section:
+You can specify resources *outside* of the Kubernetes cluster by specifying IP addresses as well with the `ipBlock.cidr` section:
     
 ```yaml
 apiVersion: networking.k8s.io/v1
