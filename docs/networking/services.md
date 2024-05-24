@@ -56,4 +56,4 @@ spec:
 <br><br>
 
 #### LoadBalancer
-If you're running your Kubernetes cluster on a public cloud environment you can leverage a **LoadBalancer** Service. This will provision an internet-facing load-balancer that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer).
+If you're running your Kubernetes cluster in a public cloud environment you can leverage a **LoadBalancer** Service. This will provision an internet-facing load-balancer that you can leverage to send traffic to your Service. For more specifics on this type of Service, refer to [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer).
