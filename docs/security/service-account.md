@@ -7,7 +7,7 @@ icon: material/circle-small
 Kubernetes distinguishes between two primary types of accounts used for interacting with the cluster:
 
 1. **User Accounts**: These are meant for humans or administrators of the cluster, managing authentication and authorization from an operational perspective.
-2. **Service Accounts**: Intended for processes running in pods that need to interact with the Kubernetes API. Unlike user accounts, service accounts are managed entirely by Kubernetes and are designed to provide an identity for processes to carry out automated actions within the cluster.
+2. **Service Accounts**: Intended for processes running in Pods that need to interact with the Kubernetes API. Unlike user accounts, service accounts are managed entirely by Kubernetes and are designed to provide an identity for processes to carry out automated actions within the cluster.
 
 <br><br>
 
@@ -42,4 +42,4 @@ spec:
 
 ## Permissions and Role-Based Access Control (RBAC)
 
-By default, service accounts have limited permissions, which restrict their operations within the cluster to basic activities. This default behavior ensures that pods cannot perform actions that affect the entire cluster, thereby enhancing the security. However, you can grant more extensive permissions to a service account by associating it with specific roles or cluster roles through RoleBindings or ClusterRoleBindings. This mechanism allows you to finely control what each service account can and cannot do within your cluster. 
+By default, service accounts have limited permissions, which restrict their operations within the cluster to basic activities. This default behavior ensures that Pods cannot perform actions that affect the entire cluster, thereby enhancing the security. However, you can grant more extensive permissions to a service account by associating it with specific roles or cluster roles through RoleBindings or ClusterRoleBindings. This mechanism allows you to finely control what each service account can and cannot do within your cluster. 
