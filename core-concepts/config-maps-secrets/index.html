@@ -1339,11 +1339,11 @@
 <p>A standard flow for implementing secrets looks like this:  </p>
 <pre class="mermaid"><code>flowchart TD
     A[Create Secret and persist to cluster store - unencrypted] --&gt; B[Pod is configured to use Secret]
-    B --&gt; C[Secret data is transferred - unencrypted - to the node]
+    B --&gt; C[Secret data is transferred - unencrypted - to the Node]
     C --&gt; D[Node kubelet starts the Pod and its containers]
     D --&gt; E[Secret is mounted into the container's temp filesystem and decoded into plain text]
     E --&gt; F[Application consumes Secret]
-    F --&gt; G[Secret is deleted from the node once the Pod is deleted]</code></pre>
+    F --&gt; G[Secret is deleted from the Node once the Pod is deleted]</code></pre>
 <p>And here's an example of how to define a Pod and use the Secret as a volume:  </p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-10-2"><a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
