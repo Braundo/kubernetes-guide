@@ -10,7 +10,7 @@ Kubernetes is able to support so many different storage types and services by le
 
 ![service](../../images/storage-1.svg)
 
-The only thing required for an external storage provider to be surfaced as a volume in Kubernetes is for it to have a CSI plugin. On the right side of the diagram you'll also notice three Kubernetes API objects:  
+The only thing required for an external storage provider to be surfaced as a volume in Kubernetes is for it to have a CSI plugin. On the right side of the diagram you'll also notice the PV subsystem, which encompasses three Kubernetes API objects:  
 
 - **Persistent Volumes (PV)**: map to external storage objects
 - **Persistent Volume Claims (PVC)**: akin to "tickets" that authorize Pods to be able to use the relevant PV
