@@ -9,7 +9,7 @@ kubectl get all --all-namespaces -o yaml > all-resources-backup.yaml
 ```
 <br>
 
-For a more comprehensive backup, you can directly back up the etcd database, which holds all state and configuration data of your Kubernetes cluster. etcdctl, the CLI tool for etcd, provides a built-in solution to snapshot the database:
+For a more comprehensive backup, you can directly back up the etcd database, which holds all state and configuration data of your Kubernetes cluster. `etcdctl`, the CLI tool for etcd, provides a built-in solution to snapshot the database:
 ```bash
 ETCDCTL_API=3 etcdctl snapshot save /opt/snapshot-pre-boot.db \
 --endpoints=https://127.0.0.1:2379 \
