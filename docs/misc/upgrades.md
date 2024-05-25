@@ -6,19 +6,19 @@ icon: material/circle-small
 
 **Node Downtime Handling:**
 
-Kubernetes nodes are given a default grace period of 5 minutes to reboot during updates or maintenance before the system starts evicting Pods. This is crucial to ensure that services remain available even when nodes are temporarily down.
+Kubernetes Nodes are given a default grace period of 5 minutes to reboot during updates or maintenance before the system starts evicting Pods. This is crucial to ensure that services remain available even when Nodes are temporarily down.
 <br>
 
 **Draining Nodes:**
 
-To minimize disruption during an OS upgrade, it is advisable to proactively drain the node. This process safely evicts all pods from the node and marks it as unschedulable, ensuring that no new pods are assigned to it during the upgrade:
+To minimize disruption during an OS upgrade, it is advisable to proactively drain the Node. This process safely evicts all Pods from the Node and marks it as unschedulable, ensuring that no new Pods are assigned to it during the upgrade:
 ```bash
 kubectl drain <node-name> --ignore-daemonsets
 ```
 
 **Uncordoning Nodes:**
 
-After the node reboots and is ready to resume work, you must make it schedulable again by uncordoning it: 
+After the Node reboots and is ready to resume work, you must make it schedulable again by uncordoning it: 
 ``` bash
 kubectl uncordon <node-name>
 ```
@@ -33,7 +33,7 @@ In a Kubernetes cluster, it's vital to maintain version compatibility among comp
 
 **Version Skew Policy:**
 
-Kubernetes supports version skew of up to three minor versions between the master and node components. Always ensure that your upgrade process respects these limits to prevent compatibility issues.
+Kubernetes supports version skew of up to three minor versions between the master and Node components. Always ensure that your upgrade process respects these limits to prevent compatibility issues.
 <br><br>
 
 **Recommended Upgrade Strategy:**
@@ -53,23 +53,23 @@ apt-get upgrade -y kubeadm=<new-version>
 ```
 
 3. **Upgrade the Control Plane Nodes:**
-Apply the upgrade to the master nodes using kubeadm:
+Apply the upgrade to the master Nodes using kubeadm:
 ``` bash
 kubeadm upgrade apply v<new-version>
 ```
 
 4. **Upgrade Kubelet on Each Node:**
-After upgrading the master, upgrade kubelet on each node:
+After upgrading the master, upgrade kubelet on each Node:
 ``` bash
 apt-get upgrade -y kubelet=<new-version>
 systemctl restart kubelet
 ```
 
 5. **Update Node Components:**
-Complete the node upgrade by running:
+Complete the Node upgrade by running:
 ``` bash
 kubeadm upgrade node
 ```
 
 6. **Monitoring Upgrades:**
-Always monitor the cluster's status and component health via `kubectl get nodes` to ensure all nodes are at the correct version and fully operational post-upgrade.
+Always monitor the cluster's status and component health via `kubectl get nodes` to ensure all Nodes are at the correct version and fully operational post-upgrade.
