@@ -30,7 +30,7 @@ etcdctl snapshot status snapshot.db
 Restoring your Kubernetes cluster from an etcd snapshot involves several critical steps:
 
 1. **Stop the Kubernetes API Server:**
-   To begin the restoration, you need to stop the API server to prevent any changes to the cluster state during the restore process:
+   To begin the restoration, you need to stop the API Server to prevent any changes to the cluster state during the restore process:
 ```bash
 service kube-apiserver stop
 ```
@@ -41,7 +41,7 @@ Use `etcdctl` to restore the snapshot to a new data directory. This helps preven
 etcdctl snapshot restore /opt/snapshot-pre-boot.db --data-dir /var/lib/etcd-from-backup
 ```
 3. **Update the etcd Pod Specification:**
-Modify the etcd manifest to use the new data directory. This usually involves editing the etcd pod definition in the Kubernetes manifests directory:
+Modify the etcd manifest to use the new data directory. This usually involves editing the etcd Pod definition in the Kubernetes manifests directory:
 ```bash
 vi /etc/kubernetes/manifests/etcd.yaml
 # Change the data directory to /var/lib/etcd-from-backup
