@@ -1144,30 +1144,30 @@
 
 <h2 id="understanding-high-availability-ha-in-kubernetes">Understanding High Availability (HA) in Kubernetes</h2>
 <p><strong>Impact of Losing a Master Node:</strong></p>
-<p>In a Kubernetes cluster, the loss of a Master node impacts the control plane's ability to manage workloads. While applications running on worker nodes will continue to operate, there will be no capability to start new Pods, restart failed Pods, or perform rolling updates until the control plane is restored. This limitation underscores the need for a High Availability (HA) configuration to ensure continuous management capabilities.</p>
+<p>In a Kubernetes cluster, the loss of a Master node impacts the control plane's ability to manage workloads. While applications running on worker Nodes will continue to operate, there will be no capability to start new Pods, restart failed Pods, or perform rolling updates until the control plane is restored. This limitation underscores the need for a High Availability (HA) configuration to ensure continuous management capabilities.</p>
 <h2 id="high-availability-components">High Availability Components</h2>
 <p><strong>API Server in Active-Active Mode:</strong></p>
 <p>The API Server, the core component that receives all REST requests for modifications and queries to the cluster state, can operate in an Active-Active configuration across multiple master nodes. This setup enhances availability and load balancing by distributing API requests among several servers.
 <br><br></p>
 <p><strong>Controller Manager and Scheduler:</strong></p>
-<p>These critical components, which observe cluster state changes and make decisions to manage the workload, typically run in an Active-Standby mode to prevent dual operations which could lead to conflicts or duplicated efforts. Kubernetes uses a leader election mechanism to determine which node should be active, ensuring that only one instance of each component makes decisions at any time.</p>
+<p>These critical components, which observe cluster state changes and make decisions to manage the workload, typically run in an Active-Standby mode to prevent dual operations which could lead to conflicts or duplicated efforts. Kubernetes uses a leader election mechanism to determine which Node should be active, ensuring that only one instance of each component makes decisions at any time.</p>
 <h2 id="etcd-high-availability">ETCD High Availability</h2>
 <p><strong>ETCD Topologies:</strong></p>
 <ul>
-<li><strong>Stacked Topology</strong>: In this configuration, ETCD runs directly on the master nodes, alongside other control plane components. This setup simplifies management but can increase the risk of resource contention.</li>
-<li><strong>External Topology</strong>: Alternatively, ETCD can operate on dedicated external servers. This arrangement isolates ETCD from the Kubernetes control plane, potentially enhancing performance and reliability by reducing load on the master nodes.
+<li><strong>Stacked Topology</strong>: In this configuration, etcd runs directly on the master Nodes, alongside other control plane components. This setup simplifies management but can increase the risk of resource contention.</li>
+<li><strong>External Topology</strong>: Alternatively, etcd can operate on dedicated external servers. This arrangement isolates etcd from the Kubernetes control plane, potentially enhancing performance and reliability by reducing load on the master Nodes.
 <br><br></li>
 </ul>
-<p><strong>ETCD Consistency Model:</strong></p>
-<p>ETCD, a key-value store that holds the cluster's state, ensures data consistency across its instances through a leader election process. When write operations occur:</p>
+<p><strong>etcd Consistency Model:</strong></p>
+<p>etcd, a key-value store that holds the cluster's state, ensures data consistency across its instances through a leader election process. When write operations occur:</p>
 <ul>
-<li>Only the leader node processes the write initially.</li>
-<li>The leader then replicates the data to follower nodes.</li>
-<li>A write is considered successful only once a majority of nodes have stored the update.</li>
+<li>Only the leader Node processes the write initially.</li>
+<li>The leader then replicates the data to follower Nodes.</li>
+<li>A write is considered successful only once a majority of Nodes have stored the update.</li>
 </ul>
-<p>This model helps maintain data integrity and state consistency, even if individual ETCD nodes experience disruptions.</p>
+<p>This model helps maintain data integrity and state consistency, even if individual etcd Nodes experience disruptions.</p>
 <h2 id="configuring-a-load-balancer-for-ha">Configuring a Load Balancer for HA</h2>
-<p>To achieve HA for the API Servers, it is common practice to place a load balancer in front of the API server endpoints. The load balancer distributes incoming traffic across all available API servers to ensure even load distribution and improve fault tolerance. When configuring your <code>kubeconfig</code>, you should point to the load balancer's IP or DNS name instead of individual API servers:
+<p>To achieve HA for the API Servers, it is common practice to place a load balancer in front of the API Server endpoints. The load balancer distributes incoming traffic across all available API Servers to ensure even load distribution and improve fault tolerance. When configuring your <code>kubeconfig</code>, you should point to the load balancer's IP or DNS name instead of individual API Servers:
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">clusters</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cluster</span><span class="p">:</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">certificate-authority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca.crt</span>
