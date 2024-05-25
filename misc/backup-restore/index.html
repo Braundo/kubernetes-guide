@@ -1130,7 +1130,7 @@ This snapshot includes all Kubernetes states and can be used to restore the enti
 <ol>
 <li>
 <p><strong>Stop the Kubernetes API Server:</strong>
-   To begin the restoration, you need to stop the API server to prevent any changes to the cluster state during the restore process:
+   To begin the restoration, you need to stop the API Server to prevent any changes to the cluster state during the restore process:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>service<span class="w"> </span>kube-apiserver<span class="w"> </span>stop
 </span></code></pre></div></p>
 </li>
@@ -1142,7 +1142,7 @@ Use <code>etcdctl</code> to restore the snapshot to a new data directory. This h
 </li>
 <li>
 <p><strong>Update the etcd Pod Specification:</strong>
-Modify the etcd manifest to use the new data directory. This usually involves editing the etcd pod definition in the Kubernetes manifests directory:
+Modify the etcd manifest to use the new data directory. This usually involves editing the etcd Pod definition in the Kubernetes manifests directory:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>vi<span class="w"> </span>/etc/kubernetes/manifests/etcd.yaml
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Change the data directory to /var/lib/etcd-from-backup</span>
 </span></code></pre></div></p>
