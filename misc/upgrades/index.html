@@ -1122,14 +1122,14 @@
 
 <h2 id="os-upgrades-on-kubernetes-nodes">OS Upgrades on Kubernetes Nodes</h2>
 <p><strong>Node Downtime Handling:</strong></p>
-<p>Kubernetes nodes are given a default grace period of 5 minutes to reboot during updates or maintenance before the system starts evicting Pods. This is crucial to ensure that services remain available even when nodes are temporarily down.
+<p>Kubernetes Nodes are given a default grace period of 5 minutes to reboot during updates or maintenance before the system starts evicting Pods. This is crucial to ensure that services remain available even when Nodes are temporarily down.
 <br></p>
 <p><strong>Draining Nodes:</strong></p>
-<p>To minimize disruption during an OS upgrade, it is advisable to proactively drain the node. This process safely evicts all pods from the node and marks it as unschedulable, ensuring that no new pods are assigned to it during the upgrade:
+<p>To minimize disruption during an OS upgrade, it is advisable to proactively drain the Node. This process safely evicts all Pods from the Node and marks it as unschedulable, ensuring that no new Pods are assigned to it during the upgrade:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>drain<span class="w"> </span>&lt;node-name&gt;<span class="w"> </span>--ignore-daemonsets
 </span></code></pre></div></p>
 <p><strong>Uncordoning Nodes:</strong></p>
-<p>After the node reboots and is ready to resume work, you must make it schedulable again by uncordoning it: 
+<p>After the Node reboots and is ready to resume work, you must make it schedulable again by uncordoning it: 
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>uncordon<span class="w"> </span>&lt;node-name&gt;
 </span></code></pre></div></p>
 <h3 id="cluster-upgrade-process">Cluster Upgrade Process</h3>
@@ -1141,7 +1141,7 @@
 <br><br></li>
 </ul>
 <p><strong>Version Skew Policy:</strong></p>
-<p>Kubernetes supports version skew of up to three minor versions between the master and node components. Always ensure that your upgrade process respects these limits to prevent compatibility issues.
+<p>Kubernetes supports version skew of up to three minor versions between the master and Node components. Always ensure that your upgrade process respects these limits to prevent compatibility issues.
 <br><br></p>
 <p><strong>Recommended Upgrade Strategy:</strong></p>
 <p>The safest approach to upgrading a Kubernetes cluster is to proceed one minor version at a time. This step-wise progression helps in managing dependencies and reducing the risk of significant disruptions:
@@ -1160,26 +1160,26 @@ Update the kubeadm tool itself to the desired version:
 </li>
 <li>
 <p><strong>Upgrade the Control Plane Nodes:</strong>
-Apply the upgrade to the master nodes using kubeadm:
+Apply the upgrade to the master Nodes using kubeadm:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubeadm<span class="w"> </span>upgrade<span class="w"> </span>apply<span class="w"> </span>v&lt;new-version&gt;
 </span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Upgrade Kubelet on Each Node:</strong>
-After upgrading the master, upgrade kubelet on each node:
+After upgrading the master, upgrade kubelet on each Node:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>apt-get<span class="w"> </span>upgrade<span class="w"> </span>-y<span class="w"> </span><span class="nv">kubelet</span><span class="o">=</span>&lt;new-version&gt;
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>systemctl<span class="w"> </span>restart<span class="w"> </span>kubelet
 </span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Update Node Components:</strong>
-Complete the node upgrade by running:
+Complete the Node upgrade by running:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubeadm<span class="w"> </span>upgrade<span class="w"> </span>node
 </span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Monitoring Upgrades:</strong>
-Always monitor the cluster's status and component health via <code>kubectl get nodes</code> to ensure all nodes are at the correct version and fully operational post-upgrade.</p>
+Always monitor the cluster's status and component health via <code>kubectl get nodes</code> to ensure all Nodes are at the correct version and fully operational post-upgrade.</p>
 </li>
 </ol>
 
