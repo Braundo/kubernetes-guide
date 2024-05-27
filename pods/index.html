@@ -754,12 +754,13 @@
 </ul>
 <h3>Restart Policies</h3>
 
-<p>Restart policies apply to individual containers within a Pod:</p>
+<p>Restart policies apply to individual <em>containers</em> within a Pod:</p>
 <ul>
 <li><strong>Always:</strong> Always restart containers.</li>
 <li><strong>Never:</strong> Never restart containers.</li>
 <li><strong>OnFailure:</strong> Restart containers only if they fail.</li>
 </ul>
+<p>Again, those are policies for containers within the Pod - Pods themselves do not restart.</p>
 <h2 id="practical-examples">Practical Examples</h2>
 <h3>Multi-Container Pods</h3>
 
