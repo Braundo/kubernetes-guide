@@ -17,10 +17,21 @@ Kubernetes is a container orchestrator, which means it manages the deployment an
 
 <h3>Key Concepts</h3>
 
+- **Declarative Model:** You tell Kubernetes how you want your app(s) to look, and it works tirelessly in the background to ensure the current state matches your desired state.
 - **Orchestration:** Kubernetes coordinates application deployment and management across clusters of machines.
 - **Containerization:** Containers package an application with all its dependencies, making it portable and efficient.
 - **Cloud-Native:** Applications designed for cloud environments, featuring auto-scaling, self-healing, and automated updates.
 - **Microservices:** Applications broken into smaller, independent services that can be developed, deployed, and scaled individually.
+
+The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:
+
+1. You tell Kubernetes (typically via `kubectl`) how you want you application to look. What image to use, how many replicas, ports to expose, etc.
+2. Kubernetes persists this desired state to the cluster store (etcd)
+3. A series of background controllers consistently check if current state matches desired state.
+4. If current state does not equal desired state (i.e. we desire 3 replicas but only 2 are currently running),
+5. Kubernetes kicks off a series of actions to reconcile the two states. In the example above, this would involve spinning up an extra replica.
+
+![](../images/overview.svg)
 
 ## Historical Background
 
