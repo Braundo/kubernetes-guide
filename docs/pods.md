@@ -30,10 +30,10 @@ Pods offer several enhancements for containers, including:
 
 Pods allow containers to share resources within the same execution environment:
 
-- **Filesystem and Volumes:** Shared through the `mnt` namespace.
-- **Network Stack:** Shared via the `net` namespace.
-- **Memory and Process Tree:** Shared using the `ipc` and `pid` namespaces.
-- **Hostname:** Shared using the `uts` namespace.
+- **Filesystem and Volumes:** Shared through the `mnt` Linux namespace.
+- **Network Stack:** Shared via the `net` Linux namespace.
+- **Memory and Process Tree:** Shared using the `ipc` and `pid` Linux namespaces.
+- **Hostname:** Shared using the `uts` Linux namespace.
 
 <h3>Scheduling Strategies</h3>
 
