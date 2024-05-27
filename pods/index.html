@@ -740,8 +740,8 @@
 <ol>
 <li>Define the Pod in a YAML manifest.</li>
 <li>Post the manifest to the API server.</li>
-<li>Authenticate and authorize the request.</li>
-<li>Validate the Pod specification.</li>
+<li>API server will authenticate and authorize the request.</li>
+<li>API server will validate the Pod specification.</li>
 <li>The scheduler assigns the Pod to a Node.</li>
 <li>The <code>kubelet</code> starts and monitors the Pod.</li>
 </ol>
@@ -749,7 +749,7 @@
 
 <p>Pods are designed to be ephemeral and immutable:</p>
 <ul>
-<li><strong>Ephemeral:</strong> Created, executed, and terminated without restarting. Pods are deleted upon completion or failure - they don't last forever.</li>
+<li><strong>Ephemeral:</strong> Created, executed, and terminated without restarting. Pods are deleted upon completion or failure - they are not intended to last forever.</li>
 <li><strong>Immutable:</strong> Once deployed, Pods cannot be modified. To update, a new Pod must be created to replace the old one.</li>
 </ul>
 <h3>Restart Policies</h3>
