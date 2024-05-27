@@ -52,8 +52,8 @@ Deploying a Pod involves several steps:
 
 1. Define the Pod in a YAML manifest.
 2. Post the manifest to the API server.
-3. Authenticate and authorize the request.
-4. Validate the Pod specification.
+3. API server will authenticate and authorize the request.
+4. API server will validate the Pod specification.
 5. The scheduler assigns the Pod to a Node.
 6. The `kubelet` starts and monitors the Pod.
 
@@ -61,7 +61,7 @@ Deploying a Pod involves several steps:
 
 Pods are designed to be ephemeral and immutable:
 
-- **Ephemeral:** Created, executed, and terminated without restarting. Pods are deleted upon completion or failure - they don't last forever.
+- **Ephemeral:** Created, executed, and terminated without restarting. Pods are deleted upon completion or failure - they are not intended to last forever.
 - **Immutable:** Once deployed, Pods cannot be modified. To update, a new Pod must be created to replace the old one.
 
 <h3>Restart Policies</h3>
