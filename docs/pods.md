@@ -78,7 +78,7 @@ Again, those are policies for containers within the Pod - Pods themselves do not
 
 <h3>Multi-Container Pods</h3>
 
-Multi-container Pods follow the single responsibility principle, where each container performs a distinct role:
+Multi-container Pods follow the single responsibility principle, where each container performs a distinct role. Some example use cases for this pattern include:
 
 - **Init Containers:** Prepare the environment before application containers start.
 - **Sidecar Containers:** Provide auxiliary services alongside the main application container.
