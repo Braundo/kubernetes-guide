@@ -101,10 +101,6 @@ Multi-container Pods follow the single responsibility principle, where each cont
   ```sh
   $ kubectl logs hello-pod
   ```
-**Execute Commands in a Pod:**
-  ```sh
-  $ kubectl exec hello-pod -- <command>
-  ```
 
 <h3>Monitoring and Debugging</h3>
 
