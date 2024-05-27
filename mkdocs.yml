@@ -6,11 +6,11 @@ nav:
   - Pods: pods.md
   - Namespaces: namespaces.md
   - Deployments: deployments.md
+  - StatefulSets: statefulsets.md
   - Services: services.md
   - Ingress: ingress.md
   - Storage: storage.md
   - ConfigMaps & Secrets: configmaps-secrets.md
-  - StatefulSets: statefulsets.md
   - Kubernetes API: kubernetes-api.md
   - Security: security.md
 theme:
