@@ -9,23 +9,25 @@
       
       
       
+        <link rel="prev" href="..">
       
-        <link rel="next" href="overview/">
+      
+        <link rel="next" href="../local-setup/">
       
       
-      <link rel="icon" href="logo.png">
+      <link rel="icon" href="../logo.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
     
     
       
-        <title>Kubernetes Guide</title>
+        <title>Overview - Kubernetes Guide</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction-to-kubernetes" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,9 +90,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Kubernetes Guide" class="md-header__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
+    <a href=".." title="Kubernetes Guide" class="md-header__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
       
-  <img src="logo.png" alt="logo">
+  <img src="../logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -102,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Overview
             
           </span>
         </div>
@@ -203,15 +210,37 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Kubernetes Guide" class="md-nav__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
+    <a href=".." title="Kubernetes Guide" class="md-nav__button md-logo" aria-label="Kubernetes Guide" data-md-component="logo">
       
-  <img src="logo.png" alt="logo">
+  <img src="../logo.png" alt="logo">
 
     </a>
     Kubernetes Guide
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
     
       
       
@@ -226,31 +255,23 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-      
-      <a href="." class="md-nav__link md-nav__link--active">
         
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5Z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 12c2.5 0 4.5 2 4.5 4.5 0 .88-.25 1.71-.69 2.4l3.08 3.1L21 23.39l-3.12-3.07c-.69.43-1.51.68-2.38.68-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5M5 3h14c1.11 0 2 .89 2 2v8.03c-.5-.8-1.19-1.49-2-2.03V5H5v14h4.5c.31.75.76 1.42 1.31 2H5c-1.11 0-2-.89-2-2V5c0-1.11.89-2 2-2m2 4h10v2H7V7m0 4h5.03c-.8.5-1.49 1.19-2.03 2H7v-2m0 4h2.17c-.11.5-.17 1-.17 1.5v.5H7v-2Z"/></svg>
   
   <span class="md-ellipsis">
-    Home
+    Overview
   </span>
   
 
-      </a>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="overview/" class="md-nav__link">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 12c2.5 0 4.5 2 4.5 4.5 0 .88-.25 1.71-.69 2.4l3.08 3.1L21 23.39l-3.12-3.07c-.69.43-1.51.68-2.38.68-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5M5 3h14c1.11 0 2 .89 2 2v8.03c-.5-.8-1.19-1.49-2-2.03V5H5v14h4.5c.31.75.76 1.42 1.31 2H5c-1.11 0-2-.89-2-2V5c0-1.11.89-2 2-2m2 4h10v2H7V7m0 4h5.03c-.8.5-1.49 1.19-2.03 2H7v-2m0 4h2.17c-.11.5-.17 1-.17 1.5v.5H7v-2Z"/></svg>
@@ -261,6 +282,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Kubernetes?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historical-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Historical Background
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes in Action
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -272,7 +367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="local-setup/" class="md-nav__link">
+      <a href="../local-setup/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v10H4m16 2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4c-1.11 0-2 .89-2 2v10a2 2 0 0 0 2 2H0v2h24v-2h-4Z"/></svg>
@@ -294,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="pods/" class="md-nav__link">
+      <a href="../pods/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 5h13.75l-.94-1h-12l-.81 1m15.42.23c.29.34.46.77.46 1.27V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5c0-.5.17-.93.46-1.27l1.38-1.68C5.12 3.21 5.53 3 6 3h12c.47 0 .88.21 1.15.55l1.39 1.68M6 18h6v-3H6v3Z"/></svg>
@@ -316,7 +411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="namespaces/" class="md-nav__link">
+      <a href="../namespaces/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3a2 2 0 0 0-2 2h2m2-2v2h2V3m2 0v2h2V3m2 0v2h2V3m2 0v2h2a2 2 0 0 0-2-2M3 7v2h2V7m2 0v4h4V7m2 0v4h4V7m2 0v2h2V7M3 11v2h2v-2m14 0v2h2v-2M7 13v4h4v-4m2 0v4h4v-4M3 15v2h2v-2m14 0v2h2v-2M3 19a2 2 0 0 0 2 2v-2m2 0v2h2v-2m2 0v2h2v-2m2 0v2h2v-2m2 0v2a2 2 0 0 0 2-2Z"/></svg>
@@ -338,7 +433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="deployments/" class="md-nav__link">
+      <a href="../deployments/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 16V4H8v12h12m2 0a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4c0-1.11.89-2 2-2h12a2 2 0 0 1 2 2v12m-6 4v2H4a2 2 0 0 1-2-2V7h2v13h12Z"/></svg>
@@ -360,7 +455,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/" class="md-nav__link">
+      <a href="../services/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 2c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h1v2H2v2h4v2H5c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2H8v-2h8v2h-1c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2h-1v-2h4v-2h-9V9h1c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2h-4m0 2h4v3h-4V4M5 17h4v3H5v-3m10 0h4v3h-4v-3Z"/></svg>
@@ -382,7 +477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ingress/" class="md-nav__link">
+      <a href="../ingress/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3 5 7h3v7h2V7h3m3 10v-7h-2v7h-3l4 4 4-4h-3Z"/></svg>
@@ -404,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="storage/" class="md-nav__link">
+      <a href="../storage/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4Z"/></svg>
@@ -426,7 +521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configmaps-secrets/" class="md-nav__link">
+      <a href="../configmaps-secrets/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17a2 2 0 0 1-2-2c0-1.11.89-2 2-2a2 2 0 0 1 2 2 2 2 0 0 1-2 2m6 3V10H6v10h12m0-12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.11.89-2 2-2h1V6a5 5 0 0 1 5-5 5 5 0 0 1 5 5v2h1m-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3Z"/></svg>
@@ -448,7 +543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="statefulsets/" class="md-nav__link">
+      <a href="../statefulsets/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
@@ -470,7 +565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="kubernetes-api/" class="md-nav__link">
+      <a href="../kubernetes-api/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
@@ -492,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="security/" class="md-nav__link">
+      <a href="../security/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12h7c-.53 4.11-3.28 7.78-7 8.92V12H5V6.3l7-3.11M12 1 3 5v6c0 5.55 3.84 10.73 9 12 5.16-1.27 9-6.45 9-12V5l-9-4Z"/></svg>
@@ -524,6 +619,70 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Kubernetes?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historical-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Historical Background
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes in Action
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -538,40 +697,77 @@
                   
 
 
-  <h1>Home</h1>
-
-<p><center>
-    <img src="logo.png" width="30%">
-</center>
-<br><br></p>
-<div class="admonition warning">
-<p class="admonition-title">NOTE - 5/26/2024</p>
-<p>I just overhauled most of the content in the guide. I will be doing the same with the diagrams here soon, so expect many missing diagrams until then.</p>
-</div>
-<p><br>
-Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!<br />
-<br/><br/></p>
-<p>The initial focus of this guide is to cover topics to help you pass the Kubernetes Certified Administrator (CKA) exam. As time goes on, I will add more study content here to help prepare for other Kubernetes-related topics.</p>
-<p><br><br></p>
-<p>Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.</p>
-<p><br><br></p>
-<p>One thing to note about text formatting in this guide: you'll notice some terms always start with a capital letter (i.e. Node, Pod, etc.). This is intentional and an attempt to adhere to standard formatting as laid out in the official Kubernetes documentation. Kubernetes API objects (like the ones just mentioned) should start with a capital letter.</p>
-<p><br><br></p>
-<p><br/><br/><br/><br/><br/><br/><br/><br/></p>
-<blockquote>
-<p><strong>Legal disclaimer</strong>:  </p>
+<h1 id="introduction-to-kubernetes">Introduction to Kubernetes</h1>
+<p>Kubernetes, often referred to as K8s, is an open-source platform designed to automate deploying, scaling, and operating application containers. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF). This sections covers the essentials to get you up to speed with Kubernetes, its architecture, and its key features.</p>
+<h2 id="what-is-kubernetes">What is Kubernetes?</h2>
+<p>Kubernetes is a container orchestrator, which means it manages the deployment and operation of containerized applications. Containers are lightweight, portable units that bundle an application and its dependencies, allowing them to run consistently across different environments. Kubernetes automates several tasks:</p>
 <ul>
-<li>
-<p>"Kubernetes", "K8s" and the Kubernetes logo are trademarks or registered trademarks of the Linux Foundation.  </p>
-</li>
-<li>
-<p>Neither myself nor this site are officially associated with the Linux Foundation. </p>
-</li>
+<li><strong>Deployment:</strong> Deploys applications seamlessly.</li>
+<li><strong>Scaling:</strong> Adjusts the number of application instances based on demand.</li>
+<li><strong>Self-healing:</strong> Detects and replaces failed instances.</li>
+<li><strong>Rolling Updates and Rollbacks:</strong> Updates applications without downtime and rolls back if needed.</li>
 </ul>
-</blockquote>
-<p><br><br></p>
-<p><a href="https://www.linkedin.com/in/aaronbraundmeier/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77Z"/></svg></span> Connect with me</a></p>
-<p><a href="https://github.com/Braundo/kubernetes-guide"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> Suggest changes</a></p>
+<h3>Key Concepts</h3>
+
+<ul>
+<li><strong>Orchestration:</strong> Kubernetes coordinates application deployment and management across clusters of machines.</li>
+<li><strong>Containerization:</strong> Containers package an application with all its dependencies, making it portable and efficient.</li>
+<li><strong>Cloud-Native:</strong> Applications designed for cloud environments, featuring auto-scaling, self-healing, and automated updates.</li>
+<li><strong>Microservices:</strong> Applications broken into smaller, independent services that can be developed, deployed, and scaled individually.</li>
+</ul>
+<h2 id="historical-background">Historical Background</h2>
+<p>Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications at massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became the standard for container orchestration.</p>
+<h3>Development and Growth</h3>
+
+<p>Kubernetes was created in response to the rise of cloud computing by AWS and the popularity of Docker for containerization. Google engineers leveraged their experience to build a flexible, scalable orchestration platform. Since its open-sourcing, Kubernetes has grown rapidly and is now a critical part of the cloud-native ecosystem.</p>
+<h2 id="kubernetes-architecture">Kubernetes Architecture</h2>
+<p>Kubernetes clusters consist of control plane nodes and worker nodes:</p>
+<ul>
+<li><strong>Control Plane Nodes:</strong> These nodes run the Kubernetes control plane, which includes components like the API server, scheduler, and controllers. They manage the overall state of the cluster.</li>
+<li><strong>Worker Nodes:</strong> These nodes run the applications and report back to the control plane.</li>
+</ul>
+<h3>Components of the Control Plane</h3>
+
+<ul>
+<li><strong>API Server:</strong> The front end of Kubernetes that exposes the Kubernetes API.</li>
+<li><strong>Cluster Store:</strong> A distributed database (etcd) that stores the entire state of the cluster.</li>
+<li><strong>Controllers:</strong> Ensure the cluster's desired state matches its observed state by managing replicas, deployments, and more.</li>
+<li><strong>Scheduler:</strong> Assigns tasks to worker nodes based on resource availability and other criteria.</li>
+</ul>
+<h3>Components of Worker Nodes</h3>
+
+<ul>
+<li><strong>Kubelet:</strong> The agent that communicates with the API server and manages containers on the node.</li>
+<li><strong>Runtime:</strong> Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.</li>
+<li><strong>Kube-proxy:</strong> Manages networking for containers, including load balancing.</li>
+</ul>
+<h2 id="kubernetes-in-action">Kubernetes in Action</h2>
+<h3>The Declarative Approach</h3>
+
+<p>Kubernetes operates on a declarative model, where you specify the desired state of the system in YAML or JSON configuration files. The system continuously works to ensure the observed state matches the desired state. This involves three key principles:</p>
+<ol>
+<li><strong>Observed State:</strong> The current state of the system.</li>
+<li><strong>Desired State:</strong> The state you want the system to achieve.</li>
+<li><strong>Reconciliation:</strong> The process of adjusting the observed state to match the desired state.</li>
+</ol>
+<h3>Pods and Deployments</h3>
+
+<ul>
+<li><strong>Pods:</strong> The smallest deployable units in Kubernetes, which can contain one or more containers. Pods share resources like network and storage.</li>
+<li><strong>Deployments:</strong> Higher-level controllers that manage Pods, providing features like scaling, rolling updates, and rollbacks.</li>
+</ul>
+<h3>Services</h3>
+
+<p>Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically.</p>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3>Self-Healing and Scaling</h3>
+
+<p>Kubernetes automatically replaces failed Pods and scales the application up or down based on traffic and load. This ensures high availability and efficient resource utilization.</p>
+<h3>Rolling Updates and Rollbacks</h3>
+
+<p>Kubernetes allows you to update your application without downtime by gradually replacing old Pods with new ones. If something goes wrong, Kubernetes can roll back to the previous version.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Kubernetes is a powerful tool for managing containerized applications, offering automation, scalability, and reliability. By abstracting the underlying infrastructure, it simplifies application deployment and management across various environments. Whether you're running on-premises or in the cloud, Kubernetes provides a consistent and efficient platform for your applications.</p>
 
 
 
@@ -609,15 +805,31 @@ Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kube
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+          <a href="../local-setup/" class="md-footer__link md-footer__link--next" aria-label="Next: Local Setup">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Overview
+                Local Setup
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -646,10 +858,10 @@ Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kube
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top", "navigation.footer", "navigation.tracking", "palette.toggle", "content.tooltips", "content.code.copy", "content.code.select"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.footer", "navigation.tracking", "palette.toggle", "content.tooltips", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      <script src="../assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
     
   </body>
