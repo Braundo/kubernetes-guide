@@ -61,6 +61,11 @@ Kubernetes clusters consist of control plane nodes and worker nodes:
 - **Runtime:** Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.
 - **Kube-proxy:** Manages networking for containers, including load balancing.
 
+![](../images/arch.svg)
+
+!!! warning "Note"
+    The API Server is the **only** component in Kubernetes that interacts directly with etcd.
+
 ## Kubernetes in Action
 
 <h3>The Declarative Approach</h3>

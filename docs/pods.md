@@ -14,6 +14,10 @@ Pods are the smallest deployable units in Kubernetes and serve as an abstraction
 
 Pods abstract the complexities of different workload types, enabling Kubernetes to manage them without needing to understand the specifics of each workload. This abstraction allows for uniform deployment and management across heterogeneous environments.
 
+![](../images/pod-abstract.svg)
+
+In the image above, all four of those apps are vastly different but once containerized and wrapped in a Pod, Kubernetes treats them all the same and doesn't have to worry about the details of how each application is written or works.
+
 <h3>Enhancements and Capabilities</h3>
 
 Pods offer several enhancements for containers, including:
@@ -82,6 +86,14 @@ Multi-container Pods follow the single responsibility principle, where each cont
 
 - **Init Containers:** Prepare the environment before application containers start.
 - **Sidecar Containers:** Provide auxiliary services alongside the main application container.
+
+One common example is to use a multi-container Pod for service meshes. In these scenarios, a sidecar container acts as an SSL termination point for all traffic coming into the main Pod.
+
+![](../images/sidecar.svg)
+
+As mentioned above, multiple containers within a Pod share the IP address, network stack, and filesystem. As such, in order to communicate to specific containers within a multi-container Pod, you have to leverage port addresses. The containers themselves however will be able to communicate to each other via localhost.
+
+![](../images/sidecar-net.svg)
 
 ## Using kubectl for Pod Management
 

@@ -34,6 +34,10 @@ Deployments consist of two main components:
 
 Deployments manage Pods indirectly through ReplicaSets. A ReplicaSet ensures a specified number of Pod replicas are running at any given time. The Deployment controller creates and manages ReplicaSets as needed to fulfill the Deployment's desired state.
 
+![](../images/deploy.svg)
+
+That diagram may look overly complex and bloated with all of the layers of abstraction, but each layer provides powerful value-adds.
+
 ## Creating and Managing Deployments
 
 <h3>Creating a Deployment</h3>
@@ -247,14 +251,6 @@ $ kubectl rollout status deploy sample-deployment
 Rollback to the previous version:
 ```sh
 $ kubectl rollout undo deploy sample-deployment
-```
-
-## Cleanup
-
-To clean up the resources created during the exercise:
-```sh
-$ kubectl delete deploy sample-deployment
-$ kubectl delete svc lb-svc
 ```
 
 ## Conclusion

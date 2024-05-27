@@ -12,9 +12,6 @@ Understanding the Kubernetes API is essential for mastering Kubernetes. It serve
 
 Kubernetes is an API-centric platform. All resources, such as Pods, Services, and StatefulSets, are defined through the API and managed by the API server. Administrators and clients interact with the cluster by sending requests to create, read, update, and delete these resources. Most interactions are done using `kubectl`, but they can also be crafted in code or generated through API development tools.
 
-!!! warning "Note"
-    The API Server is the **only** component in Kubernetes that interacts directly with etcd.
-
 <h3>Key Concepts</h3>
 
 - **API Server:** The central component that exposes the API and handles requests.
