@@ -1,35 +1,18 @@
 site_name: Kubernetes Guide
 nav:
   - Home: index.md
-  - Core Concepts:
-      - Overview: core-concepts/overview.md
-      - Container Runtime: core-concepts/container-runtime.md
-      - API Server: core-concepts/kubernetes-api.md
-      - Controllers: core-concepts/controllers.md
-      - Scheduler: core-concepts/scheduler.md
-      - Kubelet: core-concepts/kubelet.md
-      - Kube Proxy: core-concepts/kube-proxy.md
-      - Pods: core-concepts/pods.md
-      - Deployments: core-concepts/deployments.md
-      - StatefulSets: core-concepts/statefulsets.md
-      - Namespaces: core-concepts/namespaces.md
-      - Scheduling: core-concepts/scheduling.md
-      - ConfigMaps & Secrets: core-concepts/config-maps-secrets.md
-      - Storage: core-concepts/storage.md
-  - Security:
-    - Auth/RBAC: security/auth-rbac.md
-    - Certificates: security/certs.md
-    - Service Accounts: security/service-account.md
-    - Container Security: security/container-security.md
-  - Networking:
-    - Services: networking/services.md
-    - Networking Overview: networking/overview.md
-    - DNS: networking/dns.md
-    - Ingress: networking/ingress.md
-  - Misc. Topics:
-    - Upgrades: misc/upgrades.md
-    - Backup & Restore: misc/backup-restore.md
-    - Configuring HA: misc/ha.md
+  - Overview: overview.md
+  - Local Setup: local-setup.md
+  - Pods: pods.md
+  - Namespaces: namespaces.md
+  - Deployments: deployments.md
+  - Services: services.md
+  - Ingress: ingress.md
+  - Storage: storage.md
+  - ConfigMaps & Secrets: configmaps-secrets.md
+  - StatefulSets: statefulsets.md
+  - Kubernetes API: kubernetes-api.md
+  - Security: security.md
 theme:
   name: material
   logo: logo.png
