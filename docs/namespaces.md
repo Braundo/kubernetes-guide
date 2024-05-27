@@ -4,7 +4,7 @@ icon: material/select-group
 
 # Namespaces in Kubernetes
 
-Namespaces are a powerful feature in Kubernetes that allow you to segment your cluster into multiple virtual clusters, providing organization, isolation, and management capabilities.
+Namespaces are a powerful feature in Kubernetes that allow you to segment your cluster into multiple groups, providing organization, isolation, and management capabilities.
 
 ## Understanding Namespaces
 
@@ -97,7 +97,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: my-pod
-  namespace: my-namespace
+  namespace: my-namespace # specified here
 spec:
   containers:
   - name: my-container
