@@ -6,13 +6,6 @@ icon: material/package
 
 In Kubernetes, every application runs inside a Pod. Understanding how to work with Pods is crucial for deploying, scaling, and managing applications effectively.
 
-<h3>Core Concepts of Pods</h3>
-
-- **Deployment:** Applications are encapsulated within Pods.
-- **Termination:** Terminating an application involves removing its Pod.
-- **Scaling:** Adjusting application instances up or down requires adding or removing Pods.
-- **Updating:** Application updates involve deploying new Pods.
-
 ## Pod Fundamentals
 
 Pods are the smallest deployable units in Kubernetes and serve as an abstraction layer, allowing various types of workloads to run seamlessly. They enable resource sharing, advanced scheduling, health monitoring, and more.
