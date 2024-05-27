@@ -16,7 +16,7 @@ Pods abstract the complexities of different workload types, enabling Kubernetes 
 
 <h3>Enhancements and Capabilities</h3>
 
-Pods offer several enhancements, including:
+Pods offer several enhancements for containers, including:
 
 - **Resource Sharing:** Shared filesystem, network stack, memory, process tree, and hostname.
 - **Advanced Scheduling:** Features like nodeSelectors, affinity rules, topology spread constraints, resource requests, and limits.
