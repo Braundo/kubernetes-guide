@@ -781,25 +781,22 @@
 </span></code></pre></div>
 <strong>View Pod Logs:</strong>
   <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>logs<span class="w"> </span>hello-pod
-</span></code></pre></div>
-<strong>Execute Commands in a Pod:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>hello-pod<span class="w"> </span>--<span class="w"> </span>&lt;command&gt;
 </span></code></pre></div></p>
 <h3>Monitoring and Debugging</h3>
 
 <p>Use <code>kubectl</code> to monitor and debug Pods effectively:</p>
 <p><strong>Detailed Pod Info:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>yaml
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>yaml
 </span></code></pre></div>
 <strong>Pod Logs:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>logs<span class="w"> </span>hello-pod
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>logs<span class="w"> </span>hello-pod
 </span></code></pre></div>
 <strong>Remote Command Execution:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>hello-pod<span class="w"> </span>--<span class="w"> </span>ps
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>hello-pod<span class="w"> </span>--<span class="w"> </span>ps
 </span></code></pre></div>
 <strong>Interactive Shell Session:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>hello-pod<span class="w"> </span>--<span class="w"> </span>sh
+  <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>hello-pod<span class="w"> </span>--<span class="w"> </span>sh
 </span></code></pre></div></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Pods are the foundational units in Kubernetes, encapsulating applications and providing a robust execution environment. By leveraging Pods effectively, you can take full advantage of Kubernetes' capabilities for deploying, scaling, and managing applications.</p>
