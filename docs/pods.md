@@ -5,7 +5,7 @@ icon: material/package
 # Introduction to Kubernetes Pods
 
 In Kubernetes, every application runs inside a Pod. Understanding how to work with Pods is crucial for deploying, scaling, and managing applications effectively.
-<
+
 <h3>Core Concepts of Pods</h3>
 
 - **Deployment:** Applications are encapsulated within Pods.
