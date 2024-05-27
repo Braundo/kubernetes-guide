@@ -66,11 +66,13 @@ Pods are designed to be ephemeral and immutable:
 
 <h3>Restart Policies</h3>
 
-Restart policies apply to individual containers within a Pod:
+Restart policies apply to individual *containers* within a Pod:
 
 - **Always:** Always restart containers.
 - **Never:** Never restart containers.
 - **OnFailure:** Restart containers only if they fail.
+
+Again, those are policies for containers within the Pod - Pods themselves do not restart.
 
 ## Practical Examples
 
