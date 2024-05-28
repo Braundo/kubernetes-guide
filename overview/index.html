@@ -675,7 +675,7 @@
 
 <p>The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:</p>
 <ol>
-<li>You tell Kubernetes (typically via <code>kubectl</code>) how you want you application to look. What image to use, how many replicas, ports to expose, etc.</li>
+<li>You <em>tell</em> Kubernetes (typically via <code>kubectl</code>) how you want your application to look. What image to use, how many replicas, ports to expose, etc.</li>
 <li>Kubernetes persists this desired state to the cluster store (etcd)</li>
 <li>A series of background controllers consistently check if current state matches desired state.</li>
 <li>If current state does not equal desired state (i.e. we desire 3 replicas but only 2 are currently running),</li>
