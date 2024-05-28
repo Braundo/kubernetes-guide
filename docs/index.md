@@ -10,17 +10,17 @@ icon: material/home
     I just overhauled most of the content in the guide. I will be doing the same with the diagrams here soon, so expect many missing diagrams until then.
 <br>
 Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!  
-<br/><br/>
+<br>
 
 The initial focus of this guide is to cover topics to help you pass the Kubernetes Certified Administrator (CKA) exam. As time goes on, I will add more study content here to help prepare for other Kubernetes-related topics.
 
-<br><br>
+<br>
 
 Feel free to pick and choose any section in any order, but you'll likely be best served by following along in the default order of the site.
 
-<br><br>
+<br>
 
-One thing to note about text formatting in this guide: you'll notice some terms always start with a capital letter (i.e. Node, Pod, etc.). This is intentional and an attempt to adhere to standard formatting as laid out in the official Kubernetes documentation. Kubernetes API objects (like the ones just mentioned) should start with a capital letter.
+One thing to note about text formatting in this guide: you'll notice some terms always start with a capital letter (i.e. Service, Pod, etc.). This is intentional and an attempt to adhere to standard formatting as laid out in the official Kubernetes documentation. Kubernetes API objects (like the ones just mentioned) should start with a capital letter.
 
 <br><br>
 
