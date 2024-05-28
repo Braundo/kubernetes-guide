@@ -671,15 +671,8 @@
 <li><strong>Self-healing:</strong> Detects and replaces failed instances.</li>
 <li><strong>Rolling Updates and Rollbacks:</strong> Updates applications without downtime and rolls back if needed.</li>
 </ul>
-<h3>Key Concepts</h3>
+<h3>Declarative Model</h3>
 
-<ul>
-<li><strong>Declarative Model:</strong> You tell Kubernetes how you want your app(s) to look, and it works tirelessly in the background to ensure the current state matches your desired state.</li>
-<li><strong>Orchestration:</strong> Kubernetes coordinates application deployment and management across clusters of machines.</li>
-<li><strong>Containerization:</strong> Containers package an application with all its dependencies, making it portable and efficient.</li>
-<li><strong>Cloud-Native:</strong> Applications designed for cloud environments, featuring auto-scaling, self-healing, and automated updates.</li>
-<li><strong>Microservices:</strong> Applications broken into smaller, independent services that can be developed, deployed, and scaled individually.</li>
-</ul>
 <p>The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:</p>
 <ol>
 <li>You tell Kubernetes (typically via <code>kubectl</code>) how you want you application to look. What image to use, how many replicas, ports to expose, etc.</li>
