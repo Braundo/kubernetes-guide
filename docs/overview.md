@@ -29,11 +29,7 @@ The declarative nature of Kubernetes is key to understanding the power of it. At
 
 ## Historical Background
 
-Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications at massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became the standard for container orchestration.
-
-<h3>Development and Growth</h3>
-
-Kubernetes was created in response to the rise of cloud computing by AWS and the popularity of Docker for containerization. Google engineers leveraged their experience to build a flexible, scalable orchestration platform. Since its open-sourcing, Kubernetes has grown rapidly and is now a critical part of the cloud-native ecosystem.
+Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became the standard for container orchestration.
 
 ## Kubernetes Architecture
 
