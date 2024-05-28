@@ -19,7 +19,7 @@ Kubernetes is a container orchestrator, which means it manages the deployment an
 
 The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:
 
-1. You tell Kubernetes (typically via `kubectl`) how you want you application to look. What image to use, how many replicas, ports to expose, etc.
+1. You *tell* Kubernetes (typically via `kubectl`) how you want your application to look. What image to use, how many replicas, ports to expose, etc.
 2. Kubernetes persists this desired state to the cluster store (etcd)
 3. A series of background controllers consistently check if current state matches desired state.
 4. If current state does not equal desired state (i.e. we desire 3 replicas but only 2 are currently running),
