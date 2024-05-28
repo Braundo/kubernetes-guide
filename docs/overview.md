@@ -4,7 +4,7 @@ icon: material/text-box-search-outline
 
 # Introduction to Kubernetes
 
-Kubernetes, often referred to as K8s, is an open-source platform designed to automate deploying, scaling, and operating application containers. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF). This sections covers the essentials to get you up to speed with Kubernetes, its architecture, and its key features.
+Kubernetes, often referred to as K8s, is an open-source platform designed to automate deploying, scaling, and operating application containers. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF). This sections covers the essentials to get you up to speed with Kubernetes, its architecture, and its key features. Think of this as a one-pager or TLDR of Kubernetes.
 
 ## What is Kubernetes?
 
@@ -68,7 +68,7 @@ Kubernetes operates on a declarative model, where you specify the desired state 
 
 <h3>Pods and Deployments</h3>
 
-- **Pods:** The smallest deployable units in Kubernetes, which can contain one or more containers. Pods share resources like network and storage.
+- **Pods:** The smallest deployable units in Kubernetes, which can contain one or more containers. Containers within Pods share resources like network and storage.
 - **Deployments:** Higher-level controllers that manage Pods, providing features like scaling, rolling updates, and rollbacks.
 
 <h3>Services</h3>
