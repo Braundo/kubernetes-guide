@@ -696,15 +696,15 @@
 <h3>Components of the Control Plane</h3>
 
 <ul>
-<li><strong>API Server:</strong> The front end of Kubernetes that exposes the Kubernetes API.</li>
-<li><strong>Cluster Store:</strong> A distributed database (etcd) that stores the entire state of the cluster.</li>
-<li><strong>Controllers:</strong> Ensure the cluster's desired state matches its observed state by managing replicas, deployments, and more.</li>
-<li><strong>Scheduler:</strong> Assigns tasks to worker nodes based on resource availability and other criteria.</li>
+<li><strong>API Server:</strong> The front end of Kubernetes that exposes the Kubernetes API. All traffic within, to, and from various Kubernetes components flows through the ARI Server. It is the Grand Central Station or central nervous system of Kubernetes.</li>
+<li><strong>Cluster Store:</strong> A distributed database (etcd) that stores the entire state of the cluster. When your define your desired application specifications, they are stored here. This is the only <em>stateful</em> core component of Kubernetes.</li>
+<li><strong>Controllers:</strong> Ensure the cluster's desired state matches its observed state by running background watch loops on objects like Deployments, Pods, etc.</li>
+<li><strong>Scheduler:</strong> Assigns tasks to worker nodes based on resource availability, application requirements and other criteria.</li>
 </ul>
 <h3>Components of Worker Nodes</h3>
 
 <ul>
-<li><strong>Kubelet:</strong> The agent that communicates with the API server and manages containers on the node.</li>
+<li><strong>Kubelet:</strong> The agent that communicates with the API server and manages containers on the node. The kubelet also communicates directly with the container runtime on the node, instructing it to pull images, and start/stop containers.</li>
 <li><strong>Runtime:</strong> Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.</li>
 <li><strong>Kube-proxy:</strong> Manages networking for containers, including load balancing.</li>
 </ul>
