@@ -75,6 +75,8 @@ Kubernetes operates on a declarative model, where you specify the desired state 
 
 Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically.
 
+![](../images/svc.svg)
+
 ## Advanced Features
 
 <h3>Self-Healing and Scaling</h3>
