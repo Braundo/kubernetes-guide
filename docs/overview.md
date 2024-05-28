@@ -15,13 +15,7 @@ Kubernetes is a container orchestrator, which means it manages the deployment an
 - **Self-healing:** Detects and replaces failed instances.
 - **Rolling Updates and Rollbacks:** Updates applications without downtime and rolls back if needed.
 
-<h3>Key Concepts</h3>
-
-- **Declarative Model:** You tell Kubernetes how you want your app(s) to look, and it works tirelessly in the background to ensure the current state matches your desired state.
-- **Orchestration:** Kubernetes coordinates application deployment and management across clusters of machines.
-- **Containerization:** Containers package an application with all its dependencies, making it portable and efficient.
-- **Cloud-Native:** Applications designed for cloud environments, featuring auto-scaling, self-healing, and automated updates.
-- **Microservices:** Applications broken into smaller, independent services that can be developed, deployed, and scaled individually.
+<h3>Declarative Model</h3>
 
 The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:
 
