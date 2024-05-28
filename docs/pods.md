@@ -91,7 +91,7 @@ One common example is to use a multi-container Pod for service meshes. In these 
 
 ![](../images/sidecar.svg)
 
-As mentioned above, multiple containers within a Pod share the IP address, network stack, and filesystem. As such, in order to communicate to specific containers within a multi-container Pod, you have to leverage port addresses. The containers themselves however will be able to communicate to each other via localhost.
+As mentioned above, multiple containers within a Pod share the same IP address, network stack, and filesystem. As such, in order to communicate to specific containers within a multi-container Pod, you have to leverage port addresses. The containers themselves however will be able to communicate to each other via localhost.
 
 ![](../images/sidecar-net.svg)
 
