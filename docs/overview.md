@@ -47,8 +47,8 @@ Kubernetes clusters consist of two types of nodes - control plane nodes and work
 
 <h3>Components of Worker Nodes</h3>
 
-- **Kubelet:** The agent that communicates with the API server and manages containers on the node. The kubelet also communicates directly with the container runtime on the node, instructing it to pull images, and start/stop containers.
-- **Runtime:** Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.
+- **Kubelet:** The agent that communicates with the API server and manages containers on the node. The kubelet communicates directly with the container runtime on the node, instructing it to pull images, and start/stop containers.
+- **Container Runtime:** Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.
 - **Kube-proxy:** Manages networking for containers, including load balancing.
 
 ![](../images/arch.svg)
