@@ -41,7 +41,7 @@ Kubernetes clusters consist of two types of nodes - control plane nodes and work
 <h3>Components of the Control Plane</h3>
 
 - **API Server:** The front end of Kubernetes that exposes the Kubernetes API. All traffic within, to, and from various Kubernetes components flows through the API Server. It is the Grand Central Station or central nervous system of Kubernetes.
-- **Cluster Store:** A distributed database (etcd) that stores the entire state of the cluster. When your define your desired application specifications, they are stored here. This is the only *stateful* core component of Kubernetes.
+- **Cluster Store:** A distributed database (etcd) that stores the entire state of the cluster. When you define your desired application specifications, they are stored here. This is the only *stateful* core component of Kubernetes.
 - **Controllers:** Ensure the cluster's desired state matches its observed state by running background watch loops on objects like Deployments, Pods, etc.
 - **Scheduler:** Assigns tasks to worker nodes based on resource availability, application requirements and other criteria.
 
