@@ -33,7 +33,7 @@ Kubernetes was born from Google's internal systems like Borg and Omega, which ma
 
 ## Kubernetes Architecture
 
-Kubernetes clusters consist of control plane nodes and worker nodes:
+Kubernetes clusters consist of two types of nodes - control plane nodes and worker nodes:
 
 - **Control Plane Nodes:** These nodes run the Kubernetes control plane, which includes components like the API server, scheduler, and controllers. They manage the overall state of the cluster.
 - **Worker Nodes:** These nodes run the applications and report back to the control plane.
