@@ -33,7 +33,8 @@ extra_css:
 extra:
   generator: false
   analytics:
-    google: "G-WF0BEBS62L"
+    provider: google
+    property: "G-WF0BEBS62L"
 markdown_extensions:
   - admonition
   - abbr
