@@ -32,6 +32,8 @@ extra_css:
   - ./stylesheets/extra.css
 extra:
   generator: false
+  analytics:
+    google: "G-WF0BEBS62L"
 markdown_extensions:
   - admonition
   - abbr
