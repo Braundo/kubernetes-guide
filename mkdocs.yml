@@ -15,7 +15,6 @@ nav:
   - Security: security.md
 theme:
   name: material
-  custom_dir: docs/overrides
   logo: logo.png
   favicon: logo.png
   font:
