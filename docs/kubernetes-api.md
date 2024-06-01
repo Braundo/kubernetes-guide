@@ -26,6 +26,10 @@ The Kubernetes API server is the central hub through which all interactions in t
 - Node Kubelets keep an eye on the API server, picking up new tasks and sending back their statuses.
 - The control plane services don't chat amongst themselves directly; they communicate through the API server.  
 
+Below is a *highly* simplified representation of a few of the various interactions that components have with the API Server. It should be noted that this diagram does *not* encompass all of the components that interact with the API Server nor all of their various messages. It does serve as a general picture of how "busy" the API Server is and how it is central to all communication in Kubernetes.
+
+![](../images/api-server.svg)
+
 ## Understanding Serialization
 
 Serialization is essential for transmitting and storing objects. Kubernetes typically uses JSON for communication with external clients and Protobuf for internal cluster traffic due to its efficiency.

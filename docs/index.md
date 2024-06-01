@@ -6,7 +6,10 @@ icon: material/home
     <img src="logo.png" width="30%">
 </center>
 <br><br>
-!!! warning "NOTE - 5/26/2024"
+!!! warning "Update - 6/1/2024"
+    Most of the diagrams are back. Some still need to be simplified a bit and/or expanded. I still intend on overhauling the diagrams for Services and Ingress as well.
+
+!!! warning "Update - 5/26/2024"
     I just overhauled most of the content in the guide. I will be doing the same with the diagrams here soon, so expect many missing diagrams until then.
 <br>
 Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!  

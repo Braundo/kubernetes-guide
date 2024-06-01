@@ -23,6 +23,8 @@ Namespaces offer several advantages, including:
 - **Resource Management:** Apply different resource quotas and policies to each Namespace.
 - **Soft Isolation:** Prevent resource conflicts and organize cluster resources logically.
 
+![](../images/ns.svg)
+
 ## Practical Use Cases for Namespaces
 
 Namespaces are ideal for managing environments within a single organization, such as:
