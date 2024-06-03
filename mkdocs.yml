@@ -1,4 +1,6 @@
 site_name: Kubernetes Guide
+site_description: "A comprehensive, easy-to-follow guide for Kubernetes"
+site_author: "Aaron Braundmeier"
 nav:
   - Home: index.md
   - Overview: overview.md
@@ -61,3 +63,5 @@ plugins:
   - mermaid2
   - search
   - inline-svg
+  - sitemap:
+      url: https://www.k8s.guide
