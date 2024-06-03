@@ -63,5 +63,3 @@ plugins:
   - mermaid2
   - search
   - inline-svg
-  - sitemap:
-      url: https://www.k8s.guide
