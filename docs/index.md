@@ -2,6 +2,7 @@
 icon: material/home
 ---
 
+<meta name="google-adsense-account" content="ca-pub-4744916432619667">
 <center>
     <img src="logo.png" width="30%">
 </center>
