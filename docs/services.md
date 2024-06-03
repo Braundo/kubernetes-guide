@@ -20,7 +20,11 @@ Services in Kubernetes provide a front end (DNS name, IP address, and port) that
 
 <h3>ClusterIP</h3>
 
-The default Service type, ClusterIP, exposes the Service on an internal IP within the cluster. This makes it accessible only within the cluster.
+The default Service type, ClusterIP, exposes the Service on an internal IP within the cluster. This makes it accessible **only within the cluster**.
+
+Below is a high-level representation of how this looks:
+
+![](../images/clusterip.svg)
 
 **Key Points:**
 
@@ -45,6 +49,15 @@ spec:
 <h3>NodePort</h3>
 
 NodePort Services extend ClusterIP Services by making them accessible from outside the cluster through a port on each node.
+
+Below is a high-level example of how the flow works:
+
+![](../images/nodeport.svg)
+
+1. External client hits node on NodePort
+2. Node forwards request to the ClusterIP of the Service
+3. The Service picks a Pod from the list of healthy Pods in the EndpointSlice
+4. Forward request to the selected Pod
 
 **Key Points:**
 
@@ -71,6 +84,16 @@ spec:
 <h3>LoadBalancer</h3>
 
 LoadBalancer Services are built on top of NodePort and ClusterIP Services. They integrate with cloud provider load balancers to expose Services to the internet.
+
+Below is a high-level example of how the flow works:
+
+![](../images/lb.svg)
+
+1. External client hits LoadBalancer Service on friendly DNS name
+2. LoadBalancer forwards request to a NodePort     
+3. Node forwards request to the ClusterIP of the Service
+4. The Service picks a Pod from the EndpointSlice
+5. Forwards request to the selected Pod
 
 **Key Points:**
 

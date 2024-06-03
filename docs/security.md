@@ -20,6 +20,8 @@ A typical API request, such as creating a Deployment, follows these steps:
 2. **Authorization:** Checks if the authenticated user has permission to perform the action.
 3. **Admission Control:** Ensures the request complies with policies.
 
+![](../images/auth-flow.svg)
+
 ## Authentication (AuthN)
 
 <h3>Understanding Authentication</h3>

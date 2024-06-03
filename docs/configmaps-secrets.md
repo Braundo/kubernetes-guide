@@ -73,6 +73,8 @@ $ kubectl apply -f configmap.yaml
 
 Inject ConfigMap data into Pods using environment variables, command arguments, or volumes.
 
+![](../images/cm-mapping-flow.svg)
+
 <h4>As Environment Variables</h4>
 
 Define environment variables in the Pod specification:

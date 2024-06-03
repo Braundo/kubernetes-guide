@@ -22,6 +22,14 @@ Ingress is defined in the `networking.k8s.io/v1` API group and operates at Layer
 1. **Ingress Resource:** Defines routing rules.
 2. **Ingress Controller:** Implements the routing rules. Unlike other Kubernetes resources, Ingress controllers are not built-in and must be installed separately.
 
+<h4>Path-Based Routing:</h4>
+
+![](../images/ingress-3.svg)
+
+<h4>Domain-Based Routing:</h4>
+
+![](../images/ingress-2.svg)
+
 ## Setting Up Ingress
 
 <h3>Installing an Ingress Controller</h3>
