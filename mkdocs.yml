@@ -1,4 +1,5 @@
 site_name: Kubernetes Guide
+site_url: https://www.k8s.guide
 site_description: "A comprehensive, easy-to-follow guide for Kubernetes"
 site_author: "Aaron Braundmeier"
 nav:
