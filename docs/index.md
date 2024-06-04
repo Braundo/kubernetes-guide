@@ -6,10 +6,7 @@ icon: material/home
 <center>
     <img src="logo.png" width="30%">
 </center>
-<br><br>
-!!! warning "6/3/24 - Update"
-    Working on adjusting diagrams for dark/light mode. Things may look wonky until I'm finished
-
+<br>
 <br>
 Welcome to the Kubernetes Guide, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!  
 <br>
