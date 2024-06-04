@@ -26,6 +26,8 @@ The declarative nature of Kubernetes is key to understanding the power of it. At
 5. Kubernetes kicks off a series of actions to reconcile the two states. In the example above, this would involve spinning up an extra replica.
 
 ![](../images/overview.svg)
+!!! warning "Note"
+    The colors for this diagram got a little wonky. I'll fix it shortly.
 
 ## Historical Background
 
