@@ -23,7 +23,7 @@ One thing to note about text formatting in this guide: you'll notice some terms 
 
 <br><br>
 
-<br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/>
 > **Legal disclaimer**:  
 >  
 > 
