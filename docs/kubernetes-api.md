@@ -30,6 +30,7 @@ Below is a *highly* simplified representation of a few of the various interactio
 
 ![](../images/api-server.svg)
 
+
 ## Understanding Serialization
 
 Serialization is essential for transmitting and storing objects. Kubernetes typically uses JSON for communication with external clients and Protobuf for internal cluster traffic due to its efficiency.
