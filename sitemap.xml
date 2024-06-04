@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://www.k8s.guide/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/configmaps-secrets/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/deployments/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/ingress/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/kubernetes-api/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/local-setup/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/namespaces/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/overview/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/pods/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/security/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/services/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/statefulsets/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/storage/</loc>
-         <lastmod>2024-06-03</lastmod>
+         <lastmod>2024-06-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
