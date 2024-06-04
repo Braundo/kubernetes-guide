@@ -25,7 +25,7 @@ Kubernetes supports different types of storage, such as block, file, and object 
 
 Storage providers connect to Kubernetes through a plugin layer, often using the Container Storage Interface (CSI). This standardized interface simplifies integrating external storage resources with Kubernetes. 
 
-![](../images/storage-arch.svg)
+![](../images/csi.svg)
 
 <h3>Key Components</h3>
 

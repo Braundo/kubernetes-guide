@@ -122,11 +122,10 @@ spec:
 
 Services use labels and selectors to determine which Pods receive traffic. This loose coupling allows Services to dynamically update the list of Pods they route to, maintaining high availability and load balancing.
 
-![](../images/svc-label-1.svg)
+It should also be noted that Pods can still belong to a Service if they have *extra* labels, so long as they also contain all the labels that the Service is selecting on.
 
-It should also be noted that Pods can still belong to a Service if they have *extra* labels, so long as they also contain all the labels that the Service is selecting on. Below is an example of that:
+![](../images/labels-selectors.svg)
 
-![](../images/svc-label-2.svg)
 
 **Example:**
 ```yaml
