@@ -20,15 +20,6 @@ theme:
   name: material
   logo: logo.png
   favicon: logo.png
-  palette:
-    - scheme: default
-      toggle:
-        icon: material/brightness-7 
-        name: Switch to dark mode
-    - scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
   font:
     text: Ubuntu
     code: Fira Code
