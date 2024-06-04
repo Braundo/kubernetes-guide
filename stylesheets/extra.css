@@ -26,3 +26,20 @@ h1 {
 h2 {
     font-weight: bold !important;
 }
+
+.dark-mode-image {
+    display: none;
+  }
+  
+  .light-mode-image {
+    display: block;
+  }
+  
+  body[data-md-color-scheme="slate"] .dark-mode-image {
+    display: block;
+  }
+  
+  body[data-md-color-scheme="slate"] .light-mode-image {
+    display: none;
+  }
+  
