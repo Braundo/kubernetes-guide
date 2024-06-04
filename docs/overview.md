@@ -19,15 +19,13 @@ Kubernetes is a container orchestrator, which means it manages the deployment an
 
 The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:
 
+![](../images/overview.svg)
+
 1. You *tell* Kubernetes (typically via `kubectl`) how you want your application to look. What image to use, how many replicas, ports to expose, etc.
 2. Kubernetes persists this desired state to the cluster store (etcd)
 3. A series of background controllers consistently check if current state matches desired state.
 4. If current state does not equal desired state (i.e. we desire 3 replicas but only 2 are currently running),
 5. Kubernetes kicks off a series of actions to reconcile the two states. In the example above, this would involve spinning up an extra replica.
-
-![](../images/overview.svg)
-!!! warning "Note"
-    The colors for this diagram got a little wonky. I'll fix it shortly.
 
 ## Historical Background
 
@@ -53,9 +51,9 @@ Kubernetes clusters consist of two types of nodes - control plane nodes and work
 - **Container Runtime:** Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.
 - **Kube-proxy:** Manages networking for containers, including load balancing.
 
-![](../images/arch.svg)
+![](../images/overview-2.svg)
 
-!!! warning "Note"
+!!! info "Note"
     The API Server is the **only** component in Kubernetes that interacts directly with etcd.
 
 ## Kubernetes in Action

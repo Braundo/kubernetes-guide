@@ -31,12 +31,7 @@ StatefulSets are Kubernetes tools for running and managing applications that nee
 
 StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:  
 
-<h4>Node/Pod Failure with Deployments</h4>
-![control-loops](../images/node-fail-deploy.svg)
-<br><br><br>
-
-<h4>Node/Pod Failure with StatefulSets</h4>
-![control-loops](../images/node-fail-ss.svg)
+![](../images/sts.svg)
 
 Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  
 

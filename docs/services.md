@@ -216,14 +216,25 @@ Kubernetes uses an internal DNS to resolve Service names to IP addresses. Each P
 
 Service registration is the process of an app on Kubernetes providing its connection details to a registry in order for other apps on the cluster to be able to find it. This happens automatically when Services are created. 
 
-**High-level flow of Service registration:**
+**High-level flow of Service registration**
 
 1. Post a Service manifest to the API server (via `kubectl`).
 2. The Service is given a stable IP address called a **ClusterIP**.
 3. EndpointSlices are created to maintain the list of healthy Pods which match the Service's label selector.
 4. The Service's name and IP are registered with the cluster DNS.
 
-![](../images/svc-disc.svg)
+<br>
+
+**High-level flow of Service discovery:**
+
+In terms of how an application then discovers other applications behind a Service, the flow looks like this:
+
+1. The new Service is registered with the cluster DNS (Service Registry)
+2. Your application wants to know the IP address of the Service so it provides the name to the cluster DNS for lookup.
+3. The cluster DNS returns the IP address of the Service
+4. Your application now knows where to direct it's request
+
+![](../images/svc-reg.svg)
 
 <h3>Practical Example of Service Discovery</h3>
 
@@ -259,7 +270,7 @@ Namespaces partition a cluster's address space, allowing you to create isolated 
 
 Objects within the same Namespace can connect to each other using short names. However, cross-Namespace communication must use the FQDN.
 
-![](../images/dns.svg)
+![](../images/ns-dns.svg)
 
 ## Advanced Concepts
 
