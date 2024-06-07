@@ -29,6 +29,8 @@ Operators extend Kubernetes using the following components:
 - **Custom Resource Definitions (CRDs):** Define new types of resources to represent the application and its components.
 - **Custom Controllers:** Monitor the state of custom resources and take action to reconcile the actual state with the desired state.
 
+![](../images/operator.svg)
+
 ## Building and Using Operators
 
 <h3>Building an Operator</h3>
