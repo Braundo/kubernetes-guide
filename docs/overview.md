@@ -17,7 +17,13 @@ Kubernetes is a container orchestrator, which means it manages the deployment an
 
 <h3>Declarative Model</h3>
 
-The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how Kubernetes operates:
+Kubernetes operates on a declarative model, where you specify the desired state of the system in YAML or JSON configuration files. The system continuously works to ensure the observed state matches the desired state. This involves three key principles:
+
+1. **Observed State:** The current state of the system.
+2. **Desired State:** The state you want the system to achieve.
+3. **Reconciliation:** The process of adjusting the observed state to match the desired state.
+
+The declarative nature of Kubernetes is key to understanding the power of it. At a super high level, this is how this might look:
 
 ![](../images/overview.svg)
 
@@ -29,11 +35,11 @@ The declarative nature of Kubernetes is key to understanding the power of it. At
 
 ## Historical Background
 
-Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became the standard for container orchestration.
+Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became *the* standard for container orchestration.
 
 ## Kubernetes Architecture
 
-Kubernetes clusters consist of two types of nodes - control plane nodes and worker nodes:
+From a 20K-foot level, Kubernetes clusters consist of two types of nodes - **control plane** nodes and **worker** nodes:
 
 - **Control Plane Nodes:** These nodes run the Kubernetes control plane, which includes components like the API server, scheduler, and controllers. They manage the overall state of the cluster.
 - **Worker Nodes:** These nodes run the applications and report back status to the control plane.
@@ -56,15 +62,7 @@ Kubernetes clusters consist of two types of nodes - control plane nodes and work
 !!! info "Note"
     The API Server is the **only** component in Kubernetes that interacts directly with etcd.
 
-## Kubernetes in Action
-
-<h3>The Declarative Approach</h3>
-
-Kubernetes operates on a declarative model, where you specify the desired state of the system in YAML or JSON configuration files. The system continuously works to ensure the observed state matches the desired state. This involves three key principles:
-
-1. **Observed State:** The current state of the system.
-2. **Desired State:** The state you want the system to achieve.
-3. **Reconciliation:** The process of adjusting the observed state to match the desired state.
+## Common Features Primer
 
 <h3>Pods and Deployments</h3>
 
@@ -77,16 +75,14 @@ Services provide stable networking endpoints for Pods, enabling reliable communi
 
 ![](../images/labels-selectors.svg)
 
-## Advanced Features
-
 <h3>Self-Healing and Scaling</h3>
 
-Kubernetes automatically replaces failed Pods and scales the application up or down based on traffic and load. This ensures high availability and efficient resource utilization.
+If deployed as part of a Deployment or StatefulSet, Kubernetes will automatically replace failed Pods and scale your application up or down based on traffic, load, or other custom thresholds. This ensures high availability and efficient resource utilization.
 
 <h3>Rolling Updates and Rollbacks</h3>
 
-Kubernetes allows you to update your application without downtime by gradually replacing old Pods with new ones. If something goes wrong, Kubernetes can roll back to the previous version.
+By leveraging [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) (via [ReplicaSets](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)) Kubernetes allows you to update your application without downtime by gradually replacing old Pods with new ones. If something goes wrong, Kubernetes can roll back to the previous version.
 
-## Conclusion
+## Summary
 
-Kubernetes is a powerful tool for managing containerized applications, offering automation, scalability, and reliability. By abstracting the underlying infrastructure, it simplifies application deployment and management across various environments. Whether you're running on-premises or in the cloud, Kubernetes provides a consistent and efficient platform for your applications.
+Kubernetes is a powerful tool for managing containerized applications, offering automation, scalability, and reliability. By abstracting the underlying infrastructure, it simplifies application deployment and management across various environments. Whether you're running on-premises or in the cloud, Kubernetes provides a consistent and efficient platform for your applications. Before diving into some more details on these topics, let's first cover how you can quickly get your hands on a Kubernetes environment in the next section.
