@@ -162,6 +162,6 @@ parameters:
 - **Delete:** Deletes PV and external storage when PVC is released.
 - **Retain:** Keeps PV and external storage when PVC is deleted, requiring manual cleanup.
 
-## Conclusion
+## Summary
 
 Kubernetes provides a robust storage subsystem that allows applications to dynamically provision and manage storage from various external systems. By leveraging CSI plugins and StorageClasses, you can create flexible and scalable storage solutions tailored to your application's needs.

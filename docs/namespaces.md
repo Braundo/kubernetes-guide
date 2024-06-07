@@ -46,14 +46,24 @@ Every Kubernetes cluster comes with some pre-defined Namespaces:
 - **kube-public:** For resources that should be publicly accessible.
 - **kube-node-lease:** Manages Node heartbeat and leases.
 
+!!! info "Note"
+    Instead of typing out **namespace** each time, you can shorten it to **ns** in `kubectl` commands.
+
 To view the existing Namespaces, use:
-```sh
+```text
 $ kubectl get namespaces
+  NAME                 STATUS   AGE
+  default              Active   84d
+  kube-node-lease      Active   84d
+  kube-public          Active   84d
+  kube-system          Active   84d
+  local-path-storage   Active   84d
 ```
 
 To delete a Namespace:
-```sh
+```text
 $ kubectl delete ns my-namespace
+  namespace "my-namespace" deleted
 ```
 
 ## Creating and Managing Namespaces
@@ -65,6 +75,7 @@ You can create a Namespace either imperatively or declaratively.
 **Imperative Creation:**
 ```sh
 $ kubectl create ns my-namespace
+  namespace/my-namespace created
 ```
 
 **Declarative Creation:**
@@ -118,6 +129,6 @@ $ kubectl apply -f deployment.yaml
 $ kubectl get pods -n my-namespace
 ```
 
-## Conclusion
+## Summary
 
 Namespaces in Kubernetes are an effective way to manage resources and organize environments within a cluster. While they provide soft isolation and ease of management, remember that they are not suitable for hard multi-tenancy. By using Namespaces, you can efficiently segment your cluster and apply different policies and resource quotas to each segment.

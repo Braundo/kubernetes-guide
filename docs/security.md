@@ -270,6 +270,6 @@ spec:
      apiGroup: rbac.authorization.k8s.io
    ```
 
-## Conclusion
+## Summary
 
 Securing a Kubernetes cluster involves multiple layers of authentication, authorization, and admission control. By understanding and implementing these mechanisms, you can ensure that your cluster is protected from unauthorized access and that all actions comply with defined policies.

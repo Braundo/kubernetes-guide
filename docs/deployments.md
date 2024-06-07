@@ -253,6 +253,6 @@ Rollback to the previous version:
 $ kubectl rollout undo deploy sample-deployment
 ```
 
-## Conclusion
+## Summary
 
 Deployments in Kubernetes offer a robust mechanism for managing stateless applications. By leveraging features like self-healing, scaling, rolling updates, and rollbacks, you can ensure your applications are resilient, scalable, and easy to maintain. Embracing the declarative model simplifies management and aligns with Kubernetes' principles of infrastructure as code.

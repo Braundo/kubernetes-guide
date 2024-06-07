@@ -278,6 +278,6 @@ spec:
   $ kubectl delete pod -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
   ```
 
-## Conclusion
+## Summary
 
 Ingress in Kubernetes provides a powerful way to manage external access to your services. By understanding and utilizing Ingress, you can efficiently route traffic to multiple services using a single load balancer, ensuring scalability and ease of management.

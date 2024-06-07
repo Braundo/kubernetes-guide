@@ -231,6 +231,6 @@ $ kubectl apply -f db-secret.yaml
 $ kubectl describe secret db-secret
 ```
 
-## Conclusion
+## Summary
 
 ConfigMaps and Secrets are essential tools in Kubernetes for managing application configuration and sensitive data. By decoupling configuration from application code and handling sensitive information securely, you can create more flexible, maintainable, and secure applications.

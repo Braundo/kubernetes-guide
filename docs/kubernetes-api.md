@@ -201,6 +201,6 @@ spec:
    $ kubectl get rp
    ```
 
-## Conclusion
+## Summary
 
 The Kubernetes API is a powerful tool for managing your cluster. By understanding its structure and capabilities, you can leverage it to automate and streamline your operations. From creating resources to extending the API with custom definitions, mastering the API is key to unlocking Kubernetes' full potential.

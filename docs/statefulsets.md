@@ -180,6 +180,6 @@ Update the image version in the StatefulSet YAML and apply the changes to perfor
 $ kubectl apply -f statefulset.yaml
 ```
 
-## Conclusion
+## Summary
 
 StatefulSets are crucial for managing stateful applications in Kubernetes. They provide stable network identities, persistent storage, and ordered Pod creation and deletion. By leveraging StatefulSets, you can ensure your stateful applications are robust, scalable, and resilient.
