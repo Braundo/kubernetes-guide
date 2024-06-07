@@ -29,7 +29,38 @@ Operators extend Kubernetes using the following components:
 - **Custom Resource Definitions (CRDs):** Define new types of resources to represent the application and its components.
 - **Custom Controllers:** Monitor the state of custom resources and take action to reconcile the actual state with the desired state.
 
+## Detailed Workflow
+
 ![](../images/operator.svg)
+
+#### **User Modification**
+   - **Action:** A user modifies the custom resource to define or update the desired state of the application.
+   - **Example:** The user could be updating the version of the application or changing configuration parameters.
+
+   ```sh
+   # Example command to apply a change to a custom resource
+   kubectl apply -f custom-resource.yaml
+   ```
+
+#### **API Server Interaction**
+   - **Action:** The Kubernetes API server receives the modification request and processes it.
+   - **Purpose:** The API server validates and stores the new state of the custom resource.
+
+#### **Operator Watches Custom Resource**
+   - **Action:** The Operator, running as a controller within the cluster, continuously watches for changes to the custom resources.
+   - **Purpose:** The Operator detects the change event and identifies that an action is needed to reconcile the desired state with the actual state.
+
+#### **Operator Takes Action**
+   - **Action:** The Operator performs the necessary operations to adjust the state of the application to match the desired state defined in the custom resource.
+   - **Examples:** This could include creating, updating, or deleting resources such as Pods, Services, or ConfigMaps. The Operator might also perform application-specific actions like running a database migration or initiating a backup.
+
+#### **State Adjustment**
+   - **Action:** The Operator adjusts the state of the application.
+   - **Purpose:** Ensures the actual state of the cluster matches the desired state defined in the custom resource.
+
+#### **Continuous Monitoring and Reconciliation**
+   - **Action:** The Operator continuously monitors the application and custom resources.
+   - **Purpose:** Automatically reconciles any discrepancies between the desired state and the actual state, ensuring the application runs as intended over time.
 
 ## Building and Using Operators
 
