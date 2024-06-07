@@ -61,7 +61,7 @@ current-context: eggs-admin
 
 Most production clusters integrate with enterprise-grade Identity and Access Management (IAM) systems such as Active Directory or cloud-based IAM solutions, providing robust authentication mechanisms.
 
-## Authorization (AuthZ) with RBAC
+## Authorization (AuthZ)
 
 <h3>Understanding Authorization</h3>
 
@@ -88,6 +88,8 @@ rules:
   apiGroups: ["apps"]
   resources: ["deployments"]
 ```
+
+<br>
 
 **Example RoleBinding:**
 ```yaml
@@ -121,6 +123,8 @@ rules:
   apiGroups: ["apps"]
   resources: ["deployments"]
 ```
+
+<br>
 
 **Example ClusterRoleBinding:**
 ```yaml
@@ -163,14 +167,35 @@ $ kubectl describe pod kube-apiserver-docker-desktop -n kube-system | grep admis
 ## Certificates and Service Accounts
 
 <h3>Using Client Certificates</h3>
+Client certificates are used to authenticate users and services within a Kubernetes cluster. They are an essential part of securing communication between different components of the cluster.
 
-Client certificates authenticate users and services within the cluster. They are stored in the `kubeconfig` file and verified by the API server.
+- **Storage**: Client certificates are stored in the kubeconfig file, which is used by the `kubectl` command-line tool to interact with the cluster. The kubeconfig file contains information about clusters, users, namespaces, and authentication mechanisms.
+
+- **Verification**: When a user or service attempts to connect to the Kubernetes API server, the server verifies the client certificate to ensure that the request is coming from a trusted source. This process involves checking the certificate's validity, including its expiration date and the signature from a trusted certificate authority (CA).
+
+- **Creating Certificates**: Administrators can create client certificates using tools like OpenSSL or Kubernetes' built-in certificate API. Once created, these certificates must be distributed securely to the users or services that need them.
+
+Example of creating a client certificate:
+
+```sh
+openssl genrsa -out client.key 2048
+openssl req -new -key client.key -out client.csr -subj "/CN=my-user"
+openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -days 365
+```
 
 <h3>Service Accounts</h3>
+Service Accounts provide identities for Pods and controllers, enabling secure intra-cluster communication. Unlike user accounts, which are meant for human users, service accounts are intended for processes that run in pods.
 
-Service Accounts provide identities for Pods and controllers, enabling secure intra-cluster communication.
+- **Creation**: Service accounts can be created manually using YAML configuration files, or they can be automatically generated when a namespace is created.
 
-**Example ServiceAccount:**
+- **Usage**: When a pod is assigned a service account, Kubernetes automatically mounts a token inside the pod, which the pod can use to authenticate to the API server and other services within the cluster.
+
+- **Default Service Account**: Each namespace has a default service account, which is automatically used by pods that do not specify a service account.
+
+- **Permissions**: Permissions for service accounts are managed through Role-Based Access Control (RBAC). Administrators can create roles and role bindings to grant specific permissions to service accounts.
+
+Example ServiceAccount:
+
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -179,7 +204,11 @@ metadata:
   namespace: default
 ```
 
-**Using a ServiceAccount in a Pod:**
+<h3>Using a ServiceAccount in a Pod</h3>
+To use a service account in a pod, specify the `serviceAccountName` field in the pod's spec. This binds the pod to the specified service account, allowing the pod to use the account's credentials to authenticate to the API server and other services.
+
+Example of a Pod using a ServiceAccount:
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -192,22 +221,26 @@ spec:
     image: myimage
 ```
 
+<h3>Additional Considerations</h3>
+- **Security**: Ensure that service accounts have only the permissions they need. Avoid giving broad permissions to service accounts to reduce the risk of unauthorized access.
+- **Rotation**: Regularly rotate client certificates and service account tokens to minimize the impact of any potential security breaches.
+- **Secrets**: Service account tokens are stored as Kubernetes secrets. Administrators can manually create secrets and mount them into pods to provide additional credentials.
+
+By providing detailed information on client certificates and service accounts, this section aims to help administrators and users understand the critical role of authentication and authorization within a Kubernetes cluster.
+
 ## Practical Example
 
-<h3>Deploying a Secure Application</h3>
+<h3>Deploying a "Secure" Application</h3>
 
-1. **Create a Namespace:**
+**1. Create a Namespace:**
    ```sh
    $ kubectl create namespace secure-app
    ```
 
-2. **Create a ServiceAccount:**
-   ```sh
-   $ kubectl apply -f serviceaccount.yaml
-   ```
+**2. Create a ServiceAccount:**
 
-   **serviceaccount.yaml:**
    ```yaml
+   # serviceaccount.yaml
    apiVersion: v1
    kind: ServiceAccount
    metadata:
@@ -215,13 +248,14 @@ spec:
      namespace: secure-app
    ```
 
-3. **Deploy a Pod using the ServiceAccount:**
    ```sh
-   $ kubectl apply -f pod.yaml
+   $ kubectl apply -f serviceaccount.yaml
    ```
 
-   **pod.yaml:**
+**3. Deploy a Pod using the ServiceAccount:**
+
    ```yaml
+   # pod.yaml
    apiVersion: v1
    kind: Pod
    metadata:
@@ -233,15 +267,14 @@ spec:
      - name: secure-container
        image: nginx
    ```
-
-4. **Create a Role and RoleBinding:**
    ```sh
-   $ kubectl apply -f role.yaml
-   $ kubectl apply -f rolebinding.yaml
+   $ kubectl apply -f pod.yaml
    ```
 
-   **role.yaml:**
+**4. Create a Role and RoleBinding:**
+
    ```yaml
+   # role.yaml
    apiVersion: rbac.authorization.k8s.io/v1
    kind: Role
    metadata:
@@ -253,8 +286,8 @@ spec:
      verbs: ["get", "watch", "list"]
    ```
 
-   **rolebinding.yaml:**
    ```yaml
+   # rolebinding.yaml
    apiVersion: rbac.authorization.k8s.io/v1
    kind: RoleBinding
    metadata:
@@ -268,6 +301,11 @@ spec:
      kind: Role
      name: pod-reader
      apiGroup: rbac.authorization.k8s.io
+   ```
+
+   ```sh
+   $ kubectl apply -f role.yaml
+   $ kubectl apply -f rolebinding.yaml
    ```
 
 ## Summary
