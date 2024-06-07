@@ -1,8 +1,8 @@
 ---
-icon: material/select-group
+icon: material/select
 ---
 
-# Namespaces in Kubernetes
+## Namespaces in Kubernetes
 
 Namespaces are a powerful feature in Kubernetes that allow you to segment your cluster into multiple groups, providing organization, isolation, and management capabilities.
 
@@ -12,8 +12,8 @@ Namespaces are a powerful feature in Kubernetes that allow you to segment your c
 
 In Kubernetes, Namespaces provide a way to partition a single Kubernetes cluster into multiple virtual clusters. This is different from kernel namespaces, which isolate resources at the operating system level.
 
-**Kernel Namespaces:** Isolate operating system resources for containers.
-**Kubernetes Namespaces:** Segment a Kubernetes cluster into separate environments for different teams, projects, or applications.
+- **Kernel Namespaces:** Isolate operating system resources for containers.
+- **Kubernetes Namespaces:** Segment a Kubernetes cluster into separate environments for different teams, projects, or applications.
 
 <h3>Benefits of Using Namespaces</h3>
 
@@ -50,20 +50,30 @@ Every Kubernetes cluster comes with some pre-defined Namespaces:
     Instead of typing out **namespace** each time, you can shorten it to **ns** in `kubectl` commands.
 
 To view the existing Namespaces, use:
+```sh
+kubectl get namespaces
+```
+This command lists all the Namespaces in the cluster, showing their status and age.
+
+Example output:
 ```text
-$ kubectl get namespaces
-  NAME                 STATUS   AGE
-  default              Active   84d
-  kube-node-lease      Active   84d
-  kube-public          Active   84d
-  kube-system          Active   84d
-  local-path-storage   Active   84d
+NAME                 STATUS   AGE
+default              Active   84d
+kube-node-lease      Active   84d
+kube-public          Active   84d
+kube-system          Active   84d
+local-path-storage   Active   84d
 ```
 
 To delete a Namespace:
+```sh
+kubectl delete ns my-namespace
+```
+This command deletes the specified Namespace and all the resources within it. Be cautious when deleting Namespaces, as this action is irreversible.
+
+Example output:
 ```text
-$ kubectl delete ns my-namespace
-  namespace "my-namespace" deleted
+namespace "my-namespace" deleted
 ```
 
 ## Creating and Managing Namespaces
@@ -74,8 +84,13 @@ You can create a Namespace either imperatively or declaratively.
 
 **Imperative Creation:**
 ```sh
-$ kubectl create ns my-namespace
-  namespace/my-namespace created
+kubectl create ns my-namespace
+```
+This command immediately creates a Namespace named `my-namespace`. It's a quick and straightforward method for creating Namespaces.
+
+Example output:
+```text
+namespace/my-namespace created
 ```
 
 **Declarative Creation:**
@@ -90,14 +105,26 @@ metadata:
 ```
 Apply the YAML file:
 ```sh
-$ kubectl apply -f namespace.yaml
+kubectl apply -f namespace.yaml
+```
+This approach allows you to manage your Namespace as code, making it easier to track changes and automate deployments. The labels can be used for organizational purposes or for applying specific policies.
+
+Example output:
+```text
+namespace/my-namespace created
 ```
 
 <h3>Configuring kubectl for a Specific Namespace</h3>
 
 To avoid specifying the Namespace in every command, set your context to a specific Namespace:
 ```sh
-$ kubectl config set-context --current --namespace=my-namespace
+kubectl config set-context --current --namespace=my-namespace
+```
+This command configures `kubectl` to use `my-namespace` as the default Namespace for the current context. It simplifies your workflow by eliminating the need to repeatedly specify the Namespace.
+
+Example output:
+```text
+Context "your-current-context" modified.
 ```
 
 ## Deploying Applications in Namespaces
@@ -118,15 +145,29 @@ spec:
     ports:
     - containerPort: 80
 ```
+This YAML file specifies that the Pod `my-pod` should be deployed in the `my-namespace` Namespace. By including the `namespace` field, you ensure the resource is created in the correct Namespace.
 
 Apply the YAML file:
 ```sh
-$ kubectl apply -f deployment.yaml
+kubectl apply -f deployment.yaml
+```
+This command deploys the resources defined in `deployment.yaml` to the specified Namespace.
+
+Example output:
+```text
+pod/my-pod created
 ```
 
 **Using the `-n` Flag:**
 ```sh
-$ kubectl get pods -n my-namespace
+kubectl get pods -n my-namespace
+```
+The `-n` flag specifies the Namespace for the `kubectl` command. This command lists all Pods in the `my-namespace` Namespace.
+
+Example output:
+```text
+NAME        READY   STATUS    RESTARTS   AGE
+my-pod      1/1     Running   0          1m
 ```
 
 ## Summary

@@ -10,11 +10,15 @@ nav:
   - Namespaces: namespaces.md
   - Deployments: deployments.md
   - StatefulSets: statefulsets.md
+  - Operators: operators.md
   - Kubernetes API: kubernetes-api.md
+  - Custom Resources: crd.md
   - Services: services.md
+  - Networking: networking.md
   - Ingress: ingress.md
   - Storage: storage.md
   - ConfigMaps & Secrets: configmaps-secrets.md
+  - Helm: helm.md
   - Security: security.md
 theme:
   name: material

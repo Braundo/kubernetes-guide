@@ -167,16 +167,10 @@ $ kubectl describe pod kube-apiserver-docker-desktop -n kube-system | grep admis
 ## Certificates and Service Accounts
 
 <h3>Using Client Certificates</h3>
-Client certificates are used to authenticate users and services within a Kubernetes cluster. They are an essential part of securing communication between different components of the cluster.
 
-- **Storage**: Client certificates are stored in the kubeconfig file, which is used by the `kubectl` command-line tool to interact with the cluster. The kubeconfig file contains information about clusters, users, namespaces, and authentication mechanisms.
+Client certificates authenticate users and services within the cluster. They are stored in the kubeconfig file and verified by the API server.
 
-- **Verification**: When a user or service attempts to connect to the Kubernetes API server, the server verifies the client certificate to ensure that the request is coming from a trusted source. This process involves checking the certificate's validity, including its expiration date and the signature from a trusted certificate authority (CA).
-
-- **Creating Certificates**: Administrators can create client certificates using tools like OpenSSL or Kubernetes' built-in certificate API. Once created, these certificates must be distributed securely to the users or services that need them.
-
-Example of creating a client certificate:
-
+**Example of creating a client certificate:**
 ```sh
 openssl genrsa -out client.key 2048
 openssl req -new -key client.key -out client.csr -subj "/CN=my-user"
@@ -184,18 +178,10 @@ openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out c
 ```
 
 <h3>Service Accounts</h3>
-Service Accounts provide identities for Pods and controllers, enabling secure intra-cluster communication. Unlike user accounts, which are meant for human users, service accounts are intended for processes that run in pods.
 
-- **Creation**: Service accounts can be created manually using YAML configuration files, or they can be automatically generated when a namespace is created.
+Service Accounts provide identities for Pods and controllers, enabling secure intra-cluster communication. Unlike user accounts, which are meant for human users, service accounts are intended for processes that run in Pods.
 
-- **Usage**: When a pod is assigned a service account, Kubernetes automatically mounts a token inside the pod, which the pod can use to authenticate to the API server and other services within the cluster.
-
-- **Default Service Account**: Each namespace has a default service account, which is automatically used by pods that do not specify a service account.
-
-- **Permissions**: Permissions for service accounts are managed through Role-Based Access Control (RBAC). Administrators can create roles and role bindings to grant specific permissions to service accounts.
-
-Example ServiceAccount:
-
+**Example ServiceAccount:**
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -207,8 +193,7 @@ metadata:
 <h3>Using a ServiceAccount in a Pod</h3>
 To use a service account in a pod, specify the `serviceAccountName` field in the pod's spec. This binds the pod to the specified service account, allowing the pod to use the account's credentials to authenticate to the API server and other services.
 
-Example of a Pod using a ServiceAccount:
-
+**Example of a Pod using a ServiceAccount:**
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -220,13 +205,6 @@ spec:
   - name: my-container
     image: myimage
 ```
-
-<h3>Additional Considerations</h3>
-- **Security**: Ensure that service accounts have only the permissions they need. Avoid giving broad permissions to service accounts to reduce the risk of unauthorized access.
-- **Rotation**: Regularly rotate client certificates and service account tokens to minimize the impact of any potential security breaches.
-- **Secrets**: Service account tokens are stored as Kubernetes secrets. Administrators can manually create secrets and mount them into pods to provide additional credentials.
-
-By providing detailed information on client certificates and service accounts, this section aims to help administrators and users understand the critical role of authentication and authorization within a Kubernetes cluster.
 
 ## Practical Example
 

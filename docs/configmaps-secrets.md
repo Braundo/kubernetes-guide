@@ -11,11 +11,10 @@ Modern applications require dynamic configuration management and secure handling
 In the traditional monolithic application days, environment variables and configurations were bundled up with the application and deployed as one large object. However, in the cloud-native application model it's important to decouple these for many reasons:  
 
 1. **Environment Flexibility**: Decoupling allows the same application to run across different environments (development, staging, production) without code changes. Environment-specific configurations can be applied externally, improving the portability of the application.
-1. **Scalability and Dynamic Management**: When configuration is externalized, it's easier to scale applications horizontally since the configuration can be managed and applied independently. This allows for dynamic reconfiguration in response to changes in load or other factors without redeploying or restarting containers.
-1. **Security and Sensitive Data Handling**: Keeping sensitive configuration data, such as secrets and credentials, separate from the application codebase helps maintain security. It ensures that sensitive data is not exposed within the code and can be securely managed using secrets management tools.
-1. **Continuous Deployment and Rollbacks**: Decoupling facilitates continuous deployment practices by allowing configurations to be updated independently of the application. This separation also simplifies rollback procedures in case a configuration change needs to be reverted without affecting the application version that's running.
-1. **Maintainability and Clarity**: Keeping configuration separate from application code helps maintain a clean codebase and makes it clearer for developers to understand the application logic. It avoids cluttering the application with environment-specific conditionals and settings, making the code easier to maintain and evolve.  
-
+2. **Scalability and Dynamic Management**: When configuration is externalized, it's easier to scale applications horizontally since the configuration can be managed and applied independently. This allows for dynamic reconfiguration in response to changes in load or other factors without redeploying or restarting containers.
+3. **Security and Sensitive Data Handling**: Keeping sensitive configuration data, such as secrets and credentials, separate from the application codebase helps maintain security. It ensures that sensitive data is not exposed within the code and can be securely managed using secrets management tools.
+4. **Continuous Deployment and Rollbacks**: Decoupling facilitates continuous deployment practices by allowing configurations to be updated independently of the application. This separation also simplifies rollback procedures in case a configuration change needs to be reverted without affecting the application version that's running.
+5. **Maintainability and Clarity**: Keeping configuration separate from application code helps maintain a clean codebase and makes it clearer for developers to understand the application logic. It avoids cluttering the application with environment-specific conditionals and settings, making the code easier to maintain and evolve.  
 
 ## Understanding ConfigMaps
 
@@ -156,8 +155,8 @@ metadata:
   name: db-credentials
 type: Opaque
 data:
-  username: dmlubnk=
-  password: UGFzc3dvcmQxMjM=
+  username: ZGJ1c2Vy
+  password: c2VjdXJlcGFzcw==
 ```
 
 Apply the YAML file:

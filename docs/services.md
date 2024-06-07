@@ -1,8 +1,8 @@
 ---
-icon: material/lan
+icon: material/sitemap
 ---
 
-# Understanding and Utilizing Kubernetes Services
+## Understanding and Utilizing Kubernetes Services
 
 Kubernetes Services are essential for ensuring reliable communication between Pods. They abstract the complexities of networking and provide stable endpoints for applications.
 
@@ -54,10 +54,10 @@ Below is a high-level example of how the flow works:
 
 ![](../images/nodeport.svg)
 
-1. External client hits node on NodePort
-2. Node forwards request to the ClusterIP of the Service
-3. The Service picks a Pod from the list of healthy Pods in the EndpointSlice
-4. Forward request to the selected Pod
+1. External client hits node on NodePort.
+2. Node forwards request to the ClusterIP of the Service.
+3. The Service picks a Pod from the list of healthy Pods in the EndpointSlice.
+4. Forward request to the selected Pod.
 
 **Key Points:**
 
@@ -89,11 +89,11 @@ Below is a high-level example of how the flow works:
 
 ![](../images/lb.svg)
 
-1. External client hits LoadBalancer Service on friendly DNS name
-2. LoadBalancer forwards request to a NodePort     
-3. Node forwards request to the ClusterIP of the Service
-4. The Service picks a Pod from the EndpointSlice
-5. Forwards request to the selected Pod
+1. External client hits LoadBalancer Service on friendly DNS name.
+2. LoadBalancer forwards request to a NodePort.
+3. Node forwards request to the ClusterIP of the Service.
+4. The Service picks a Pod from the EndpointSlice.
+5. Forwards request to the selected Pod.
 
 **Key Points:**
 
@@ -125,7 +125,6 @@ Services use labels and selectors to determine which Pods receive traffic. This 
 It should also be noted that Pods can still belong to a Service if they have *extra* labels, so long as they also contain all the labels that the Service is selecting on.
 
 ![](../images/labels-selectors.svg)
-
 
 **Example:**
 ```yaml
@@ -163,8 +162,6 @@ As mentioned above, as Pods are spinning up and down, the Service will keep an u
 
 Any new Pods that are created on the cluster that match a Service's label selector will automatically be added to the given Service's EndpointSlice object. When a Pod disappears (fails, Node goes down, etc.) it will be removed from the EndpointSlice. The net result is that the Service's EndpointSlice should always be up to date with a list of healthy Pods that the Service can route to.
 
-
-
 ## Hands-On with Services
 
 <h3>Creating and Managing Services</h3>
@@ -173,7 +170,7 @@ Any new Pods that are created on the cluster that match a Service's label select
 
 Create a Service for an existing Deployment using `kubectl expose`:
 ```sh
-$ kubectl expose deployment my-app --type=LoadBalancer --name=my-service
+kubectl expose deployment my-app --type=LoadBalancer --name=my-service
 ```
 
 <h4>Declarative Creation</h4>
@@ -194,15 +191,15 @@ spec:
       targetPort: 8080
 ```
 ```sh
-$ kubectl apply -f my-service.yaml
+kubectl apply -f my-service.yaml
 ```
 
 <h4>Inspecting Services</h4>
 
 Check the status and details of Services:
 ```sh
-$ kubectl get svc
-$ kubectl describe svc my-service
+kubectl get svc
+kubectl describe svc my-service
 ```
 
 ## Service Discovery
@@ -213,9 +210,9 @@ Kubernetes uses an internal DNS to resolve Service names to IP addresses. Each P
 
 <h3>Service Registration</h3>
 
-Service registration is the process of an app on Kubernetes providing its connection details to a registry in order for other apps on the cluster to be able to find it. This happens automatically when Services are created. 
+Service registration is the process of an app on Kubernetes providing its connection details to a registry in order for other apps on the cluster to be able to find it. This happens automatically when Services are created.
 
-**High-level flow of Service registration**
+**High-level flow of Service registration:**
 
 1. Post a Service manifest to the API server (via `kubectl`).
 2. The Service is given a stable IP address called a **ClusterIP**.
@@ -228,10 +225,10 @@ Service registration is the process of an app on Kubernetes providing its connec
 
 In terms of how an application then discovers other applications behind a Service, the flow looks like this:
 
-1. The new Service is registered with the cluster DNS (Service Registry)
+1. The new Service is registered with the cluster DNS (Service Registry).
 2. Your application wants to know the IP address of the Service so it provides the name to the cluster DNS for lookup.
-3. The cluster DNS returns the IP address of the Service
-4. Your application now knows where to direct it's request
+3. The cluster DNS returns the IP address of the Service.
+4. Your application now knows where to direct its request.
 
 ![](../images/svc-reg.svg)
 
@@ -239,8 +236,11 @@ In terms of how an application then discovers other applications behind a Servic
 
 Assume we have two applications on the same cluster - `ham` and `eggs`. Each application has their Pods fronted by a Service, which in turn each have their own ClusterIP.
 
-```shell
-$ kubectl get svc
+```sh
+kubectl get svc
+```
+Example output:
+```text
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 ham-svc      ClusterIP   192.168.1.200               443/TCP   5d19h
 eggs-svc     ClusterIP   192.168.1.208               443/TCP   5d19h
@@ -282,6 +282,8 @@ Session Affinity allows you to configure Services to direct requests from the sa
 apiVersion: v1
 kind: Service
 metadata:
+
+
   name: my-affinity-service
 spec:
   selector:
@@ -320,27 +322,27 @@ spec:
 
 **Service Not Accessible:**
 
-   - Check the status of the Service and Pods:
-     ```sh
-     $ kubectl get svc
-     $ kubectl get pods
-     ```
-   - Ensure the selectors match the Pod labels.
+- Check the status of the Service and Pods:
+  ```sh
+  kubectl get svc
+  kubectl get pods
+  ```
+- Ensure the selectors match the Pod labels.
 
 **DNS Resolution Fails:**
 
-   - Verify the cluster DNS is running:
-     ```sh
-     $ kubectl get pods -n kube-system -l k8s-app=kube-dns
-     ```
-   - Check the contents of `/etc/resolv.conf` in the Pods.
+- Verify the cluster DNS is running:
+  ```sh
+  kubectl get pods -n kube-system -l k8s-app=kube-dns
+  ```
+- Check the contents of `/etc/resolv.conf` in the Pods.
 
 <h3>Practical Tips</h3>
 
 - Use `kubectl logs` to inspect logs of coreDNS Pods for DNS-related issues.
 - Restart coreDNS Pods if necessary:
   ```sh
-  $ kubectl delete pod -n kube-system -l k8s-app=kube-dns
+  kubectl delete pod -n kube-system -l k8s-app=kube-dns
   ```
 
 ## Summary

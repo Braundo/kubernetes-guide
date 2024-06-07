@@ -2,7 +2,7 @@
 icon: material/api
 ---
 
-# Mastering the Kubernetes API
+## Mastering the Kubernetes API
 
 Understanding the Kubernetes API is essential for mastering Kubernetes. It serves as the backbone of the platform, allowing you to manage resources programmatically and automate cluster operations.
 
@@ -20,12 +20,11 @@ Kubernetes is an API-centric platform. All resources, such as Pods, Services, an
 
 <h3>How the API Works</h3>
 
-The Kubernetes API server is the central hub through which all interactions in the cluster are routed, functioning as the front-end interface for Kubernetes' API. Picture it as the Grand Central Station of Kubernetes — every command, status update, and inter-service communication passes through the API server via RESTful calls over HTTPS. Here's a snapshot of how it operates:  
+The Kubernetes API server is the central hub through which all interactions in the cluster are routed, functioning as the front-end interface for Kubernetes' API. Picture it as the Grand Central Station of Kubernetes — every command, status update, and inter-service communication passes through the API server via RESTful calls over HTTPS. Here's a snapshot of how it operates:
 
 - `kubectl` commands are directed to the API server, whether it's for creating, retrieving, updating, or deleting Kubernetes objects.
 - Node Kubelets keep an eye on the API server, picking up new tasks and sending back their statuses.
-- The control plane services don't chat amongst themselves directly; they communicate through the API server.  
-
+- The control plane services don't chat amongst themselves directly; they communicate through the API server.
 
 ## Understanding Serialization
 
@@ -51,10 +50,10 @@ The API server is the front-end to the Kubernetes API, handling all RESTful HTTP
 
 A typical `kubectl` command translates into a REST request:
 ```sh
-$ kubectl get pods --namespace eggs
+kubectl get pods --namespace eggs
 ```
 This command converts to:
-```
+```text
 GET /api/v1/namespaces/eggs/pods
 ```
 
@@ -62,20 +61,31 @@ GET /api/v1/namespaces/eggs/pods
 
 <h3>Exploring the API</h3>
 
-1. **Start a Proxy Session:**
+**1. Start a Proxy Session:**
    ```sh
-   $ kubectl proxy --port 9000 &
+   kubectl proxy --port 9000 &
    ```
+   This command starts a local proxy to the Kubernetes API server, allowing you to interact with the API using `curl` or other HTTP clients on `http://localhost:9000`.
 
-2. **Using `curl` to Interact with the API:**
+**2. Using `curl` to Interact with the API:**
    ```sh
-   $ curl -X GET http://localhost:9000/api/v1/namespaces/eggs/pods
+   curl -X GET http://localhost:9000/api/v1/namespaces/eggs/pods
    ```
+   This command sends a GET request to the API server to retrieve information about Pods in the `eggs` Namespace.
+
+Example output:
+```json
+{
+  "kind": "PodList",
+  "apiVersion": "v1",
+  "items": []
+}
+```
 
 <h3>Creating Resources</h3>
 
-1. **Define a Namespace:**
-   **ns.json:**
+**1. Define a Namespace:**
+   Create a JSON file (`ns.json`):
    ```json
    {
      "kind": "Namespace",
@@ -89,46 +99,151 @@ GET /api/v1/namespaces/eggs/pods
    }
    ```
 
-2. **Post the Namespace:**
+**2. Post the Namespace:**
    ```sh
-   $ curl -X POST -H "Content-Type: application/json" \
-   --data-binary @ns.json http://localhost:9000/api/v1/namespaces
+   curl -X POST -H "Content-Type: application/json" --data-binary @ns.json http://localhost:9000/api/v1/namespaces
    ```
+   This command posts the JSON data to the API server, creating a new Namespace called `eggs`.
 
-3. **Verify Creation:**
-   ```sh
-   $ kubectl get namespaces
-   ```
+Example output:
+```json
+{
+  "kind": "Namespace",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "eggs",
+    "selfLink": "/api/v1/namespaces/eggs",
+    "uid": "abcd1234-5678-90ef-ghij-klmnopqrstuv",
+    "resourceVersion": "123456",
+    "creationTimestamp": "2024-06-07T12:34:56Z",
+    "labels": {
+      "chapter": "api"
+    }
+  }
+}
+```
 
-4. **Delete the Namespace:**
+**3. Verify Creation:**
    ```sh
-   $ curl -X DELETE -H "Content-Type: application/json" \
-   http://localhost:9000/api/v1/namespaces/eggs
+   kubectl get namespaces
    ```
+   This command lists all Namespaces in the cluster, allowing you to verify the creation of the `eggs` Namespace.
+
+Example output:
+```text
+NAME          STATUS   AGE
+default       Active   84d
+kube-system   Active   84d
+eggs          Active   1m
+```
+
+**4. Delete the Namespace:**
+   ```sh
+   curl -X DELETE http://localhost:9000/api/v1/namespaces/eggs
+   ```
+   This command deletes the `eggs` Namespace.
+
+Example output:
+```json
+{
+  "kind": "Namespace",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "eggs",
+    "deletionTimestamp": "2024-06-07T12:36:00Z"
+  },
+  "status": {
+    "phase": "Terminating"
+  }
+}
+```
 
 ## Inspecting the API
 
 <h3>Useful Commands</h3>
 
-1. **List All API Resources:**
+**1. List All API Resources:**
    ```sh
-   $ kubectl api-resources
+   kubectl api-resources
    ```
+   This command lists all available API resources in the cluster.
 
-2. **List Supported API Versions:**
-   ```sh
-   $ kubectl api-versions
-   ```
+Example output:
+```text
+NAME                  SHORTNAMES   APIGROUP                       NAMESPACED   KIND
+pods                  po                                        true          Pod
+services              svc                                       true          Service
+deployments           deploy        apps                        true          Deployment
+...
+```
 
-3. **Inspect Specific Resources:**
+**2. List Supported API Versions:**
    ```sh
-   $ kubectl explain pods
+   kubectl api-versions
    ```
+   This command lists all API versions supported by the cluster.
 
-4. **Using `curl` to Explore:**
+Example output:
+```text
+v1
+apps/v1
+batch/v1
+extensions/v1beta1
+...
+```
+
+**3. Inspect Specific Resources:**
    ```sh
-   $ curl http://localhost:9000/apis
+   kubectl explain pods
    ```
+   This command provides detailed information about the `Pod` resource, including its fields and their descriptions.
+
+Example output:
+```yaml
+KIND:     Pod
+VERSION:  v1
+
+DESCRIPTION:
+     Pod is a collection of containers that can run on a host. This resource
+     is created by clients and scheduled onto hosts.
+
+FIELDS:
+   apiVersion   <string>
+   kind         <string>
+   metadata     <Object>
+   spec         <Object>
+   status       <Object>
+```
+
+**4. Using `curl` to Explore:**
+   ```sh
+   curl http://localhost:9000/apis
+   ```
+   This command lists all API groups and their versions available in the cluster.
+
+Example output:
+```json
+{
+  "kind": "APIGroupList",
+  "apiVersion": "v1",
+  "groups": [
+    {
+      "name": "apps",
+      "versions": [
+        {
+          "groupVersion": "apps/v1",
+          "version": "v1"
+        }
+      ],
+      "preferredVersion": {
+        "groupVersion": "apps/v1",
+        "version": "v1"
+      }
+    },
+    ...
+  ]
+}
+```
 
 ## Extending the API
 
@@ -143,7 +258,7 @@ Kubernetes allows you to extend the API with CustomResourceDefinitions (CRDs). T
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: eggs.breakfast.com
+  name: recipes.breakfast.com
 spec:
   group: breakfast.com
   scope: Cluster
@@ -174,32 +289,54 @@ spec:
 
 <h3>Deploying the CRD</h3>
 
-1. **Apply the CRD:**
+**1. Apply the CRD:**
    ```sh
-   $ kubectl apply -f crd.yml
+   kubectl apply -f crd.yml
    ```
+   This command creates the custom resource definition in the cluster.
 
-2. **Create an Instance:**
-   **eggs.yml:**
+Example output:
+```text
+customresourcedefinition.apiextensions.k8s.io/recipes.breakfast.com created
+```
+
+**2. Create an Instance:**
+   Create a YAML file (`eggs.yml`) for the custom resource:
    ```yaml
-   apiVersion: breakfast.com/v1
+   apiVersion:
+
+ breakfast.com/v1
    kind: Recipe
    metadata:
      name: scrambled
    spec:
+     bookTitle: "Breakfast Recipes"
      topic: Eggs
      edition: 1
    ```
 
-3. **Apply the Instance:**
+**3. Apply the Instance:**
    ```sh
-   $ kubectl apply -f eggs.yml
+   kubectl apply -f eggs.yml
    ```
+   This command creates an instance of the custom resource.
 
-4. **Verify Creation:**
+Example output:
+```text
+recipe.breakfast.com/scrambled created
+```
+
+**4. Verify Creation:**
    ```sh
-   $ kubectl get rp
+   kubectl get rp
    ```
+   This command lists all instances of the custom resource.
+
+Example output:
+```text
+NAME        AGE
+scrambled   1m
+```
 
 ## Summary
 

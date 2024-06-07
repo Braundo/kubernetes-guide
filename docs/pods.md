@@ -2,7 +2,7 @@
 icon: material/package
 ---
 
-# Introduction to Kubernetes Pods
+## Introduction to Kubernetes Pods
 
 In Kubernetes, every application runs inside a Pod. Understanding how to work with Pods is crucial for deploying, scaling, and managing applications effectively.
 
@@ -54,18 +54,18 @@ Kubernetes handles scheduling Pods to Nodes based on several different criteria.
 
 Deploying a Pod involves several steps:
 
-1. Define the Pod in a YAML manifest.
-2. Post the manifest to the API server.
-3. API server will authenticate and authorize the request.
-4. API server will validate the Pod specification.
-5. The scheduler assigns the Pod to a Node.
-6. The `kubelet` starts and monitors the Pod.
+1. **Define the Pod in a YAML manifest:** A YAML file specifying the desired state of the Pod, including containers, volumes, and other resources.
+2. **Post the manifest to the API server:** Using `kubectl apply -f <filename>.yaml`, the manifest is sent to the Kubernetes API server.
+3. **API server authentication and authorization:** The API server checks if the request is allowed.
+4. **API server validation:** The API server validates the Pod specification against the cluster's policies and configurations.
+5. **Scheduler assigns the Pod to a Node:** The scheduler determines the most suitable node based on resource availability and scheduling policies.
+6. **Kubelet starts and monitors the Pod:** The kubelet on the assigned node starts the containers and continuously monitors their status.
 
 <h3>Pod Lifecycle and Immutability</h3>
 
 Pods are designed to be ephemeral and immutable:
 
-- **Ephemeral:** Created, executed, and terminated without restarting. Pods are deleted upon completion or failure - they are not intended to last forever.
+- **Ephemeral:** Pods are created, executed, and terminated without restarting. Pods are deleted upon completion or failure and are not intended to last forever.
 - **Immutable:** Once deployed, Pods cannot be modified. To update, a new Pod must be created to replace the old one.
 
 <h3>Restart Policies</h3>
@@ -89,7 +89,7 @@ One common example is to use a multi-container Pod for service meshes. In these 
 
 ![](../images/sidecar.svg)
 
-As mentioned above, multiple containers within a Pod share the same IP address, network stack, and filesystem. As such, in order to communicate to specific containers within a multi-container Pod, you have to leverage port addresses. The containers themselves however will be able to communicate to each other via localhost.
+As mentioned above, multiple containers within a Pod share the same IP address, network stack, and filesystem. As such, to communicate with specific containers within a multi-container Pod, you have to leverage port addresses. The containers themselves, however, will be able to communicate with each other via localhost.
 
 ![](../images/sidecar-net.svg)
 
@@ -105,7 +105,6 @@ As mentioned above, multiple containers within a Pod share the same IP address, 
   NAME        READY   STATUS    RESTARTS   AGE
   nginx-pod   1/1     Running   0          10s
   ```
-<br>
 
 **View more details on a Pod using `describe`:**
   ```text
@@ -135,8 +134,6 @@ As mentioned above, multiple containers within a Pod share the same IP address, 
       Restart Count:  0
   <-- Rest of output trimmed -->
   ```
-
-<br>
 
 **View Pod Logs:**
   ```text
@@ -169,16 +166,14 @@ Use `kubectl` to monitor and debug Pods effectively:
   NAME        READY   STATUS    RESTARTS   AGE    IP           NODE          NOMINATED NODE   READINESS GATES
   nginx-pod   1/1     Running   0          5m7s   10.244.2.2   kind-worker   <none>           <none>
   ```
-  
-  <br>
 
 **Running a specific command in a running container:**
-  ```text
+  ```
+
+sh
   $ kubectl exec nginx-pod -- hostname
   nginx-pod
   ```
-
-<br>
 
 **Interactive Shell Session:**
   ```text

@@ -1,5 +1,5 @@
 ---
-icon: material/swap-vertical
+icon: material/shuffle-variant
 ---
 
 # Managing Ingress in Kubernetes
@@ -26,10 +26,10 @@ Ingress is defined in the `networking.k8s.io/v1` API group and operates at Layer
 
 In this example, the traffic flow is as follows:
 
-1. Client requests <b>eggs.food.com</b> or <b>food.com/eggs</b> and hits the public load-balancer
-2. The request is forwarded to the Ingress controller
-3. HTTP headers are inspected and Ingress rules trigger and route traffic to <b>svc-eggs</b>
-4. The <b>svc-eggs</b> Service forwards the request to a healthy Pod listed in it's EndpointSlice
+1. Client requests <b>eggs.food.com</b> or <b>food.com/eggs</b> and hits the public load-balancer.
+2. The request is forwarded to the Ingress controller.
+3. HTTP headers are inspected and Ingress rules trigger and route traffic to <b>svc-eggs</b>.
+4. The <b>svc-eggs</b> Service forwards the request to a healthy Pod listed in its EndpointSlice.
 
 ## Setting Up Ingress
 
@@ -37,37 +37,37 @@ In this example, the traffic flow is as follows:
 
 To use Ingress, you need an Ingress controller. This example uses the NGINX Ingress controller:
 
-1. **Install the NGINX Ingress Controller:**
+**1. Install the NGINX Ingress Controller:**
    ```sh
-   $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.4/deploy/static/provider/cloud/deploy.yaml
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.4/deploy/static/provider/cloud/deploy.yaml
    ```
 
-2. **Check the Ingress Controller Pod:**
+**2. Check the Ingress Controller Pod:**
    ```sh
-   $ kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
+   kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
    ```
 
 <h3>Configuring Ingress Class</h3>
 
 Ingress classes allow multiple Ingress controllers to coexist in a single cluster:
 
-1. **List Ingress Classes:**
+**1. List Ingress Classes:**
    ```sh
-   $ kubectl get ingressclass
+   kubectl get ingressclass
    ```
 
-2. **Describe Ingress Class:**
+**2. Describe Ingress Class:**
    ```sh
-   $ kubectl describe ingressclass nginx
+   kubectl describe ingressclass nginx
    ```
 
 ## Creating and Managing Ingress Resources
 
 <h3>Deploying Sample Applications</h3>
 
-1. **Deploy Apps and Services:**
+**1. Deploy Apps and Services:**
    ```sh
-   $ kubectl apply -f app.yml
+   kubectl apply -f app.yml
    ```
 
 **app.yml:**
@@ -121,9 +121,9 @@ spec:
 
 <h3>Configuring Ingress Resource</h3>
 
-2. **Deploy Ingress Resource:**
+**2. Deploy Ingress Resource:**
    ```sh
-   $ kubectl apply -f ig-all.yml
+   kubectl apply -f ig-all.yml
    ```
 
 **ig-all.yml:**
@@ -178,21 +178,21 @@ spec:
 
 <h3>Verifying Ingress Setup</h3>
 
-3. **Check Ingress Resource:**
+**3. Check Ingress Resource:**
    ```sh
-   $ kubectl get ing
+   kubectl get ing
    ```
 
-4. **Describe Ingress Resource:**
+**4. Describe Ingress Resource:**
    ```sh
-   $ kubectl describe ing breakfast-all
+   kubectl describe ing breakfast-all
    ```
 
 ## Configuring DNS for Ingress
 
 To route traffic correctly, configure DNS to point to the Ingress load balancer's IP:
 
-1. **Edit /etc/hosts:**
+**1. Edit /etc/hosts:**
    ```sh
    212.2.246.150 bacon.breakfast.com
    212.2.246.150 eggs.breakfast.com
@@ -255,18 +255,18 @@ spec:
 
 <h3>Common Issues and Solutions</h3>
 
-1. **Service Not Accessible:**
+**1. Service Not Accessible:**
    - Check Service and Pod status:
      ```sh
-     $ kubectl get svc
-     $ kubectl get pods
+     kubectl get svc
+     kubectl get pods
      ```
    - Ensure selectors match Pod labels.
 
-2. **DNS Resolution Fails:**
+**2. DNS Resolution Fails:**
    - Verify cluster DNS is running:
      ```sh
-     $ kubectl get pods -n kube-system -l k8s-app=kube-dns
+     kubectl get pods -n kube-system -l k8s-app=kube-dns
      ```
    - Check `/etc/resolv.conf` in Pods.
 
@@ -275,7 +275,7 @@ spec:
 - Use `kubectl logs` to inspect Ingress controller logs.
 - Restart Ingress controller Pods if necessary:
   ```sh
-  $ kubectl delete pod -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
+  kubectl delete pod -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
   ```
 
 ## Summary

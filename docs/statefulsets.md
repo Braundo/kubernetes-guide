@@ -1,8 +1,8 @@
 ---
-icon: material/content-copy
+icon: material/select-multiple
 ---
 
-# Managing Stateful Applications with Kubernetes StatefulSets
+## Managing Stateful Applications with Kubernetes StatefulSets
 
 StatefulSets are essential for deploying and managing stateful applications on Kubernetes, which require persistent storage and stable network identities. This includes databases, key-value stores, and applications that maintain client session data.
 
@@ -25,15 +25,15 @@ While both StatefulSets and Deployments are used to manage Pods, StatefulSets of
 - **Unique Network Identities:** Each Pod gets a unique, stable network identity.
 - **Stable Storage:** Each Pod is associated with persistent storage that remains consistent across restarts.
 
-StatefulSets are Kubernetes constructs designed to manage stateful applications that require persistent data and identity across Pod restarts and deployments. Each Pod in a StatefulSet is given a stable and unique network identifier and persistent storage, which remains associated with the Pod, even when it is rescheduled to a different node within the cluster. 
+StatefulSets are Kubernetes constructs designed to manage stateful applications that require persistent data and identity across Pod restarts and deployments. Each Pod in a StatefulSet is given a stable and unique network identifier and persistent storage, which remains associated with the Pod, even when it is rescheduled to a different node within the cluster.
 
-StatefulSets are Kubernetes tools for running and managing applications that need to remember who they are and what they know—think of them like memory keepers for your apps, such as databases that need to recall data after a reboot. Unlike Deployments that are more about stateless apps (think of them as forgetful but easily replaceable), StatefulSets make sure each of their Pods has a consistent name, network identity, and storage, even if they move around in the cluster. This makes StatefulSets perfect for when your app's individual identity and history are crucial for running smoothly.  
+StatefulSets are Kubernetes tools for running and managing applications that need to remember who they are and what they know—think of them like memory keepers for your apps, such as databases that need to recall data after a reboot. Unlike Deployments that are more about stateless apps (think of them as forgetful but easily replaceable), StatefulSets make sure each of their Pods has a consistent name, network identity, and storage, even if they move around in the cluster. This makes StatefulSets perfect for when your app's individual identity and history are crucial for running smoothly.
 
-StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:  
+StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:
 
 ![](../images/sts.svg)
 
-Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.  
+Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.
 
 ## StatefulSet Theory
 
@@ -84,7 +84,7 @@ spec:
       - name: ctr-mysql
         image: mysql:latest
         ports:
-        - containerPort: 27017
+        - containerPort: 3306
   volumeClaimTemplates:
   - metadata:
       name: mysql-data
@@ -100,15 +100,41 @@ spec:
 
 Deploy the StatefulSet using the following command:
 ```sh
-$ kubectl apply -f statefulset.yaml
+kubectl apply -f statefulset.yaml
+```
+This command posts the StatefulSet configuration to the Kubernetes API server, which will create and manage the specified Pods and their associated storage.
+
+Example output:
+```text
+statefulset.apps/my-sts created
 ```
 
 <h3>Inspecting StatefulSet and Pods</h3>
 
 Check the status of the StatefulSet and its Pods:
 ```sh
-$ kubectl get sts
-$ kubectl get pods
+kubectl get sts
+```
+This command displays the status of the StatefulSets in your cluster.
+
+Example output:
+```text
+NAME     READY   AGE
+my-sts   3/3     2m
+```
+
+To get detailed information about the Pods managed by the StatefulSet:
+```sh
+kubectl get pods
+```
+This command lists all Pods in your cluster, including those managed by the StatefulSet.
+
+Example output:
+```text
+NAME      READY   STATUS    RESTARTS   AGE
+my-sts-0  1/1     Running   0          2m
+my-sts-1  1/1     Running   0          1m
+my-sts-2  1/1     Running   0          30s
 ```
 
 <h3>Scaling StatefulSets</h3>
@@ -120,7 +146,13 @@ StatefulSets can be scaled up or down, ensuring order and data integrity:
 
 To scale the StatefulSet:
 ```sh
-$ kubectl scale sts my-sts --replicas=4
+kubectl scale sts my-sts --replicas=4
+```
+This command scales the StatefulSet to 4 replicas. Kubernetes will create the new Pod in order, ensuring consistency and stability.
+
+Example output:
+```text
+statefulset.apps/my-sts scaled
 ```
 
 <h3>Handling Failures</h3>
@@ -161,8 +193,9 @@ spec:
       - name: mysql
         image: mysql:latest
         ports:
-        - containerPort: 28018
+        - containerPort: 3306
 ```
+The `clusterIP: None` in the Service configuration creates a headless Service, which means it does not get a ClusterIP address. Instead, it allows Pods to be addressed directly via their DNS names.
 
 ## Scaling and Updating StatefulSets
 
@@ -170,14 +203,26 @@ spec:
 
 Edit the StatefulSet YAML to change the replica count and apply the changes:
 ```sh
-$ kubectl apply -f statefulset.yaml
+kubectl apply -f statefulset.yaml
+```
+This command updates the StatefulSet configuration, adjusting the number of replicas as specified.
+
+Example output:
+```text
+statefulset.apps/my-sts scaled
 ```
 
 <h3>Rolling Updates</h3>
 
 Update the image version in the StatefulSet YAML and apply the changes to perform a rolling update:
 ```sh
-$ kubectl apply -f statefulset.yaml
+kubectl apply -f statefulset.yaml
+```
+This command triggers a rolling update, where each Pod is updated one by one, ensuring that the application remains available during the update process.
+
+Example output:
+```text
+statefulset.apps/my-sts updated
 ```
 
 ## Summary
