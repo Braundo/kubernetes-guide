@@ -12,13 +12,13 @@
         <meta name="author" content="Aaron Braundmeier">
       
       
-        <link rel="canonical" href="https://www.k8s.guide/local-setup/">
+        <link rel="canonical" href="https://www.k8s.guide/networking/">
       
       
-        <link rel="prev" href="../overview/">
+        <link rel="prev" href="../services/">
       
       
-        <link rel="next" href="../pods/">
+        <link rel="next" href="../ingress/">
       
       
       <link rel="icon" href="../logo.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Local Setup - Kubernetes Guide</title>
+        <title>Networking - Kubernetes Guide</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#getting-a-local-kubernetes-cluster" class="md-skip">
+        <a href="#networking-in-kubernetes" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Local Setup
+              Networking
             
           </span>
         </div>
@@ -248,30 +248,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v10H4m16 2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4c-1.11 0-2 .89-2 2v10a2 2 0 0 0 2 2H0v2h24v-2h-4Z"/></svg>
-  
-  <span class="md-ellipsis">
-    Local Setup
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../local-setup/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v10H4m16 2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4c-1.11 0-2 .89-2 2v10a2 2 0 0 0 2 2H0v2h24v-2h-4Z"/></svg>
@@ -282,75 +262,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-a-local-kubernetes-cluster" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting a Local Kubernetes Cluster
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Getting a Local Kubernetes Cluster">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-1-docker-desktop" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option 1: Docker Desktop
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-2-kind" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option 2: KinD
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#working-with-kubectl" class="md-nav__link">
-    <span class="md-ellipsis">
-      Working with kubectl
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      Summary
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -535,10 +446,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../networking/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 20a1 1 0 0 0-1-1h-1v-2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4v2h-1a1 1 0 0 0-1 1H2v2h7a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1h7v-2h-7m-8-5V5h10v10H7Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Networking
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 20a1 1 0 0 0-1-1h-1v-2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4v2h-1a1 1 0 0 0-1 1H2v2h7a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1h7v-2h-7m-8-5V5h10v10H7Z"/></svg>
@@ -549,6 +482,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#container-network-interface-cni" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Network Interface (CNI)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#popular-cni-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Popular CNI Plugins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-service-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Service Mesh
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -680,6 +678,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -688,42 +688,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-a-local-kubernetes-cluster" class="md-nav__link">
+  <a href="#container-network-interface-cni" class="md-nav__link">
     <span class="md-ellipsis">
-      Getting a Local Kubernetes Cluster
+      Container Network Interface (CNI)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Getting a Local Kubernetes Cluster">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-1-docker-desktop" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option 1: Docker Desktop
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-2-kind" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option 2: KinD
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#working-with-kubectl" class="md-nav__link">
+  <a href="#popular-cni-plugins" class="md-nav__link">
     <span class="md-ellipsis">
-      Working with kubectl
+      Popular CNI Plugins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Policies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-service-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Service Mesh
     </span>
   </a>
   
@@ -753,108 +747,166 @@
                   
 
 
-  <h1>Local Setup</h1>
+<h1 id="networking-in-kubernetes">Networking in Kubernetes</h1>
+<p>Networking is a fundamental aspect of Kubernetes, enabling communication between various components within a cluster and with the outside world. This section covers the Container Network Interface (CNI) and popular CNI plugins, as well as network policies for controlling pod communication.</p>
+<h2 id="container-network-interface-cni">Container Network Interface (CNI)</h2>
+<h3>What is CNI?</h3>
 
-<h2 id="getting-a-local-kubernetes-cluster">Getting a Local Kubernetes Cluster</h2>
-<p>For most users, setting up a local Kubernetes cluster using Docker Desktop or KinD (Kubernetes in Docker) is the best option when learning. It's free and allows you to quickly and easily get your hands on and start playing with Kubernetes.</p>
-<h3 id="option-1-docker-desktop">Option 1: Docker Desktop</h3>
-<p>Docker Desktop is a straightforward way to get Docker, Kubernetes, and <code>kubectl</code> on your computer, along with a user-friendly interface for managing your cluster contexts.</p>
-<p><strong>1. Install Docker Desktop:</strong></p>
-<ul>
-<li>Download and run the installer for your operating system from <a href="https://www.docker.com/products/docker-desktop/">the Docker website</a>.</li>
-<li>Follow the installation prompts. For Windows users, install the WSL 2 subsystem when prompted.</li>
-</ul>
-<p><strong>2. Enable Kubernetes in Docker Desktop:</strong></p>
-<ul>
-<li>Click the Docker icon in your menu bar or system tray and go to Settings.</li>
-<li>Select "Kubernetes" from the left navigation bar.</li>
-<li>Check "Enable Kubernetes" and click "Apply &amp; restart."</li>
-<li>Wait a few minutes for Docker Desktop to pull the required images and start the cluster. The Kubernetes icon in the Docker Desktop window will turn green when the cluster is ready.</li>
-</ul>
-<p><strong>3. Verify the Installation:</strong></p>
-<ul>
-<li>Open a terminal and run the following commands to ensure Docker and <code>kubectl</code> are installed and working:
-     <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>--version
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>kubectl<span class="w"> </span>version<span class="w"> </span>--client<span class="o">=</span><span class="nb">true</span><span class="w"> </span>-o<span class="w"> </span>yaml
-</span></code></pre></div></li>
-<li>Ensure the cluster is running with:
-     <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
-</span></code></pre></div>
-     This command lists all the nodes in your Kubernetes cluster. You should see at least one node listed, confirming your cluster is up and running.</li>
-</ul>
-<h3 id="option-2-kind">Option 2: KinD</h3>
-<p>KinD (Kubernetes in Docker) is an excellent tool for running local Kubernetes clusters using Docker containers. It’s lightweight, flexible, and ideal for development and testing. It's my tool of choice for local development/experimentation.</p>
-<p><strong>Steps to Set Up KinD:</strong></p>
-<p><strong>Install KinD:</strong></p>
-<ul>
-<li>Follow the instructions on the <a href="https://kind.sigs.k8s.io/">KinD GitHub page</a> to install KinD on your system.</li>
-<li>For macOS users, you can simply run <code>brew install kind</code> to get up and running quickly.</li>
-</ul>
-<p><strong>Create a KinD Cluster:</strong>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kind<span class="w"> </span>create<span class="w"> </span>cluster
-</span></code></pre></div>
-   This command sets up a new Kubernetes cluster locally using Docker containers. KinD creates a single-node cluster by default, which is sufficient for most development and testing needs.</p>
-<p><strong>Verify your cluster is running:</strong>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
-</span></code></pre></div>
-   This command lists all the nodes in your Kubernetes cluster. You should see the node created by KinD, confirming your cluster is up and running.</p>
-<h2 id="working-with-kubectl">Working with kubectl</h2>
-<p><code>kubectl</code> is the command-line tool used to interact with your Kubernetes clusters. It's essential for deploying applications, inspecting and managing cluster resources, and troubleshooting issues.</p>
-<h3>Installation</h3>
+<p>The Container Network Interface (CNI) is a specification and a set of libraries for configuring network interfaces in Linux containers. It ensures that when a container is created or deleted, its network resources are allocated and cleaned up properly.</p>
+<h3>Role of CNI in Kubernetes</h3>
 
-<p>If you've followed the steps to set up either Docker Desktop or KinD, you should already have <code>kubectl</code> installed. If not, you can install it separately:</p>
-<p><strong>Linux:</strong></p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span><span class="s2">&quot;https://dl.k8s.io/release/</span><span class="k">$(</span>curl<span class="w"> </span>-L<span class="w"> </span>-s<span class="w"> </span>https://dl.k8s.io/release/stable.txt<span class="k">)</span><span class="s2">/bin/linux/amd64/kubectl&quot;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubectl
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>kubectl<span class="w"> </span>/usr/local/bin/
-</span></code></pre></div>
-<p><strong>Mac:</strong></p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>brew<span class="w"> </span>install<span class="w"> </span>kubectl
-</span></code></pre></div>
-<p><strong>Windows:</strong></p>
-<p>Download the executable from the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/">official Kubernetes site</a> and add it to your system PATH.</p>
-<h3>Using kubectl</h3>
+<p>Kubernetes uses CNI to manage networking for Pods. When a Pod is created, the CNI plugin is responsible for assigning the Pod an IP address, setting up the network interface, and ensuring connectivity both within the cluster and externally.</p>
+<h2 id="popular-cni-plugins">Popular CNI Plugins</h2>
+<p>Several CNI plugins are widely used in Kubernetes environments. Each offers different features and capabilities.</p>
+<h3>Calico</h3>
 
-<p>Once installed, <code>kubectl</code> allows you to perform various operations on your Kubernetes cluster. Here are a few basic commands to get you started:</p>
+<p>Calico provides secure network connectivity for containers, virtual machines, and native host-based workloads. It supports a range of features, including:</p>
 <ul>
+<li><strong>Network Policy Enforcement</strong>: Allows you to define and enforce network policies.</li>
+<li><strong>BGP for Routing</strong>: Uses Border Gateway Protocol (BGP) for high-performance routing.</li>
+<li><strong>IP-in-IP and VXLAN Encapsulation</strong>: Supports various encapsulation methods for different networking needs.</li>
+</ul>
+<p><strong>Installation Example:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://docs.projectcalico.org/manifests/calico.yaml
+</span></code></pre></div></p>
+<h3>Flannel</h3>
+
+<p>Flannel is a simple and easy-to-configure CNI plugin designed to provide basic networking for Kubernetes clusters. It supports various backend options for network traffic encapsulation, including VXLAN and host-gw.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li><strong>Simple Overlay Network</strong>: Uses a flat network to provide communication between nodes.</li>
+<li><strong>Multiple Backends</strong>: Supports different backend options like VXLAN, host-gw, and UDP.</li>
+</ul>
+<p><strong>Installation Example:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+</span></code></pre></div></p>
+<h3>Weave</h3>
+
+<p>Weave Net is a CNI plugin that creates a virtual network allowing Pods to communicate with each other, regardless of the node they are on. It is designed for simplicity and ease of use.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li><strong>Automatic Mesh Network</strong>: Automatically forms a mesh network for all nodes in the cluster.</li>
+<li><strong>Encryption</strong>: Supports network traffic encryption.</li>
+<li><strong>Network Policy</strong>: Integrates with Kubernetes Network Policies for traffic control.</li>
+</ul>
+<p><strong>Installation Example:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://cloud.weave.works/k8s/net?k8s-version<span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>version<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="k">)</span>
+</span></code></pre></div></p>
+<h2 id="network-policies">Network Policies</h2>
+<p>Network policies in Kubernetes provide a way to control the communication between Pods. They use label selectors to define the source and destination Pods and specify the allowed protocols and ports.</p>
+<h3>Defining Network Policies</h3>
+
+<p>Network policies are defined using YAML files. Here’s a basic example that allows incoming traffic to Pods with the label <code>app: my-app</code> only from Pods with the label <code>role: frontend</code>.</p>
+<p><strong>Example Network Policy:</strong>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-frontend</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">          </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frontend</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</span></code></pre></div></p>
+<h3>Enforcing Network Policies</h3>
+
+<p>To enforce network policies, ensure that your CNI plugin supports them. Most advanced CNI plugins, like Calico and Weave, provide full support for Kubernetes network policies.</p>
+<p><strong>Applying a Network Policy:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>networkpolicy.yaml
+</span></code></pre></div></p>
+<h3>Key Concepts</h3>
+
+<ul>
+<li><strong>PodSelector</strong>: Selects the Pods to which the policy applies.</li>
+<li><strong>Ingress Rules</strong>: Define the allowed incoming traffic to the selected Pods.</li>
+<li><strong>Egress Rules</strong>: Define the allowed outgoing traffic from the selected Pods.</li>
+</ul>
+<h3>Example Use Cases</h3>
+
+<ol>
+<li><strong>Isolate Development and Production</strong>: Ensure that development Pods cannot communicate with production Pods.</li>
+<li><strong>Allow Only Specific Services</strong>: Permit communication only between specific services, enhancing security.</li>
+<li><strong>Restrict Traffic by Namespace</strong>: Control traffic between different namespaces for better segmentation and security.</li>
+</ol>
+<h2 id="introduction-to-service-mesh">Introduction to Service Mesh</h2>
+<h3>Concept and Benefits</h3>
+
+<p>A service mesh abstracts the complexity of service-to-service communication, providing a uniform and consistent way to secure, connect, and monitor microservices. Key benefits include:</p>
+<ul>
+<li><strong>Traffic Management:</strong> Advanced routing, load balancing, and traffic splitting.</li>
+<li><strong>Security:</strong> Mutual TLS (mTLS) for secure communication between services.</li>
+<li><strong>Observability:</strong> Detailed telemetry and monitoring of service interactions.</li>
+<li><strong>Resilience:</strong> Fault injection, retries, and circuit breaking.</li>
+</ul>
+<h3>Setting Up Istio</h3>
+
+<p>Istio is a popular open-source service mesh that provides advanced networking, security, and observability features for microservices.</p>
+<p><strong>Installation:</strong>
+1. Download the Istio CLI:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>https://istio.io/downloadIstio<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">cd</span><span class="w"> </span>istio-&lt;version&gt;
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PWD</span>/bin:<span class="nv">$PATH</span>
+</span></code></pre></div></p>
+<ol>
 <li>
-<p><strong>Check Cluster Nodes:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
-</span></code></pre></div>
-  This command lists all nodes in the cluster, showing their status, roles, and other details.</p>
+<p>Install Istio on your cluster:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>istioctl<span class="w"> </span>install<span class="w"> </span>--set<span class="w"> </span><span class="nv">profile</span><span class="o">=</span>demo<span class="w"> </span>-y
+</span></code></pre></div></p>
 </li>
 <li>
-<p><strong>Get Cluster Info:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>cluster-info
-</span></code></pre></div>
-  This command displays information about the cluster, including the URL of the Kubernetes master and other components.</p>
+<p>Label the namespace for automatic sidecar injection:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class="w"> </span>default<span class="w"> </span>istio-injection<span class="o">=</span>enabled
+</span></code></pre></div></p>
 </li>
-<li>
-<p><strong>Deploy an Application:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>&lt;filename&gt;.yaml
-</span></code></pre></div>
-  This command applies a configuration file to the cluster, creating or updating resources defined in the file.</p>
-</li>
-<li>
-<p><strong>Inspect Resources:</strong>
-  <div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;
-</span></code></pre></div>
-  These commands list all pods in the cluster and provide detailed information about a specific pod, respectively.</p>
-</li>
-</ul>
-<h3>Setting an Alias for kubectl</h3>
+</ol>
+<h3>Using Istio</h3>
 
-<p>Instead of typing out <code>kubectl</code> for every command, many Kubernetes users set an alias for it by adding the following to their shell profile:</p>
-<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">k</span><span class="o">=</span>kubectl
-</span></code></pre></div>
-This way, you can use <code>k</code> instead of <code>kubectl</code> in your commands, saving time and effort.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Using aliases can significantly speed up your workflow and reduce the chances of making typos in long commands.</p>
-</div>
+<p><strong>Deploy a sample application:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>samples/bookinfo/platform/kube/bookinfo.yaml
+</span></code></pre></div></p>
+<p><strong>Access the Istio dashboard:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>samples/addons
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>istioctl<span class="w"> </span>dashboard<span class="w"> </span>kiali
+</span></code></pre></div></p>
+<h3>Using Linkerd</h3>
+
+<h3>Setting Up Linkerd</h3>
+
+<p>Linkerd is a lightweight service mesh that provides essential features like observability, security, and reliability.</p>
+<p><strong>Installation:</strong>
+1. Install the Linkerd CLI:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-sL<span class="w"> </span>https://run.linkerd.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.linkerd2/bin
+</span></code></pre></div></p>
+<ol>
+<li>
+<p>Install Linkerd on your cluster:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>linkerd<span class="w"> </span>install<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>linkerd<span class="w"> </span>check
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Label the namespace for automatic sidecar injection:
+   <div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span>annotate<span class="w"> </span>ns<span class="w"> </span>default<span class="w"> </span>linkerd.io/inject<span class="o">=</span>enabled
+</span></code></pre></div></p>
+</li>
+</ol>
+<p><strong>Deploy a sample application:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://run.linkerd.io/emojivoto.yml
+</span></code></pre></div></p>
+<p><strong>Access the Linkerd dashboard:</strong>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>linkerd<span class="w"> </span>viz<span class="w"> </span>dashboard<span class="w"> </span><span class="p">&amp;</span>
+</span></code></pre></div></p>
 <h2 id="summary">Summary</h2>
-<p>Setting up a local Kubernetes cluster using Docker Desktop or KinD is a great way to get hands-on experience with Kubernetes. Both tools provide an easy and quick way to start working with Kubernetes, allowing you to experiment and learn in a controlled environment. With <code>kubectl</code>, you can manage your cluster and deploy applications, making it an essential tool for any Kubernetes user.</p>
+<p>Kubernetes networking, facilitated by CNI plugins, is crucial for seamless communication between Pods and external systems. Popular CNI plugins like Calico, Flannel, and Weave offer various features to meet different networking needs. Network policies provide fine-grained control over pod communication, enhancing the security and manageability of your Kubernetes clusters. By understanding and implementing these concepts, you can build a robust and secure networking environment for your applications.</p>
 
 
 
@@ -895,7 +947,7 @@ This way, you can use <code>k</code> instead of <code>kubectl</code> in your com
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../services/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Services">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -905,20 +957,20 @@ This way, you can use <code>k</code> instead of <code>kubectl</code> in your com
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                Services
               </div>
             </div>
           </a>
         
         
           
-          <a href="../pods/" class="md-footer__link md-footer__link--next" aria-label="Next: Pods">
+          <a href="../ingress/" class="md-footer__link md-footer__link--next" aria-label="Next: Ingress">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Pods
+                Ingress
               </div>
             </div>
             <div class="md-footer__button md-icon">

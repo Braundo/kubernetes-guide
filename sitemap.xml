@@ -11,7 +11,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://www.k8s.guide/crd/</loc>
+         <lastmod>2024-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://www.k8s.guide/deployments/</loc>
+         <lastmod>2024-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/helm/</loc>
          <lastmod>2024-06-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -32,6 +42,16 @@
     </url>
     <url>
          <loc>https://www.k8s.guide/namespaces/</loc>
+         <lastmod>2024-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/networking/</loc>
+         <lastmod>2024-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/operators/</loc>
          <lastmod>2024-06-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
