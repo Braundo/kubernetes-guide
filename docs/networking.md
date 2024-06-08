@@ -28,6 +28,49 @@ Calico provides secure network connectivity for containers, virtual machines, an
 - **BGP for Routing**: Uses Border Gateway Protocol (BGP) for high-performance routing.
 - **IP-in-IP and VXLAN Encapsulation**: Supports various encapsulation methods for different networking needs.
 
+## Understanding Overlay Networking in Kubernetes
+
+Overlay networking is a fundamental concept in Kubernetes that allows for the seamless communication of pods across different nodes within a cluster. This approach abstracts the underlying network infrastructure, providing a virtual network that connects all pods regardless of their physical location. The diagram below illustrates the high-level architecture of overlay networking in a Kubernetes cluster.
+
+<h3>Key Components of the Overlay Network</h3>
+
+**1. Node Network**:
+    - This is the physical network where the Kubernetes nodes (servers) are deployed. Each node in the cluster has a unique IP address within this network.
+    - Nodes can communicate with each other through this network, enabling pod-to-pod communication across different nodes.
+
+**2. Pod Network**:
+    - Pods are assigned IP addresses from a logically separate, private CIDR block, distinct from the node network.
+    - The pod network enables direct communication between pods across different nodes. This network is virtual and managed by Kubernetes through the use of CNI (Container Network Interface) plugins.
+
+**3. Services Network**:
+    - Kubernetes services provide stable endpoints for accessing pods. They use cluster-internal IP addresses and DNS names to facilitate communication.
+    - Services abstract the underlying pods, allowing for load balancing and failover.
+
+<h3>How Overlay Networking Works</h3>
+
+In overlay networking, each pod receives an IP address from a private CIDR block. This block is logically separate from the network where the nodes are deployed, allowing for greater scalability and simplified network management.
+
+<h4>Intra-Cluster Communication</h4>
+
+- **Pod-to-Pod Communication**: Pods can communicate directly with each other using their assigned IP addresses. The overlay network ensures that these communications are routed correctly, regardless of the pods' physical locations.
+- **Service-to-Pod Communication**: Services use label selectors to route traffic to the appropriate pods. The service network provides a stable IP and DNS name for accessing the pods, abstracting the complexity of pod IP management.
+
+<h4>Exiting the Cluster</h4>
+
+- When traffic leaves the cluster, it undergoes Source Network Address Translation (SNAT), which translates the pod's IP address to the node's IP address. This process ensures that external systems see the traffic as coming from the node, not the individual pod.
+- Inbound traffic destined for pods is routed through services like load balancers. These services manage the translation and routing of requests to the appropriate pods, hiding the pod IP addresses behind the node's IP address.
+
+<h3>Benefits of Overlay Networking</h3>
+
+- **Scalability**: The separation of pod and node networks allows for easy scaling of the cluster. New pods and nodes can be added without reconfiguring the underlying network infrastructure.
+- **Flexibility**: Overlay networks abstract the physical network, providing a consistent and flexible networking environment that can adapt to various underlying infrastructures.
+- **Simplicity**: Managing a private CIDR block for pods simplifies IP address management and reduces the complexity of networking configurations.
+
+
+Overlay networking is a powerful model in Kubernetes, enabling seamless and scalable communication between pods and services. By abstracting the underlying network infrastructure, overlay networking allows for greater flexibility and simplicity in managing Kubernetes clusters. The diagram above encapsulates these concepts, illustrating the relationship between the node network, pod network, and services network in a Kubernetes environment.
+
+![](../images/network-overlay.svg)
+
 **Installation Example:**
 ```sh
 $ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
