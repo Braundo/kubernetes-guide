@@ -1,5 +1,5 @@
 ---
-icon: material/package
+icon: material/cube-outline
 ---
 
 ## Introduction to Kubernetes Pods

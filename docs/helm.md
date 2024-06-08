@@ -1,5 +1,5 @@
 ---
-icon: material/package-variant-closed
+icon: material/ship-wheel
 ---
 
 # Helm and Kubernetes Package Management

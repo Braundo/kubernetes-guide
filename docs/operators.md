@@ -1,5 +1,5 @@
 ---
-icon: material/robot
+icon: material/robot-outline
 ---
 
 # Kubernetes Operators
