@@ -20,6 +20,7 @@ nav:
   - ConfigMaps & Secrets: configmaps-secrets.md
   - Helm: helm.md
   - Security: security.md
+  - About Me: about.md
 theme:
   name: material
   custom_dir: overrides
