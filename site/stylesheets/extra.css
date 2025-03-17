@@ -1,0 +1,45 @@
+.md-header {
+    background: #4051b5 !important;
+}
+
+.md-footer {
+    background: #4051b5 !important;
+}
+
+.md-footer-meta {
+    display: none;
+}
+
+.md-nav__link:hover {
+    color:#4051b5 !important;
+}
+
+.md-nav__link--active {
+    font-weight: bold;
+    color:#4051b5 !important;
+}
+
+h1 {
+    font-style: bold !important;
+}
+
+h2 {
+    font-weight: bold !important;
+}
+
+.dark-mode-image {
+    display: none;
+  }
+  
+  .light-mode-image {
+    display: block;
+  }
+  
+  body[data-md-color-scheme="slate"] .dark-mode-image {
+    display: block;
+  }
+  
+  body[data-md-color-scheme="slate"] .light-mode-image {
+    display: none;
+  }
+  
