@@ -18,9 +18,18 @@ StatefulSets are a Kubernetes resource designed to manage stateful applications.
 
 These features ensure that each Pod maintains a consistent identity, even across restarts, failures, and rescheduling.
 
+<h3>Use Cases for StatefulSets</h3>
+
+StatefulSets are ideal for applications that require stable identities and persistent storage, such as:
+
+- Databases (e.g., MySQL, PostgreSQL)
+- Distributed systems (e.g., Kafka, Zookeeper)
+- Applications maintaining client session data
+
 <h3>Key Differences from Deployments</h3>
 
 While both StatefulSets and Deployments are used to manage Pods, StatefulSets offer additional guarantees:
+
 - **Ordered Creation and Deletion:** Pods are created and deleted in a specific order.
 - **Unique Network Identities:** Each Pod gets a unique, stable network identity.
 - **Stable Storage:** Each Pod is associated with persistent storage that remains consistent across restarts.
@@ -31,9 +40,26 @@ StatefulSets are Kubernetes tools for running and managing applications that nee
 
 StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:
 
-![](../images/sts.svg)
+<div style="text-align: center; width: 100%;">
+    <img src="/images/sts-deploy.svg#only-light" alt="Kubernetes StatefulSet approach" style="width: 170%; max-width: 1000px;" />
+    <img src="/images/sts-deploy.svg#only-dark" alt="Kubernetes StatefulSet approach" style="width: 170%; max-width: 1000px;" />
+</div>
 
 Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.
+
+## Comparison of Deployments and StatefulSets
+
+| Feature                  | Deployment                     | StatefulSet                          |
+|--------------------------|--------------------------------|--------------------------------------|
+| **Pod Identity**         | Random and ephemeral           | Stable and persistent                |
+| **Storage**              | Ephemeral by default           | Persistent with volume claims        |
+| **Network Identity**     | No stable network identity     | Stable network identity with DNS     |
+| **Pod Ordering**         | No guarantees                  | Ordered creation and deletion        |
+| **Use Cases**            | Stateless applications         | Stateful applications like databases |
+| **Scaling**              | Parallel scaling               | Ordered scaling                      |
+| **Updates**              | Rolling updates                | Rolling updates with partitioning    |
+
+This table highlights the key differences between Deployments and StatefulSets, helping you choose the right controller based on your application's needs.
 
 ## StatefulSet Theory
 
@@ -54,6 +80,55 @@ StatefulSets manage volumes through PersistentVolumeClaims (PVCs). Each Pod gets
 
 - **Volume Naming:** Volumes are named based on the StatefulSet and Pod names, e.g., `vol-my-sts-0`, `vol-my-sts-1`.
 - **Persistence:** Volumes remain attached to the same Pod, even if the Pod is rescheduled to a different node.
+
+## Managing StatefulSets
+
+<h3>Scaling StatefulSets</h3>
+
+Scaling a StatefulSet involves adding or removing Pods in a controlled manner, ensuring that the order and identity of Pods are maintained.
+
+- **Scaling Up:** New Pods are added in a sequential order.
+- **Scaling Down:** Pods are removed in reverse order.
+
+<h3>Updating StatefulSets</h3>
+
+Updates to a StatefulSet are managed carefully to ensure application stability:
+
+- **Rolling Updates:** Pods are updated one at a time, maintaining the order and identity.
+- **Partitioned Updates:** Allows updates to a subset of Pods while others remain unchanged.
+
+<h3>Example YAML for StatefulSet</h3>
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+```
 
 ## Hands-On with StatefulSets
 
@@ -197,33 +272,12 @@ spec:
 ```
 The `clusterIP: None` in the Service configuration creates a headless Service, which means it does not get a ClusterIP address. Instead, it allows Pods to be addressed directly via their DNS names.
 
-## Scaling and Updating StatefulSets
+## Best Practices
 
-<h3>Scaling StatefulSets</h3>
-
-Edit the StatefulSet YAML to change the replica count and apply the changes:
-```sh
-kubectl apply -f statefulset.yaml
-```
-This command updates the StatefulSet configuration, adjusting the number of replicas as specified.
-
-Example output:
-```text
-statefulset.apps/my-sts scaled
-```
-
-<h3>Rolling Updates</h3>
-
-Update the image version in the StatefulSet YAML and apply the changes to perform a rolling update:
-```sh
-kubectl apply -f statefulset.yaml
-```
-This command triggers a rolling update, where each Pod is updated one by one, ensuring that the application remains available during the update process.
-
-Example output:
-```text
-statefulset.apps/my-sts updated
-```
+- **Use Headless Services:** Ensure that each Pod gets a stable DNS identity.
+- **Monitor Resource Usage:** Regularly check the resource utilization of StatefulSets.
+- **Backup Persistent Data:** Implement backup strategies for data stored in persistent volumes.
+- **Consider Network Policies:** Use network policies to control traffic to and from StatefulSet Pods.
 
 ## Summary
 

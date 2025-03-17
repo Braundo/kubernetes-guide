@@ -4,16 +4,18 @@ icon: material/text-box-search-outline
 
 ## Introduction to Kubernetes
 
-Kubernetes, often referred to as K8s, is an open-source platform designed to automate deploying, scaling, and operating application containers. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF). This section covers the essentials to get you up to speed with Kubernetes, its architecture, and its key features. Think of this as a one-pager or TLDR of Kubernetes.
+Kubernetes, often referred to as K8s, is an open-source platform designed to automate deploying, scaling, and operating application containers. Originally developed by Google, it is now maintained by the Cloud Native Computing Foundation (CNCF). This section provides an essential overview of Kubernetes, its architecture, and key features to get you started.
 
 ## What is Kubernetes?
 
-Kubernetes is a container orchestrator, which means it manages the deployment and operation of containerized applications. Containers are lightweight, portable units that bundle an application and its dependencies, allowing them to run consistently across different environments. Kubernetes automates several tasks:
+Kubernetes is a powerful container orchestrator that manages the deployment and operation of containerized applications. Containers are lightweight, portable units that bundle an application and its dependencies, allowing them to run consistently across different environments. Kubernetes automates several tasks:
 
 - **Deployment:** Seamlessly deploys applications by creating and managing containers.
 - **Scaling:** Adjusts the number of application instances based on demand, ensuring efficient use of resources.
 - **Self-healing:** Detects and replaces failed instances to maintain application availability.
-- **Rolling Updates and Rollbacks:** Updates applications without downtime and rolls back if needed to a previous version if something goes wrong.
+- **Rolling Updates and Rollbacks:** Updates applications without downtime and rolls back to a previous version if needed.
+
+## Key Concepts of Kubernetes
 
 <h3>Declarative Model</h3>
 
@@ -25,42 +27,40 @@ Kubernetes operates on a declarative model, where you specify the desired state 
 
 The declarative nature of Kubernetes is key to understanding its power. At a high level, here's how it works:
 
-![](../images/overview.svg)
-
 1. You *tell* Kubernetes (typically via `kubectl`) how you want your application to look—what image to use, how many replicas, ports to expose, etc.
 2. Kubernetes persists this desired state to the cluster store (etcd).
 3. A series of background controllers consistently check if the current state matches the desired state.
-4. If the current state does not equal the desired state (e.g., you desire 3 replicas but only 2 are currently running),
-5. Kubernetes initiates a series of actions to reconcile the two states. In this example, it would involve spinning up an additional replica.
+4. If the current state does not equal the desired state (e.g., you desire 3 replicas but only 2 are currently running), the API Server is notified and,
+5. Kubernetes initiates actions to reconcile the two states.
+
+<h3>Declarative Approach in Kubernetes</h3>
+
+Kubernetes uses a declarative approach to manage resources. This means you define the desired state of the system and Kubernetes works to maintain that state.
+
+<div style="text-align: center; width: 100%;">
+    <img src="/images/declarative-light-svg.svg#only-light" alt="Kubernetes declarative approach" style="width: 170%; max-width: 1000px;" />
+    <img src="/images/declarative-dark-svg.svg#only-dark" alt="Kubernetes declarative approach" style="width: 170%; max-width: 1000px;" />
+</div>
+
+This diagram illustrates how Kubernetes manages resources declaratively, ensuring the system's state aligns with the user's specifications.
+
+<h3>Kubernetes Architecture</h3>
+
+Kubernetes architecture consists of several key components:
+
+- **API Server:** The front-end for the Kubernetes control plane, handling all REST operations.
+- **etcd:** A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+- **Scheduler:** Assigns workloads to nodes based on resource availability.
+- **Controller Manager:** Runs controllers to regulate the state of the cluster.
+- **Kubelet:** Ensures containers are running in a Pod on each node.
+
+<h3>Services</h3>
+
+Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically, and give you a stable, long-lived connection point to the underlying Pods.
 
 ## Historical Background
 
 Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at a massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became *the* standard for container orchestration.
-
-## Kubernetes Architecture
-
-From a 20K-foot level, Kubernetes clusters consist of two types of nodes - **control plane** nodes and **worker** nodes:
-
-- **Control Plane Nodes:** These nodes run the Kubernetes control plane, which includes components like the API server, scheduler, and controllers. They manage the overall state of the cluster.
-- **Worker Nodes:** These nodes run the applications and report back status to the control plane.
-
-<h3>Components of the Control Plane</h3>
-
-- **API Server:** The front end of Kubernetes that exposes the Kubernetes API. All traffic within, to, and from various Kubernetes components flows through the API Server. It is the Grand Central Station or central nervous system of Kubernetes.
-- **Cluster Store:** A distributed database (etcd) that stores the entire state of the cluster. When you define your desired application specifications, they are stored here. This is the only *stateful* core component of Kubernetes.
-- **Controllers:** Ensure the cluster's desired state matches its observed state by running background watch loops on objects like Deployments, Pods, etc.
-- **Scheduler:** Assigns tasks to worker nodes based on resource availability, application requirements, and other criteria.
-
-<h3>Components of Worker Nodes</h3>
-
-- **Kubelet:** The agent that communicates with the API server and manages containers on the node. The kubelet communicates directly with the container runtime on the node, instructing it to pull images, and start/stop containers.
-- **Container Runtime:** Executes container operations like starting and stopping containers. Common runtimes include containerd and CRI-O.
-- **Kube-proxy:** Manages networking for containers, including load balancing.
-
-![](../images/overview-2.svg)
-
-!!! info "Note"
-    The API Server is the **only** component in Kubernetes that interacts directly with etcd.
 
 ## Common Features Primer
 
@@ -68,12 +68,6 @@ From a 20K-foot level, Kubernetes clusters consist of two types of nodes - **con
 
 - **Pods:** The smallest deployable units in Kubernetes, which can contain one or more containers. Containers within Pods share resources like network and storage.
 - **Deployments:** Higher-level controllers that manage Pods, providing features like scaling, rolling updates, and rollbacks.
-
-<h3>Services</h3>
-
-Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically, and give you a stable, long-lived connection point to the underlying Pods.
-
-![](../images/labels-selectors.svg)
 
 <h3>Self-Healing and Scaling</h3>
 

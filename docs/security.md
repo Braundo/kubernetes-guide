@@ -20,8 +20,6 @@ A typical API request, such as creating a Deployment, follows these steps:
 2. **Authorization:** Checks if the authenticated user has permission to perform the action.
 3. **Admission Control:** Ensures the request complies with policies.
 
-![](../images/auth-flow.svg)
-
 ## Authentication (AuthN)
 
 <h3>Understanding Authentication</h3>
@@ -69,43 +67,40 @@ Authorization (authZ) determines what actions authenticated users can perform. K
 
 <h3>Role-Based Access Control (RBAC)</h3>
 
-RBAC is the most common authorization module, using Roles and RoleBindings to define and assign permissions.
+RBAC is a method of regulating access to computer or network resources based on the roles of individual users within your organization. Kubernetes RBAC allows you to dynamically configure policies through the Kubernetes API.
 
-**Key Components:**
+<h3>Setting Up RBAC</h3>
 
-- **Roles:** Define a set of permissions.
-- **RoleBindings:** Assign roles to users or groups.
+To set up RBAC, define roles and role bindings in YAML files.
 
 **Example Role:**
 ```yaml
-apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: eggs
-  name: read-deployments
+  namespace: default
+  name: pod-reader
 rules:
-- verbs: ["get", "watch", "list"]
-  apiGroups: ["apps"]
-  resources: ["deployments"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
 ```
-
-<br>
 
 **Example RoleBinding:**
 ```yaml
-apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: read-deployments
-  namespace: eggs
+  name: read-pods
+  namespace: default
 subjects:
 - kind: User
-  name: jambo
-  apiGroup: rbac.authorization.k8s.io
+  name: jane
+  apiGroup: ""
 roleRef:
   kind: Role
-  name: read-deployments
-  apiGroup: rbac.authorization.k8s.io
+  name: pod-reader
+  apiGroup: ""
 ```
 
 <h3>ClusterRoles and ClusterRoleBindings</h3>
@@ -144,17 +139,15 @@ roleRef:
 
 ## Admission Control
 
-<h3>Overview of Admission Controllers</h3>
+<h3>Understanding Admission Controllers</h3>
 
-Admission controllers enforce policies on requests after authentication and authorization but before they are persisted. They come in two types:
-
-- **Mutating Controllers:** Modify requests to ensure compliance.
-- **Validating Controllers:** Reject non-compliant requests.
+Admission controllers are plugins that govern and enforce how the cluster should react to requests. They can be used to set defaults, enforce policies, and perform validations.
 
 <h3>Common Admission Controllers</h3>
 
-- **NodeRestriction:** Limits nodes to modifying their own objects.
-- **AlwaysPullImages:** Ensures images are always pulled from the registry, preventing the use of cached images.
+- **NamespaceLifecycle:** Prevents deletion of active namespaces.
+- **LimitRanger:** Enforces resource usage limits.
+- **ResourceQuota:** Ensures resource usage does not exceed specified limits.
 
 <h3>Example: NodeRestriction</h3>
 
@@ -285,6 +278,13 @@ spec:
    $ kubectl apply -f role.yaml
    $ kubectl apply -f rolebinding.yaml
    ```
+
+## Best Practices
+
+- **Secure the API Server:** Use TLS to encrypt communication with the API server.
+- **Implement Network Policies:** Control traffic flow between Pods.
+- **Regularly Update Clusters:** Keep Kubernetes and its components up to date.
+- **Use Secrets for Sensitive Data:** Store sensitive information securely using Kubernetes Secrets.
 
 ## Summary
 

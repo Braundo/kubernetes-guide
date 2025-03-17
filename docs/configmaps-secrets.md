@@ -1,5 +1,5 @@
 ---
-icon: material/lock-outline
+icon: material/text
 ---
 
 # Managing Configuration and Secrets in Kubernetes
@@ -24,15 +24,35 @@ ConfigMaps store non-sensitive configuration data as key-value pairs. They are f
 
 <h3>Use Cases for ConfigMaps</h3>
 
-ConfigMaps are used to store:
+ConfigMaps are ideal for storing configuration data that is not sensitive, such as:
 
 - Environment variables
-- Configuration files (e.g., web server configs)
-- Hostnames
-- Service ports
-- Account names
+- Command-line arguments
+- Configuration files
 
-Avoid storing sensitive data in ConfigMaps; use Secrets for that purpose.
+<h3>Creating and Using ConfigMaps</h3>
+
+ConfigMaps can be created from files, directories, or literal values. Here's an example of creating a ConfigMap from a file:
+
+```sh
+kubectl create configmap my-config --from-file=config.txt
+```
+
+To use a ConfigMap in a Pod, you can reference it in the Pod's configuration:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    envFrom:
+    - configMapRef:
+        name: my-config
+```
 
 <h3>Creating ConfigMaps</h3>
 
@@ -71,8 +91,6 @@ $ kubectl apply -f configmap.yaml
 <h3>Using ConfigMaps</h3>
 
 Inject ConfigMap data into Pods using environment variables, command arguments, or volumes.
-
-![](../images/cm-mapping-flow.svg)
 
 <h4>As Environment Variables</h4>
 
@@ -134,6 +152,38 @@ Secrets store sensitive data such as passwords, tokens, and certificates. They a
 
 By default, Kubernetes Secrets are not encrypted in the cluster store or in transit. They are base64-encoded, which is not secure. To enhance security, use additional tools like HashiCorp Vault for better encryption.
 
+<h3>Use Cases for Secrets</h3>
+
+Secrets are used to securely manage sensitive data, including:
+
+- Database credentials
+- API keys
+- TLS certificates
+
+<h3>Creating and Using Secrets</h3>
+
+Secrets can be created imperatively or declaratively. Here's an example of creating a Secret from literal values:
+
+```sh
+kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secret
+```
+
+To use a Secret in a Pod, you can reference it in the Pod's configuration:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    envFrom:
+    - secretRef:
+        name: my-secret
+```
+
 <h3>Creating Secrets</h3>
 
 Secrets can also be created imperatively or declaratively.
@@ -188,6 +238,13 @@ spec:
         - name: secret-volume
           mountPath: /etc/secret
 ```
+
+## Best Practices
+
+- **Separate Sensitive Data:** Always use Secrets for sensitive information to ensure it's not exposed in your code.
+- **Limit Access:** Use Kubernetes RBAC to control access to ConfigMaps and Secrets.
+- **Encrypt Secrets:** Consider using tools like HashiCorp Vault to encrypt Secrets in transit and at rest.
+- **Regularly Rotate Secrets:** Update Secrets regularly to minimize the risk of exposure.
 
 ## Hands-On Examples
 

@@ -6,29 +6,42 @@ nav:
   - Home: index.md
   - Overview: overview.md
   - Local Setup: local-setup.md
-  - Pods: pods.md
+  - Pods and Deployments: pods-deployments.md
   - Namespaces: namespaces.md
-  - Deployments: deployments.md
-  - StatefulSets: statefulsets.md
-  - Operators: operators.md
-  - Kubernetes API: kubernetes-api.md
-  - Custom Resources: crd.md
-  - Services: services.md
-  - Networking: networking.md
-  - Ingress: ingress.md
-  - Storage: storage.md
+  - Services and Networking: services-networking.md
   - ConfigMaps & Secrets: configmaps-secrets.md
-  - Helm: helm.md
-  - Security: security.md
-  - About Me: about.md
+  - Storage: storage.md
+  - StatefulSets: statefulsets.md
+  - DaemonSets: daemonsets.md
+  - Operators and CRDs: operators-crds.md
+  - Helm: helm-package-management.md
+  - Security and Best Practices: security.md
+  - Kubernetes API: kubernetes-api.md
+  - Troubleshooting: troubleshooting.md
+  - Maintenance: maintenance.md
+  - Certification Preparation: certification-preparation.md
+  - About the Author: about.md
 theme:
   name: material
   custom_dir: overrides
-  logo: logo.png
-  favicon: logo.png
+  logo: /images/logo.png
+  favicon: /images/logo.png
   font:
     text: Ubuntu
     code: Fira Code
+  palette:
+    - scheme: default
+      primary: 'indigo'
+      accent: 'indigo'
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: 'indigo'
+      accent: 'indigo'
+      toggle:
+        icon: material/white-balance-sunny
+        name: Switch to light mode
   features:
     - navigation.top
     - navigation.footer
@@ -44,6 +57,13 @@ extra:
   analytics:
     provider: google
     property: "G-WF0BEBS62L"
+  meta:
+    - name: description
+      content: "Comprehensive Kubernetes guide for beginners and professionals."
+    - name: keywords
+      content: "Kubernetes, guide, beginners, professionals, CKA, CKAD"
+    - name: author
+      content: "Aaron Braundmeier"
 markdown_extensions:
   - admonition
   - abbr
@@ -52,6 +72,8 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.inlinehilite
   - pymdownx.mark
+  - toc:
+      toc_depth: 0
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
