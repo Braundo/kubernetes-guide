@@ -3,73 +3,91 @@
     <url>
          <loc>https://www.k8s.guide/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/about/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/certification-preparation/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/configmaps-secrets/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/daemonsets/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/helm-package-management/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/kubernetes-api/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/local-setup/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/maintenance/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/namespaces/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/operators-crds/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/overview/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/pods-deployments/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/security/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/services-networking/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/statefulsets/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/storage/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.k8s.guide/troubleshooting/</loc>
          <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>
