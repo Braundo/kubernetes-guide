@@ -37,10 +37,10 @@ The declarative nature of Kubernetes is key to understanding its power. At a hig
 
 Kubernetes uses a declarative approach to manage resources. This means you define the desired state of the system and Kubernetes works to maintain that state.
 
-<div style="text-align: center; width: 100%;">
-    <img src="/images/declarative-light-svg.svg#only-light" alt="Kubernetes declarative approach" style="width: 170%; max-width: 1000px;" />
-    <img src="/images/declarative-dark-svg.svg#only-dark" alt="Kubernetes declarative approach" style="width: 170%; max-width: 1000px;" />
-</div>
+![Kubernetes (light)](/images/declarative-light-svg.svg#only-light){ width="170%" max-width="1000px" }
+
+![Kubernetes (dark)](/images/declarative-dark-svg.svg#only-dark){ width="170%" max-width="1000px" }
+
 
 This diagram illustrates how Kubernetes manages resources declaratively, ensuring the system's state aligns with the user's specifications.
 
