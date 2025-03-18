@@ -35,10 +35,8 @@ Kubernetes supports several types of Services, each suited to different use case
 
 <h2>ClusterIP</h2>
 
-<div style="text-align: center; width: 100%;">
-    <img src="/images/clusterip.svg#only-light" alt="Kubernetes ClusterIP approach" style="width: 170%; max-width: 1000px;" />
-    <img src="/images/clusterip.svg#only-dark" alt="Kubernetes ClusterIP approach" style="width: 170%; max-width: 1000px;" />
-</div>
+![ClusterIP Diagram](images/clusterip-light.png#only-light)
+![ClusterIP Diagram](images/clusterip-dark.png#only-dark)
 
 <p><strong>Key Points:</strong></p>
 <ul>
@@ -68,10 +66,8 @@ spec:
 
 <h2>NodePort</h2>
 
-<div style="text-align: center; width: 100%;">
-    <img src="/images/nodeport.svg#only-light" alt="Kubernetes NodePort approach" style="width: 170%; max-width: 1000px;" />
-    <img src="/images/nodeport.svg#only-dark" alt="Kubernetes NodePort approach" style="width: 170%; max-width: 1000px;" />
-</div>
+![NodePort Diagram](images/nodeport-light.png#only-light)
+![NodePort Diagram](images/nodeport-dark.png#only-dark)
 
 1. External client hits node on NodePort.
 2. Node forwards request to the ClusterIP of the Service.
@@ -92,10 +88,8 @@ spec:
 
 <h2>LoadBalancer</h2>
 
-<div style="text-align: center; width: 100%;">
-    <img src="/images/loadbalancer.svg#only-light" alt="Kubernetes LoadBalancer approach" style="width: 170%; max-width: 1000px;" />
-    <img src="/images/loadbalancer.svg#only-dark" alt="Kubernetes LoadBalancer approach" style="width: 170%; max-width: 1000px;" />
-</div>
+![LoadBalancer Diagram](images/loadbalancer-light.png#only-light)
+![LoadBalancer Diagram](images/loadbalancer-dark.png#only-dark)
 
 1. External client hits LoadBalancer Service on friendly DNS name.
 2. LoadBalancer forwards request to a NodePort.

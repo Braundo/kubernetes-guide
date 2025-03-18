@@ -57,7 +57,9 @@ One common example is to use a multi-container Pod for service meshes. In these 
 
 Multiple containers within a Pod share the same IP address, network stack, and filesystem. As such, to communicate with specific containers within a multi-container Pod, you have to leverage port addresses. The containers themselves, however, will be able to communicate with each other via localhost.
 
-<img src="images/multi-container.svg" alt="Multi-container diagram" />
+![Multi-container Diagram](images/multicontainer-light.png#only-light)
+![Multi-container Diagram](images/multicontainer-dark.png#only-dark)
+
 
 ## Kubernetes Deployments
 

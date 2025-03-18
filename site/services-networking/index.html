@@ -687,10 +687,8 @@
 <h2 id="types-of-kubernetes-services">Types of Kubernetes Services</h2>
 <p>Kubernetes supports several types of Services, each suited to different use cases:</p>
 <h2>ClusterIP</h2>
-<div style="text-align: center; width: 100%;">
-<img alt="Kubernetes ClusterIP approach" src="/images/clusterip.svg#only-light" style="width: 170%; max-width: 1000px;"/>
-<img alt="Kubernetes ClusterIP approach" src="/images/clusterip.svg#only-dark" style="width: 170%; max-width: 1000px;"/>
-</div>
+<p><img alt="ClusterIP Diagram" src="../images/clusterip-light.png#only-light"/>
+<img alt="ClusterIP Diagram" src="../images/clusterip-dark.png#only-dark"/></p>
 <p><strong>Key Points:</strong></p>
 <ul>
 <li>Internal IP and DNS name are automatically created.</li>
@@ -715,10 +713,8 @@
 </span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
 </span></code></pre></div>
 <h2>NodePort</h2>
-<div style="text-align: center; width: 100%;">
-<img alt="Kubernetes NodePort approach" src="/images/nodeport.svg#only-light" style="width: 170%; max-width: 1000px;"/>
-<img alt="Kubernetes NodePort approach" src="/images/nodeport.svg#only-dark" style="width: 170%; max-width: 1000px;"/>
-</div>
+<p><img alt="NodePort Diagram" src="../images/nodeport-light.png#only-light"/>
+<img alt="NodePort Diagram" src="../images/nodeport-dark.png#only-dark"/></p>
 <ol>
 <li>External client hits node on NodePort.</li>
 <li>Node forwards request to the ClusterIP of the Service.</li>
@@ -737,10 +733,8 @@
 <p>When you access a NodePort service, you can connect to <strong>any</strong> node in the cluster on the NodePort, even if the target Pod is not running on that specific node. Kubernetes will automatically route the traffic to the appropriate Pod, regardless of which node it's running on.</p>
 </div>
 <h2>LoadBalancer</h2>
-<div style="text-align: center; width: 100%;">
-<img alt="Kubernetes LoadBalancer approach" src="/images/loadbalancer.svg#only-light" style="width: 170%; max-width: 1000px;"/>
-<img alt="Kubernetes LoadBalancer approach" src="/images/loadbalancer.svg#only-dark" style="width: 170%; max-width: 1000px;"/>
-</div>
+<p><img alt="LoadBalancer Diagram" src="../images/loadbalancer-light.png#only-light"/>
+<img alt="LoadBalancer Diagram" src="../images/loadbalancer-dark.png#only-dark"/></p>
 <ol>
 <li>External client hits LoadBalancer Service on friendly DNS name.</li>
 <li>LoadBalancer forwards request to a NodePort.</li>

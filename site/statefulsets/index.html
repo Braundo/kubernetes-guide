@@ -696,10 +696,8 @@
 <p>StatefulSets are Kubernetes constructs designed to manage stateful applications that require persistent data and identity across Pod restarts and deployments. Each Pod in a StatefulSet is given a stable and unique network identifier and persistent storage, which remains associated with the Pod, even when it is rescheduled to a different node within the cluster.</p>
 <p>StatefulSets are Kubernetes tools for running and managing applications that need to remember who they are and what they know—think of them like memory keepers for your apps, such as databases that need to recall data after a reboot. Unlike Deployments that are more about stateless apps (think of them as forgetful but easily replaceable), StatefulSets make sure each of their Pods has a consistent name, network identity, and storage, even if they move around in the cluster. This makes StatefulSets perfect for when your app's individual identity and history are crucial for running smoothly.</p>
 <p>StatefulSets can guarantee Pod names, volume bindings, and DNS hostnames across reboots - whereas Deployments cannot. Below are two diagrams that illustrate this point:</p>
-<div style="text-align: center; width: 100%;">
-<img alt="Kubernetes StatefulSet approach" src="/images/sts-deploy.svg#only-light" style="width: 170%; max-width: 1000px;"/>
-<img alt="Kubernetes StatefulSet approach" src="/images/sts-deploy.svg#only-dark" style="width: 170%; max-width: 1000px;"/>
-</div>
+<p><img alt="StatefulSets Diagram" src="../images/sts-light.png#only-light"/>
+<img alt="StatefulSets Diagram" src="../images/sts-dark.png#only-dark"/></p>
 <p>Notice how with a Deployment, when a Pod is replaced it comes up with a new name, IP address, and its volume is no longer bound to it. With StatefulSets, the new Pod comes up looking exactly the same as the previous failed one.</p>
 <h2 id="comparison-of-deployments-and-statefulsets">Comparison of Deployments and StatefulSets</h2>
 <table>
