@@ -30,9 +30,17 @@ nav:
     - Pod Security: psa.md
     - Audit & Logging: audit-logging.md
     - Image Scanning & Signing: image-scan-sign.md
+    - RBAC: rbac.md
+    - Security Context: sec-context.md
+    - Network Policies: netpol.md
     - Troubleshooting: troubleshooting.md
     - Maintenance: maintenance.md
-  - Cert Prep: certification-preparation.md
+  - Cert Prep:
+    - Cert Prep: certification-preparation.md
+    - CKA: cka.md
+    - CKAD: ckad.md
+    - CKS: cks.md
+
   - About: about.md
 theme:
   name: material

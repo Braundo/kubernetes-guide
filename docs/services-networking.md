@@ -1,234 +1,143 @@
+---
+icon: material/server-network
+---
 
+# Services & Networking
 
-Kubernetes Services are essential for ensuring reliable communication between Pods. They abstract the complexities of networking and provide stable endpoints for applications.
+Pods are ephemeral — they come and go. A **Service** gives you a stable way to **communicate with groups of Pods**, no matter how often those Pods restart, move, or scale.
 
-## Introduction to Kubernetes Services
+---
 
-<h3>Why Use Services?</h3>
+## What Is a Service?
 
-Pods in Kubernetes are ephemeral; they can be created, destroyed, and rescheduled at any time due to various events such as scaling operations, rolling updates, rollbacks, and failures. This makes direct communication with Pods unreliable. Kubernetes Services address this issue by providing a stable endpoint for communication.
+A Kubernetes **Service** is an abstraction that:
 
-## How Services Work
-
-Services in Kubernetes provide a front end (DNS name, IP address, and port) that remains constant regardless of the state of the Pods behind it. They use label selectors to dynamically route traffic to healthy Pods that match the specified criteria.
-
-<h3>Service Discovery</h3>
-
-Kubernetes offers two primary modes of service discovery:
-
-- **Environment Variables:** When a Pod is created, the kubelet adds environment variables for each active Service. These variables are accessible within the Pod and provide the Service's cluster IP and port.
-- **DNS:** Kubernetes includes a DNS server that automatically assigns DNS names to Services. Pods can use these DNS names to communicate with Services.
-
-<h3>Endpoint Management</h3>
-
-Services use endpoints to track the IP addresses of the Pods that match their label selector. The kube-proxy component on each node watches for changes to Service and Endpoint objects, updating the iptables rules accordingly to ensure traffic is correctly routed.
-
-<h3>Load Balancing</h3>
-
-Kubernetes Services provide built-in load balancing across the Pods they manage. The kube-proxy component distributes incoming requests to the available Pods based on the chosen load balancing strategy, ensuring even distribution of traffic.
-
-## Types of Kubernetes Services
-
-Kubernetes supports several types of Services, each suited to different use cases:
-
-<h2>ClusterIP</h2>
-
-![ClusterIP Diagram](images/clusterip-light.png#only-light)
-![ClusterIP Diagram](images/clusterip-dark.png#only-dark)
-
-<p><strong>Key Points:</strong></p>
-<ul>
-<li>Internal IP and DNS name are automatically created.</li>
-<li>Accessible only from within the cluster (i.e. Pod to Pod).</li>
-<li>Ideal for internal applications that do not need external access.</li>
-</ul>
-
-!!! tip "Label Selector Behavior"
-    When a Service uses label selectors to find Pods (e.g., `project: ab`), Pods must have **ALL** the labels specified in the selector to receive traffic. However, Pods can have additional labels beyond those required by the selector and will still receive traffic. This means that selectors work as an "AND" operation, not an "OR" operation.
-
-<p><strong>Example YAML:</strong></p>
+- Selects a group of Pods using a **label selector**
+- Assigns a **stable IP and DNS name**
+- Forwards traffic to the correct Pods, even as they change
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-clusterip-service
+  name: web
 spec:
   selector:
-    app: my-app
+    app: web
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 8080
 ```
 
-<h2>NodePort</h2>
+This exposes Pods with label `app=web` on port 80, forwarding traffic to their port 8080.
+
+---
+
+## 1. ClusterIP (default)
+
+A **ClusterIP** Service exposes Pods **within the cluster only**.
+
+- Internal IP address (`10.x.x.x`)
+- DNS-resolvable: `web.default.svc.cluster.local`
+- Default Service type
+
+![ClusterIP Diagram](images/clusterip-light.png#only-light)
+![ClusterIP Diagram](images/clusterip-dark.png#only-dark)
+
+### Use When:
+- Services communicate internally (e.g., frontend ↔ backend)
+- You don’t need external access
+
+---
+
+## 2. NodePort
+
+A **NodePort** Service exposes your app to the **outside world** using a static port on **every node** in the cluster.
+
+- Uses the node's IP + assigned port (default range: `30000–32767`)
+- Maps traffic from each node to the backing Pods
+
+```yaml
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30080
+```
+
+Access from outside the cluster:
+
+```
+http://<node-ip>:30080
+```
 
 ![NodePort Diagram](images/nodeport-light.png#only-light)
 ![NodePort Diagram](images/nodeport-dark.png#only-dark)
 
-1. External client hits node on NodePort.
-2. Node forwards request to the ClusterIP of the Service.
-3. The Service picks a Pod from the list of healthy Pods in the EndpointSlice.
-4. The Pod receives the request.
+### Use When:
+- Testing external access without a LoadBalancer
+- You don’t have a cloud provider (e.g., on-prem clusters)
 
-<br>
+---
 
-<p><strong>Key Points:</strong></p>
-<ul>
-<li>Allocates a port from a configurable range (default: 30000-32767).</li>
-<li>Accessible externally via <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code>.</li>
-<li>Useful for exposing applications for development and testing purposes.</li>
-</ul>
+## 3. LoadBalancer
 
-!!! info "Important NodePort Behavior"
-    When you access a NodePort service, you can connect to **any** node in the cluster on the NodePort, even if the target Pod is not running on that specific node. Kubernetes will automatically route the traffic to the appropriate Pod, regardless of which node it's running on.
+A **LoadBalancer** Service provisions an **external cloud load balancer** (if supported by your environment).
 
-<h2>LoadBalancer</h2>
+- Only works with cloud providers (GCP, AWS, Azure)
+- Assigns a public IP and balances across backing Pods
+- Combines NodePort + external LB behind the scenes
+
+```yaml
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+```
 
 ![LoadBalancer Diagram](images/loadbalancer-light.png#only-light)
 ![LoadBalancer Diagram](images/loadbalancer-dark.png#only-dark)
 
-1. External client hits LoadBalancer Service on friendly DNS name.
-2. LoadBalancer forwards request to a NodePort.
-3. Node forwards request to the ClusterIP of the Service.
-4. The Service picks a Pod from the EndpointSlice.
-5. Forwards request to the selected Pod.
+### Use When:
+- You want public access to your app in a cloud environment
+- You need external DNS + SSL termination (with Ingress)
 
-<p><strong>Key Points:</strong></p>
-<ul>
-<li>Automatically provisions an external load balancer.</li>
-<li>Provides a single IP address for external access.</li>
-<li>Suitable for production environments where high availability is required.</li>
-</ul>
+---
 
-<h2>ExternalName</h2>
+## 4. ExternalName (Special Case)
 
-<p><strong>Key Points:</strong></p>
-<ul>
-<li>Does not use kube-proxy.</li>
-<li>Maps Service to an external DNS name.</li>
-<li>Useful for integrating external services into a cluster.</li>
-</ul>
-
-<h3>Comparison of Service Types</h3>
-
-| Service Type   | Internal Access | External Access | Use Case                                    |
-|----------------|-----------------|-----------------|---------------------------------------------|
-| ClusterIP      | Yes             | No              | Internal applications                       |
-| NodePort       | Yes             | Yes (via NodeIP)| Development and testing                     |
-| LoadBalancer   | Yes             | Yes             | Production environments with high availability |
-| ExternalName   | No              | Yes (via DNS)   | Integrating external services               |
-
-
-## Service Discovery
-
-In terms of how an application then discovers other applications behind a Service, the flow looks like this:
-
-1. The new Service is registered with the cluster DNS (Service Registry).
-2. Your application wants to know the IP address of the Service so it provides the name to the cluster DNS for lookup.
-3. The cluster DNS returns the IP address of the Service.
-4. Your application now knows where to direct its request.
-
-<h3>Practical Example of Service Discovery</h3>
-
-Assume we have two applications on the same cluster - `ham` and `eggs`. Each application has their Pods fronted by a Service, which in turn each have their own ClusterIP.
-
-```bash
-kubectl get svc
-```
-
-Example output:
-```text
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-ham-svc      ClusterIP   192.168.1.200               443/TCP   5d19h
-eggs-svc     ClusterIP   192.168.1.208               443/TCP   5d19h
-```
-
-For `ham` to communicate with `eggs`, it needs to know two things:
-
-1. The name of the `eggs` application's Service (eggs-svc).
-2. How to convert that name to an IP address.
-
-<h3>Steps for Service Discovery:</h3>
-
-1. The application container's default gateway routes the traffic to the Node it is running on.
-2. The Node itself does not have a route to the Service network so it routes the traffic to the node kernel.
-3. The Node kernel recognizes traffic intended for the service network and routes the traffic to a healthy Pod that matches the label selector of the Service.
-
-
-## Ingress
-
-<h3>Understanding Ingress</h3>
-
-Ingress allows external HTTP and HTTPS traffic to access services within the cluster. It provides a single entry point for multiple services and can manage SSL termination, load balancing, and name-based virtual hosting.
-
-<h3>Configuring Ingress</h3>
-
-1. **Create an Ingress Resource:** Define rules for routing traffic to services.
-
-2. **Use an Ingress Controller:** Deploy an Ingress controller to manage traffic according to the rules.
-
-3. **TLS Configuration:** Secure traffic using TLS by specifying certificates in the Ingress resource.
-
-<h3>Example Ingress Resource</h3>
+Maps a Kubernetes Service to an **external DNS name**.
 
 ```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: example-ingress
 spec:
-  rules:
-  - host: example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: example-service
-            port:
-              number: 80
-
+  type: ExternalName
+  externalName: db.example.com
 ```
 
-<h3>Advanced Ingress Configuration</h3>
+- No selectors or backing Pods
+- Useful for referencing external databases, APIs, etc.
 
-Ingress can be configured for advanced use cases, such as:
+---
 
-- **Path-Based Routing:** Direct traffic based on URL paths to different services.
-- **Name-Based Virtual Hosting:** Host multiple domains on the same IP address.
-- **Load Balancing:** Distribute traffic across multiple backend services.
+## Summary Table
 
-<h3>Example: Path-Based Routing</h3>
+| Type           | Visibility       | Use Case                        | Requires Cloud |
+|----------------|------------------|----------------------------------|----------------|
+| `ClusterIP`    | Internal only     | Pod-to-Pod communication         | No             |
+| `NodePort`     | Exposes on node IP| Direct external access via port  | No             |
+| `LoadBalancer` | External IP       | Cloud load balancer with public IP| ✅ Yes       |
+| `ExternalName` | DNS redirect      | External services via DNS        | No             |
 
-Here's how to configure path-based routing with Ingress:
+---
 
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: path-example
-spec:
-  rules:
-  - host: example.com
-    http:
-      paths:
-      - path: /service1
-        pathType: Prefix
-        backend:
-          service:
-            name: service1
-            port:
-              number: 80
-      - path: /service2
-        pathType: Prefix
-        backend:
-          service:
-            name: service2
-            port:
-              number: 80
-```
+## Summary
 
-This configuration routes traffic to `service1` and `service2` based on the URL path.
+- **Services abstract a group of Pods** behind a stable IP and DNS name.
+- **ClusterIP** is the default and internal-only.
+- **NodePort** opens access via node IP and high port.
+- **LoadBalancer** gives you a cloud-managed endpoint.
+- **ExternalName** is a DNS-level alias.
+
+Understanding how each Service type works — and when to use it — is essential for building reliable, scalable apps in Kubernetes.

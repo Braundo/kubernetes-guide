@@ -1,37 +1,43 @@
 ---
-hide:
-  - navigation
+icon: material/school-outline
 ---
 
 # Kubernetes Certification Preparation
 
-Preparing for Kubernetes certification exams, such as the Certified Kubernetes Administrator (CKA) and Certified Kubernetes Application Developer (CKAD), requires a solid understanding of Kubernetes concepts and hands-on practice.
+The CNCF offers several certifications to validate your Kubernetes knowledge. This section helps you prepare for the **three core exams**:
+
+- [Certified Kubernetes Administrator (CKA)](cka.md)
+- [Certified Kubernetes Application Developer (CKAD)](ckad.md)
+- [Certified Kubernetes Security Specialist (CKS)](cks.md)
+
+Each guide includes:
+- Core topics you need to master
+- Trusted resources and courses
+- Practical exam tips and environment setup
+
+---
 
 ## Exam Overview
 
-<h3>Certified Kubernetes Administrator (CKA)</h3>
+| Cert | Duration | Format       | Focus Area              |
+|------|----------|--------------|--------------------------|
+| CKA  | 2 hours  | Hands-on lab | Cluster operations, admin |
+| CKAD | 2 hours  | Hands-on lab | App design, deployment   |
+| CKS  | 2 hours  | Hands-on lab | Security and hardening   |
 
-The CKA exam tests your ability to perform the responsibilities of a Kubernetes administrator, including:
+---
 
-- **Cluster Architecture, Installation & Configuration:** Setting up and configuring a Kubernetes cluster.
-- **Workloads & Scheduling:** Managing Pods, Deployments, and scheduling.
-- **Services & Networking:** Configuring services and networking policies.
-- **Storage:** Managing persistent and ephemeral storage.
-- **Troubleshooting:** Diagnosing and resolving cluster issues.
+## General Advice
 
-<h3>Certified Kubernetes Application Developer (CKAD)</h3>
+- Practice in a real cluster — don’t rely only on theory
+- Learn to navigate `kubectl` quickly — alias everything
+- Master `vim`, `tmux`, and `kubectl explain`
+- Use tab-complete and `kubectl -h` constantly
+- Use `--dry-run=client -o yaml` for rapid manifest generation
 
-The CKAD exam focuses on your ability to design, build, and deploy applications in Kubernetes, covering:
+---
 
-- **Core Concepts:** Understanding Pods, Deployments, and Namespaces.
-- **Configuration:** Managing ConfigMaps and Secrets.
-- **Multi-Container Pods:** Designing and deploying multi-container Pod patterns.
-- **Observability:** Monitoring applications and cluster components.
-- **Services & Networking:** Configuring services, ingress, and network policies.
-
-## Study Resources
-
-The two most valuable resource types for me personally when preparing for these examinations were the books listed below and the official Kubernetes documentation. Feel free to take them or leave them; it's up to you.
+## Resources
 
 ### Books
 
@@ -64,12 +70,16 @@ The two most valuable resource types for me personally when preparing for these 
 |---------------------------------|-----------------------------------------------------------------------------------------------|
 | Katacoda                       | [Katacoda](https://www.katacoda.com/){target="_blank"}                                                          |
 | Play with Kubernetes           | [Play with Kubernetes](https://labs.play-with-k8s.com/){target="_blank"}                                        |
-| Killer Shell  | [killer.sh](https://killer.sh/){target="_blank"}
+| Killer Shell  | [killer.sh](https://killer.sh/){target="_blank"} |
 
+> Note: You’ll have access to [kubernetes.io/docs](https://kubernetes.io/docs) and [github.com/kubernetes](https://github.com/kubernetes) during the exam.
 
-## Exam Tips
+---
 
-- **Time Management:** Practice managing your time effectively during the exam.
-- **Hands-On Practice:** Spend ample time practicing in a real Kubernetes environment.
-- **Understand the Exam Format:** Familiarize yourself with the exam interface and question types.
-- **Stay Calm:** Read questions carefully and stay calm during the exam.
+## Ready to Dive In?
+
+Choose your path:
+
+- 👉 [CKA – Admin-focused](cka.md)
+- 👉 [CKAD – Developer-focused](ckad.md)
+- 👉 [CKS – Security-focused](cks.md)

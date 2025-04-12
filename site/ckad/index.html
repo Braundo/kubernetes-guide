@@ -12,13 +12,13 @@
         <meta name="author" content="Aaron Braundmeier">
       
       
-        <link rel="canonical" href="https://www.k8s.guide/statefulsets/">
+        <link rel="canonical" href="https://www.k8s.guide/ckad/">
       
       
-        <link rel="prev" href="../storage/">
+        <link rel="prev" href="../cka/">
       
       
-        <link rel="next" href="../limits-requests/">
+        <link rel="next" href="../cks/">
       
       
       <link rel="icon" href="/images/logo.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>StatefulSets - Kubernetes Guide</title>
+        <title>CKAD - Kubernetes Guide</title>
       
     
     
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              StatefulSets
+              CKAD
             
           </span>
         </div>
@@ -259,12 +259,10 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../configmaps-secrets/" class="md-tabs__link">
           
   
@@ -333,10 +331,12 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../certification-preparation/" class="md-tabs__link">
           
   
@@ -632,30 +632,25 @@
       
   
   
-    
   
   
-  
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -666,7 +661,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             State & Config
@@ -723,17 +718,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../statefulsets/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
@@ -744,7 +732,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1270,25 +1257,30 @@
       
   
   
+    
   
   
+  
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1299,7 +1291,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             Cert Prep
@@ -1356,10 +1348,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../ckad/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.6 16.6 4.6-4.6-4.6-4.6L16 6l6 6-6 6zm-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6z"/></svg>
@@ -1370,6 +1369,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1456,122 +1456,160 @@
                   
 
 
-<h1 id="statefulsets">StatefulSets</h1>
-<p>A <strong>StatefulSet</strong> is a Kubernetes controller for deploying and scaling <strong>stateful applications</strong>. Unlike Deployments, StatefulSets maintain <strong>persistent identity and storage</strong> for each Pod across rescheduling and restarts.</p>
+<h1 id="certified-kubernetes-application-developer-ckad">Certified Kubernetes Application Developer (CKAD)</h1>
+<p>The <strong>CKAD</strong> certification tests your ability to design, build, and run applications in Kubernetes. It's focused on <strong>real-world usage of Kubernetes primitives</strong> — deployments, configs, probes, volumes, and services — from a <strong>developer's perspective</strong>.</p>
 <hr/>
-<h2 id="why-use-a-statefulset">Why Use a StatefulSet?</h2>
-<p>Use a StatefulSet when your app requires:</p>
-<p>✅ <strong>Stable network identity</strong> (e.g., <code>pod-0</code>, <code>pod-1</code>)<br/>
-✅ <strong>Persistent storage per Pod</strong> that survives rescheduling<br/>
-✅ <strong>Ordered Pod startup, scaling, and deletion</strong></p>
-<p>Examples: databases (PostgreSQL, Cassandra), Zookeeper, Kafka, etc.</p>
+<h2 id="exam-overview">🧠 Exam Overview</h2>
+<ul>
+<li><strong>Format</strong>: Hands-on, browser-based lab</li>
+<li><strong>Duration</strong>: 2 hours</li>
+<li><strong>Passing score</strong>: 66%</li>
+<li><strong>Price</strong>: $395 USD (includes one retake)</li>
+<li><strong>Open book</strong>: Access to <a href="https://kubernetes.io/docs">kubernetes.io/docs</a></li>
+</ul>
 <hr/>
-<h2 id="how-it-differs-from-deployments">How It Differs from Deployments</h2>
-<p>StatefulSets guarantee <strong>identity and storage</strong>, while Deployments prioritize <strong>replica management</strong> without caring about which Pod is which.</p>
-<p><img alt="StatefulSets Diagram" src="../images/sts-light.png#only-light"/>
-<img alt="StatefulSets Diagram" src="../images/sts-dark.png#only-dark"/></p>
-<p><strong>Top Half (Deployment):</strong> Pod reschedule = new IP, broken volume mount<br/>
-<strong>Bottom Half (StatefulSet):</strong> Pod is recreated with the <strong>same IP</strong>, <strong>same volume</strong></p>
-<hr/>
-<h2 id="key-features">Key Features</h2>
+<h2 id="domains-weights">📋 Domains &amp; Weights</h2>
 <table>
 <thead>
 <tr>
-<th>Feature</th>
-<th>Deployment</th>
-<th>StatefulSet</th>
+<th>Domain</th>
+<th>Weight</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Pod name</td>
-<td>Random (e.g., <code>pod-abc123</code>)</td>
-<td>Stable (e.g., <code>web-0</code>, <code>web-1</code>)</td>
+<td>Core Concepts</td>
+<td>13%</td>
 </tr>
 <tr>
-<td>Pod start/delete order</td>
-<td>Any</td>
-<td>Ordered</td>
+<td>Configuration</td>
+<td>18%</td>
 </tr>
 <tr>
-<td>Persistent VolumeClaim</td>
-<td>Shared or ephemeral</td>
-<td>One per Pod</td>
+<td>Multi-Container Pods</td>
+<td>10%</td>
 </tr>
 <tr>
-<td>DNS hostname</td>
-<td>Random</td>
-<td>Stable via headless service</td>
+<td>Observability</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>Pod Design</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>Services &amp; Networking</td>
+<td>13%</td>
+</tr>
+<tr>
+<td>State Persistence</td>
+<td>8%</td>
 </tr>
 </tbody>
 </table>
 <hr/>
-<h2 id="sample-yaml">Sample YAML</h2>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="s">"web"</span><span class="w">  </span><span class="c1"># Headless service</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-16"><a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-</span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
-</span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
-</span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">          </span><span class="nt">volumeMounts</span><span class="p">:</span>
-</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
-</span><span id="__span-0-21"><a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">              </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/nginx/html</span>
-</span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">  </span><span class="nt">volumeClaimTemplates</span><span class="p">:</span>
-</span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
-</span><span id="__span-0-25"><a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-26"><a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"ReadWriteOnce"</span><span class="p p-Indicator">]</span>
-</span><span id="__span-0-27"><a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
-</span><span id="__span-0-28"><a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
-</span><span id="__span-0-29"><a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-</span></code></pre></div>
-<hr/>
-<h2 id="networking-dns">Networking &amp; DNS</h2>
-<p>Pods in a StatefulSet get predictable hostnames:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>web-0.web.default.svc.cluster.local
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>web-1.web.default.svc.cluster.local
-</span></code></pre></div>
-<p>This is enabled by the <strong>headless Service</strong>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
-</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">clusterIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span><span class="w">  </span><span class="c1"># Headless</span>
-</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-</span><span id="__span-2-8"><a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-</span><span id="__span-2-9"><a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-2-10"><a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-</span></code></pre></div>
-<hr/>
-<h2 id="volume-behavior">Volume Behavior</h2>
-<p>Each Pod gets its own PVC:</p>
+<h2 id="what-you-should-master">✅ What You Should Master</h2>
+<h3 id="1-core-concepts-13">1. Core Concepts (13%)</h3>
 <ul>
-<li><code>web-0</code> → <code>data-web-0</code></li>
-<li><code>web-1</code> → <code>data-web-1</code></li>
+<li>Pod lifecycle and restart policies</li>
+<li>YAML basics: <code>kind</code>, <code>metadata</code>, <code>spec</code></li>
+<li><code>kubectl explain</code>, <code>run</code>, <code>logs</code>, <code>exec</code></li>
 </ul>
-<p>These volumes are <strong>retained</strong> even if the Pod is deleted.</p>
+<hr/>
+<h3 id="2-configuration-18">2. Configuration (18%)</h3>
+<ul>
+<li>ConfigMaps &amp; Secrets (env and volumes)</li>
+<li><code>env</code>, <code>envFrom</code>, <code>valueFrom</code></li>
+<li>Probes: liveness, readiness, startup</li>
+<li>Resource <code>requests</code> and <code>limits</code></li>
+<li><code>initContainers</code></li>
+</ul>
+<hr/>
+<h3 id="3-pod-design-20">3. Pod Design (20%)</h3>
+<ul>
+<li>Deployments, ReplicaSets, Jobs, CronJobs</li>
+<li>Multi-container Pods (sidecar pattern)</li>
+<li>Labels &amp; selectors</li>
+<li>Rolling updates &amp; rollbacks</li>
+</ul>
+<hr/>
+<h3 id="4-multi-container-pods-10">4. Multi-Container Pods (10%)</h3>
+<ul>
+<li>Sharing volumes, network namespace</li>
+<li>Common patterns:</li>
+<li>Sidecar (logging, proxy)</li>
+<li>Adapter (log converter, translator)</li>
+<li>Ambassador (external traffic entrypoint)</li>
+</ul>
+<hr/>
+<h3 id="5-observability-18">5. Observability (18%)</h3>
+<ul>
+<li><code>kubectl logs</code>, <code>describe</code>, <code>top</code></li>
+<li>Events and debugging Pods</li>
+<li>Container exit codes and status</li>
+<li>Custom probes for health checks</li>
+<li>Monitoring concepts (but not setup)</li>
+</ul>
+<hr/>
+<h3 id="6-services-networking-13">6. Services &amp; Networking (13%)</h3>
+<ul>
+<li>ClusterIP, NodePort (no LoadBalancer config needed)</li>
+<li>Headless Services</li>
+<li>DNS-based Pod discovery</li>
+<li>Understanding service selectors</li>
+</ul>
+<hr/>
+<h3 id="7-state-persistence-8">7. State Persistence (8%)</h3>
+<ul>
+<li>Volumes and volumeMounts</li>
+<li>PersistentVolumeClaims (PVCs)</li>
+<li>AccessModes: <code>ReadWriteOnce</code>, <code>ReadOnlyMany</code></li>
+<li>EmptyDir (for temporary scratch space)</li>
+</ul>
+<hr/>
+<h2 id="practice-tips">⚙️ Practice Tips</h2>
+<ul>
+<li>Alias often-used commands:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">k</span><span class="o">=</span>kubectl
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">kgp</span><span class="o">=</span><span class="s1">'kubectl get pods'</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">kaf</span><span class="o">=</span><span class="s1">'kubectl apply -f'</span>
+</span></code></pre></div>
+<ul>
+<li>Use dry-run + output:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>nginx<span class="w"> </span>--image<span class="o">=</span>nginx<span class="w"> </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>yaml
+</span></code></pre></div>
+<ul>
+<li>Practice common configs:</li>
+<li>YAML for Pods with ConfigMap/Secret env vars</li>
+<li>Liveness and readiness probes</li>
+<li>Multi-container Pod with shared volume</li>
+</ul>
+<hr/>
+<h2 id="test-environment-tips">🧪 Test Environment Tips</h2>
+<ul>
+<li>Open docs in one tab, terminal in another</li>
+<li>Bookmark these:</li>
+<li><a href="https://kubernetes.io/docs/tasks/">Tasks</a></li>
+<li><a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/">kubectl Cheat Sheet</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/">Workloads Overview</a></li>
+<li>Use <code>kubectl explain</code> to recall spec fields quickly</li>
+<li>Copy/paste manifest scaffolds from the docs to save time</li>
+</ul>
+<hr/>
+<h2 id="recommended-resources">📚 Recommended Resources</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/">Kubernetes Official Docs</a></li>
+<li><a href="https://killer.sh">Killer.sh Simulator</a></li>
+<li><a href="https://kodekloud.com/p/kubernetes-for-developers/">KodeKloud CKAD Course</a></li>
+<li><a href="https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/">Linux Foundation CKAD Training</a></li>
+<li><a href="https://www.youtube.com/watch?v=d6WC5n9G_sM">YouTube: TechWorld with Nana – CKAD Series</a></li>
+</ul>
 <hr/>
 <h2 id="summary">Summary</h2>
-<p>StatefulSets are essential when:</p>
-<ul>
-<li>Each Pod must retain <strong>identity</strong>, <strong>storage</strong>, and <strong>DNS</strong></li>
-<li>Order of startup or shutdown matters</li>
-<li>Storage must be preserved between Pod rescheduling</li>
-</ul>
-<p>Use them wisely—they’re powerful but can be overkill for stateless services.</p>
+<p>The CKAD exam tests your <strong>Kubernetes fluency as a developer</strong>. You’ll create and configure Pods, manage configs and secrets, debug issues, and expose applications.</p>
+<p>If you’re confident writing manifests and using <code>kubectl</code> with speed, you’re ready to pass.</p>
 
 
 
@@ -1612,7 +1650,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../storage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Storage">
+          <a href="../cka/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CKA">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1622,20 +1660,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Storage
+                CKA
               </div>
             </div>
           </a>
         
         
           
-          <a href="../limits-requests/" class="md-footer__link md-footer__link--next" aria-label="Next: Limits &amp; Requests">
+          <a href="../cks/" class="md-footer__link md-footer__link--next" aria-label="Next: CKS">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Limits & Requests
+                CKS
               </div>
             </div>
             <div class="md-footer__button md-icon">

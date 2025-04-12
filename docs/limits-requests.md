@@ -1,99 +1,75 @@
 ---
-icon: material/speedometer
+icon: material/gauge
 ---
 
-In Kubernetes, **Resource Requests and Limits** allow you to control how much CPU and memory a container is guaranteed to receive, and how much it is allowed to consume at maximum. This is critical for achieving stability, performance, and fairness in shared clusters.
+# Resource Requests & Limits
 
-Resource requests and limits are specified for each container inside a Pod and are supported for the following resources:
-
-- `cpu`
-- `memory` (RAM)
+Kubernetes lets you control how much CPU and memory each container is **guaranteed** and **allowed** to use. This is done through **resource requests** and **limits** in the container spec.
 
 ---
 
-## Resource Requests
+## Requests vs Limits
 
-A **request** defines the **minimum amount** of a resource that a container is guaranteed. The Kubernetes scheduler uses this value to decide **which node** to place the Pod on, ensuring the node has enough available capacity.
+| Term     | Purpose                               | Scheduler Uses? | Enforced at Runtime? |
+|----------|----------------------------------------|------------------|----------------------|
+| `requests` | Minimum resources guaranteed to a container | ✅ Yes           | ❌ No               |
+| `limits`   | Maximum resources a container can use       | ❌ No            | ✅ Yes              |
 
-If a node does not have the requested amount of resources available, the Pod will not be scheduled on that node.
+- **Requests** are used during scheduling. Kubernetes places Pods on nodes that can satisfy their requested resources.
+- **Limits** prevent a container from exceeding a set threshold.
 
-### Example:
+---
+
+## Example: CPU and Memory Settings
 
 ```yaml
 resources:
   requests:
-    memory: "128Mi"
-    cpu: "250m"
-```
-
-This container requests 128Mi of RAM and 250 millicores (0.25 cores) of CPU.
-
----
-
-## Resource Limits
-
-A **limit** defines the **maximum amount** of a resource that a container can use.
-
-- For **CPU**: If a container tries to use more than the limit, it is throttled.
-- For **memory**: If usage exceeds the limit, the container is **terminated (OOMKilled)** and may be restarted.
-
-### Example:
-
-```yaml
-resources:
-  limits:
     memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
     cpu: "500m"
 ```
 
-This restricts the container to a maximum of 256Mi RAM and 0.5 CPU cores.
-
----
-
-## Full Example
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: resource-demo
-spec:
-  containers:
-  - name: app
-    image: nginx
-    resources:
-      requests:
-        memory: "128Mi"
-        cpu: "250m"
-      limits:
-        memory: "256Mi"
-        cpu: "500m"
-```
+This guarantees the container gets **at least 256Mi and 250 millicores**, but it **cannot exceed 512Mi or 500 millicores**.
 
 ---
 
 ## Why It Matters
 
-| Benefit                        | Description                                                                 |
-|-------------------------------|-----------------------------------------------------------------------------|
-| Stable Scheduling             | Requests ensure pods land on nodes with adequate resources                  |
-| Fair Resource Distribution    | Limits prevent one pod from starving others                                 |
-| Cost Efficiency               | Enables autoscaling and bin-packing of workloads                            |
-| Cluster Health                | Prevents runaway containers from overloading nodes                          |
-| Predictable Performance       | Ensures each container has access to enough CPU and memory                  |
+- **Too low requests** → Your Pod may get scheduled on a crowded node and experience performance issues.
+- **No limits** → A container can consume all resources and cause noisy neighbor problems.
+- **Too low limits** → Can result in **OOMKills** or throttled CPU.
+
+---
+
+## CPU Behavior
+
+- If a container exceeds its **CPU limit**, it is throttled — not killed.
+- If you don’t set a limit, the container may consume all available CPU.
+
+---
+
+## Memory Behavior
+
+- If memory **usage exceeds the limit**, the container is killed with an **OOMKill** (Out of Memory).
+- Kubernetes does **not restart it** unless it's part of a higher-level controller (like a Deployment).
 
 ---
 
 ## Best Practices
 
-- Always define both **requests** and **limits** — don't leave them blank.
-- Requests should match expected steady-state usage.
-- Limits should reflect maximum acceptable burst usage.
-- Use **Vertical Pod Autoscaler (VPA)** in dynamic environments.
-- Monitor actual usage with tools like `kubectl top`, Prometheus, or metrics server.
+- Always set both **requests** and **limits** — especially for memory.
+- Set realistic **requests** to ensure proper scheduling.
+- Avoid overly restrictive limits unless you're debugging or need to enforce strict control.
+- Use **LimitRanges** or **ResourceQuotas** to apply default or max values across a namespace.
 
 ---
 
 ## Summary
 
-Defining CPU and memory **requests** and **limits** is essential for building reliable and performant Kubernetes applications. It ensures your containers are scheduled properly, prevents noisy neighbor problems, and keeps your cluster healthy and efficient.
+- **Requests** = what your container is guaranteed
+- **Limits** = the hard ceiling your container can use
+- Kubernetes uses requests for scheduling and limits for enforcement.
+- Proper resource settings help with performance, predictability, and cluster stability.

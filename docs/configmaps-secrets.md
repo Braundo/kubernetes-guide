@@ -1,275 +1,52 @@
 ---
-icon: material/text
+icon: material/key-outline
 ---
 
-# Managing Configuration and Secrets in Kubernetes
+# ConfigMaps & Secrets
 
-Modern applications require dynamic configuration management and secure handling of sensitive data. Kubernetes offers ConfigMaps and Secrets to handle these requirements efficiently, allowing you to decouple configuration from application code and manage sensitive information securely.
+Kubernetes lets you decouple application configuration from container images using two key resources:
 
-## Introduction
+- **ConfigMaps** for non-sensitive data (settings, URLs, etc.)
+- **Secrets** for sensitive data (passwords, tokens, certificates)
 
-In the traditional monolithic application days, environment variables and configurations were bundled up with the application and deployed as one large object. However, in the cloud-native application model it's important to decouple these for many reasons:  
+These resources allow you to define environment-specific values once and reuse them across multiple workloads — improving security, consistency, and portability.
 
-1. **Environment Flexibility**: Decoupling allows the same application to run across different environments (development, staging, production) without code changes. Environment-specific configurations can be applied externally, improving the portability of the application.
-2. **Scalability and Dynamic Management**: When configuration is externalized, it's easier to scale applications horizontally since the configuration can be managed and applied independently. This allows for dynamic reconfiguration in response to changes in load or other factors without redeploying or restarting containers.
-3. **Security and Sensitive Data Handling**: Keeping sensitive configuration data, such as secrets and credentials, separate from the application codebase helps maintain security. It ensures that sensitive data is not exposed within the code and can be securely managed using secrets management tools.
-4. **Continuous Deployment and Rollbacks**: Decoupling facilitates continuous deployment practices by allowing configurations to be updated independently of the application. This separation also simplifies rollback procedures in case a configuration change needs to be reverted without affecting the application version that's running.
-5. **Maintainability and Clarity**: Keeping configuration separate from application code helps maintain a clean codebase and makes it clearer for developers to understand the application logic. It avoids cluttering the application with environment-specific conditionals and settings, making the code easier to maintain and evolve.  
+---
 
-## Understanding ConfigMaps
+## ConfigMaps (Non-Sensitive Configuration)
 
-<h3>What are ConfigMaps?</h3>
+A **ConfigMap** is a key-value store for plain-text configuration. Use it for:
 
-ConfigMaps store non-sensitive configuration data as key-value pairs. They are first-class objects in the Kubernetes API, making them stable and widely supported.
+- Environment-specific settings (`LOG_LEVEL`, `API_BASE_URL`)
+- Hostnames, ports, feature flags
+- Complete config files or CLI arguments
 
-<h3>Use Cases for ConfigMaps</h3>
+### Example
 
-ConfigMaps are ideal for storing configuration data that is not sensitive, such as:
-
-- Environment variables
-- Command-line arguments
-- Configuration files
-
-<h3>Creating and Using ConfigMaps</h3>
-
-ConfigMaps can be created from files, directories, or literal values. Here's an example of creating a ConfigMap from a file:
-
-```sh
-kubectl create configmap my-config --from-file=config.txt
-```
-
-To use a ConfigMap in a Pod, you can reference it in the Pod's configuration:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-spec:
-  containers:
-  - name: my-container
-    image: my-image
-    envFrom:
-    - configMapRef:
-        name: my-config
-```
-
-<h3>Creating ConfigMaps</h3>
-
-ConfigMaps can be created imperatively or declaratively.
-
-<h4>Imperative Creation</h4>
-
-Create a ConfigMap with literal values:
-```sh
-$ kubectl create configmap app-config --from-literal=env=prod --from-literal=debug=false
-```
-
-Create a ConfigMap from a file:
-```sh
-$ kubectl create configmap app-config --from-file=config.properties
-```
-
-<h4>Declarative Creation</h4>
-
-Define a ConfigMap in a YAML file (`configmap.yaml`):
 ```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config
 data:
-  env: prod
-  debug: "false"
+  LOG_LEVEL: debug
+  DB_HOST: db.default.svc.cluster.local
 ```
 
-Apply the YAML file:
-```sh
-$ kubectl apply -f configmap.yaml
-```
+---
 
-<h3>Using ConfigMaps</h3>
+## Secrets (Sensitive Data)
 
-Inject ConfigMap data into Pods using environment variables, command arguments, or volumes.
+**Secrets** are also key-value stores — but intended for private data such as:
 
-<h4>As Environment Variables</h4>
+- Passwords, tokens, and API keys
+- SSH keys or TLS certs
+- Docker registry credentials
 
-Define environment variables in the Pod specification:
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: app-pod
-spec:
-  containers:
-    - name: app-container
-      image: myapp:latest
-      env:
-        - name: ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: env
-        - name: DEBUG
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: debug
-```
+Kubernetes encodes all Secret values in **base64**. Note: this is for transport, not security.
 
-<h4>As Volumes</h4>
+### Example
 
-Mount the ConfigMap as a volume:
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: app-pod
-spec:
-  volumes:
-    - name: config-volume
-      configMap:
-        name: app-config
-  containers:
-    - name: app-container
-      image: myapp:latest
-      volumeMounts:
-        - name: config-volume
-          mountPath: /etc/config
-```
-
-<h3>Kubernetes-Native Applications</h3>
-
-Kubernetes-native applications can access ConfigMap data directly via the API server, simplifying configuration management and reducing dependencies on environment variables or volumes.
-
-## Understanding Secrets
-
-<h3>What are Secrets?</h3>
-
-Secrets store sensitive data such as passwords, tokens, and certificates. They are similar to ConfigMaps but are designed to handle sensitive information securely.
-
-<h3>Are Kubernetes Secrets Secure?</h3>
-
-By default, Kubernetes Secrets are not encrypted in the cluster store or in transit. They are base64-encoded, which is not secure. To enhance security, use additional tools like HashiCorp Vault for better encryption.
-
-<h3>Use Cases for Secrets</h3>
-
-Secrets are used to securely manage sensitive data, including:
-
-- Database credentials
-- API keys
-- TLS certificates
-
-<h3>Creating and Using Secrets</h3>
-
-Secrets can be created imperatively or declaratively. Here's an example of creating a Secret from literal values:
-
-```sh
-kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secret
-```
-
-To use a Secret in a Pod, you can reference it in the Pod's configuration:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-spec:
-  containers:
-  - name: my-container
-    image: my-image
-    envFrom:
-    - secretRef:
-        name: my-secret
-```
-
-<h3>Creating Secrets</h3>
-
-Secrets can also be created imperatively or declaratively.
-
-<h4>Imperative Creation</h4>
-
-Create a Secret with literal values:
-```sh
-$ kubectl create secret generic db-credentials --from-literal=username=dbuser --from-literal=password=securepass
-```
-
-<h4>Declarative Creation</h4>
-
-Define a Secret in a YAML file (`secret.yaml`):
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: db-credentials
-type: Opaque
-data:
-  username: ZGJ1c2Vy
-  password: c2VjdXJlcGFzcw==
-```
-
-Apply the YAML file:
-```sh
-$ kubectl apply -f secret.yaml
-```
-
-<h3>Using Secrets</h3>
-
-Inject Secret data into Pods using environment variables, command arguments, or volumes.
-
-<h4>As Volumes</h4>
-
-Mount the Secret as a volume:
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: app-pod
-spec:
-  volumes:
-    - name: secret-volume
-      secret:
-        secretName: db-credentials
-  containers:
-    - name: app-container
-      image: myapp:latest
-      volumeMounts:
-        - name: secret-volume
-          mountPath: /etc/secret
-```
-
-## Best Practices
-
-- **Separate Sensitive Data:** Always use Secrets for sensitive information to ensure it's not exposed in your code.
-- **Limit Access:** Use Kubernetes RBAC to control access to ConfigMaps and Secrets.
-- **Encrypt Secrets:** Consider using tools like HashiCorp Vault to encrypt Secrets in transit and at rest.
-- **Regularly Rotate Secrets:** Update Secrets regularly to minimize the risk of exposure.
-
-## Hands-On Examples
-
-<h3>Example ConfigMap</h3>
-
-Create a ConfigMap with configuration data:
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: example-config
-data:
-  APP_ENV: "production"
-  APP_DEBUG: "false"
-```
-
-Deploy and inspect the ConfigMap:
-```sh
-$ kubectl apply -f example-config.yaml
-$ kubectl describe configmap example-config
-```
-
-<h3>Example Secret</h3>
-
-Create a Secret with sensitive data:
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -277,16 +54,112 @@ metadata:
   name: db-secret
 type: Opaque
 data:
-  username: ZGJ1c2Vy
-  password: c2VjdXJlcGFzcw==
+  DB_PASSWORD: c3VwZXJzZWNyZXQ=
 ```
 
-Deploy and inspect the Secret:
-```sh
-$ kubectl apply -f db-secret.yaml
-$ kubectl describe secret db-secret
+> ⓘ Decode with: `echo c3VwZXJzZWNyZXQ= | base64 -d`  
+> Use `stringData:` if you want Kubernetes to handle the encoding automatically.
+
+---
+
+## Ways to Use ConfigMaps and Secrets
+
+There are three main ways to expose values inside your Pods:
+
+---
+
+### 1. Environment Variables
+
+Inject all key-value pairs from a ConfigMap or Secret:
+
+```yaml
+envFrom:
+  - configMapRef:
+      name: app-config
+  - secretRef:
+      name: db-secret
 ```
+
+Or reference individual keys:
+
+```yaml
+env:
+  - name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: db-secret
+        key: DB_PASSWORD
+```
+
+---
+
+### 2. Mounted Volumes
+
+Map each key to a file inside the container:
+
+```yaml
+volumes:
+  - name: config-vol
+    configMap:
+      name: app-config
+containers:
+  - name: app
+    volumeMounts:
+      - name: config-vol
+        mountPath: /etc/config
+```
+
+In the container, this results in:
+
+```
+/etc/config/LOG_LEVEL
+/etc/config/DB_HOST
+```
+
+You can do the same for Secrets:
+
+```yaml
+volumes:
+  - name: creds
+    secret:
+      secretName: db-secret
+```
+
+> ⚠️ Secrets mounted as files on disk are **only base64-decoded**. They are **not encrypted** unless you've enabled encryption at rest.
+
+---
+
+### 3. CLI Arguments or Command Overrides
+
+```yaml
+containers:
+  - name: app
+    image: myapp
+    args:
+      - "--log-level=$(LOG_LEVEL)"
+    env:
+      - name: LOG_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            name: app-config
+            key: LOG_LEVEL
+```
+
+---
+
+## Best Practices
+
+- Use **ConfigMaps** for plain-text configuration and **Secrets** for anything private.
+- Use **RBAC** to control access to Secrets.
+- Enable **encryption at rest** for Secret resources (`EncryptionConfiguration`).
+- Avoid committing secrets to Git — even in base64 form.
+- Use tools like **Sealed Secrets**, **Vault**, or **external-secrets** to integrate with cloud-native secrets managers.
+
+---
 
 ## Summary
 
-ConfigMaps and Secrets are essential tools in Kubernetes for managing application configuration and sensitive data. By decoupling configuration from application code and handling sensitive information securely, you can create more flexible, maintainable, and secure applications.
+- **ConfigMaps** store non-sensitive values like app settings and hostnames.
+- **Secrets** store sensitive data like passwords and certificates — encoded, but not encrypted by default.
+- Both can be used via environment variables, mounted volumes, or command overrides.
+- Combine with proper RBAC and encryption settings for production use.

@@ -2,76 +2,128 @@
 icon: material/select
 ---
 
-# Kubernetes Namespaces
+# Namespaces
 
-Namespaces provide a way to divide cluster resources between multiple users. They are intended for use in environments with many users spread across multiple teams, or projects.
+Namespaces in Kubernetes allow you to divide cluster resources between multiple users or teams. They provide **logical isolation** and help with **multi-tenancy**, access control, and resource management.
 
-## Understanding Namespaces
+---
 
-<h3>Purpose of Namespaces</h3>
+## When to Use Namespaces
 
-Namespaces allow you to create multiple virtual clusters within the same physical cluster. They help in organizing and managing resources efficiently.
+Namespaces are useful when:
 
-<h3>Common Use Cases</h3>
+- You need to **isolate environments** (e.g., `dev`, `staging`, `prod`)
+- You want to enforce **resource quotas and limits**
+- You want to implement **RBAC per team or application**
 
-- **Environment Separation:** Separate development, testing, and production environments.
-- **Resource Quotas:** Apply resource limits to different teams or projects.
-- **Access Control:** Implement fine-grained access control using Role-Based Access Control (RBAC).
+> For most small or single-team clusters, the `default` namespace is sufficient.
 
-## Managing Namespaces
+---
 
-<h3>Creating a Namespace</h3>
+## Viewing Namespaces
 
-```sh
-kubectl create namespace dev
-```
-
-<h3>Viewing Namespaces</h3>
-
-```sh
+```shell
 kubectl get namespaces
 ```
 
-<h3>Deleting a Namespace</h3>
+Or with shorthand:
 
-```sh
-kubectl delete namespace dev
+```shell
+kubectl get ns
 ```
 
-<h3>Advanced Namespace Management</h3>
+---
 
-Namespaces can be used to implement advanced management strategies:
-
-- **Network Policies:** Control traffic flow between namespaces to enhance security.
-- **Custom Resource Definitions (CRDs):** Use CRDs to extend namespace capabilities with custom resources.
-- **Monitoring and Logging:** Implement monitoring solutions to track resource usage and access patterns across namespaces.
-
-<h3>Example: Network Policies for Namespaces</h3>
-
-Network policies can be applied to namespaces to control traffic flow. Here's an example:
+## Creating a Namespace
 
 ```yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+apiVersion: v1
+kind: Namespace
 metadata:
-  name: allow-namespace
-  namespace: dev
-spec:
-  podSelector:
-    matchLabels: {}
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: frontend
+  name: dev-team
 ```
 
-This policy allows traffic from Pods in the `frontend` namespace to Pods in the `dev` namespace.
+Apply it:
 
-## Best Practices
+```shell
+kubectl apply -f namespace.yaml
+```
 
-- **Consistent Naming:** Use a consistent naming convention for namespaces.
-- **Limit Resource Usage:** Apply resource quotas and limits to manage resource consumption.
-- **Regular Audits:** Conduct regular audits to ensure compliance with policies.
+---
+
+## Using Namespaces with kubectl
+
+```shell
+kubectl get pods -n dev-team
+kubectl create deployment nginx --image=nginx -n dev-team
+```
+
+To temporarily switch namespace context:
+
+```shell
+kubectl config set-context --current --namespace=dev-team
+```
+
+---
+
+## Default Namespaces
+
+| Namespace     | Purpose                                               |
+|---------------|--------------------------------------------------------|
+| `default`     | Used when no other namespace is specified              |
+| `kube-system` | Kubernetes control plane components (DNS, scheduler)   |
+| `kube-public` | Readable by all users, often used for public bootstrap |
+| `kube-node-lease` | Heartbeats for node status                         |
+
+---
+
+## Namespaced vs Cluster-Scoped Resources
+
+Some resources **must** live in a namespace, others are **cluster-scoped**.
+
+| Namespaced             | Cluster-Scoped            |
+|------------------------|---------------------------|
+| Pods, Deployments, PVCs| Nodes, PersistentVolumes  |
+| ConfigMaps, Secrets    | Namespaces, CRDs          |
+| Services               | StorageClasses, RBAC Roles|
+
+---
+
+## Resource Quotas and Limits
+
+You can **enforce limits** on namespaces using:
+
+- `ResourceQuota`: caps total resources in the namespace
+- `LimitRange`: sets default limits per Pod/container
+
+Example:
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev
+spec:
+  hard:
+    requests.cpu: "2"
+    limits.memory: 4Gi
+```
+
+---
+
+## Cleanup
+
+To delete a namespace and everything inside it:
+
+```shell
+kubectl delete namespace dev-team
+```
+
+---
+
+## Summary
+
+- Namespaces are key to **organizing**, **isolating**, and **managing** Kubernetes resources.
+- Use them for multi-tenancy, RBAC, and resource quotas.
+- Know which resources are namespaced vs. cluster-scoped.

@@ -1,291 +1,110 @@
 ---
-icon: material/security
+icon: material/shield-lock-outline
 ---
 
-# Securing Kubernetes: Authentication, Authorization, and Admission Control
+# Security Primer
 
-Kubernetes security is a critical aspect of managing clusters, ensuring that only authorized users and processes can access and modify resources. This section covers API security, Role-Based Access Control (RBAC), and admission control.
+Kubernetes security isn't just one feature — it's a collection of layered controls designed to protect **clusters**, **workloads**, **data**, and **users**. Understanding how these layers work together is critical to hardening your environment.
 
-## Overview of Kubernetes Security
+---
 
-<h3>The Big Picture</h3>
+## The 4Cs of Kubernetes Security
 
-Kubernetes is API-centric, with the API server as its core component. Every interaction with the cluster, whether from users, Pods, or internal services, goes through the API server. This makes securing the API server paramount.
+Kubernetes security builds on the **4Cs** model:
 
-<h3>Typical API Request Flow</h3>
+1. **Cloud / Infrastructure**
+2. **Cluster**
+3. **Container**
+4. **Code**
 
-A typical API request, such as creating a Deployment, follows these steps:
+Each layer provides opportunities for both defense and attack. Strong security means securing **each level**, not just one.
 
-1. **Authentication:** Verifies the identity of the requester.
-2. **Authorization:** Checks if the authenticated user has permission to perform the action.
-3. **Admission Control:** Ensures the request complies with policies.
+---
 
-## Authentication (AuthN)
+## Common Threat Vectors
 
-<h3>Understanding Authentication</h3>
+| Surface Area        | Risk Example                                 |
+|---------------------|-----------------------------------------------|
+| Misconfigured RBAC  | Users can access or delete sensitive resources|
+| Insecure Pods       | Privileged containers, exposed hostPath       |
+| Unsafe Images       | Vulnerable base images or untrusted sources   |
+| Over-permissive Network | No NetworkPolicy = open lateral movement |
+| Secrets in plain text | Poorly handled sensitive data               |
 
-Authentication (authN) is about proving your identity. Kubernetes does not have a built-in identity database; instead, it integrates with external identity management systems. Common methods include:
+---
 
-- **Client Certificates:** Signed by the cluster's Certificate Authority (CA).
-- **Webhook Token Authentication:** Integrates with external systems.
-- **Service Accounts:** For intra-cluster communication.
+## Key Kubernetes Security Concepts
 
-<h3>Checking Your Authentication Setup</h3>
+Here’s a quick overview of what you’ll encounter in the upcoming sections:
 
-Your cluster's details and user credentials are stored in a `kubeconfig` file, typically located at: `/home/<user>/.kube/config`
+### 🔐 Authentication & Authorization
 
-**Example `kubeconfig` File:**
-```yaml
-apiVersion: v1
-kind: Config
-clusters:
-- cluster:
-    name: prod-eggs
-    server: https://<api-server-url>:443
-    certificate-authority-data: LS0mRS1F...LS0tRj==
-users:
-- name: vinny
-  user:
-    token: FfqwFGF1gASDF4...SZY3uUQ
-contexts:
-- context:
-    name: eggs-admin
-    cluster: prod-eggs
-    user: vinny
-current-context: eggs-admin
-```
+- **Authentication** – Who are you?
+- **Authorization (RBAC)** – What can you do?
+- **Admission Controllers** – Should this action be allowed or mutated?
 
-<h3>Integrating with External IAM Systems</h3>
+These mechanisms protect access to the Kubernetes API and workloads.
 
-Most production clusters integrate with enterprise-grade Identity and Access Management (IAM) systems such as Active Directory or cloud-based IAM solutions, providing robust authentication mechanisms.
+---
 
-## Authorization (AuthZ)
+### 🧱 Pod Security
 
-<h3>Understanding Authorization</h3>
+- Prevent privilege escalation
+- Block host access
+- Apply security contexts
+- Enforce using **Pod Security Admission (PSA)**
 
-Authorization (authZ) determines what actions authenticated users can perform. Kubernetes uses a least-privilege model with deny-by-default, meaning you must explicitly grant permissions.
+---
 
-<h3>Role-Based Access Control (RBAC)</h3>
+### 🕵️‍♂️ Audit Logs
 
-RBAC is a method of regulating access to computer or network resources based on the roles of individual users within your organization. Kubernetes RBAC allows you to dynamically configure policies through the Kubernetes API.
+- Record every API request
+- Help detect suspicious or unauthorized behavior
+- Required for compliance in regulated environments
 
-<h3>Setting Up RBAC</h3>
+---
 
-To set up RBAC, define roles and role bindings in YAML files.
+### 🔍 Image Scanning
 
-**Example Role:**
-```yaml
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  namespace: default
-  name: pod-reader
-rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
-```
+- Analyze container images for known vulnerabilities
+- Prevent deployment of unsafe workloads
+- Tools: Trivy, Grype, Cosign, Clair
 
-**Example RoleBinding:**
-```yaml
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: read-pods
-  namespace: default
-subjects:
-- kind: User
-  name: jane
-  apiGroup: ""
-roleRef:
-  kind: Role
-  name: pod-reader
-  apiGroup: ""
-```
+---
 
-<h3>ClusterRoles and ClusterRoleBindings</h3>
+### 🔐 Secrets Management
 
-ClusterRoles apply to all Namespaces, allowing for broader permissions management.
+- Use `Secret` objects (with encryption at rest)
+- Avoid embedding secrets in images or environment variables
+- Consider sealed secrets or external tools like Vault
 
-**Example ClusterRole:**
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: read-deployments
-rules:
-- verbs: ["get", "watch", "list"]
-  apiGroups: ["apps"]
-  resources: ["deployments"]
-```
+---
 
-<br>
+### 🔒 Network Security
 
-**Example ClusterRoleBinding:**
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: read-deployments
-subjects:
-- kind: User
-  name: jambo
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: ClusterRole
-  name: read-deployments
-  apiGroup: rbac.authorization.k8s.io
-```
+- Use **NetworkPolicies** to restrict Pod-to-Pod traffic
+- Combine with Ingress controllers and TLS
+- Isolate workloads by namespace or label
 
-## Admission Control
+---
 
-<h3>Understanding Admission Controllers</h3>
+## Shift Left: DevSecOps in Kubernetes
 
-Admission controllers are plugins that govern and enforce how the cluster should react to requests. They can be used to set defaults, enforce policies, and perform validations.
+Modern Kubernetes security integrates with CI/CD pipelines:
 
-<h3>Common Admission Controllers</h3>
+- Scan containers during build
+- Validate policies (e.g., with OPA/Gatekeeper)
+- Reject non-compliant resources before deployment
 
-- **NamespaceLifecycle:** Prevents deletion of active namespaces.
-- **LimitRanger:** Enforces resource usage limits.
-- **ResourceQuota:** Ensures resource usage does not exceed specified limits.
-
-<h3>Example: NodeRestriction</h3>
-
-To check admission controllers in your cluster:
-```sh
-$ kubectl describe pod kube-apiserver-docker-desktop -n kube-system | grep admission
---enable-admission-plugins=NodeRestriction
-```
-
-## Certificates and Service Accounts
-
-<h3>Using Client Certificates</h3>
-
-Client certificates authenticate users and services within the cluster. They are stored in the kubeconfig file and verified by the API server.
-
-**Example of creating a client certificate:**
-```sh
-openssl genrsa -out client.key 2048
-openssl req -new -key client.key -out client.csr -subj "/CN=my-user"
-openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -days 365
-```
-
-<h3>Service Accounts</h3>
-
-Service Accounts provide identities for Pods and controllers, enabling secure intra-cluster communication. Unlike user accounts, which are meant for human users, service accounts are intended for processes that run in Pods.
-
-**Example ServiceAccount:**
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: my-service-account
-  namespace: default
-```
-
-<h3>Using a ServiceAccount in a Pod</h3>
-To use a service account in a pod, specify the `serviceAccountName` field in the pod's spec. This binds the pod to the specified service account, allowing the pod to use the account's credentials to authenticate to the API server and other services.
-
-**Example of a Pod using a ServiceAccount:**
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-spec:
-  serviceAccountName: my-service-account
-  containers:
-  - name: my-container
-    image: myimage
-```
-
-## Practical Example
-
-<h3>Deploying a "Secure" Application</h3>
-
-**1. Create a Namespace:**
-   ```sh
-   $ kubectl create namespace secure-app
-   ```
-
-**2. Create a ServiceAccount:**
-
-   ```yaml
-   # serviceaccount.yaml
-   apiVersion: v1
-   kind: ServiceAccount
-   metadata:
-     name: secure-app-sa
-     namespace: secure-app
-   ```
-
-   ```sh
-   $ kubectl apply -f serviceaccount.yaml
-   ```
-
-**3. Deploy a Pod using the ServiceAccount:**
-
-   ```yaml
-   # pod.yaml
-   apiVersion: v1
-   kind: Pod
-   metadata:
-     name: secure-pod
-     namespace: secure-app
-   spec:
-     serviceAccountName: secure-app-sa
-     containers:
-     - name: secure-container
-       image: nginx
-   ```
-   ```sh
-   $ kubectl apply -f pod.yaml
-   ```
-
-**4. Create a Role and RoleBinding:**
-
-   ```yaml
-   # role.yaml
-   apiVersion: rbac.authorization.k8s.io/v1
-   kind: Role
-   metadata:
-     namespace: secure-app
-     name: pod-reader
-   rules:
-   - apiGroups: [""]
-     resources: ["pods"]
-     verbs: ["get", "watch", "list"]
-   ```
-
-   ```yaml
-   # rolebinding.yaml
-   apiVersion: rbac.authorization.k8s.io/v1
-   kind: RoleBinding
-   metadata:
-     name: read-pods
-     namespace: secure-app
-   subjects:
-   - kind: ServiceAccount
-     name: secure-app-sa
-     namespace: secure-app
-   roleRef:
-     kind: Role
-     name: pod-reader
-     apiGroup: rbac.authorization.k8s.io
-   ```
-
-   ```sh
-   $ kubectl apply -f role.yaml
-   $ kubectl apply -f rolebinding.yaml
-   ```
-
-## Best Practices
-
-- **Secure the API Server:** Use TLS to encrypt communication with the API server.
-- **Implement Network Policies:** Control traffic flow between Pods.
-- **Regularly Update Clusters:** Keep Kubernetes and its components up to date.
-- **Use Secrets for Sensitive Data:** Store sensitive information securely using Kubernetes Secrets.
+---
 
 ## Summary
 
-Securing a Kubernetes cluster involves multiple layers of authentication, authorization, and admission control. By understanding and implementing these mechanisms, you can ensure that your cluster is protected from unauthorized access and that all actions comply with defined policies.
+Kubernetes security is broad and layered. The upcoming sections break it down into actionable areas like:
+
+- Pod-level hardening (PSA)
+- Audit and observability
+- Image security and scanning
+- Runtime policies and network controls
+
+Security isn't a checkbox — it's a process. Let’s dig into each piece.

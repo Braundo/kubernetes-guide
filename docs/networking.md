@@ -1,71 +1,82 @@
-## Networking in Kubernetes
+---
+icon: material/lan
+---
 
-Networking is a fundamental aspect of Kubernetes, enabling communication between various components within a cluster and with the outside world. This section covers the Container Network Interface (CNI) and popular CNI plugins, as well as network policies for controlling pod communication.
+# Networking Overview
 
-<h3>Container Network Interface (CNI)</h3>
+Networking in Kubernetes is simple on the surface, but powerful under the hood. Every Pod gets an IP address, Services provide stable endpoints, and the network model enables communication across the entire cluster — often without needing to understand the low-level implementation details.
 
-<h4>What is CNI?</h4>
+---
 
-The Container Network Interface (CNI) is a specification and a set of libraries for configuring network interfaces in Linux containers. It ensures that when a container is created or deleted, its network resources are allocated and cleaned up properly.
+## Core Principles of Kubernetes Networking
 
-<h4>Role of CNI in Kubernetes</h4>
+1. **Each Pod gets a unique IP**
+   - No NAT between Pods
+   - All containers within a Pod share the same network namespace
 
-Kubernetes uses CNI to manage networking for Pods. When a Pod is created, the CNI plugin is responsible for assigning the Pod an IP address, setting up the network interface, and ensuring connectivity both within the cluster and externally.
+2. **All Pods can reach each other**
+   - Flat network model (no IP masquerading between Pods)
 
-<h3>Popular CNI Plugins</h3>
+3. **Services provide stable access to Pods**
+   - Pods are ephemeral — Services give them a consistent IP + DNS name
 
-Several CNI plugins are widely used in Kubernetes environments. Each offers different features and capabilities.
+---
 
-<h4>Calico</h4>
+## Network Abstraction Layers
 
-Calico provides secure network connectivity for containers, virtual machines, and native host-based workloads. It supports a range of features, including:
+| Layer        | Purpose                                   |
+|--------------|--------------------------------------------|
+| **Pod Network** | Every Pod gets an IP, routable in-cluster |
+| **Service**      | Provides a stable endpoint for Pod groups |
+| **Ingress**      | Exposes HTTP/S services externally       |
+| **NetworkPolicy**| Controls traffic between Pods (optional) |
 
-- **Network Policy Enforcement**: Allows you to define and enforce network policies.
-- **BGP for Routing**: Uses Border Gateway Protocol (BGP) for high-performance routing.
-- **IP-in-IP and VXLAN Encapsulation**: Supports various encapsulation methods for different networking needs.
+---
 
-<h4>Flannel</h4>
+## DNS in Kubernetes
 
-Flannel is a simple and easy way to configure a layer 3 network fabric designed for Kubernetes. It creates an overlay network that allows Pods on different nodes to communicate with each other.
+Kubernetes includes built-in **DNS resolution** for:
 
-<h4>Weave Net</h4>
+- Services: `my-service.my-namespace.svc.cluster.local`
+- Pods (not recommended for direct use)
 
-Weave Net provides a simple and secure network for Kubernetes clusters. It supports automatic encryption of Pod traffic and can be used to create a flat network topology.
+DNS is powered by CoreDNS by default, running in the `kube-system` namespace.
 
-<h3>Understanding Overlay Networking in Kubernetes</h3>
-
-Overlay networking is a fundamental concept in Kubernetes that allows for the seamless communication of pods across different nodes within a cluster. This approach abstracts the underlying network infrastructure, providing a virtual network that connects all pods regardless of their physical location.
-
-<h4>Key Components of the Overlay Network</h4>
-
-- **Node Network**: The physical network where the Kubernetes nodes are deployed.
-- **Pod Network**: A logically separate, private CIDR block distinct from the node network.
-
-<h3>Network Policies</h3>
-
-Network Policies allow you to control the communication between Pods. They define rules that specify what traffic is allowed to and from Pods.
-
-<h4>Creating Network Policies</h4>
-
-Network Policies are created using YAML configuration files that specify the allowed traffic.
-
-**Example YAML for Network Policy:**
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-frontend
-spec:
-  podSelector:
-    matchLabels:
-      role: frontend
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          role: backend
+```shell
+nslookup my-service.default.svc.cluster.local
 ```
 
-This configuration allows ingress traffic to Pods with the label "role: frontend" from Pods with the label "role: backend."
+---
+
+## Pod-to-Pod Communication
+
+- All Pods are routable via their internal IP addresses
+- No need for manual port forwarding
+- Backed by a **Container Network Interface (CNI)** plugin (e.g., Calico, Flannel)
+
+---
+
+## Service Types (Covered in next section)
+
+- `ClusterIP` – default; internal-only
+- `NodePort` – exposes via node IP + static port
+- `LoadBalancer` – provision external LB (cloud)
+- `ExternalName` – maps to external DNS
+
+---
+
+## Key Takeaways
+
+- Kubernetes assumes a **flat, open network** where every Pod can talk to every other Pod
+- You don’t need to assign IPs or manage routes — the CNI plugin does that
+- Communication is typically via **Service abstraction**, not direct Pod IPs
+- You can add **NetworkPolicies** to restrict traffic if needed
+
+---
+
+## Summary
+
+- Every Pod gets an IP — networking is **native**, not container-to-container port mapping
+- Services, not Pods, are the preferred way to access applications
+- DNS is built-in and resolves Services by name
+- You don’t manage the network manually — but understanding its behavior is essential
