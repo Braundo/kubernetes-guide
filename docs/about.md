@@ -4,7 +4,7 @@ hide:
 ---
 
 <div class="id-card">
-  <img src="/images/aaron-card.png" class="id-img">
+<img src="/images/aaron-card.png" class="id-img">
 </div>
 
 
