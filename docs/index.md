@@ -1,10 +1,12 @@
 ---
+hide:
+  - navigation
 icon: material/home
 ---
 
 <meta name="google-adsense-account" content="ca-pub-4744916432619667">
 <center>
-    <img src="/images/logo-2025.png" width="55%">
+    <img src="/images/logo-2025.png" width="45%">
 </center>
 <br>
 <br>

@@ -1,5 +1,6 @@
 ---
-icon: material/book-open-variant
+hide:
+  - navigation
 ---
 
 # Kubernetes Certification Preparation

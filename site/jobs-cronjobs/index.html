@@ -12,13 +12,13 @@
         <meta name="author" content="Aaron Braundmeier">
       
       
-        <link rel="canonical" href="https://www.k8s.guide/storage/">
+        <link rel="canonical" href="https://www.k8s.guide/jobs-cronjobs/">
       
       
-        <link rel="prev" href="../configmaps-secrets/">
+        <link rel="prev" href="../helm-package-management/">
       
       
-        <link rel="next" href="../statefulsets/">
+        <link rel="next" href="../init-containers/">
       
       
       <link rel="icon" href="/images/logo.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Storage - Kubernetes Guide</title>
+        <title>Jobs & Cronjobs - Kubernetes Guide</title>
       
     
     
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Storage
+              Jobs & Cronjobs
             
           </span>
         </div>
@@ -243,10 +243,12 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../pods-deployments/" class="md-tabs__link">
           
   
@@ -261,12 +263,10 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../configmaps-secrets/" class="md-tabs__link">
           
   
@@ -450,25 +450,30 @@
       
   
   
+    
   
   
+  
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -479,7 +484,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Workloads
@@ -582,10 +587,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../jobs-cronjobs/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2h12v6l-4 4 4 4v6H6v-6l4-4-4-4zm10 14.5-4-4-4 4V20h8zm-4-5 4-4V4H8v3.5zM10 6h4v.75l-2 2-2-2z"/></svg>
@@ -596,6 +608,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -635,30 +648,25 @@
       
   
   
-    
   
   
-  
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -669,7 +677,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             State & Config
@@ -703,17 +711,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
@@ -724,7 +725,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1267,186 +1267,147 @@
                   
 
 
-<h1 id="mastering-kubernetes-storage">Mastering Kubernetes Storage</h1>
-<p>Storing and retrieving data is crucial for most real-world applications. Kubernetes' persistent volume subsystem allows you to connect to enterprise-grade storage systems that provide advanced data management services such as backup and recovery, replication, and snapshots.</p>
-<h2 id="overview">Overview</h2>
-<p>Kubernetes supports a variety of storage systems, including those from major cloud providers and enterprise-class solutions like EMC and NetApp. This section will cover:</p>
+  <h1>Jobs & Cronjobs</h1>
+
+<p>In Kubernetes, <strong>Jobs</strong> and <strong>CronJobs</strong> are workload resources designed to run tasks that are either one-off (batch jobs) or recurring (scheduled tasks). Unlike Deployments or StatefulSets, Jobs are not intended for long-running applications, but rather for tasks that need to complete successfully once or on a schedule.</p>
+<hr/>
+<h2 id="what-is-a-job">What is a Job?</h2>
+<p>A <strong>Job</strong> is a controller that creates one or more Pods and ensures that a specified number of them successfully terminate. Jobs are useful for batch processing, migrations, cleanup tasks, or data processing pipelines.</p>
+<h3 id="example-use-cases">Example Use Cases:</h3>
 <ul>
-<li>The big picture of Kubernetes storage</li>
-<li>Various storage providers</li>
-<li>The Container Storage Interface (CSI)</li>
-<li>Kubernetes persistent volume subsystem</li>
-<li>Dynamic provisioning with Storage Classes</li>
-<li>Hands-on examples</li>
+<li>Database schema migrations</li>
+<li>Data processing (e.g., ETL tasks)</li>
+<li>One-time background tasks</li>
 </ul>
-<h2 id="the-big-picture">The Big Picture</h2>
-<p>Kubernetes supports different types of storage, such as block, file, and object storage, from various external systems, either in the cloud or on-premises.</p>
-<h3>Types of Storage</h3>
-<ul>
-<li><strong>Block Storage:</strong> Provides raw storage volumes that can be mounted as disks to Pods. Ideal for databases and applications requiring high-performance storage.</li>
-<li><strong>File Storage:</strong> Offers a shared file system that can be mounted by multiple Pods. Suitable for shared data and configuration files.</li>
-<li><strong>Object Storage:</strong> Stores data as objects, often used for unstructured data like media files and backups.</li>
-</ul>
-<h3>High-Level Architecture</h3>
-<p>Storage providers connect to Kubernetes through a plugin layer, often using the Container Storage Interface (CSI). This standardized interface simplifies integrating external storage resources with Kubernetes.</p>
-<h3>Key Components</h3>
-<ul>
-<li><strong>Storage Providers:</strong> External systems providing storage services, like EMC, NetApp, or cloud providers.</li>
-<li><strong>Plugin Layer:</strong> Connects external storage systems with Kubernetes, typically using CSI plugins.</li>
-<li><strong>Kubernetes Persistent Volume Subsystem:</strong> Standardized API objects that allow applications to consume storage easily.</li>
-</ul>
-<h2 id="storage-providers">Storage Providers</h2>
-<p>Kubernetes supports a wide range of external storage systems, each typically providing its own CSI plugin. These plugins are usually installed via Helm charts or YAML installers and run as Pods in the <code>kube-system</code> Namespace.</p>
-<h3>Restrictions</h3>
-<ul>
-<li><strong>Cloud-Specific:</strong> You can't provision and mount GCP volumes if your cluster is on Microsoft Azure.</li>
-<li><strong>Locality:</strong> Pods often need to be in the same region or zone as the storage backend.</li>
-</ul>
-<h2 id="container-storage-interface-csi">Container Storage Interface (CSI)</h2>
-<p>The Container Storage Interface (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems (COS) like Kubernetes. CSI allows for the consistent configuration and management of storage solutions across various container orchestration systems.</p>
-<h3>Benefits of CSI</h3>
-<ul>
-<li><strong>Standardization:</strong> Provides a consistent interface for storage providers, simplifying integration.</li>
-<li><strong>Flexibility:</strong> Supports a wide range of storage solutions and configurations.</li>
-<li><strong>Scalability:</strong> Enables dynamic provisioning and management of storage resources.</li>
-<li><strong>Decoupled Updates:</strong> CSI plugins can be updated independently of Kubernetes releases.</li>
-<li><strong>Broad Compatibility:</strong> CSI plugins work across different orchestration platforms.</li>
-</ul>
-<h3>Installing CSI Plugins</h3>
-<p>Most cloud platforms pre-install CSI plugins for native storage services. Third-party storage systems require manual installation, often available as Helm charts or YAML files.</p>
-<h2 id="persistent-volumes-and-claims">Persistent Volumes and Claims</h2>
-<p>Persistent Volumes (PVs) and Persistent Volume Claims (PVCs) are integral to Kubernetes' storage system, providing a way to manage and consume storage resources.</p>
-<h3>Persistent Volumes (PVs)</h3>
-<p>PVs are cluster-wide storage resources that are provisioned either statically by an administrator or dynamically using Storage Classes. They represent a piece of storage that has been provisioned by an administrator or dynamically created by Kubernetes.</p>
-<ul>
-<li><strong>Static Provisioning:</strong> Administrators manually create PVs, defining the storage details and capabilities.</li>
-<li><strong>Dynamic Provisioning:</strong> Kubernetes automatically provisions storage based on the Storage Class specified in the PVC.</li>
-</ul>
-<h3>Persistent Volume Claims (PVCs)</h3>
-<p>PVCs are requests for storage by users. They consume PV resources and specify the desired storage size and access modes (e.g., ReadWriteOnce, ReadOnlyMany, ReadWriteMany).</p>
-<ul>
-<li><strong>Binding Process:</strong> When a PVC is created, Kubernetes matches it to an available PV based on size and access mode.</li>
-<li><strong>Lifecycle Management:</strong> PVCs allow users to request storage resources without knowing the underlying infrastructure details.</li>
-</ul>
-<h3>Example YAML for PV and PVC</h3>
-<p><strong>Persistent Volume (PV):</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolume</span>
+<h3 id="example-yaml">Example YAML:</h3>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">batch/v1</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Job</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-pv</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data-processing-job</span>
 </span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">capacity</span><span class="p">:</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5Gi</span>
-</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
-</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">  </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span>
-</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
-</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span>
-</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"/mnt/data"</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processor</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-data-processor:latest</span>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"--run-once"</span><span class="p p-Indicator">]</span>
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">      </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
 </span></code></pre></div>
-<p><strong>Persistent Volume Claim (PVC):</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
-</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-pvc</span>
-</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
-</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
-</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
+<hr/>
+<h2 id="what-is-a-cronjob">What is a CronJob?</h2>
+<p>A <strong>CronJob</strong> creates Jobs on a scheduled basis, similar to a Unix cron. It’s perfect for recurring tasks such as cleanup scripts, report generation, or periodic data syncs.</p>
+<h3 id="schedule-format">Schedule Format:</h3>
+<p>The <code>schedule</code> field uses standard cron notation:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>┌───────────── minute (0 - 59)
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>│ ┌───────────── hour (0 - 23)
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>│ │ ┌───────────── day of month (1 - 31)
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>│ │ │ ┌───────────── month (1 - 12)
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>│ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday)
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>│ │ │ │ │
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>│ │ │ │ │
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>│ │ │ │ │
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a>* * * * *
 </span></code></pre></div>
-<h2 id="kubernetes-persistent-volume-subsystem">Kubernetes Persistent Volume Subsystem</h2>
-<p>The Persistent Volume Subsystem in Kubernetes abstracts the underlying storage details, providing a consistent API for users to request and consume storage resources.</p>
-<h3>Key Features</h3>
-<ul>
-<li><strong>Abstraction:</strong> Decouples storage from Pods, allowing for flexible storage management.</li>
-<li><strong>Reclaim Policies:</strong> Defines what happens to a PV when it is released by a PVC (e.g., Retain, Recycle, Delete).</li>
-<li><strong>Access Modes:</strong> Specifies how the volume can be mounted by Pods (e.g., ReadWriteOnce, ReadOnlyMany, ReadWriteMany).</li>
-</ul>
-<h3>Dynamic Provisioning with Storage Classes</h3>
-<p>Storage Classes provide a way to define different classes of storage, enabling dynamic provisioning of storage resources based on predefined parameters.</p>
-<ul>
-<li><strong>Provisioners:</strong> Specify the type of storage backend (e.g., aws-ebs, gce-pd).</li>
-<li><strong>Parameters:</strong> Define specific configurations for the storage backend (e.g., volume type, IOPS).</li>
-</ul>
-<h3>Example YAML for Storage Class</h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
-</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StorageClass</span>
+<h3 id="example-yaml_1">Example YAML:</h3>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">batch/v1</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CronJob</span>
 </span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
-</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/aws-ebs</span>
-</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="nt">parameters</span><span class="p">:</span>
-</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gp2</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log-cleanup</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">"0</span><span class="nv"> </span><span class="s">3</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span><span class="w">  </span><span class="c1"># Every day at 3:00 AM</span>
+</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">  </span><span class="nt">jobTemplate</span><span class="p">:</span>
+</span><span id="__span-2-8"><a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-2-9"><a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">      </span><span class="nt">template</span><span class="p">:</span>
+</span><span id="__span-2-10"><a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">        </span><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-2-11"><a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">          </span><span class="nt">containers</span><span class="p">:</span>
+</span><span id="__span-2-12"><a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cleaner</span>
+</span><span id="__span-2-13"><a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cleaner:latest</span>
+</span><span id="__span-2-14"><a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">            </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"--clean"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"/var/log"</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-15"><a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">          </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
 </span></code></pre></div>
+<hr/>
+<h2 id="key-fields-and-options">Key Fields and Options</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schedule</code></td>
+<td>Cron format string that defines the execution interval</td>
+</tr>
+<tr>
+<td><code>concurrencyPolicy</code></td>
+<td>Controls whether jobs can run concurrently (<code>Allow</code>, <code>Forbid</code>, <code>Replace</code>)</td>
+</tr>
+<tr>
+<td><code>startingDeadlineSeconds</code></td>
+<td>How long to wait before marking a missed job as failed</td>
+</tr>
+<tr>
+<td><code>successfulJobsHistoryLimit</code></td>
+<td>How many successful job runs to keep in history</td>
+</tr>
+<tr>
+<td><code>failedJobsHistoryLimit</code></td>
+<td>How many failed job runs to keep in history</td>
+</tr>
+<tr>
+<td><code>ttlSecondsAfterFinished</code></td>
+<td>Automatically clean up old jobs after this many seconds</td>
+</tr>
+</tbody>
+</table>
+<hr/>
 <h2 id="best-practices">Best Practices</h2>
 <ul>
-<li><strong>Choose the Right Storage Type:</strong> Select block, file, or object storage based on application needs.</li>
-<li><strong>Use Storage Classes:</strong> Leverage dynamic provisioning to simplify storage management.</li>
-<li><strong>Monitor Storage Usage:</strong> Regularly check storage utilization and adjust resources as needed.</li>
-<li><strong>Backup and Recovery:</strong> Implement backup strategies to protect data and ensure recovery.</li>
+<li><strong>Use <code>restartPolicy: OnFailure</code></strong> for Job Pods so they retry if the container fails.</li>
+<li><strong>Set <code>ttlSecondsAfterFinished</code></strong> to avoid clutter from completed Jobs.</li>
+<li><strong>Use <code>concurrencyPolicy: Forbid</code></strong> in CronJobs if jobs must not overlap.</li>
+<li><strong>Set resource limits</strong> to prevent runaway tasks from consuming too much cluster capacity.</li>
 </ul>
-<h2 id="example">Example</h2>
-<p><strong>Example YAML:</strong>
-Below is the high-level flow for creating and using StorageClasses:</p>
-<ol>
-<li>Ensure you have a storage back-end (cloud, on-prem, etc.)</li>
-<li>Have a running Kubernetes cluster</li>
-<li>Install and setup the CSI storage plugin to connect to Kubernetes</li>
-<li>Create at least one StorageClass on Kubernetes</li>
-<li>Deploy Pods with PVCs that reference those Storage classes</li>
-</ol>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
-</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypod</span>
-</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
-</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
-</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">      </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
-</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">        </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypvc</span>
-</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-</span><span id="__span-3-11"><a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-container</span>
-</span><span id="__span-3-12"><a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myimage</span>
-</span><span id="__span-3-13"><a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
-</span><span id="__span-3-14"><a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
-</span><span id="__span-3-15"><a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data</span>
-</span><span id="__span-3-16"><a href="#__codelineno-3-16" id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="nn">---</span>
-</span><span id="__span-3-17"><a href="#__codelineno-3-17" id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-</span><span id="__span-3-18"><a href="#__codelineno-3-18" id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
-</span><span id="__span-3-19"><a href="#__codelineno-3-19" id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-3-20"><a href="#__codelineno-3-20" id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypvc</span>
-</span><span id="__span-3-21"><a href="#__codelineno-3-21" id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-3-22"><a href="#__codelineno-3-22" id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
-</span><span id="__span-3-23"><a href="#__codelineno-3-23" id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-</span><span id="__span-3-24"><a href="#__codelineno-3-24" id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-</span><span id="__span-3-25"><a href="#__codelineno-3-25" id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
-</span><span id="__span-3-26"><a href="#__codelineno-3-26" id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span>
-</span><span id="__span-3-27"><a href="#__codelineno-3-27" id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fast</span>
-</span><span id="__span-3-28"><a href="#__codelineno-3-28" id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="nn">---</span>
-</span><span id="__span-3-29"><a href="#__codelineno-3-29" id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StorageClass</span>
-</span><span id="__span-3-30"><a href="#__codelineno-3-30" id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
-</span><span id="__span-3-31"><a href="#__codelineno-3-31" id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-3-32"><a href="#__codelineno-3-32" id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fast</span>
-</span><span id="__span-3-33"><a href="#__codelineno-3-33" id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd.csi.storage.gke.io</span>
-</span><span id="__span-3-34"><a href="#__codelineno-3-34" id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="nt">parameters</span><span class="p">:</span>
-</span><span id="__span-3-35"><a href="#__codelineno-3-35" id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pd-ssd</span>
-</span></code></pre></div>
-<h2 id="additional-volume-settings">Additional Volume Settings</h2>
-<h3>Access Modes</h3>
-<ul>
-<li><strong>ReadWriteOnce (RWO):</strong> Single PVC can bind to a volume in read-write mode.</li>
-<li><strong>ReadWriteMany (RWM):</strong> Multiple PVCs can bind to a volume in read-write mode.</li>
-<li><strong>ReadOnlyMany (ROM):</strong> Multiple PVCs can bind to a volume in read-only mode.</li>
-</ul>
-<h3>Reclaim Policy</h3>
-<ul>
-<li><strong>Delete:</strong> Deletes PV and external storage when PVC is released.</li>
-<li><strong>Retain:</strong> Keeps PV and external storage when PVC is deleted, requiring manual cleanup.</li>
-</ul>
+<hr/>
 <h2 id="summary">Summary</h2>
-<p>Kubernetes provides a robust storage subsystem that allows applications to dynamically provision and manage storage from various external systems. By leveraging CSI plugins and StorageClasses, you can create flexible and scalable storage solutions tailored to your application's needs.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Job</th>
+<th>CronJob</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One-off</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Scheduled</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Retryable</td>
+<td>✅ (via <code>restartPolicy</code>)</td>
+<td>✅ (inherits Job behavior)</td>
+</tr>
+<tr>
+<td>Cleanup</td>
+<td>Optional with <code>ttlSecondsAfterFinished</code></td>
+<td>Optional with <code>ttlSecondsAfterFinished</code></td>
+</tr>
+<tr>
+<td>Use Case</td>
+<td>Data migration, ETL, cleanup</td>
+<td>Backups, scheduled reports, cleanup</td>
+</tr>
+</tbody>
+</table>
+<p>Use <strong>Jobs</strong> when you need a task to run once until successful. Use <strong>CronJobs</strong> when you need tasks to run on a repeating schedule with optional history and overlap control.</p>
 
 
 
@@ -1487,7 +1448,7 @@ Below is the high-level flow for creating and using StorageClasses:</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../configmaps-secrets/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ConfigMaps &amp; Secrets">
+          <a href="../helm-package-management/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Helm">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1497,20 +1458,20 @@ Below is the high-level flow for creating and using StorageClasses:</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                ConfigMaps & Secrets
+                Helm
               </div>
             </div>
           </a>
         
         
           
-          <a href="../statefulsets/" class="md-footer__link md-footer__link--next" aria-label="Next: StatefulSets">
+          <a href="../init-containers/" class="md-footer__link md-footer__link--next" aria-label="Next: Init Containers">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                StatefulSets
+                Init Containers
               </div>
             </div>
             <div class="md-footer__button md-icon">

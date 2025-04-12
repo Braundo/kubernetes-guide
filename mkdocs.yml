@@ -3,24 +3,37 @@ site_url: https://www.k8s.guide
 site_description: "A comprehensive, easy-to-follow guide for Kubernetes"
 site_author: "Aaron Braundmeier"
 nav:
-  - Home: index.md
-  - Overview: overview.md
-  - Local Setup: local-setup.md
-  - Pods and Deployments: pods-deployments.md
-  - Namespaces: namespaces.md
-  - Services and Networking: services-networking.md
-  - ConfigMaps & Secrets: configmaps-secrets.md
-  - Storage: storage.md
-  - StatefulSets: statefulsets.md
-  - DaemonSets: daemonsets.md
-  - Operators and CRDs: operators-crds.md
-  - Helm: helm-package-management.md
-  - Security and Best Practices: security.md
-  - Kubernetes API: kubernetes-api.md
-  - Troubleshooting: troubleshooting.md
-  - Maintenance: maintenance.md
-  - Certification Preparation: certification-preparation.md
-  - About the Author: about.md
+  - "&nbsp;": index.md
+  - Getting Started: overview.md
+  - Workloads:
+      - Pods & Deployments: pods-deployments.md
+      - DaemonSets: daemonsets.md
+      - Operators & CRDs: operators-crds.md
+      - Helm: helm-package-management.md
+      - Jobs & Cronjobs: jobs-cronjobs.md
+      - Init Containers: init-containers.md
+  - State & Config:
+      - ConfigMaps & Secrets: configmaps-secrets.md
+      - Storage: storage.md
+      - StatefulSets: statefulsets.md
+      - Limits & Requests: limits-requests.md
+      - Env. Variables & Probes: env-var.md
+  - Cluster:
+      - Namespaces: namespaces.md
+      - Kubernetes API: kubernetes-api.md
+      - Quotas & Limits: quotas-limits.md
+  - Networking:
+      - Overview: networking.md
+      - Services: services-networking.md
+  - SecOps:
+    - Security Primer: security.md
+    - Pod Security: psa.md
+    - Audit & Logging: audit-logging.md
+    - Image Scanning & Signing: image-scan-sign.md
+    - Troubleshooting: troubleshooting.md
+    - Maintenance: maintenance.md
+  - Cert Prep: certification-preparation.md
+  - About: about.md
 theme:
   name: material
   custom_dir: overrides
@@ -44,6 +57,9 @@ theme:
         name: Switch to light mode
   features:
     - navigation.top
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
     - navigation.footer
     - navigation.tracking
     - palette.toggle

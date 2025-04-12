@@ -1,5 +1,6 @@
 ---
-icon: material/text-box-search-outline
+hide:
+  - navigation
 ---
 
 ## Introduction to Kubernetes

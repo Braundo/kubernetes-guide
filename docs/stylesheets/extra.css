@@ -2,9 +2,6 @@
     background: #4051b5 !important;
 }
 
-.md-footer {
-    background: #4051b5 !important;
-}
 
 .md-footer-meta {
     display: none;
@@ -43,3 +40,81 @@ h2 {
     display: none;
   }
   
+/* Base font scaling */
+:root {
+    --md-typeset-font-size: 1rem;   /* default is 0.8rem */
+    --md-typeset-line-height: 1.75;
+  }
+
+/* Nav sidebar font size */
+.md-nav {
+    font-size: 0.9rem;
+  }
+  
+  /* TOC font size */
+  .md-nav--secondary {
+    font-size: 0.85rem;
+  }
+
+  /* Increase font size in the top nav bar */
+.md-tabs__link {
+    font-size: 1rem;  /* default is ~0.8rem */
+  }
+
+  @media (min-width: 1024px) {
+    .md-grid {
+      max-width: 95% !important;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  
+  .md-tabs__item--active {
+    font-size: 20px !important;
+    font-weight: 850 !important;
+    color: #D8E3FC;
+    position: relative; /* Allow positioning of the pseudo-element */
+  }
+  
+  .md-tabs__item--active::after {
+    content: ""; /* Creates the underline effect */
+    display: block;
+    width: 100%; /* Span the width of the link */
+    height: 5px; /* Thickness of the underline */
+    background-color: #D8E3FC; /* Adjust to match your active color */
+    color: #D8E3FC !important;
+    position: absolute; /* Position relative to the parent */
+    bottom: 0px; /* Moves the underline lower */
+    left: 0;
+    font-weight: bold !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+  
+  .md-tabs__link:hover {
+    font-size: 20px !important;
+    color: #D8E3FC !important;
+    position: relative; /* Allow positioning of the pseudo-element */
+  }
+
+  /* Increase header logo size */
+.md-header__button.md-logo img {
+  height: 40px !important;  /* You can adjust this up to 48px or so */
+}
+.md-header__button.md-logo {
+  align-items: center !important;
+}
+/* Increase site title font size in the header */
+.md-header__title {
+  font-size: 1.4rem;   /* Default is ~1.1rem — adjust as needed */
+  font-weight: 600;    /* Optional: make it bolder */
+}
+
+.md-header {
+  background-color: #2A2E35 !important;
+}
+
+.md-tabs {
+  background-color: #2A2E35 !important;
+}
