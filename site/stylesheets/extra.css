@@ -133,3 +133,15 @@ h2 {
   padding: 0;
   font-weight: 700;
 }
+
+.id-card {
+  display: inline-block; /* shrink-wrap around image */
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* make border-radius clip the image */
+}
+
+.id-img {
+  width: 280px; /* or 25%, or any size you want */
+  display: block; /* remove inline whitespace gap */
+}
