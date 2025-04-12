@@ -3,6 +3,8 @@ hide:
   - navigation
 ---
 
+<img src="/images/aaron-card.png" width="25%">
+
 My name is Aaron Braundmeier and I've been working in the tech industry for over a decade at companies such as Mastercard, VMware, Broadcom and CVS. I've long been a Kubernetes fan and had the privilege of working hands-on in that space during my time within the [Tanzu](https://tanzu.vmware.com/platform) business unit at VMware. Please note that all opinions and content on this site belong to me and do not reflect the opinions, plans, or designs of any of my current or former employers.
 
 I'm currently hold **Certified Kubernetes Administrator (CKA)** and **Kubernetes and Cloud Native Security Associate (KCSA)** certifications and am always interesting in learning and being hands-on with all things Kubernetes.

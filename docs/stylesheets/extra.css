@@ -73,7 +73,7 @@ h2 {
   .md-tabs__item--active {
     font-size: 20px !important;
     font-weight: 850 !important;
-    color: #D8E3FC;
+    color: #FFFFFF;
     position: relative; /* Allow positioning of the pseudo-element */
   }
   
@@ -82,8 +82,8 @@ h2 {
     display: block;
     width: 100%; /* Span the width of the link */
     height: 5px; /* Thickness of the underline */
-    background-color: #D8E3FC; /* Adjust to match your active color */
-    color: #D8E3FC !important;
+    background-color: #FFFFFF; /* Adjust to match your active color */
+    color: #FFFFFF !important;
     position: absolute; /* Position relative to the parent */
     bottom: 0px; /* Moves the underline lower */
     left: 0;
@@ -93,8 +93,8 @@ h2 {
   }
   
   .md-tabs__link:hover {
-    font-size: 20px !important;
-    color: #D8E3FC !important;
+    
+    color: #FFFFFF !important;
     position: relative; /* Allow positioning of the pseudo-element */
   }
 
@@ -117,4 +117,19 @@ h2 {
 
 .md-tabs {
   background-color: #2A2E35 !important;
+}
+
+/* Flex layout to keep image + h1 on same line */
+.hero-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* spacing between image and h1 */
+}
+
+/* Custom styling for that specific h1 */
+.hero-title h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
 }
