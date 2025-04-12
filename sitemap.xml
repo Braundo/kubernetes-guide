@@ -17,6 +17,18 @@
          <lastmod>2025-04-12</lastmod>
     </url>
     <url>
+         <loc>https://www.k8s.guide/cka/</loc>
+         <lastmod>2025-04-12</lastmod>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/ckad/</loc>
+         <lastmod>2025-04-12</lastmod>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/cks/</loc>
+         <lastmod>2025-04-12</lastmod>
+    </url>
+    <url>
          <loc>https://www.k8s.guide/configmaps-secrets/</loc>
          <lastmod>2025-04-12</lastmod>
     </url>
@@ -65,6 +77,10 @@
          <lastmod>2025-04-12</lastmod>
     </url>
     <url>
+         <loc>https://www.k8s.guide/netpol/</loc>
+         <lastmod>2025-04-12</lastmod>
+    </url>
+    <url>
          <loc>https://www.k8s.guide/networking/</loc>
          <lastmod>2025-04-12</lastmod>
     </url>
@@ -86,6 +102,14 @@
     </url>
     <url>
          <loc>https://www.k8s.guide/quotas-limits/</loc>
+         <lastmod>2025-04-12</lastmod>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/rbac/</loc>
+         <lastmod>2025-04-12</lastmod>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/sec-context/</loc>
          <lastmod>2025-04-12</lastmod>
     </url>
     <url>
