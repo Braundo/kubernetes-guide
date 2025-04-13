@@ -92,6 +92,8 @@ markdown_extensions:
   - admonition
   - abbr
   - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.details
   - pymdownx.snippets
   - pymdownx.inlinehilite

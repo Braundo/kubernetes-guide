@@ -1,6 +1,7 @@
 ---
 hide:
   - navigation
+  - toc
 ---
 
 ## Introduction to Kubernetes
@@ -38,7 +39,7 @@ The declarative nature of Kubernetes is key to understanding its power. At a hig
 
 Kubernetes uses a declarative approach to manage resources. This means you define the desired state of the system and Kubernetes works to maintain that state.
 
-<div style="width: 120%; margin: 0 auto;">
+<div style="width: 100%; margin: 0 auto;">
 ```mermaid
 sequenceDiagram
     participant User
