@@ -154,6 +154,20 @@ h2 {
   background-color: #FFFFFF;
 }
 
+[data-md-color-scheme="default"] .grid.cards li,
+[data-md-color-scheme="default"] .grid.cards .card {
+  background-color: #ffffff;
+}
+
+[data-md-color-scheme="slate"] .grid.cards li,
+[data-md-color-scheme="slate"] .grid.cards .card {
+  background-color: #1B1E25;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
 .grid.cards li {
   perspective: 1000px;
 }
