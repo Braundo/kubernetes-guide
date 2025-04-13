@@ -145,3 +145,66 @@ h2 {
   width: 280px; /* or 25%, or any size you want */
   display: block; /* remove inline whitespace gap */
 }
+
+.grid.cards li, .grid.cards .card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #FFFFFF;
+}
+
+.grid.cards li {
+  perspective: 1000px;
+}
+
+
+.grid.cards img {
+  max-width: 250px;
+  height: auto;
+  margin: 0 auto 16px auto;
+  display: block;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+
+.issuer {
+  font-style: italic; /* Italics */
+  font-size: 0.9em; /* Slightly smaller font size */
+  display: block; /* Ensures the text is on its own line */
+  margin-top: auto !important; /* Push the text to the bottom of the card */
+  text-align: center; /* Center-align the text */
+  font-weight: lighter;
+}  
+
+.cert-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+
+/* Light Mode */
+[data-md-color-scheme="default"] .md-container {
+  background-image: url("/images/dot-grid-light.png");
+  background-repeat: repeat;
+  background-size: 150px auto;
+  background-position: top left;
+}
+
+/* Dark Mode */
+[data-md-color-scheme="slate"] .md-container {
+  background-image: url("/images/dot-grid-dark.png");
+  background-repeat: repeat;
+  background-size: 150px auto;
+  background-position: top left;
+}
+
+.md-nav__title {
+  background-color: #26292e !important; /* dark slate */
+  color: #fff !important;
+}
