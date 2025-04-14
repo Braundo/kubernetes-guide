@@ -568,99 +568,70 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="pods-deployments">Pods &amp; Deployments</h1>
-<p>Pods and Deployments are two of the most essential workload primitives in Kubernetes. Understanding their roles and differences is foundational for working with containerized workloads.</p>
+<p>In Kubernetes, <strong>Pods</strong> are the foundational execution units—everything runs in a Pod. But on their own, Pods aren't typically used directly in production environments. Instead, <strong>Deployments</strong> manage Pods to provide automation, self-healing, and declarative updates.</p>
 <hr/>
-<h2 id="pods-core-execution-unit">Pods (Core Execution Unit)</h2>
-<p>A <strong>Pod</strong> is the smallest deployable unit in Kubernetes. It wraps one or more containers that:</p>
+<h2 id="what-is-a-pod">What is a Pod?</h2>
+<p>A <strong>Pod</strong> is the smallest deployable unit in Kubernetes. It represents one or more containers that share:</p>
 <ul>
-<li>Share the same <strong>network namespace</strong> (they communicate over <code>localhost</code>)</li>
-<li>Can share <strong>volumes</strong></li>
-<li>Are scheduled and executed together on the same node</li>
+<li>The same <strong>network namespace</strong> (IP address and port space).</li>
+<li>A shared <strong>storage volume</strong> (if defined).</li>
+<li>The same <strong>lifecycle</strong> (they are scheduled and managed together).</li>
 </ul>
-<p>Most Pods run a <strong>single container</strong>, but Kubernetes allows multi-container Pods when containers need to be tightly coupled.</p>
-<h3 id="pod-structure">Pod Structure</h3>
+<p>Typically, a Pod contains a <strong>single container</strong>, but multi-container Pods are used when tightly coupled containers need to share resources, such as a sidecar pattern.</p>
+<p><strong>Key traits of Pods</strong>:</p>
+<ul>
+<li>Pods are ephemeral and disposable.</li>
+<li>Pods do not self-heal if they crash or are evicted.</li>
+<li>Pods are bound to a specific Node until terminated.</li>
+</ul>
+<p><img alt="Multi-container Diagram" src="../images/multicontainer-light.png#only-light">
+<img alt="Multi-container Diagram" src="../images/multicontainer-dark.png#only-dark"/></img></p>
 <pre class="mermaid"><code>flowchart TD 
-subgraph "Pod"
-    subgraph "container"
-    H["application"]
-    end
+    subgraph "Pod"
+        subgraph "container"
+        H["application"]
+        end
     end</code></pre>
 <hr/>
-<h3 id="multi-container-pods">Multi-Container Pods</h3>
-<p>Multi-container Pods are used in scenarios like sidecars (e.g. logging agents, proxies) or helper containers that share resources.</p>
-<p><img alt="Multi-container Diagram" src="../images/multicontainer-light.png#only-light"><br/>
-<img alt="Multi-container Diagram" src="../images/multicontainer-dark.png#only-dark"/></img></p>
-<hr/>
-<h3 id="minimal-pod-example">Minimal Pod Example</h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
-</span></code></pre></div>
-<p>Pods are <strong>ephemeral</strong> — they are not automatically replaced if they crash unless managed by a controller.</p>
-<hr/>
-<h2 id="deployments-lifecycle-scaling">Deployments (Lifecycle + Scaling)</h2>
-<p>A <strong>Deployment</strong> manages a ReplicaSet, which ensures that a specified number of Pods are running at all times. It enables:</p>
+<h2 id="what-is-a-deployment">What is a Deployment?</h2>
+<p>A <strong>Deployment</strong> is a higher-level Kubernetes resource that manages a ReplicaSet, which in turn manages the lifecycle of multiple identical Pods.</p>
+<p>With Deployments, you get:</p>
 <ul>
-<li><strong>Declarative replica management</strong></li>
-<li><strong>Rolling updates and rollbacks</strong></li>
-<li><strong>Self-healing</strong>: dead Pods are replaced automatically</li>
+<li>Declarative management of Pod replicas</li>
+<li>Rolling updates and rollbacks</li>
+<li>Auto-replacement of failed Pods</li>
+<li>Declarative versioning of your app</li>
 </ul>
-<h3 id="minimal-deployment-example">Minimal Deployment Example</h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
-</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
-</span></code></pre></div>
+<p>You define the desired state in a <code>Deployment</code> YAML file, and the Kubernetes control plane ensures that the running state matches it.</p>
 <hr/>
-<h2 id="pod-vs-deployment-quick-comparison">Pod vs Deployment: Quick Comparison</h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Pod</th>
-<th>Deployment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Use case</td>
-<td>Debug, sidecars</td>
-<td>Production workloads</td>
-</tr>
-<tr>
-<td>Scales automatically</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Replaces failed Pod</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Rolling updates</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Manages replicas</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-</tbody>
-</table>
-<hr/>
-<h2 id="summary">Summary</h2>
+<h2 id="relationship-between-pods-and-deployments">Relationship Between Pods and Deployments</h2>
+<p>Think of it this way:</p>
 <ul>
-<li>Use <strong>Pods</strong> for simple or coupled workloads (e.g. sidecars).</li>
-<li>Use <strong>Deployments</strong> for scalable, self-healing applications with rolling updates.</li>
-<li>Avoid managing standalone Pods in production — Deployments are the standard controller for most apps.</li>
+<li>A <strong>Pod</strong> is like a single soldier.</li>
+<li>A <strong>Deployment</strong> is the commanding officer ensuring there are always a certain number of those soldiers available, healthy, and working.</li>
+</ul>
+<p><strong>A Deployment always manages Pods</strong>—you never run a Deployment without Pods.</p>
+<p>When you apply a Deployment spec:</p>
+<ol>
+<li>Kubernetes creates a <strong>ReplicaSet</strong>.</li>
+<li>The ReplicaSet creates the desired number of <strong>Pods</strong>.</li>
+<li>If any Pod dies, the ReplicaSet spawns a replacement.</li>
+</ol>
+<hr/>
+<h2 id="when-to-use-what">When to Use What?</h2>
+<ul>
+<li><strong>Use Pods directly</strong>:</li>
+<li>In static dev/test environments.</li>
+<li>For one-off jobs (though <code>Job</code> is preferred).</li>
+<li>
+<p>For simple single-Pod debugging.</p>
+</li>
+<li>
+<p><strong>Use Deployments</strong>:</p>
+</li>
+<li>Always, for production services.</li>
+<li>When you need replication, availability, and self-healing.</li>
+<li>If you plan to roll out updates with zero downtime.</li>
 </ul>
 </article>
 </div>
