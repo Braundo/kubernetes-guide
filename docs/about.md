@@ -16,7 +16,7 @@ I'm currently working on attaining [Kubestronaut](https://www.cncf.io/training/k
 
 - [x] Certified Kubernetes Administrator (CKA)
 - [x] Kubernetes Certified Security Associate (KCSA)
-- [ ] Kubernetes and Cloud Native Associate (KCNA)
+- [x] Kubernetes and Cloud Native Associate (KCNA)
 - [ ] Certified Kubernetes Security Specialist (CKS)
 - [ ] Certified Kubernetes Application Developer (CKAD)
 
@@ -47,6 +47,15 @@ If you're interested in connecting, I can be reached in the following ways:
     <hr />
     <a href="https://www.credly.com/badges/59a4a303-bc31-41c6-bc9f-fbc2da719f39/public_url" target="_blank">
       <img src="/images/kcsa.png">
+    </a>
+    <span class="issuer">Issuer: The Linux Foundation</span>
+  </div>
+
+  <div class="card">
+    <div class="cert-title">Kubernetes and Cloud Native Associate</div>
+    <hr />
+    <a href="https://www.credly.com/badges/e21d80a7-b787-4731-b731-b8cff94f7815/public_url" target="_blank">
+      <img src="/images/kcna.png">
     </a>
     <span class="issuer">Issuer: The Linux Foundation</span>
   </div>
