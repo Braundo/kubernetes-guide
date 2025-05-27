@@ -1456,10 +1456,10 @@
                   
 
 
-<h1 id="resource-requests-limits">Resource Requests &amp; Limits</h1>
+<h1>Resource Requests &amp; Limits</h1>
 <p>Kubernetes lets you control how much CPU and memory each container is <strong>guaranteed</strong> and <strong>allowed</strong> to use. This is done through <strong>resource requests</strong> and <strong>limits</strong> in the container spec.</p>
 <hr/>
-<h2 id="requests-vs-limits">Requests vs Limits</h2>
+<h2>Requests vs Limits</h2>
 <table>
 <thead>
 <tr>
@@ -1489,7 +1489,7 @@
 <li><strong>Limits</strong> prevent a container from exceeding a set threshold.</li>
 </ul>
 <hr/>
-<h2 id="example-cpu-and-memory-settings">Example: CPU and Memory Settings</h2>
+<h2>Example: CPU and Memory Settings</h2>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">resources</span><span class="p">:</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"256Mi"</span>
@@ -1500,39 +1500,40 @@
 </span></code></pre></div>
 <p>This guarantees the container gets <strong>at least 256Mi and 250 millicores</strong>, but it <strong>cannot exceed 512Mi or 500 millicores</strong>.</p>
 <hr/>
-<h2 id="why-it-matters">Why It Matters</h2>
+<h2>Why It Matters</h2>
 <ul>
 <li><strong>Too low requests</strong> → Your Pod may get scheduled on a crowded node and experience performance issues.</li>
 <li><strong>No limits</strong> → A container can consume all resources and cause noisy neighbor problems.</li>
 <li><strong>Too low limits</strong> → Can result in <strong>OOMKills</strong> or throttled CPU.</li>
 </ul>
 <hr/>
-<h2 id="cpu-behavior">CPU Behavior</h2>
+<h2>CPU Behavior</h2>
 <ul>
-<li>If a container exceeds its <strong>CPU limit</strong>, it is throttled — not killed.</li>
+<li>If a container exceeds its <strong>CPU limit</strong>, it is throttled—not killed.</li>
 <li>If you don’t set a limit, the container may consume all available CPU.</li>
 </ul>
 <hr/>
-<h2 id="memory-behavior">Memory Behavior</h2>
+<h2>Memory Behavior</h2>
 <ul>
 <li>If memory <strong>usage exceeds the limit</strong>, the container is killed with an <strong>OOMKill</strong> (Out of Memory).</li>
 <li>Kubernetes does <strong>not restart it</strong> unless it's part of a higher-level controller (like a Deployment).</li>
 </ul>
 <hr/>
-<h2 id="best-practices">Best Practices</h2>
+<h2>Best Practices</h2>
 <ul>
 <li>Always set both <strong>requests</strong> and <strong>limits</strong> — especially for memory.</li>
 <li>Set realistic <strong>requests</strong> to ensure proper scheduling.</li>
 <li>Avoid overly restrictive limits unless you're debugging or need to enforce strict control.</li>
-<li>Use <strong>LimitRanges</strong> or <strong>ResourceQuotas</strong> to apply default or max values across a namespace.</li>
+<li>Use <strong>LimitRanges</strong> to enforce defaults and maximums in namespaces.</li>
+<li>Monitor Pod and Node usage to tune your settings.</li>
+<li>Set realistic requests and limits for every container. This keeps your cluster healthy and prevents resource hogs or accidental outages.</li>
 </ul>
 <hr/>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <ul>
-<li><strong>Requests</strong> = what your container is guaranteed</li>
-<li><strong>Limits</strong> = the hard ceiling your container can use</li>
-<li>Kubernetes uses requests for scheduling and limits for enforcement.</li>
-<li>Proper resource settings help with performance, predictability, and cluster stability.</li>
+<li><strong>Requests</strong> guarantee a minimum amount of resources for a container.</li>
+<li><strong>Limits</strong> cap the maximum resources a container can use.</li>
+<li>Always set both for predictable, stable workloads.</li>
 </ul>
 
 

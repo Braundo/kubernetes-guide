@@ -1456,10 +1456,10 @@
                   
 
 
-<h1 id="networking-overview">Networking Overview</h1>
+<h1>Networking Overview</h1>
 <p>Networking in Kubernetes is simple on the surface, but powerful under the hood. Every Pod gets an IP address, Services provide stable endpoints, and the network model enables communication across the entire cluster — often without needing to understand the low-level implementation details.</p>
 <hr/>
-<h2 id="core-principles-of-kubernetes-networking">Core Principles of Kubernetes Networking</h2>
+<h2>Core Principles of Kubernetes Networking</h2>
 <ol>
 <li><strong>Each Pod gets a unique IP</strong></li>
 <li>No NAT between Pods</li>
@@ -1478,7 +1478,7 @@
 <li>Pods are ephemeral — Services give them a consistent IP + DNS name</li>
 </ol>
 <hr/>
-<h2 id="network-abstraction-layers">Network Abstraction Layers</h2>
+<h2>Network Abstraction Layers</h2>
 <table>
 <thead>
 <tr>
@@ -1506,7 +1506,7 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="dns-in-kubernetes">DNS in Kubernetes</h2>
+<h2>DNS in Kubernetes</h2>
 <p>Kubernetes includes built-in <strong>DNS resolution</strong> for:</p>
 <ul>
 <li>Services: <code>my-service.my-namespace.svc.cluster.local</code></li>
@@ -1526,26 +1526,21 @@
 <h2 id="service-types-covered-in-next-section">Service Types (Covered in next section)</h2>
 <ul>
 <li><code>ClusterIP</code> – default; internal-only</li>
-<li><code>NodePort</code> – exposes via node IP + static port</li>
-<li><code>LoadBalancer</code> – provision external LB (cloud)</li>
-<li><code>ExternalName</code> – maps to external DNS</li>
+<li><code>NodePort</code> – exposes on every node</li>
+<li><code>LoadBalancer</code> – cloud provider external IP</li>
+<li><code>ExternalName</code> – DNS alias</li>
 </ul>
 <hr/>
-<h2 id="key-takeaways">Key Takeaways</h2>
+<h2>Summary</h2>
 <ul>
-<li>Kubernetes assumes a <strong>flat, open network</strong> where every Pod can talk to every other Pod</li>
-<li>You don’t need to assign IPs or manage routes — the CNI plugin does that</li>
-<li>Communication is typically via <strong>Service abstraction</strong>, not direct Pod IPs</li>
-<li>You can add <strong>NetworkPolicies</strong> to restrict traffic if needed</li>
+<li>Kubernetes networking gives every Pod a unique IP and makes service discovery simple.</li>
+<li>All Pods can talk to each other by default—use NetworkPolicies to restrict if needed.</li>
+<li>Understanding the network model is key for debugging, scaling, and securing your apps.</li>
 </ul>
-<hr/>
-<h2 id="summary">Summary</h2>
-<ul>
-<li>Every Pod gets an IP — networking is <strong>native</strong>, not container-to-container port mapping</li>
-<li>Services, not Pods, are the preferred way to access applications</li>
-<li>DNS is built-in and resolves Services by name</li>
-<li>You don’t manage the network manually — but understanding its behavior is essential</li>
-</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use DNS names for service discovery, and always test network policies and connectivity in staging before rolling out to production.</p>
+</div>
 
 
 

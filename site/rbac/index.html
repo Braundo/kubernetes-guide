@@ -1456,12 +1456,12 @@
                   
 
 
-<h1 id="rbac-role-based-access-control">RBAC (Role-Based Access Control)</h1>
-<p>RBAC controls <strong>who can do what</strong> in your Kubernetes cluster. It defines <strong>permissions to access the Kubernetes API</strong>, and is critical for securing multi-user environments.</p>
+<h1>RBAC (Role-Based Access Control)</h1>
+<p>RBAC controls <strong>who can do what</strong> in your Kubernetes cluster. It sets permissions for accessing the Kubernetes API and is essential for securing clusters with multiple users or teams.</p>
 <hr/>
-<h2 id="core-concepts">Core Concepts</h2>
-<p>Kubernetes RBAC works by <strong>granting verbs on resources</strong> to users or service accounts.</p>
-<h3 id="rbac-objects">RBAC Objects</h3>
+<h2>Core Concepts</h2>
+<p>Kubernetes RBAC grants specific actions (verbs) on resources to users or service accounts.</p>
+<h3>RBAC Objects</h3>
 <table>
 <thead>
 <tr>
@@ -1480,16 +1480,16 @@
 </tr>
 <tr>
 <td><code>RoleBinding</code></td>
-<td>Assigns a Role to a user or group in a namespace</td>
+<td>Assigns a Role to a user/group in a namespace</td>
 </tr>
 <tr>
 <td><code>ClusterRoleBinding</code></td>
-<td>Assigns a ClusterRole to a user or group across all namespaces</td>
+<td>Assigns a ClusterRole to a user/group across all namespaces</td>
 </tr>
 </tbody>
 </table>
 <hr/>
-<h2 id="example-read-only-role-in-a-namespace">Example: Read-Only Role in a Namespace</h2>
+<h2>Example: Read-Only Role in a Namespace</h2>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Role</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1500,7 +1500,7 @@
 </span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"pods"</span><span class="p p-Indicator">]</span>
 </span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">verbs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"get"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"list"</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
-<h3 id="binding-the-role">Binding the Role</h3>
+<h3>Binding the Role</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RoleBinding</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1514,9 +1514,9 @@
 </span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod-reader</span>
 </span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
 </span></code></pre></div>
-<p>This lets <code>alice</code> <strong>read pods in the <code>dev</code> namespace</strong> only.</p>
+<p>This lets <code>alice</code> read pods in the <code>dev</code> namespace only.</p>
 <hr/>
-<h2 id="cluster-wide-example">Cluster-Wide Example</h2>
+<h2>Cluster-Wide Example</h2>
 <p>To give a user full access to nodes and persistent volumes across the cluster:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">rules</span><span class="p">:</span>

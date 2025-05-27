@@ -570,7 +570,7 @@
 <h1 id="init-containers">Init Containers</h1>
 <p><strong>Init containers</strong> run before regular containers in a Pod start. They’re designed to perform setup tasks that need to complete before your main application launches — like setting config values, creating folders, or waiting for external services.</p>
 <hr/>
-<h2 id="why-use-init-containers">Why Use Init Containers?</h2>
+<h2>Why Use Init Containers?</h2>
 <ul>
 <li>Wait for a database or service to become available</li>
 <li>Download configuration or secrets from an external source</li>
@@ -604,7 +604,7 @@
 </span></code></pre></div>
 <p>This init container waits for a database service to be reachable on port 5432 before allowing the main container to start.</p>
 <hr/>
-<h2 id="key-differences-vs-regular-containers">Key Differences vs Regular Containers</h2>
+<h2>Key Differences vs Regular Containers</h2>
 <table>
 <thead>
 <tr>
@@ -637,8 +637,14 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <p>Init containers are a built-in way to prepare your environment before your app runs. They help keep your main containers focused and clean by offloading setup logic. Use them to wait on dependencies, perform one-time actions, or enforce startup ordering.</p>
+<ul>
+<li><strong>Init containers</strong> run before your main app, handling setup and dependencies.</li>
+<li>Use them for waiting on services, running migrations, or any pre-launch logic.</li>
+<li>They run sequentially and must succeed before your main containers start.</li>
+</ul>
+<hr/>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

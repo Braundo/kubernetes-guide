@@ -1460,7 +1460,7 @@
 
 <p>Kubernetes allows you to configure runtime behavior of containers using <strong>environment variables</strong>, and to monitor their health using <strong>liveness</strong> and <strong>readiness probes</strong>. These features are essential for building reliable, configurable, and observable applications in the cluster.</p>
 <hr/>
-<h2 id="environment-variables">Environment Variables</h2>
+<h2>Environment Variables</h2>
 <p>You can pass key-value pairs into containers using environment variables. These can be hardcoded, referenced from ConfigMaps, Secrets, or even dynamically derived from field references.</p>
 <h3 id="static-environment-variables">Static Environment Variables</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">env</span><span class="p">:</span>
@@ -1542,10 +1542,15 @@
 <li>Use <strong>startup probes</strong> for slow-starting applications.</li>
 <li>Avoid setting <code>initialDelaySeconds</code> too low — allow the app to start first.</li>
 <li>Prefer HTTP or command probes for rich diagnostics.</li>
+<li>Avoid hardcoding values inside your images. Use environment variables, ConfigMaps, and Secrets for maximum flexibility and security.</li>
 </ul>
 <hr/>
-<h2 id="summary">Summary</h2>
-<p>Environment variables allow you to make your containerized applications configurable without rebuilding images. Probes give Kubernetes insight into the health and lifecycle of your applications, enabling smart traffic routing and automated restarts. Together, these tools form the backbone of robust and production-ready workloads.</p>
+<h2>Summary</h2>
+<ul>
+<li><strong>Environment variables</strong> make your containers configurable and portable.</li>
+<li>Use ConfigMaps and Secrets for dynamic or sensitive values.</li>
+<li>Probes help keep your apps healthy and ready for traffic.</li>
+</ul>
 
 
 

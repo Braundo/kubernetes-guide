@@ -1461,7 +1461,7 @@
 <p><strong>Pod Security Admission (PSA)</strong> is the built-in mechanism in Kubernetes for enforcing security standards on Pods at the API level. Introduced in Kubernetes v1.22 and stable in v1.25, it replaced the deprecated PodSecurityPolicy (PSP) feature.</p>
 <p>PSA evaluates Pod specifications during creation or update and applies policy controls based on predefined security profiles.</p>
 <hr/>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2>Key Concepts</h2>
 <p>PSA is implemented as an <strong>admission controller</strong> that checks incoming Pod specs and enforces or audits their compliance with a chosen security profile.</p>
 <p>There are <strong>three policy levels</strong>, each defining a different set of security requirements:</p>
 <table>
@@ -1510,9 +1510,9 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="configuring-psa">Configuring PSA</h2>
+<h2>Configuring PSA</h2>
 <p>PSA is enabled by default in modern Kubernetes clusters. You can configure policy levels on a <strong>per-namespace</strong> basis using labels.</p>
-<h3 id="example-apply-restricted-policy-with-all-modes">Example: Apply <code>restricted</code> policy with all modes</h3>
+<h3>Example: Apply <code>restricted</code> policy with all modes</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class="w"> </span>secure-ns<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span>pod-security.kubernetes.io/enforce<span class="o">=</span>restricted<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span>pod-security.kubernetes.io/enforce-version<span class="o">=</span>latest<span class="w"> </span><span class="se">\</span>
@@ -1523,7 +1523,7 @@
 </span></code></pre></div>
 <p>This enforces, audits, and warns against any pod that doesn’t meet the <code>restricted</code> policy level.</p>
 <hr/>
-<h2 id="policy-examples">Policy Examples</h2>
+<h2>Policy Examples</h2>
 <p>Here are a few settings disallowed at each level:</p>
 <table>
 <thead>
@@ -1561,7 +1561,17 @@
 </tr>
 </tbody>
 </table>
-<p>For full definitions, refer to the Kubernetes Pod Security Standards.</p>
+<hr/>
+<h2>Summary</h2>
+<ul>
+<li><strong>Pod Security Admission (PSA)</strong> enforces security standards for Pods at the API level.</li>
+<li>Use PSA to prevent risky Pod configurations and enforce best practices per namespace.</li>
+<li>Choose the right policy level and mode for your environment.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Start with <code>baseline</code> or <code>restricted</code> in new namespaces, and use <code>audit</code> and <code>warn</code> modes to monitor for violations before enforcing.</p>
+</div>
 <hr/>
 <h2 id="when-to-use-each-profile">When to Use Each Profile</h2>
 <table>
@@ -1590,18 +1600,6 @@
 </tr>
 </tbody>
 </table>
-<hr/>
-<h2 id="best-practices">Best Practices</h2>
-<ul>
-<li>Apply PSA labels early in your cluster setup.</li>
-<li>Use <code>audit</code> and <code>warn</code> modes first to test compliance before enforcing.</li>
-<li>Combine PSA with RBAC and admission webhooks for layered security.</li>
-<li>Use <code>kubectl run</code> and <code>kubectl apply</code> in secure ways to avoid bypassing policy checks.</li>
-<li>Regularly review and adjust policy levels as your workloads evolve.</li>
-</ul>
-<hr/>
-<h2 id="summary">Summary</h2>
-<p>Pod Security Admission (PSA) provides a native, stable way to enforce pod-level security standards in Kubernetes. By labeling namespaces with the appropriate levels and modes, you can create secure boundaries around workloads and minimize exposure to unsafe configurations.</p>
 
 
 

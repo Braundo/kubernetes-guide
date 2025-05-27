@@ -1456,20 +1456,23 @@
                   
 
 
-<h1 id="security-primer">Security Primer</h1>
-<p>Kubernetes security isn't just one feature — it's a collection of layered controls designed to protect <strong>clusters</strong>, <strong>workloads</strong>, <strong>data</strong>, and <strong>users</strong>. Understanding how these layers work together is critical to hardening your environment.</p>
+<h1>Security Primer</h1>
+<p>Kubernetes security is like building a fortress with many walls—each layer protects your cluster, workloads, data, and users. Understanding how these layers work together is the key to a secure environment.</p>
 <hr/>
-<h2 id="the-4cs-of-kubernetes-security">The 4Cs of Kubernetes Security</h2>
-<p>Kubernetes security builds on the <strong>4Cs</strong> model:</p>
+<h2>The 4Cs of Kubernetes Security</h2>
+<p>Kubernetes security is built on the <strong>4Cs</strong> model:</p>
 <ol>
 <li><strong>Cloud / Infrastructure</strong></li>
 <li><strong>Cluster</strong></li>
 <li><strong>Container</strong></li>
 <li><strong>Code</strong></li>
 </ol>
-<p>Each layer provides opportunities for both defense and attack. Strong security means securing <strong>each level</strong>, not just one.</p>
+<blockquote>
+<p><strong>Analogy:</strong> Think of the 4Cs as security gates: each one must be strong to keep your cluster safe.</p>
+</blockquote>
+<p>Each layer is an opportunity for both defense and attack. True security means securing <strong>every</strong> level.</p>
 <hr/>
-<h2 id="common-threat-vectors">Common Threat Vectors</h2>
+<h2>Common Threat Vectors</h2>
 <table>
 <thead>
 <tr>
@@ -1500,18 +1503,21 @@
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>Tip:</strong> Most real-world incidents result from misconfigurations, not zero-day exploits.</p>
+</blockquote>
 <hr/>
-<h2 id="key-kubernetes-security-concepts">Key Kubernetes Security Concepts</h2>
-<p>Here’s a quick overview of what you’ll encounter in the upcoming sections:</p>
-<h3 id="authentication-authorization">🔐 Authentication &amp; Authorization</h3>
+<h2>Key Kubernetes Security Concepts</h2>
+<p>Quick overview of what matters most:</p>
+<h3>🔐 Authentication &amp; Authorization</h3>
 <ul>
-<li><strong>Authentication</strong> – Who are you?</li>
-<li><strong>Authorization (RBAC)</strong> – What can you do?</li>
-<li><strong>Admission Controllers</strong> – Should this action be allowed or mutated?</li>
+<li><strong>Authentication</strong>: Who are you?</li>
+<li><strong>Authorization (RBAC)</strong>: What are you allowed to do?</li>
+<li><strong>Admission Controllers</strong>: Should this action be allowed or changed?</li>
 </ul>
-<p>These mechanisms protect access to the Kubernetes API and workloads.</p>
+<p>These protect access to the Kubernetes API and workloads.</p>
 <hr/>
-<h3 id="pod-security">🧱 Pod Security</h3>
+<h3>🧱 Pod Security</h3>
 <ul>
 <li>Prevent privilege escalation</li>
 <li>Block host access</li>
@@ -1519,7 +1525,7 @@
 <li>Enforce using <strong>Pod Security Admission (PSA)</strong></li>
 </ul>
 <hr/>
-<h3 id="audit-logs">🕵️‍♂️ Audit Logs</h3>
+<h3>🕵️‍♂️ Audit Logs</h3>
 <ul>
 <li>Record every API request</li>
 <li>Help detect suspicious or unauthorized behavior</li>
@@ -1563,7 +1569,9 @@
 <li>Image security and scanning</li>
 <li>Runtime policies and network controls</li>
 </ul>
-<p>Security isn't a checkbox — it's a process. Let’s dig into each piece.</p>
+<p><br/>
+Security isn't a checkbox — it's a process. Let’s dig into each piece.
+<br/></p>
 
 
 

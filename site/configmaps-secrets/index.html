@@ -1456,22 +1456,20 @@
                   
 
 
-<h1 id="configmaps-secrets">ConfigMaps &amp; Secrets</h1>
-<p>Kubernetes lets you decouple application configuration from container images using two key resources:</p>
+<h1>ConfigMaps &amp; Secrets</h1>
+<p>Kubernetes lets you separate your app’s configuration from your container images using two special resources:</p>
 <ul>
-<li><strong>ConfigMaps</strong> for non-sensitive data (settings, URLs, etc.)</li>
-<li><strong>Secrets</strong> for sensitive data (passwords, tokens, certificates)</li>
+<li><strong>ConfigMaps</strong> for non-sensitive data (like settings, URLs, etc.)</li>
+<li><strong>Secrets</strong> for sensitive data (like passwords, tokens, certificates)</li>
 </ul>
-<p>These resources allow you to define environment-specific values once and reuse them across multiple workloads — improving security, consistency, and portability.</p>
+<p>This makes your apps more secure, portable, and easier to manage.</p>
 <hr/>
-<h2 id="configmaps-non-sensitive-configuration">ConfigMaps (Non-Sensitive Configuration)</h2>
-<p>A <strong>ConfigMap</strong> is a key-value store for plain-text configuration. Use it for:</p>
-<ul>
-<li>Environment-specific settings (<code>LOG_LEVEL</code>, <code>API_BASE_URL</code>)</li>
-<li>Hostnames, ports, feature flags</li>
-<li>Complete config files or CLI arguments</li>
-</ul>
-<h3 id="example">Example</h3>
+<h2>ConfigMaps (Non-Sensitive Configuration)</h2>
+<p>A <strong>ConfigMap</strong> is a key-value store for plain-text configuration. Use it for:
+- Environment settings (like <code>LOG_LEVEL</code>, <code>API_BASE_URL</code>)
+- Hostnames, ports, feature flags
+- Complete config files or CLI arguments</p>
+<h3>Example</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1481,15 +1479,15 @@
 </span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">DB_HOST</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db.default.svc.cluster.local</span>
 </span></code></pre></div>
 <hr/>
-<h2 id="secrets-sensitive-data">Secrets (Sensitive Data)</h2>
-<p><strong>Secrets</strong> are also key-value stores — but intended for private data such as:</p>
+<h2>Secrets (Sensitive Data)</h2>
+<p><strong>Secrets</strong> are also key-value stores—but for private data:</p>
 <ul>
-<li>Passwords, tokens, and API keys</li>
+<li>Passwords, tokens, API keys</li>
 <li>SSH keys or TLS certs</li>
 <li>Docker registry credentials</li>
 </ul>
-<p>Kubernetes encodes all Secret values in <strong>base64</strong>. Note: this is for transport, not security.</p>
-<h3 id="example_1">Example</h3>
+<p>Kubernetes encodes all Secret values in <strong>base64</strong> (for transport, not real security).</p>
+<h3>Example</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1498,10 +1496,10 @@
 </span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="nt">data</span><span class="p">:</span>
 </span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">  </span><span class="nt">DB_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">c3VwZXJzZWNyZXQ=</span>
 </span></code></pre></div>
-<blockquote>
-<p>ⓘ Decode with: <code>echo c3VwZXJzZWNyZXQ= | base64 -d</code><br/>
-Use <code>stringData:</code> if you want Kubernetes to handle the encoding automatically.</p>
-</blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Decode with <code>echo c3VwZXJzZWNyZXQ= | base64 -d</code>. Use <code>stringData:</code> if you want Kubernetes to handle encoding for you.</p>
+</div>
 <hr/>
 <h2 id="ways-to-use-configmaps-and-secrets">Ways to Use ConfigMaps and Secrets</h2>
 <p>There are three main ways to expose values inside your Pods:</p>
@@ -1563,21 +1561,22 @@ Use <code>stringData:</code> if you want Kubernetes to handle the encoding autom
 </span><span id="__span-7-11"><a href="#__codelineno-7-11" id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LOG_LEVEL</span>
 </span></code></pre></div>
 <hr/>
-<h2 id="best-practices">Best Practices</h2>
+<h2>Using ConfigMaps &amp; Secrets</h2>
+<p>You can mount ConfigMaps and Secrets as environment variables or files inside your Pods. This keeps your app configuration flexible and secure.</p>
+<hr/>
+<h2>Best Practices</h2>
 <ul>
-<li>Use <strong>ConfigMaps</strong> for plain-text configuration and <strong>Secrets</strong> for anything private.</li>
-<li>Use <strong>RBAC</strong> to control access to Secrets.</li>
-<li>Enable <strong>encryption at rest</strong> for Secret resources (<code>EncryptionConfiguration</code>).</li>
-<li>Avoid committing secrets to Git — even in base64 form.</li>
-<li>Use tools like <strong>Sealed Secrets</strong>, <strong>Vault</strong>, or <strong>external-secrets</strong> to integrate with cloud-native secrets managers.</li>
+<li><strong>Never store sensitive data in ConfigMaps.</strong> Use Secrets for anything private.</li>
+<li><strong>Restrict access</strong> to Secrets using RBAC.</li>
+<li><strong>Avoid hardcoding values</strong> in your manifests. Reference ConfigMaps and Secrets instead.</li>
+<li><strong>Use external secret managers</strong> (like AWS Secrets Manager, HashiCorp Vault) for extra-sensitive data.</li>
 </ul>
 <hr/>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <ul>
-<li><strong>ConfigMaps</strong> store non-sensitive values like app settings and hostnames.</li>
-<li><strong>Secrets</strong> store sensitive data like passwords and certificates — encoded, but not encrypted by default.</li>
-<li>Both can be used via environment variables, mounted volumes, or command overrides.</li>
-<li>Combine with proper RBAC and encryption settings for production use.</li>
+<li><strong>ConfigMaps</strong>: For non-sensitive, environment-specific configuration.</li>
+<li><strong>Secrets</strong>: For sensitive data, encoded for transport.</li>
+<li>Both improve security, portability, and flexibility in your Kubernetes apps.</li>
 </ul>
 
 

@@ -1460,9 +1460,10 @@
 
 <p>In Kubernetes, <strong>audit logging</strong> and centralized <strong>log collection</strong> are critical components of a secure and observable platform. Audit logs help detect policy violations or suspicious behavior, while application and cluster logs help with troubleshooting, monitoring, and forensics.</p>
 <hr/>
-<h2 id="audit-logs-in-kubernetes">Audit Logs in Kubernetes</h2>
-<p>Kubernetes audit logs record the <strong>who, what, when, and where</strong> of every request made to the Kubernetes API server. These logs are essential for security analysis, compliance, and intrusion detection.</p>
-<p>Audit logging must be configured explicitly and is typically enabled on the control plane node(s).</p>
+<h2>Audit Logs in Kubernetes</h2>
+<p>Kubernetes audit logs record the <strong>who, what, when, and where</strong> of every request made to the Kubernetes API server. These logs are essential for security analysis, compliance, and intrusion detection.
+<br/>
+Audit logging must be configured explicitly and is typically enabled on the control plane node(s).</p>
 <h3 id="key-fields-in-audit-events">Key Fields in Audit Events</h3>
 <p>Each audit log entry includes:</p>
 <ul>
@@ -1499,6 +1500,7 @@
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>--audit-log-path<span class="o">=</span>/var/log/kubernetes/audit.log
 </span></code></pre></div>
 <p>You also define a <strong>policy file</strong> to control which events get logged:</p>
+<hr/>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audit.k8s.io/v1</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Policy</span>
 </span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">rules</span><span class="p">:</span>
@@ -1554,11 +1556,13 @@
 </span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>     ↓
 </span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>Grafana / Kibana / Alerting Tools
 </span></code></pre></div>
-<p>This allows:
-- Full-text search over logs
-- Filtering by label, container, namespace, or timestamp
-- Long-term storage for audit/compliance
-- Alerts on suspicious activity</p>
+<p>This allows:</p>
+<ul>
+<li>Full-text search over logs</li>
+<li>Filtering by label, container, namespace, or timestamp</li>
+<li>Long-term storage for audit/compliance</li>
+<li>Alerts on suspicious activity</li>
+</ul>
 <hr/>
 <h2 id="best-practices">Best Practices</h2>
 <ul>

@@ -1456,14 +1456,14 @@
                   
 
 
-<h1 id="network-policies">Network Policies</h1>
-<p>By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky — especially in multi-tenant clusters or production environments.</p>
+<h1>Network Policies</h1>
+<p>By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky—especially in multi-tenant clusters or production environments.</p>
 <p><strong>NetworkPolicies</strong> let you control <strong>which Pods can talk to which other Pods</strong> (and even external IPs).</p>
 <blockquote>
-<p>Think of it like a firewall for Pod-to-Pod traffic — but defined in YAML.</p>
+<p>Think of it like a firewall for Pod-to-Pod traffic—but defined in YAML.</p>
 </blockquote>
 <hr/>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2>Key Concepts</h2>
 <ul>
 <li>NetworkPolicies apply to <strong>Pods</strong> (via label selectors)</li>
 <li>They control <strong>ingress</strong>, <strong>egress</strong>, or both</li>
@@ -1474,7 +1474,7 @@
 Any policy = default deny (for the targeted direction)</p>
 </blockquote>
 <hr/>
-<h2 id="minimal-example">Minimal Example</h2>
+<h2>Minimal Example</h2>
 <p>Allow only traffic to a Pod from Pods with a specific label:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
@@ -1491,10 +1491,9 @@ Any policy = default deny (for the targeted direction)</p>
 </span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
 </span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">              </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frontend</span>
 </span></code></pre></div>
-<p>This says:<br/>
-<strong>Only Pods labeled <code>app=frontend</code> can access Pods labeled <code>app=backend</code>.</strong></p>
+<p>This says:  <strong>only Pods labeled <code>app=frontend</code> can access Pods labeled <code>app=backend</code>.</strong></p>
 <hr/>
-<h2 id="policy-scope">Policy Scope</h2>
+<h2>Policy Scope</h2>
 <table>
 <thead>
 <tr>
@@ -1547,8 +1546,11 @@ Any policy = default deny (for the targeted direction)</p>
 <li>❌ Amazon VPC CNI (limited support unless enhanced)</li>
 </ul>
 <hr/>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <ul>
+<li><strong>NetworkPolicies</strong> let you control pod-to-pod and pod-to-external communication.</li>
+<li>By default, all traffic is allowed—add a policy to restrict.</li>
+<li>Use label selectors to target specific Pods for fine-grained control.</li>
 <li>NetworkPolicies control <strong>Pod-level traffic</strong> based on labels and CIDRs</li>
 <li>Define <strong>who can talk to what</strong>, and where traffic can go</li>
 <li>Essential for <strong>zero-trust network design</strong> inside the cluster</li>

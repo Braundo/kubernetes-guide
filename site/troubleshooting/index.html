@@ -1456,9 +1456,9 @@
                   
 
 
-<h1 id="troubleshooting-kubernetes">Troubleshooting Kubernetes</h1>
+<h1>Troubleshooting Kubernetes</h1>
 <p>Troubleshooting is a crucial skill for managing Kubernetes clusters. This section provides strategies and tools for diagnosing and resolving common issues.</p>
-<h2 id="common-issues-and-solutions">Common Issues and Solutions</h2>
+<h2>Common Issues and Solutions</h2>
 <table>
 <thead>
 <tr>
@@ -1515,7 +1515,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="tools-for-troubleshooting">Tools for Troubleshooting</h2>
+<h2>Tools for Troubleshooting</h2>
 <table>
 <thead>
 <tr>
@@ -1526,17 +1526,17 @@
 </thead>
 <tbody>
 <tr>
-<td><strong><code>describe</code></strong></td>
+<td><strong>describe</strong></td>
 <td>Provides detailed information about resources.</td>
 <td><code>kubectl describe pod &lt;pod-name&gt;</code></td>
 </tr>
 <tr>
-<td><strong><code>logs</code></strong></td>
+<td><strong>logs</strong></td>
 <td>Retrieves logs from containers.</td>
 <td><code>kubectl logs &lt;pod-name&gt;</code></td>
 </tr>
 <tr>
-<td><strong><code>exec</code></strong></td>
+<td><strong>exec</strong></td>
 <td>Executes commands in a container.</td>
 <td><code>kubectl exec -it &lt;pod-name&gt; -- /bin/sh</code></td>
 </tr>
@@ -1544,16 +1544,39 @@
 </table>
 <h3>Monitoring and Logging</h3>
 <ul>
-<li><strong>Prometheus:</strong> Collects metrics and provides alerts. It's highly customizable and integrates well with Kubernetes. <a href="https://prometheus.io/">Learn more</a></li>
-<li><strong>Grafana:</strong> Visualizes metrics collected by Prometheus and other sources. It offers a rich set of dashboards and visualization tools. <a href="https://grafana.com/">Learn more</a></li>
-<li><strong>Elasticsearch, Fluentd, Kibana (EFK) Stack:</strong> Centralizes logging and provides search capabilities. Elasticsearch stores logs, Fluentd collects and forwards them, and Kibana visualizes the data. <a href="https://www.elastic.co/elasticsearch/">Learn more about Elasticsearch</a>, <a href="https://www.fluentd.org/">Fluentd</a>, <a href="https://www.elastic.co/kibana/">Kibana</a></li>
+<li>
+<p><strong>Prometheus:</strong> Collects metrics and provides alerts. It's highly customizable and integrates well with Kubernetes. <a href="https://prometheus.io/">Learn more</a></p>
+</li>
+<li>
+<p><strong>Grafana:</strong> Visualizes metrics collected by Prometheus and other sources. It offers a rich set of dashboards and visualization tools. <a href="https://grafana.com/">Learn more</a></p>
+</li>
+<li>
+<p><strong>Elasticsearch, Fluentd, Kibana (EFK) Stack:</strong> Centralizes logging and provides search capabilities. Elasticsearch stores logs, Fluentd collects and forwards them, and Kibana visualizes the data. <a href="https://www.elastic.co/elasticsearch/">Learn more about Elasticsearch</a>, <a href="https://www.fluentd.org/">Fluentd</a>, <a href="https://www.elastic.co/kibana/">Kibana</a></p>
+</li>
 </ul>
-<h2 id="best-practices">Best Practices</h2>
+<h2>Best Practices</h2>
 <ul>
-<li><strong>Regular Monitoring:</strong> Continuously monitor cluster health and performance.</li>
-<li><strong>Automated Alerts:</strong> Set up alerts for critical issues to ensure timely response.</li>
-<li><strong>Documentation:</strong> Keep detailed records of issues and solutions for future reference.</li>
+<li>
+<p><strong>Regular Monitoring:</strong> Continuously monitor cluster health and performance.</p>
+</li>
+<li>
+<p><strong>Automated Alerts:</strong> Set up alerts for critical issues to ensure timely response.</p>
+</li>
+<li>
+<p><strong>Documentation:</strong> Keep detailed records of issues and solutions for future reference.</p>
+</li>
 </ul>
+<hr/>
+<h2>Summary</h2>
+<ul>
+<li>Troubleshooting is a core skill for any Kubernetes admin.</li>
+<li>Use <code>kubectl</code> commands, logs, and monitoring tools to diagnose issues.</li>
+<li>Document common issues and solutions for your team.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Build a troubleshooting playbook and share it with your team. Review and update it after every incident.</p>
+</div>
 
 
 

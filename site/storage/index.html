@@ -1456,10 +1456,10 @@
                   
 
 
-<h1 id="storage-in-kubernetes">Storage in Kubernetes</h1>
+<h1>Storage in Kubernetes</h1>
 <p>Kubernetes provides flexible ways to <strong>persist data</strong>, from temporary in-Pod storage to persistent disks that survive Pod and node failure. You’ll most commonly use <strong>Volumes</strong>, <strong>PersistentVolumes (PVs)</strong>, and <strong>PersistentVolumeClaims (PVCs)</strong> to manage storage in production.</p>
 <hr/>
-<h2 id="types-of-storage">Types of Storage</h2>
+<h2>Types of Storage</h2>
 <p>Kubernetes supports several storage mechanisms:</p>
 <table>
 <thead>
@@ -1492,7 +1492,7 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="volumes">Volumes</h2>
+<h2>Volumes</h2>
 <p>Basic <code>volumes</code> are attached to a Pod spec and live as long as the Pod.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cache</span>
@@ -1502,14 +1502,14 @@
 <p>Use <code>emptyDir</code> for scratch space or caching — not persistent data.</p>
 </blockquote>
 <hr/>
-<h2 id="persistentvolumes-pvs-and-persistentvolumeclaims-pvcs">PersistentVolumes (PVs) and PersistentVolumeClaims (PVCs)</h2>
+<h2>PersistentVolumes (PVs) and PersistentVolumeClaims (PVCs)</h2>
 <p>To persist data <strong>beyond the life of a Pod</strong>, use the <strong>PV + PVC model</strong>:</p>
 <ul>
 <li>A <strong>PV</strong> is a piece of actual storage (disk, NFS, etc.)</li>
 <li>A <strong>PVC</strong> is a user’s request for storage</li>
 <li>Kubernetes binds them together dynamically</li>
 </ul>
-<h3 id="pvc-example">PVC Example</h3>
+<h3>PVC Example</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1520,7 +1520,7 @@
 </span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
 </span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
 </span></code></pre></div>
-<h3 id="pod-using-the-pvc">Pod using the PVC</h3>
+<h3>Pod using the PVC</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app-data</span>
 </span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
@@ -1534,15 +1534,14 @@
 </span></code></pre></div>
 <hr/>
 <h2 id="volume-modes-access">Volume Modes &amp; Access</h2>
+<p><strong>Volume Modes:</strong></p>
 <ul>
-<li><strong>Volume Modes:</strong></li>
 <li><code>Filesystem</code> (default): mounts as a directory</li>
-<li>
-<p><code>Block</code>: exposes the raw device</p>
-</li>
-<li>
+<li><code>Block</code>: exposes the raw device</li>
+</ul>
+<p><br/></p>
 <p><strong>Access Modes:</strong></p>
-</li>
+<ul>
 <li><code>ReadWriteOnce</code>: one node read/write</li>
 <li><code>ReadOnlyMany</code>: multiple nodes read-only</li>
 <li><code>ReadWriteMany</code>: shared read/write (NFS, etc.)</li>

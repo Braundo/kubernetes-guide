@@ -567,22 +567,22 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="pods-deployments">Pods &amp; Deployments</h1>
-<p>In Kubernetes, <strong>Pods</strong> are the foundational execution units—everything runs in a Pod. But on their own, Pods aren't typically used directly in production environments. Instead, <strong>Deployments</strong> manage Pods to provide automation, self-healing, and declarative updates.</p>
+<h1>Pods &amp; Deployments</h1>
+<p>Kubernetes runs everything inside a Pod, but in real-world production, you rarely manage Pods directly. Instead, you use Deployments to automate, heal, and update your applications.</p>
 <hr/>
-<h2 id="what-is-a-pod">What is a Pod?</h2>
-<p>A <strong>Pod</strong> is the smallest deployable unit in Kubernetes. It represents one or more containers that share:</p>
+<h2>What is a Pod?</h2>
+<p>A <strong>Pod</strong> is the smallest unit you can deploy in Kubernetes. It wraps one or more containers that:</p>
 <ul>
-<li>The same <strong>network namespace</strong> (IP address and port space).</li>
-<li>A shared <strong>storage volume</strong> (if defined).</li>
-<li>The same <strong>lifecycle</strong> (they are scheduled and managed together).</li>
+<li>Share the same <strong>network</strong> (IP and ports)</li>
+<li>Can share <strong>storage</strong></li>
+<li>Are managed as a single unit</li>
 </ul>
-<p>Typically, a Pod contains a <strong>single container</strong>, but multi-container Pods are used when tightly coupled containers need to share resources, such as a sidecar pattern.</p>
-<p><strong>Key traits of Pods</strong>:</p>
+<p>Most Pods have just one container, but sometimes you need tightly-coupled containers together (like a main app and a helper/sidecar).</p>
+<p><strong>Key traits:</strong></p>
 <ul>
-<li>Pods are ephemeral and disposable.</li>
-<li>Pods do not self-heal if they crash or are evicted.</li>
-<li>Pods are bound to a specific Node until terminated.</li>
+<li>Pods are short-lived and disposable.</li>
+<li>If a Pod crashes, it won’t restart by itself (unless managed by something higher-level).</li>
+<li>Pods stick to the Node they’re scheduled on until they die.</li>
 </ul>
 <p><img alt="Multi-container Diagram" src="../images/multicontainer-light.png#only-light">
 <img alt="Multi-container Diagram" src="../images/multicontainer-dark.png#only-dark"/></img></p>
@@ -593,20 +593,20 @@
         end
     end</code></pre>
 <hr/>
-<h2 id="what-is-a-deployment">What is a Deployment?</h2>
-<p>A <strong>Deployment</strong> is a higher-level Kubernetes resource that manages a ReplicaSet, which in turn manages the lifecycle of multiple identical Pods.</p>
-<p>With Deployments, you get:</p>
+<h2>What is a Deployment?</h2>
+<p>A <strong>Deployment</strong> is a manager for your Pods. It ensures the right number are running, replaces them if they fail, and allows you to update your app with zero downtime.</p>
+<p><strong>With Deployments, you get:</strong></p>
 <ul>
-<li>Declarative management of Pod replicas</li>
-<li>Rolling updates and rollbacks</li>
-<li>Auto-replacement of failed Pods</li>
-<li>Declarative versioning of your app</li>
+<li>Automated management of Pod replicas</li>
+<li>Rolling updates and safe rollbacks</li>
+<li>Automatic replacement of failed Pods</li>
+<li>Easy version control for your app</li>
 </ul>
-<p>You define the desired state in a <code>Deployment</code> YAML file, and the Kubernetes control plane ensures that the running state matches it.</p>
+<p>You describe your desired state in a YAML file, and Kubernetes makes it happen.</p>
 <hr/>
-<h2 id="relationship-between-pods-and-deployments">Relationship Between Pods and Deployments</h2>
-<p>Think of a <strong>Pod</strong> like a coffee machine in a busy café. It makes drinks, does its job, and eventually wears out or breaks.</p>
-<p>Now imagine the <strong>Deployment</strong> as the café manager:</p>
+<h2>Relationship Between Pods and Deployments</h2>
+<p>Think of a Pod as a coffee machine in a busy café. It makes drinks, does its job, and eventually wears out or breaks.</p>
+<p>Now imagine the Deployment as the café manager:</p>
 <ul>
 <li>They make sure there are always enough coffee machines running.</li>
 <li>If one breaks, they replace it.</li>
@@ -622,18 +622,29 @@
 <li>If any Pod dies, the ReplicaSet spawns a replacement.</li>
 </ol>
 <hr/>
-<h2 id="when-to-use-what">When to Use What?</h2>
-<p><strong>Use Pods directly</strong>:</p>
+<h2>When to Use What?</h2>
+<p><strong>Use Pods directly:</strong></p>
 <ul>
-<li>In static dev/test environments.</li>
-<li>For one-off jobs (though <code>Job</code> is preferred).</li>
-<li>For simple single-Pod debugging.</li>
+<li>For quick experiments or debugging</li>
+<li>One-off tasks (but consider <code>Job</code> for this)</li>
+<li>Learning and testing</li>
 </ul>
-<p><strong>Use Deployments</strong>:</p>
+<p><strong>Use Deployments:</strong></p>
 <ul>
-<li>Always, for production services.</li>
-<li>When you need replication, availability, and self-healing.</li>
-<li>If you plan to roll out updates with zero downtime.</li>
+<li>Always use for production workloads</li>
+<li>When you want automatic healing, scaling, and updates</li>
+<li>For anything that needs to run reliably over time</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In almost all cases, use Deployments for your applications. Pods alone are for special situations.</p>
+</div>
+<hr/>
+<h2>Summary</h2>
+<ul>
+<li><strong>Pods</strong> are the basic building block, but not self-healing or scalable on their own.</li>
+<li><strong>Deployments</strong> manage Pods, giving you automation, scaling, and reliability.</li>
+<li>For production, always use Deployments.</li>
 </ul>
 </article>
 </div>

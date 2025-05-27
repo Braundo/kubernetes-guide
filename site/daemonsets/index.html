@@ -1456,9 +1456,9 @@
                   
 
 
-<h1 id="managing-daemonsets-in-kubernetes">Managing DaemonSets in Kubernetes</h1>
+<h1>Managing DaemonSets in Kubernetes</h1>
 <p>DaemonSets ensure that all (or some) nodes run a copy of a Pod. They are used for deploying system-level applications like log collectors, monitoring agents, and other node-specific services.</p>
-<h3>Introduction to DaemonSets</h3>
+<h2>Introduction to DaemonSets</h2>
 <p>DaemonSets are designed to manage the deployment of Pods across all nodes in a cluster. They ensure that a specific Pod is running on each node, making them ideal for system-level applications.</p>
 <h3>Use Cases for DaemonSets</h3>
 <p>DaemonSets are commonly used for:</p>
@@ -1505,6 +1505,17 @@
 </span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"node-role.kubernetes.io/master"</span>
 </span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">        </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="s">"Exists"</span>
 </span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">        </span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="s">"NoSchedule"</span>
+</span><span id="__span-0-25"><a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="nn">---</span>
+</span><span id="__span-0-27"><a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a>
+</span><span id="__span-0-28"><a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="l l-Scalar l-Scalar-Plain">&lt;h2&gt;Summary&lt;/h2&gt;</span>
+</span><span id="__span-0-29"><a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="l l-Scalar l-Scalar-Plain">&lt;ul&gt;</span>
+</span><span id="__span-0-30"><a href="#__codelineno-0-30" id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="l l-Scalar l-Scalar-Plain">&lt;li&gt;&lt;strong&gt;DaemonSets&lt;/strong&gt; ensure a Pod runs on every (or selected) node in your cluster.&lt;/li&gt;</span>
+</span><span id="__span-0-31"><a href="#__codelineno-0-31" id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="l l-Scalar l-Scalar-Plain">&lt;li&gt;They’re perfect for log collection, monitoring, and node-specific services.&lt;/li&gt;</span>
+</span><span id="__span-0-32"><a href="#__codelineno-0-32" id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="l l-Scalar l-Scalar-Plain">&lt;li&gt;Rolling updates and node selectors give you fine-grained control.&lt;/li&gt;</span>
+</span><span id="__span-0-33"><a href="#__codelineno-0-33" id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="l l-Scalar l-Scalar-Plain">&lt;/ul&gt;</span>
+</span><span id="__span-0-34"><a href="#__codelineno-0-34" id="__codelineno-0-34" name="__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a href="#__codelineno-0-35" id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="l l-Scalar l-Scalar-Plain">&gt; &lt;strong&gt;Best Practice:&lt;/strong&gt; Use DaemonSets for system-level workloads that must run everywhere. For app workloads, use Deployments or StatefulSets.</span>
 </span></code></pre></div>
 <h2 id="best-practices">Best Practices</h2>
 <ul>

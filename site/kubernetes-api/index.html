@@ -571,7 +571,7 @@
 <p>The Kubernetes API is the <strong>primary interface</strong> to interact with your cluster. Whether you’re deploying an app, scaling a workload, inspecting a Pod, or running automation — you’re using the Kubernetes API.</p>
 <p>It’s <strong>declarative</strong>, <strong>versioned</strong>, <strong>extensible</strong>, and serves as the <strong>backbone of the control plane</strong>.</p>
 <hr/>
-<h2 id="what-is-the-kubernetes-api">What Is the Kubernetes API?</h2>
+<h2>What Is the Kubernetes API?</h2>
 <p>At its core, the API is a RESTful interface that lets you manage <strong>API objects</strong> such as:</p>
 <ul>
 <li>Pods</li>
@@ -583,7 +583,7 @@
 </ul>
 <p>Everything in Kubernetes — from <code>kubectl</code> to the scheduler — interacts with the API server.</p>
 <hr/>
-<h2 id="anatomy-of-a-kubernetes-object">Anatomy of a Kubernetes Object</h2>
+<h2>Anatomy of a Kubernetes Object</h2>
 <p>Every resource in Kubernetes follows a common structure:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span><span class="w">          </span><span class="c1"># API group + version</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span><span class="w">             </span><span class="c1"># Type of object</span>
@@ -626,7 +626,7 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="api-server-role">API Server Role</h2>
+<h2>API Server Role</h2>
 <p>The <code>kube-apiserver</code> is the <strong>front door</strong> to your cluster. It handles:</p>
 <ul>
 <li><strong>All incoming requests</strong> from users, <code>kubectl</code>, controllers, and web UIs</li>
@@ -753,30 +753,17 @@
 <li><strong>Validation</strong> – Is the object schema correct?</li>
 <li><strong>Persistence</strong> – If approved, store in etcd</li>
 </ol>
-<p>RBAC example:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Role</span>
-</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nt">rules</span><span class="p">:</span>
-</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroups</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">""</span><span class="p p-Indicator">]</span>
-</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"pods"</span><span class="p p-Indicator">]</span>
-</span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="nt">verbs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"get"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"list"</span><span class="p p-Indicator">]</span>
-</span></code></pre></div>
 <hr/>
-<h2 id="common-trouble-spots">Common Trouble Spots</h2>
+<h2>Summary</h2>
 <ul>
-<li><strong>Wrong API version</strong>: Resources can move or deprecate (e.g., <code>apps/v1beta1</code> is deprecated)</li>
-<li><strong>Incorrect Group</strong>: Always verify the group (e.g., <code>networking.k8s.io</code> vs <code>extensions</code>)</li>
-<li><strong>Unregistered CRDs</strong>: You can’t use a CRD before applying its definition</li>
+<li>The Kubernetes API is the backbone of your cluster—everything goes through it.</li>
+<li>All operations, from deploying apps to inspecting resources, use the API.</li>
+<li>Understanding the API is key to mastering Kubernetes automation and troubleshooting.</li>
 </ul>
-<hr/>
-<h2 id="summary">Summary</h2>
-<ul>
-<li>The <strong>API server</strong> is the core of the Kubernetes control plane.</li>
-<li>Everything — even <code>kubectl</code> commands — maps to API calls.</li>
-<li>Understand the object structure (<code>apiVersion</code>, <code>kind</code>, <code>metadata</code>, <code>spec</code>)</li>
-<li>Know how <strong>groups, versions, and resources</strong> are organized and discovered</li>
-<li>CRDs allow teams to define custom workflows</li>
-<li>All requests flow through authentication, authorization, and admission control before being persisted and acted upon</li>
-</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code>kubectl explain &lt;resource&gt;</code> and the official API docs to understand all available fields and options.</p>
+</div>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

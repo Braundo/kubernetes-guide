@@ -1456,28 +1456,29 @@
                   
 
 
-<h1 id="namespaces">Namespaces</h1>
+<h1>Namespaces</h1>
 <p>Namespaces in Kubernetes allow you to divide cluster resources between multiple users or teams. They provide <strong>logical isolation</strong> and help with <strong>multi-tenancy</strong>, access control, and resource management.</p>
 <hr/>
-<h2 id="when-to-use-namespaces">When to Use Namespaces</h2>
+<h2>When to Use Namespaces</h2>
 <p>Namespaces are useful when:</p>
 <ul>
 <li>You need to <strong>isolate environments</strong> (e.g., <code>dev</code>, <code>staging</code>, <code>prod</code>)</li>
 <li>You want to enforce <strong>resource quotas and limits</strong></li>
 <li>You want to implement <strong>RBAC per team or application</strong></li>
 </ul>
-<blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>For most small or single-team clusters, the <code>default</code> namespace is sufficient.</p>
-</blockquote>
+</div>
 <hr/>
-<h2 id="viewing-namespaces">Viewing Namespaces</h2>
+<h2>Viewing Namespaces</h2>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>namespaces
 </span></code></pre></div>
 <p>Or with shorthand:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>ns
 </span></code></pre></div>
 <hr/>
-<h2 id="creating-a-namespace">Creating a Namespace</h2>
+<h2>Creating a Namespace</h2>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespace</span>
 </span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1487,7 +1488,7 @@
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>namespace.yaml
 </span></code></pre></div>
 <hr/>
-<h2 id="using-namespaces-with-kubectl">Using Namespaces with kubectl</h2>
+<h2>Using Namespaces with kubectl</h2>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>dev-team
 </span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span>--image<span class="o">=</span>nginx<span class="w"> </span>-n<span class="w"> </span>dev-team
 </span></code></pre></div>
@@ -1571,12 +1572,17 @@
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>dev-team
 </span></code></pre></div>
 <hr/>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <ul>
-<li>Namespaces are key to <strong>organizing</strong>, <strong>isolating</strong>, and <strong>managing</strong> Kubernetes resources.</li>
-<li>Use them for multi-tenancy, RBAC, and resource quotas.</li>
-<li>Know which resources are namespaced vs. cluster-scoped.</li>
+<li><strong>Namespaces</strong> provide logical isolation for teams, environments, or applications.</li>
+<li>Use namespaces to set resource quotas, apply RBAC, and organize your cluster.</li>
+<li>For small/simple clusters, the <code>default</code> namespace is fine; use more as you scale.</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Name namespaces clearly (e.g., <code>dev</code>, <code>prod</code>, <code>team-a</code>) and use them to enforce security and resource policies.</p>
+</div>
+<p><br/></p>
 
 
 

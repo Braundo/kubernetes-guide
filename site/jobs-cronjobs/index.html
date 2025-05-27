@@ -1456,18 +1456,16 @@
                   
 
 
-<h1 id="jobs-cronjobs">Jobs &amp; CronJobs</h1>
-<p>Not all workloads in Kubernetes are long-running services. Sometimes, you just need to run something once — or on a schedule. That’s where <strong>Jobs</strong> and <strong>CronJobs</strong> come in.</p>
+<h1>Jobs &amp; CronJobs</h1>
+<p>Not all Kubernetes workloads run forever. Sometimes, you just need to run something once—or on a schedule. That’s where <strong>Jobs</strong> and <strong>CronJobs</strong> come in.</p>
 <hr/>
-<h2 id="jobs">Jobs</h2>
-<p>A <strong>Job</strong> runs a Pod (or set of Pods) to completion. It's ideal for:</p>
-<ul>
-<li>One-time tasks</li>
-<li>Batch processing</li>
-<li>Migrations or post-deployment hooks</li>
-</ul>
-<p>Kubernetes ensures the Job runs successfully to completion — even if a Pod crashes or a node fails, a new Pod will be scheduled.</p>
-<h3 id="minimal-job-example">Minimal Job Example</h3>
+<h2>Jobs</h2>
+<p>A <strong>Job</strong> runs a Pod (or Pods) to completion. Perfect for:
+- One-time tasks
+- Batch processing
+- Migrations or post-deployment hooks</p>
+<p>Kubernetes guarantees the Job runs to completion—even if a Pod crashes or a node fails, a new Pod will be scheduled.</p>
+<h3>Minimal Job Example</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Job</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">spec</span><span class="p">:</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">template</span><span class="p">:</span>
@@ -1479,18 +1477,16 @@
 </span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">      </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never</span>
 </span></code></pre></div>
 <blockquote>
-<p>ⓘ The <code>restartPolicy</code> for Jobs must be <code>Never</code> or <code>OnFailure</code>.</p>
+<p><strong>Tip:</strong> The <code>restartPolicy</code> for Jobs must be <code>Never</code> or <code>OnFailure</code>.</p>
 </blockquote>
 <hr/>
-<h2 id="cronjobs">CronJobs</h2>
-<p>A <strong>CronJob</strong> runs Jobs on a repeating schedule, similar to Linux cron syntax.</p>
-<p>Use CronJobs for:</p>
-<ul>
-<li>Periodic cleanup tasks</li>
-<li>Scheduled report generation</li>
-<li>Time-based batch jobs</li>
-</ul>
-<h3 id="cron-syntax-example">Cron Syntax Example</h3>
+<h2>CronJobs</h2>
+<p>A <strong>CronJob</strong> runs Jobs on a repeating schedule, just like Linux cron.</p>
+<p>Use CronJobs for:
+- Periodic cleanup tasks
+- Scheduled reports
+- Time-based batch jobs</p>
+<h3>Cron Syntax Example</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CronJob</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">spec</span><span class="p">:</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">"0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span><span class="w">  </span><span class="c1"># every hour</span>

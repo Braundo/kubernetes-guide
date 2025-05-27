@@ -1456,10 +1456,10 @@
                   
 
 
-<h1 id="security-contexts">Security Contexts</h1>
+<h1>Security Contexts</h1>
 <p>A <strong>Security Context</strong> defines privilege and access control settings for a <strong>Pod</strong> or <strong>container</strong>. It’s how you harden workloads against privilege escalation, file system abuse, and host access.</p>
 <hr/>
-<h2 id="why-it-matters">Why It Matters</h2>
+<h2>Why It Matters</h2>
 <p>By default, containers can:</p>
 <ul>
 <li>Run as root inside the container</li>
@@ -1468,13 +1468,13 @@
 </ul>
 <p>Security contexts <strong>restrict and control</strong> this behavior — without needing to modify your image.</p>
 <hr/>
-<h2 id="pod-vs-container-security-contexts">Pod vs Container Security Contexts</h2>
+<h2>Pod vs Container Security Contexts</h2>
 <ul>
 <li><strong>Pod-level</strong> applies to all containers in the Pod</li>
 <li><strong>Container-level</strong> overrides the Pod-level settings</li>
 </ul>
 <hr/>
-<h2 id="common-fields">Common Fields</h2>
+<h2>Common Fields</h2>
 <table>
 <thead>
 <tr>
@@ -1510,7 +1510,7 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="example-secure-container-context">Example: Secure Container Context</h2>
+<h2>Example: Secure Container Context</h2>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">securityContext</span><span class="p">:</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nt">runAsNonRoot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
@@ -1543,20 +1543,22 @@
 </span></code></pre></div>
 <p>This gives full host access — avoid unless you know exactly what you’re doing (e.g., for a CNI plugin or host-level utility).</p>
 <hr/>
-<h2 id="quick-hardening-checklist">Quick Hardening Checklist</h2>
+<h2>Best Practices</h2>
 <ul>
-<li>✅ <code>runAsNonRoot: true</code></li>
-<li>✅ Drop all capabilities unless needed</li>
-<li>✅ Use <code>readOnlyRootFilesystem</code></li>
-<li>✅ Avoid <code>privileged: true</code></li>
-<li>✅ Explicitly set <code>runAsUser</code> and <code>fsGroup</code> for file access</li>
+<li>Always run containers as a non-root user (<code>runAsNonRoot: true</code>).</li>
+<li>Use <code>readOnlyRootFilesystem: true</code> for immutable containers.</li>
+<li>Drop all unnecessary Linux capabilities.</li>
+<li>Avoid privileged mode unless absolutely necessary.</li>
+<li>Use Pod-level security context for shared settings.</li>
+<li>Always review and lock down security contexts in production workloads.</li>
+<li>Start with the most restrictive settings and loosen only as needed.</li>
 </ul>
 <hr/>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <ul>
-<li>Security contexts define <strong>runtime privileges</strong> for Pods and containers</li>
-<li>Helps enforce <strong>least privilege</strong> and prevent lateral movement</li>
-<li>Combine with <strong>PodSecurity Admission</strong> and <strong>RBAC</strong> for layered defense</li>
+<li><strong>Security contexts</strong> are critical for hardening workloads.</li>
+<li>Use them to restrict privileges, enforce non-root, and block escalation.</li>
+<li>Combine with PodSecurityAdmission and RBAC for a defense-in-depth approach.</li>
 </ul>
 
 

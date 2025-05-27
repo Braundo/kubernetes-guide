@@ -1456,24 +1456,26 @@
                   
 
 
-<h1 id="statefulsets">StatefulSets</h1>
-<p>A <strong>StatefulSet</strong> is a Kubernetes controller for deploying and scaling <strong>stateful applications</strong>. Unlike Deployments, StatefulSets maintain <strong>persistent identity and storage</strong> for each Pod across rescheduling and restarts.</p>
+<h1>StatefulSets</h1>
+<p>A <strong>StatefulSet</strong> is a Kubernetes controller for running <strong>stateful apps</strong>—apps that need each Pod to keep its identity and storage, even if rescheduled. Think databases, message queues, or anything that can't just be replaced with a blank copy.</p>
 <hr/>
-<h2 id="why-use-a-statefulset">Why Use a StatefulSet?</h2>
-<p>Use a StatefulSet when your app requires:</p>
-<p>✅ <strong>Stable network identity</strong> (e.g., <code>pod-0</code>, <code>pod-1</code>)<br/>
-✅ <strong>Persistent storage per Pod</strong> that survives rescheduling<br/>
-✅ <strong>Ordered Pod startup, scaling, and deletion</strong></p>
-<p>Examples: databases (PostgreSQL, Cassandra), Zookeeper, Kafka, etc.</p>
+<h2>Why Use a StatefulSet?</h2>
+<p>Use a StatefulSet when your app needs:</p>
+<ul>
+<li><strong>Stable network identity</strong> (like <code>pod-0</code>, <code>pod-1</code>)</li>
+<li><strong>Persistent storage per Pod</strong> that sticks around if the Pod is rescheduled</li>
+<li><strong>Ordered startup, scaling, and deletion</strong></li>
+</ul>
+<p><strong>Examples:</strong> Databases (PostgreSQL, Cassandra), Zookeeper, Kafka, etc.</p>
 <hr/>
-<h2 id="how-it-differs-from-deployments">How It Differs from Deployments</h2>
-<p>StatefulSets guarantee <strong>identity and storage</strong>, while Deployments prioritize <strong>replica management</strong> without caring about which Pod is which.</p>
+<h2>How It Differs from Deployments</h2>
+<p>StatefulSets guarantee identity and storage for each Pod, while Deployments just care about keeping the right number of Pods running (not which is which).</p>
 <p><img alt="StatefulSets Diagram" src="../images/sts-light.png#only-light"/>
 <img alt="StatefulSets Diagram" src="../images/sts-dark.png#only-dark"/></p>
 <p><strong>Top Half (Deployment):</strong> Pod reschedule = new IP, broken volume mount<br/>
 <strong>Bottom Half (StatefulSet):</strong> Pod is recreated with the <strong>same IP</strong>, <strong>same volume</strong></p>
 <hr/>
-<h2 id="key-features">Key Features</h2>
+<h2>Key Features</h2>
 <table>
 <thead>
 <tr>
@@ -1495,7 +1497,7 @@
 </tr>
 <tr>
 <td>Persistent VolumeClaim</td>
-<td>Shared or ephemeral</td>
+<td>Shared/ephemeral</td>
 <td>One per Pod</td>
 </tr>
 <tr>
@@ -1506,7 +1508,7 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="sample-yaml">Sample YAML</h2>
+<h2>Sample YAML</h2>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1528,14 +1530,18 @@
 </span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">          </span><span class="nt">volumeMounts</span><span class="p">:</span>
 </span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
 </span><span id="__span-0-21"><a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">              </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/nginx/html</span>
-</span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">  </span><span class="nt">volumeClaimTemplates</span><span class="p">:</span>
-</span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
-</span><span id="__span-0-25"><a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-26"><a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"ReadWriteOnce"</span><span class="p p-Indicator">]</span>
-</span><span id="__span-0-27"><a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
-</span><span id="__span-0-28"><a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
-</span><span id="__span-0-29"><a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+</span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">      </span><span class="nt">tolerations</span><span class="p">:</span>
+</span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"node-role.kubernetes.io/master"</span>
+</span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">        </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="s">"Exists"</span>
+</span><span id="__span-0-25"><a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">        </span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="s">"NoSchedule"</span>
+</span><span id="__span-0-26"><a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">  </span><span class="nt">volumeClaimTemplates</span><span class="p">:</span>
+</span><span id="__span-0-27"><a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-0-28"><a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
+</span><span id="__span-0-29"><a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-30"><a href="#__codelineno-0-30" id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"ReadWriteOnce"</span><span class="p p-Indicator">]</span>
+</span><span id="__span-0-31"><a href="#__codelineno-0-31" id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
+</span><span id="__span-0-32"><a href="#__codelineno-0-32" id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
+</span><span id="__span-0-33"><a href="#__codelineno-0-33" id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
 </span></code></pre></div>
 <hr/>
 <h2 id="networking-dns">Networking &amp; DNS</h2>
@@ -1564,14 +1570,16 @@
 </ul>
 <p>These volumes are <strong>retained</strong> even if the Pod is deleted.</p>
 <hr/>
-<h2 id="summary">Summary</h2>
-<p>StatefulSets are essential when:</p>
+<h2>Summary</h2>
 <ul>
-<li>Each Pod must retain <strong>identity</strong>, <strong>storage</strong>, and <strong>DNS</strong></li>
-<li>Order of startup or shutdown matters</li>
-<li>Storage must be preserved between Pod rescheduling</li>
+<li><strong>StatefulSets</strong> are for apps that need stable identity and storage.</li>
+<li>Use them for databases, queues, and apps that can't just be replaced with a blank Pod.</li>
+<li>Deployments are for stateless, replaceable workloads.</li>
 </ul>
-<p>Use them wisely—they’re powerful but can be overkill for stateless services.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Only use StatefulSets when you really need sticky identity or storage. For most apps, Deployments are simpler and easier to manage.</p>
+</div>
 
 
 

@@ -1456,15 +1456,14 @@
                   
 
 
-  <h1>Quotas & Limits</h1>
-
-<p>In a multi-tenant Kubernetes environment, it's important to prevent any single team, namespace, or workload from consuming all available cluster resources. Kubernetes provides two mechanisms to enforce this: <strong>ResourceQuotas</strong> and <strong>LimitRanges</strong>.</p>
-<p>These tools help cluster administrators enforce <strong>fair resource allocation</strong>, <strong>cost controls</strong>, and <strong>capacity planning</strong> across teams and environments.</p>
+<h1>Resource Quotas &amp; LimitRanges</h1>
+<p>In a multi-tenant Kubernetes environment, you need to make sure no single team or workload can hog all the resources. Kubernetes provides two key tools for this: <strong>ResourceQuotas</strong> and <strong>LimitRanges</strong>.</p>
+<p>These help admins enforce <strong>fair resource allocation</strong>, <strong>cost controls</strong>, and <strong>capacity planning</strong>.</p>
 <hr/>
-<h2 id="resourcequota">ResourceQuota</h2>
-<p>A <strong>ResourceQuota</strong> defines a hard cap on the total resource usage (CPU, memory, object counts, etc.) within a namespace.</p>
-<p>If the total usage across all Pods in the namespace exceeds the defined quota, further resource requests will be denied.</p>
-<h3 id="example-memory-cpu-quota">Example: Memory &amp; CPU Quota</h3>
+<h2>ResourceQuota</h2>
+<p>A <strong>ResourceQuota</strong> sets a hard cap on the total resource usage (CPU, memory, object counts, etc.) within a namespace.</p>
+<p>If the sum of all Pods in the namespace exceeds the quota, new requests are denied.</p>
+<h3>Example: Memory &amp; CPU Quota</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ResourceQuota</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1478,7 +1477,7 @@
 </span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">limits.memory</span><span class="p">:</span><span class="w"> </span><span class="s">"8Gi"</span>
 </span></code></pre></div>
 <p>This restricts total <strong>requested</strong> and <strong>limited</strong> CPU/memory for all Pods in the <code>dev</code> namespace.</p>
-<h3 id="example-object-count-quota">Example: Object Count Quota</h3>
+<h3>Example: Object Count Quota</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">spec</span><span class="p">:</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">hard</span><span class="p">:</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">pods</span><span class="p">:</span><span class="w"> </span><span class="s">"10"</span>
@@ -1487,10 +1486,10 @@
 </span></code></pre></div>
 <p>You can limit the number of objects like Pods, ConfigMaps, or PVCs to enforce soft multi-tenancy boundaries.</p>
 <hr/>
-<h2 id="limitrange">LimitRange</h2>
+<h2>LimitRange</h2>
 <p>A <strong>LimitRange</strong> sets default values and upper/lower bounds for container-level resource usage <strong>within a namespace</strong>.</p>
 <p>It ensures developers don’t accidentally omit or misuse resource definitions.</p>
-<h3 id="example-default-limits-and-requests">Example: Default Limits and Requests</h3>
+<h3>Example: Default Limits and Requests</h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LimitRange</span>
 </span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">metadata</span><span class="p">:</span>
@@ -1505,9 +1504,11 @@
 </span><span id="__span-2-12"><a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Mi</span>
 </span><span id="__span-2-13"><a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Container</span>
 </span></code></pre></div>
-<p>This sets:
-- A <strong>default request and limit</strong> if none is provided in the Pod spec.
-- A guardrail to prevent containers from consuming too much by default.</p>
+<p>This sets:</p>
+<ul>
+<li>A <strong>default request and limit</strong> if none is provided in the Pod spec.</li>
+<li>A guardrail to prevent containers from consuming too much by default.</li>
+</ul>
 <hr/>
 <h2 id="when-to-use-quotas-vs-limitranges">When to Use Quotas vs LimitRanges</h2>
 <table>
@@ -1547,17 +1548,18 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="best-practices">Best Practices</h2>
+<h2>Summary</h2>
 <ul>
-<li>Use <strong>ResourceQuotas</strong> in shared clusters to prevent noisy neighbor problems.</li>
-<li>Apply <strong>LimitRanges</strong> to avoid under- or over-provisioned workloads.</li>
-<li>Combine both to enforce sane defaults and total caps.</li>
-<li>Monitor usage with <code>kubectl describe quota</code> or metrics dashboards.</li>
+<li><strong>ResourceQuotas</strong>: Limit total resources in a namespace.</li>
+<li><strong>LimitRanges</strong>: Set defaults and max/min per container.</li>
+<li>Both are essential for multi-tenant, production-grade clusters.</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Always set quotas and limits in shared clusters. It keeps things fair, predictable, and safe for everyone.</li>
+<li>Monitor usage with `kubectl describe quota` or metrics dashboards.</li>
 <li>Document enforced limits for your teams to avoid confusion and failures.</li>
 </ul>
-<hr/>
-<h2 id="summary">Summary</h2>
-<p>Kubernetes ResourceQuotas and LimitRanges are essential for managing shared cluster resources. They provide controls at both the namespace and container level, making it easier to ensure fairness, reduce waste, and maintain a healthy multi-tenant environment.</p>
 
 
 
