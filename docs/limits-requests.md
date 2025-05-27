@@ -2,25 +2,25 @@
 icon: material/gauge
 ---
 
-# Resource Requests & Limits
+<h1>Resource Requests & Limits</h1>
 
-Kubernetes lets you control how much CPU and memory each container is **guaranteed** and **allowed** to use. This is done through **resource requests** and **limits** in the container spec.
+Kubernetes lets you control how much CPU and memory each container is <strong>guaranteed</strong> and <strong>allowed</strong> to use. This is done through <strong>resource requests</strong> and <strong>limits</strong> in the container spec.
 
 ---
 
-## Requests vs Limits
+<h2>Requests vs Limits</h2>
 
 | Term     | Purpose                               | Scheduler Uses? | Enforced at Runtime? |
 |----------|----------------------------------------|------------------|----------------------|
-| `requests` | Minimum resources guaranteed to a container | ✅ Yes           | ❌ No               |
-| `limits`   | Maximum resources a container can use       | ❌ No            | ✅ Yes              |
+| <code>requests</code> | Minimum resources guaranteed to a container | ✅ Yes           | ❌ No               |
+| <code>limits</code>   | Maximum resources a container can use       | ❌ No            | ✅ Yes              |
 
-- **Requests** are used during scheduling. Kubernetes places Pods on nodes that can satisfy their requested resources.
-- **Limits** prevent a container from exceeding a set threshold.
+- <strong>Requests</strong> are used during scheduling. Kubernetes places Pods on nodes that can satisfy their requested resources.
+- <strong>Limits</strong> prevent a container from exceeding a set threshold.
 
 ---
 
-## Example: CPU and Memory Settings
+<h2>Example: CPU and Memory Settings</h2>
 
 ```yaml
 resources:
@@ -32,44 +32,46 @@ resources:
     cpu: "500m"
 ```
 
-This guarantees the container gets **at least 256Mi and 250 millicores**, but it **cannot exceed 512Mi or 500 millicores**.
+This guarantees the container gets <strong>at least 256Mi and 250 millicores</strong>, but it <strong>cannot exceed 512Mi or 500 millicores</strong>.
 
 ---
 
-## Why It Matters
+<h2>Why It Matters</h2>
 
-- **Too low requests** → Your Pod may get scheduled on a crowded node and experience performance issues.
-- **No limits** → A container can consume all resources and cause noisy neighbor problems.
-- **Too low limits** → Can result in **OOMKills** or throttled CPU.
+- <strong>Too low requests</strong> → Your Pod may get scheduled on a crowded node and experience performance issues.
+- <strong>No limits</strong> → A container can consume all resources and cause noisy neighbor problems.
+- <strong>Too low limits</strong> → Can result in <strong>OOMKills</strong> or throttled CPU.
 
 ---
 
-## CPU Behavior
+<h2>CPU Behavior</h2>
 
-- If a container exceeds its **CPU limit**, it is throttled — not killed.
+- If a container exceeds its <strong>CPU limit</strong>, it is throttled—not killed.
 - If you don’t set a limit, the container may consume all available CPU.
 
 ---
 
-## Memory Behavior
+<h2>Memory Behavior</h2>
 
-- If memory **usage exceeds the limit**, the container is killed with an **OOMKill** (Out of Memory).
-- Kubernetes does **not restart it** unless it's part of a higher-level controller (like a Deployment).
+- If memory <strong>usage exceeds the limit</strong>, the container is killed with an <strong>OOMKill</strong> (Out of Memory).
+- Kubernetes does <strong>not restart it</strong> unless it's part of a higher-level controller (like a Deployment).
 
 ---
 
-## Best Practices
+<h2>Best Practices</h2>
 
 - Always set both **requests** and **limits** — especially for memory.
 - Set realistic **requests** to ensure proper scheduling.
 - Avoid overly restrictive limits unless you're debugging or need to enforce strict control.
-- Use **LimitRanges** or **ResourceQuotas** to apply default or max values across a namespace.
+- Use <strong>LimitRanges</strong> to enforce defaults and maximums in namespaces.
+- Monitor Pod and Node usage to tune your settings.
+- Set realistic requests and limits for every container. This keeps your cluster healthy and prevents resource hogs or accidental outages.
 
 ---
 
-## Summary
-
-- **Requests** = what your container is guaranteed
-- **Limits** = the hard ceiling your container can use
-- Kubernetes uses requests for scheduling and limits for enforcement.
-- Proper resource settings help with performance, predictability, and cluster stability.
+<h2>Summary</h2>
+<ul>
+<li><strong>Requests</strong> guarantee a minimum amount of resources for a container.</li>
+<li><strong>Limits</strong> cap the maximum resources a container can use.</li>
+<li>Always set both for predictable, stable workloads.</li>
+</ul>

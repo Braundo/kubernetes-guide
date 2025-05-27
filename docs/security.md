@@ -2,26 +2,28 @@
 icon: material/shield-lock-outline
 ---
 
-# Security Primer
+<h1>Security Primer</h1>
 
-Kubernetes security isn't just one feature — it's a collection of layered controls designed to protect **clusters**, **workloads**, **data**, and **users**. Understanding how these layers work together is critical to hardening your environment.
-
----
-
-## The 4Cs of Kubernetes Security
-
-Kubernetes security builds on the **4Cs** model:
-
-1. **Cloud / Infrastructure**
-2. **Cluster**
-3. **Container**
-4. **Code**
-
-Each layer provides opportunities for both defense and attack. Strong security means securing **each level**, not just one.
+Kubernetes security is like building a fortress with many walls—each layer protects your cluster, workloads, data, and users. Understanding how these layers work together is the key to a secure environment.
 
 ---
 
-## Common Threat Vectors
+<h2>The 4Cs of Kubernetes Security</h2>
+
+Kubernetes security is built on the <strong>4Cs</strong> model:
+
+1. <strong>Cloud / Infrastructure</strong>
+2. <strong>Cluster</strong>
+3. <strong>Container</strong>
+4. <strong>Code</strong>
+
+> <strong>Analogy:</strong> Think of the 4Cs as security gates: each one must be strong to keep your cluster safe.
+
+Each layer is an opportunity for both defense and attack. True security means securing <strong>every</strong> level.
+
+---
+
+<h2>Common Threat Vectors</h2>
 
 | Surface Area        | Risk Example                                 |
 |---------------------|-----------------------------------------------|
@@ -31,33 +33,32 @@ Each layer provides opportunities for both defense and attack. Strong security m
 | Over-permissive Network | No NetworkPolicy = open lateral movement |
 | Secrets in plain text | Poorly handled sensitive data               |
 
----
-
-## Key Kubernetes Security Concepts
-
-Here’s a quick overview of what you’ll encounter in the upcoming sections:
-
-### 🔐 Authentication & Authorization
-
-- **Authentication** – Who are you?
-- **Authorization (RBAC)** – What can you do?
-- **Admission Controllers** – Should this action be allowed or mutated?
-
-These mechanisms protect access to the Kubernetes API and workloads.
+> <strong>Tip:</strong> Most real-world incidents result from misconfigurations, not zero-day exploits.
 
 ---
 
-### 🧱 Pod Security
+<h2>Key Kubernetes Security Concepts</h2>
 
+Quick overview of what matters most:
+
+<h3>🔐 Authentication & Authorization</h3>
+- <strong>Authentication</strong>: Who are you?
+- <strong>Authorization (RBAC)</strong>: What are you allowed to do?
+- <strong>Admission Controllers</strong>: Should this action be allowed or changed?
+
+These protect access to the Kubernetes API and workloads.
+
+---
+
+<h3>🧱 Pod Security</h3>
 - Prevent privilege escalation
 - Block host access
 - Apply security contexts
-- Enforce using **Pod Security Admission (PSA)**
+- Enforce using <strong>Pod Security Admission (PSA)</strong>
 
 ---
 
-### 🕵️‍♂️ Audit Logs
-
+<h3>🕵️‍♂️ Audit Logs</h3>
 - Record every API request
 - Help detect suspicious or unauthorized behavior
 - Required for compliance in regulated environments
@@ -107,4 +108,6 @@ Kubernetes security is broad and layered. The upcoming sections break it down in
 - Image security and scanning
 - Runtime policies and network controls
 
+<br>
 Security isn't a checkbox — it's a process. Let’s dig into each piece.
+<br>

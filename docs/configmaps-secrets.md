@@ -2,26 +2,25 @@
 icon: material/key-outline
 ---
 
-# ConfigMaps & Secrets
+<h1>ConfigMaps & Secrets</h1>
 
-Kubernetes lets you decouple application configuration from container images using two key resources:
+Kubernetes lets you separate your app’s configuration from your container images using two special resources:
 
-- **ConfigMaps** for non-sensitive data (settings, URLs, etc.)
-- **Secrets** for sensitive data (passwords, tokens, certificates)
+- <strong>ConfigMaps</strong> for non-sensitive data (like settings, URLs, etc.)
+- <strong>Secrets</strong> for sensitive data (like passwords, tokens, certificates)
 
-These resources allow you to define environment-specific values once and reuse them across multiple workloads — improving security, consistency, and portability.
+This makes your apps more secure, portable, and easier to manage.
 
 ---
 
-## ConfigMaps (Non-Sensitive Configuration)
+<h2>ConfigMaps (Non-Sensitive Configuration)</h2>
 
-A **ConfigMap** is a key-value store for plain-text configuration. Use it for:
-
-- Environment-specific settings (`LOG_LEVEL`, `API_BASE_URL`)
+A <strong>ConfigMap</strong> is a key-value store for plain-text configuration. Use it for:
+- Environment settings (like <code>LOG_LEVEL</code>, <code>API_BASE_URL</code>)
 - Hostnames, ports, feature flags
 - Complete config files or CLI arguments
 
-### Example
+<h3>Example</h3>
 
 ```yaml
 apiVersion: v1
@@ -35,17 +34,17 @@ data:
 
 ---
 
-## Secrets (Sensitive Data)
+<h2>Secrets (Sensitive Data)</h2>
 
-**Secrets** are also key-value stores — but intended for private data such as:
+<strong>Secrets</strong> are also key-value stores—but for private data:
 
-- Passwords, tokens, and API keys
+- Passwords, tokens, API keys
 - SSH keys or TLS certs
 - Docker registry credentials
 
-Kubernetes encodes all Secret values in **base64**. Note: this is for transport, not security.
+Kubernetes encodes all Secret values in <strong>base64</strong> (for transport, not real security).
 
-### Example
+<h3>Example</h3>
 
 ```yaml
 apiVersion: v1
@@ -57,8 +56,8 @@ data:
   DB_PASSWORD: c3VwZXJzZWNyZXQ=
 ```
 
-> ⓘ Decode with: `echo c3VwZXJzZWNyZXQ= | base64 -d`  
-> Use `stringData:` if you want Kubernetes to handle the encoding automatically.
+!!! tip
+    Decode with `echo c3VwZXJzZWNyZXQ= | base64 -d`. Use `stringData:` if you want Kubernetes to handle encoding for you.
 
 ---
 
@@ -147,19 +146,25 @@ containers:
 
 ---
 
-## Best Practices
+<h2>Using ConfigMaps & Secrets</h2>
 
-- Use **ConfigMaps** for plain-text configuration and **Secrets** for anything private.
-- Use **RBAC** to control access to Secrets.
-- Enable **encryption at rest** for Secret resources (`EncryptionConfiguration`).
-- Avoid committing secrets to Git — even in base64 form.
-- Use tools like **Sealed Secrets**, **Vault**, or **external-secrets** to integrate with cloud-native secrets managers.
+You can mount ConfigMaps and Secrets as environment variables or files inside your Pods. This keeps your app configuration flexible and secure.
 
 ---
 
-## Summary
+<h2>Best Practices</h2>
+<ul>
+<li><strong>Never store sensitive data in ConfigMaps.</strong> Use Secrets for anything private.</li>
+<li><strong>Restrict access</strong> to Secrets using RBAC.</li>
+<li><strong>Avoid hardcoding values</strong> in your manifests. Reference ConfigMaps and Secrets instead.</li>
+<li><strong>Use external secret managers</strong> (like AWS Secrets Manager, HashiCorp Vault) for extra-sensitive data.</li>
+</ul>
 
-- **ConfigMaps** store non-sensitive values like app settings and hostnames.
-- **Secrets** store sensitive data like passwords and certificates — encoded, but not encrypted by default.
-- Both can be used via environment variables, mounted volumes, or command overrides.
-- Combine with proper RBAC and encryption settings for production use.
+---
+
+<h2>Summary</h2>
+<ul>
+<li><strong>ConfigMaps</strong>: For non-sensitive, environment-specific configuration.</li>
+<li><strong>Secrets</strong>: For sensitive data, encoded for transport.</li>
+<li>Both improve security, portability, and flexibility in your Kubernetes apps.</li>
+</ul>

@@ -6,10 +6,10 @@ In Kubernetes, **audit logging** and centralized **log collection** are critical
 
 ---
 
-## Audit Logs in Kubernetes
+<h2>Audit Logs in Kubernetes</h2>
 
-Kubernetes audit logs record the **who, what, when, and where** of every request made to the Kubernetes API server. These logs are essential for security analysis, compliance, and intrusion detection.
-
+Kubernetes audit logs record the <strong>who, what, when, and where</strong> of every request made to the Kubernetes API server. These logs are essential for security analysis, compliance, and intrusion detection.
+<br>
 Audit logging must be configured explicitly and is typically enabled on the control plane node(s).
 
 ### Key Fields in Audit Events
@@ -59,6 +59,8 @@ Audit logging is configured via the `--audit-policy-file` and `--audit-log-path`
 
 You also define a **policy file** to control which events get logged:
 
+---
+
 ```yaml
 apiVersion: audit.k8s.io/v1
 kind: Policy
@@ -105,6 +107,7 @@ Grafana / Kibana / Alerting Tools
 ```
 
 This allows:
+
 - Full-text search over logs
 - Filtering by label, container, namespace, or timestamp
 - Long-term storage for audit/compliance

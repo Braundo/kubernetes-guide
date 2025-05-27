@@ -6,9 +6,10 @@ Kubernetes allows you to configure runtime behavior of containers using **enviro
 
 ---
 
-## Environment Variables
+<h2>Environment Variables</h2>
 
 You can pass key-value pairs into containers using environment variables. These can be hardcoded, referenced from ConfigMaps, Secrets, or even dynamically derived from field references.
+
 
 ### Static Environment Variables
 
@@ -124,9 +125,13 @@ startupProbe:
 - Use **startup probes** for slow-starting applications.
 - Avoid setting `initialDelaySeconds` too low — allow the app to start first.
 - Prefer HTTP or command probes for rich diagnostics.
+- Avoid hardcoding values inside your images. Use environment variables, ConfigMaps, and Secrets for maximum flexibility and security.
 
 ---
 
-## Summary
-
-Environment variables allow you to make your containerized applications configurable without rebuilding images. Probes give Kubernetes insight into the health and lifecycle of your applications, enabling smart traffic routing and automated restarts. Together, these tools form the backbone of robust and production-ready workloads.
+<h2>Summary</h2>
+<ul>
+<li><strong>Environment variables</strong> make your containers configurable and portable.</li>
+<li>Use ConfigMaps and Secrets for dynamic or sensitive values.</li>
+<li>Probes help keep your apps healthy and ready for traffic.</li>
+</ul>

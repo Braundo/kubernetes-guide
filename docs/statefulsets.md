@@ -2,48 +2,48 @@
 icon: material/database
 ---
 
-# StatefulSets
+<h1>StatefulSets</h1>
 
-A **StatefulSet** is a Kubernetes controller for deploying and scaling **stateful applications**. Unlike Deployments, StatefulSets maintain **persistent identity and storage** for each Pod across rescheduling and restarts.
-
----
-
-## Why Use a StatefulSet?
-
-Use a StatefulSet when your app requires:
-
-✅ **Stable network identity** (e.g., `pod-0`, `pod-1`)  
-✅ **Persistent storage per Pod** that survives rescheduling  
-✅ **Ordered Pod startup, scaling, and deletion**
-
-Examples: databases (PostgreSQL, Cassandra), Zookeeper, Kafka, etc.
+A <strong>StatefulSet</strong> is a Kubernetes controller for running <strong>stateful apps</strong>—apps that need each Pod to keep its identity and storage, even if rescheduled. Think databases, message queues, or anything that can't just be replaced with a blank copy.
 
 ---
 
-## How It Differs from Deployments
+<h2>Why Use a StatefulSet?</h2>
 
-StatefulSets guarantee **identity and storage**, while Deployments prioritize **replica management** without caring about which Pod is which.
+Use a StatefulSet when your app needs:
+
+- <strong>Stable network identity</strong> (like <code>pod-0</code>, <code>pod-1</code>)
+- <strong>Persistent storage per Pod</strong> that sticks around if the Pod is rescheduled
+- <strong>Ordered startup, scaling, and deletion</strong>
+
+<strong>Examples:</strong> Databases (PostgreSQL, Cassandra), Zookeeper, Kafka, etc.
+
+---
+
+<h2>How It Differs from Deployments</h2>
+
+StatefulSets guarantee identity and storage for each Pod, while Deployments just care about keeping the right number of Pods running (not which is which).
 
 ![StatefulSets Diagram](images/sts-light.png#only-light)
 ![StatefulSets Diagram](images/sts-dark.png#only-dark)
 
-**Top Half (Deployment):** Pod reschedule = new IP, broken volume mount  
-**Bottom Half (StatefulSet):** Pod is recreated with the **same IP**, **same volume**
+<strong>Top Half (Deployment):</strong> Pod reschedule = new IP, broken volume mount  
+<strong>Bottom Half (StatefulSet):</strong> Pod is recreated with the <strong>same IP</strong>, <strong>same volume</strong>
 
 ---
 
-## Key Features
+<h2>Key Features</h2>
 
 | Feature                 | Deployment         | StatefulSet         |
 |-------------------------|--------------------|----------------------|
-| Pod name                | Random (e.g., `pod-abc123`) | Stable (e.g., `web-0`, `web-1`) |
+| Pod name                | Random (e.g., <code>pod-abc123</code>) | Stable (e.g., <code>web-0</code>, <code>web-1</code>) |
 | Pod start/delete order  | Any                | Ordered             |
-| Persistent VolumeClaim  | Shared or ephemeral | One per Pod         |
+| Persistent VolumeClaim  | Shared/ephemeral   | One per Pod         |
 | DNS hostname            | Random             | Stable via headless service |
 
 ---
 
-## Sample YAML
+<h2>Sample YAML</h2>
 
 ```yaml
 apiVersion: apps/v1
@@ -67,6 +67,10 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /usr/share/nginx/html
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
   volumeClaimTemplates:
     - metadata:
         name: data
@@ -116,12 +120,12 @@ These volumes are **retained** even if the Pod is deleted.
 
 ---
 
-## Summary
+<h2>Summary</h2>
+<ul>
+<li><strong>StatefulSets</strong> are for apps that need stable identity and storage.</li>
+<li>Use them for databases, queues, and apps that can't just be replaced with a blank Pod.</li>
+<li>Deployments are for stateless, replaceable workloads.</li>
+</ul>
 
-StatefulSets are essential when:
-
-- Each Pod must retain **identity**, **storage**, and **DNS**
-- Order of startup or shutdown matters
-- Storage must be preserved between Pod rescheduling
-
-Use them wisely—they’re powerful but can be overkill for stateless services.
+!!! tip
+    Only use StatefulSets when you really need sticky identity or storage. For most apps, Deployments are simpler and easier to manage.

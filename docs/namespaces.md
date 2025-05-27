@@ -2,13 +2,13 @@
 icon: material/select
 ---
 
-# Namespaces
+<h1>Namespaces</h1>
 
-Namespaces in Kubernetes allow you to divide cluster resources between multiple users or teams. They provide **logical isolation** and help with **multi-tenancy**, access control, and resource management.
+Namespaces in Kubernetes allow you to divide cluster resources between multiple users or teams. They provide <strong>logical isolation</strong> and help with <strong>multi-tenancy</strong>, access control, and resource management.
 
 ---
 
-## When to Use Namespaces
+<h2>When to Use Namespaces</h2>
 
 Namespaces are useful when:
 
@@ -16,11 +16,12 @@ Namespaces are useful when:
 - You want to enforce **resource quotas and limits**
 - You want to implement **RBAC per team or application**
 
-> For most small or single-team clusters, the `default` namespace is sufficient.
+!!! tip
+    For most small or single-team clusters, the `default` namespace is sufficient.
 
 ---
 
-## Viewing Namespaces
+<h2>Viewing Namespaces</h2>
 
 ```shell
 kubectl get namespaces
@@ -34,7 +35,7 @@ kubectl get ns
 
 ---
 
-## Creating a Namespace
+<h2>Creating a Namespace</h2>
 
 ```yaml
 apiVersion: v1
@@ -51,7 +52,7 @@ kubectl apply -f namespace.yaml
 
 ---
 
-## Using Namespaces with kubectl
+<h2>Using Namespaces with kubectl</h2>
 
 ```shell
 kubectl get pods -n dev-team
@@ -122,8 +123,13 @@ kubectl delete namespace dev-team
 
 ---
 
-## Summary
+<h2>Summary</h2>
 
-- Namespaces are key to **organizing**, **isolating**, and **managing** Kubernetes resources.
-- Use them for multi-tenancy, RBAC, and resource quotas.
-- Know which resources are namespaced vs. cluster-scoped.
+- <strong>Namespaces</strong> provide logical isolation for teams, environments, or applications.
+- Use namespaces to set resource quotas, apply RBAC, and organize your cluster.
+- For small/simple clusters, the <code>default</code> namespace is fine; use more as you scale.
+
+!!! tip
+    Name namespaces clearly (e.g., `dev`, `prod`, `team-a`) and use them to enforce security and resource policies.
+
+<br>

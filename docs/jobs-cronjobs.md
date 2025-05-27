@@ -2,23 +2,22 @@
 icon: material/clock-outline
 ---
 
-# Jobs & CronJobs
+<h1>Jobs & CronJobs</h1>
 
-Not all workloads in Kubernetes are long-running services. Sometimes, you just need to run something once — or on a schedule. That’s where **Jobs** and **CronJobs** come in.
+Not all Kubernetes workloads run forever. Sometimes, you just need to run something once—or on a schedule. That’s where <strong>Jobs</strong> and <strong>CronJobs</strong> come in.
 
 ---
 
-## Jobs
+<h2>Jobs</h2>
 
-A **Job** runs a Pod (or set of Pods) to completion. It's ideal for:
-
+A <strong>Job</strong> runs a Pod (or Pods) to completion. Perfect for:
 - One-time tasks
 - Batch processing
 - Migrations or post-deployment hooks
 
-Kubernetes ensures the Job runs successfully to completion — even if a Pod crashes or a node fails, a new Pod will be scheduled.
+Kubernetes guarantees the Job runs to completion—even if a Pod crashes or a node fails, a new Pod will be scheduled.
 
-### Minimal Job Example
+<h3>Minimal Job Example</h3>
 
 ```yaml
 kind: Job
@@ -32,21 +31,20 @@ spec:
       restartPolicy: Never
 ```
 
-> ⓘ The `restartPolicy` for Jobs must be `Never` or `OnFailure`.
+> <strong>Tip:</strong> The <code>restartPolicy</code> for Jobs must be <code>Never</code> or <code>OnFailure</code>.
 
 ---
 
-## CronJobs
+<h2>CronJobs</h2>
 
-A **CronJob** runs Jobs on a repeating schedule, similar to Linux cron syntax.
+A <strong>CronJob</strong> runs Jobs on a repeating schedule, just like Linux cron.
 
 Use CronJobs for:
-
 - Periodic cleanup tasks
-- Scheduled report generation
+- Scheduled reports
 - Time-based batch jobs
 
-### Cron Syntax Example
+<h3>Cron Syntax Example</h3>
 
 ```yaml
 kind: CronJob

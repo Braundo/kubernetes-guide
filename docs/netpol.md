@@ -2,28 +2,28 @@
 icon: material/shield-key-outline
 ---
 
-# Network Policies
+<h1>Network Policies</h1>
 
-By default, **all Pods in a Kubernetes cluster can talk to each other**. This is convenient, but risky — especially in multi-tenant clusters or production environments.
+By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky—especially in multi-tenant clusters or production environments.
 
-**NetworkPolicies** let you control **which Pods can talk to which other Pods** (and even external IPs).
+<strong>NetworkPolicies</strong> let you control <strong>which Pods can talk to which other Pods</strong> (and even external IPs).
 
-> Think of it like a firewall for Pod-to-Pod traffic — but defined in YAML.
+> Think of it like a firewall for Pod-to-Pod traffic—but defined in YAML.
 
 ---
 
-## Key Concepts
+<h2>Key Concepts</h2>
 
-- NetworkPolicies apply to **Pods** (via label selectors)
-- They control **ingress**, **egress**, or both
-- They require a **network plugin (CNI)** that supports them (e.g., Calico, Cilium)
+- NetworkPolicies apply to <strong>Pods</strong> (via label selectors)
+- They control <strong>ingress</strong>, <strong>egress</strong>, or both
+- They require a <strong>network plugin (CNI)</strong> that supports them (e.g., Calico, Cilium)
 
 > No policies = allow all  
 > Any policy = default deny (for the targeted direction)
 
 ---
 
-## Minimal Example
+<h2>Minimal Example</h2>
 
 Allow only traffic to a Pod from Pods with a specific label:
 
@@ -44,16 +44,15 @@ spec:
               app: frontend
 ```
 
-This says:  
-**Only Pods labeled `app=frontend` can access Pods labeled `app=backend`.**
+This says:  **only Pods labeled `app=frontend` can access Pods labeled `app=backend`.**
 
 ---
 
-## Policy Scope
+<h2>Policy Scope</h2>
 
 | Field         | Controls                              |
 |---------------|----------------------------------------|
-| `podSelector` | Which Pods the policy applies **to**   |
+| `podSelector` | Which Pods the policy applies <strong>to</strong>   |
 | `ingress`     | Who can reach the Pod                  |
 | `egress`      | Where the Pod is allowed to send traffic |
 
@@ -96,8 +95,11 @@ Not all network plugins support NetworkPolicies. Some common ones that do:
 
 ---
 
-## Summary
+<h2>Summary</h2>
 
+- <strong>NetworkPolicies</strong> let you control pod-to-pod and pod-to-external communication.
+- By default, all traffic is allowed—add a policy to restrict.
+- Use label selectors to target specific Pods for fine-grained control.
 - NetworkPolicies control **Pod-level traffic** based on labels and CIDRs
 - Define **who can talk to what**, and where traffic can go
 - Essential for **zero-trust network design** inside the cluster

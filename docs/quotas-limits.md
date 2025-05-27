@@ -2,19 +2,21 @@
 icon: material/scale-balance
 ---
 
-In a multi-tenant Kubernetes environment, it's important to prevent any single team, namespace, or workload from consuming all available cluster resources. Kubernetes provides two mechanisms to enforce this: **ResourceQuotas** and **LimitRanges**.
+<h1>Resource Quotas & LimitRanges</h1>
 
-These tools help cluster administrators enforce **fair resource allocation**, **cost controls**, and **capacity planning** across teams and environments.
+In a multi-tenant Kubernetes environment, you need to make sure no single team or workload can hog all the resources. Kubernetes provides two key tools for this: <strong>ResourceQuotas</strong> and <strong>LimitRanges</strong>.
+
+These help admins enforce <strong>fair resource allocation</strong>, <strong>cost controls</strong>, and <strong>capacity planning</strong>.
 
 ---
 
-## ResourceQuota
+<h2>ResourceQuota</h2>
 
-A **ResourceQuota** defines a hard cap on the total resource usage (CPU, memory, object counts, etc.) within a namespace.
+A <strong>ResourceQuota</strong> sets a hard cap on the total resource usage (CPU, memory, object counts, etc.) within a namespace.
 
-If the total usage across all Pods in the namespace exceeds the defined quota, further resource requests will be denied.
+If the sum of all Pods in the namespace exceeds the quota, new requests are denied.
 
-### Example: Memory & CPU Quota
+<h3>Example: Memory & CPU Quota</h3>
 
 ```yaml
 apiVersion: v1
@@ -30,9 +32,9 @@ spec:
     limits.memory: "8Gi"
 ```
 
-This restricts total **requested** and **limited** CPU/memory for all Pods in the `dev` namespace.
+This restricts total <strong>requested</strong> and <strong>limited</strong> CPU/memory for all Pods in the <code>dev</code> namespace.
 
-### Example: Object Count Quota
+<h3>Example: Object Count Quota</h3>
 
 ```yaml
 spec:
@@ -46,13 +48,13 @@ You can limit the number of objects like Pods, ConfigMaps, or PVCs to enforce so
 
 ---
 
-## LimitRange
+<h2>LimitRange</h2>
 
-A **LimitRange** sets default values and upper/lower bounds for container-level resource usage **within a namespace**.
+A <strong>LimitRange</strong> sets default values and upper/lower bounds for container-level resource usage <strong>within a namespace</strong>.
 
 It ensures developers don’t accidentally omit or misuse resource definitions.
 
-### Example: Default Limits and Requests
+<h3>Example: Default Limits and Requests</h3>
 
 ```yaml
 apiVersion: v1
@@ -71,6 +73,7 @@ spec:
 ```
 
 This sets:
+
 - A **default request and limit** if none is provided in the Pod spec.
 - A guardrail to prevent containers from consuming too much by default.
 
@@ -88,16 +91,17 @@ This sets:
 
 ---
 
-## Best Practices
+<h2>Summary</h2>
+<ul>
+  <li><strong>ResourceQuotas</strong>: Limit total resources in a namespace.</li>
+  <li><strong>LimitRanges</strong>: Set defaults and max/min per container.</li>
+  <li>Both are essential for multi-tenant, production-grade clusters.</li>
+</ul>
 
-- Use **ResourceQuotas** in shared clusters to prevent noisy neighbor problems.
-- Apply **LimitRanges** to avoid under- or over-provisioned workloads.
-- Combine both to enforce sane defaults and total caps.
-- Monitor usage with `kubectl describe quota` or metrics dashboards.
-- Document enforced limits for your teams to avoid confusion and failures.
+<h2>Best Practices</h2>
+<ul>
+  <li>Always set quotas and limits in shared clusters. It keeps things fair, predictable, and safe for everyone.</li>
+  <li>Monitor usage with `kubectl describe quota` or metrics dashboards.</li>
+  <li>Document enforced limits for your teams to avoid confusion and failures.</li>
+</ul>
 
----
-
-## Summary
-
-Kubernetes ResourceQuotas and LimitRanges are essential for managing shared cluster resources. They provide controls at both the namespace and container level, making it easier to ensure fairness, reduce waste, and maintain a healthy multi-tenant environment.

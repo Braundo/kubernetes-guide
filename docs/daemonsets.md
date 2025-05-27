@@ -2,13 +2,14 @@
 icon: material/content-copy
 ---
 
-# Managing DaemonSets in Kubernetes
+<h1>Managing DaemonSets in Kubernetes</h1>
 
 DaemonSets ensure that all (or some) nodes run a copy of a Pod. They are used for deploying system-level applications like log collectors, monitoring agents, and other node-specific services.
 
-<h3>Introduction to DaemonSets</h3>
+<h2>Introduction to DaemonSets</h2>
 
 DaemonSets are designed to manage the deployment of Pods across all nodes in a cluster. They ensure that a specific Pod is running on each node, making them ideal for system-level applications.
+
 
 <h3>Use Cases for DaemonSets</h3>
 
@@ -19,6 +20,7 @@ DaemonSets are commonly used for:
 - **Networking:** Managing network services like DNS or proxy servers.
 
 <h3>Key Features</h3>
+
 
 - **Automatic Updates:** Automatically adds Pods to new nodes when they are added to the cluster.
 - **Selective Deployment:** Can be configured to deploy Pods only to specific nodes using node selectors.
@@ -59,6 +61,17 @@ spec:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"
         effect: "NoSchedule"
+
+---
+
+<h2>Summary</h2>
+<ul>
+<li><strong>DaemonSets</strong> ensure a Pod runs on every (or selected) node in your cluster.</li>
+<li>They’re perfect for log collection, monitoring, and node-specific services.</li>
+<li>Rolling updates and node selectors give you fine-grained control.</li>
+</ul>
+
+> <strong>Best Practice:</strong> Use DaemonSets for system-level workloads that must run everywhere. For app workloads, use Deployments or StatefulSets.
 ```
 
 ## Best Practices

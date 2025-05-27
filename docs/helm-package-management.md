@@ -2,51 +2,58 @@
 icon: material/ship-wheel
 ---
 
-# Helm
+<h1>Helm</h1>
 
-Helm is a powerful tool for managing Kubernetes applications. It simplifies application deployment and management by using packages called "charts." This page will cover an introduction to Helm, its benefits, and how to create and use Helm charts effectively.
+Helm is the package manager for Kubernetes. It makes deploying and managing complex apps as easy as installing an app on your phone—just use a "chart" (a package of Kubernetes resources).
 
-## Introduction to Helm
+---
 
-<h3>What is Helm?</h3>
+<h2>What is Helm?</h2>
 
-Helm is a package manager for Kubernetes that allows you to define, install, and upgrade complex Kubernetes applications. It uses a packaging format called charts, which are collections of files that describe a related set of Kubernetes resources.
+Helm lets you define, install, and upgrade Kubernetes applications using packages called <strong>charts</strong>.
 
-<h3>Benefits of Using Helm</h3>
+---
 
-Helm provides several benefits for managing Kubernetes applications:
+<h2>Benefits of Using Helm</h2>
+<ul>
+<li><strong>Simplifies Deployment:</strong> Bundle all your resources in one chart for easy deployment.</li>
+<li><strong>Versioning:</strong> Upgrade and roll back apps with a single command.</li>
+<li><strong>Reuse:</strong> Share charts across teams and environments.</li>
+<li><strong>Customization:</strong> Use templates and values to adapt to any setup.</li>
+<li><strong>Dependency Management:</strong> Charts can depend on other charts.</li>
+</ul>
 
-- **Simplifies Deployment:** Packages multiple Kubernetes resources into a single unit, making it easier to deploy complex applications.
-- **Versioning:** Supports versioning of charts, enabling easy upgrades and rollbacks.
-- **Reuse:** Allows you to reuse charts for different environments, reducing duplication.
-- **Customization:** Supports customizable templates to adapt to different environments and configurations.
-- **Dependency Management:** Manages dependencies between different charts.
+---
 
-<h3>Helm Architecture</h3>
+<h2>Helm Architecture</h2>
 
-Helm operates with two main components:
+- <strong>Helm Client:</strong> Command-line tool for managing charts.
+- <strong>Helm Server (Tiller):</strong> Only in Helm v2. In Helm v3+, the client talks directly to the Kubernetes API server (no Tiller).
 
-1. **Helm Client:** The command-line tool that you use to create, install, and manage Helm charts.
-2. **Helm Server (Tiller):** In Helm v2, Tiller runs inside the Kubernetes cluster and manages the deployment of charts. Note that Helm v3 has removed Tiller, and the client communicates directly with the Kubernetes API server.
+---
 
-<h3>How Helm Works</h3>
+<h2>How Helm Works</h2>
+<ul>
+<li><strong>Charts:</strong> Collections of files describing Kubernetes resources.</li>
+<li><strong>Values Files:</strong> Override default settings for different environments.</li>
+<li><strong>Templates:</strong> Dynamically generate manifests.</li>
+<li><strong>Releases:</strong> Each deployment of a chart is a release.</li>
+<li><strong>Repositories:</strong> Collections of charts you can share and reuse.</li>
+</ul>
 
-- **Charts:** Collections of files that describe a related set of Kubernetes resources.
-- **Values Files:** Used to customize the deployment by overriding default values.
-- **Templates:** Allow dynamic generation of Kubernetes manifests.
-- **Releases:** An instance of a chart running in a Kubernetes cluster.
-- **Repositories:** Collections of charts that can be shared and reused.
+---
 
-## Creating and Using Helm Charts
+<h2>Creating and Using Helm Charts</h2>
 
 <h3>Creating a Helm Chart</h3>
 
-To create a new Helm chart, use the following command:
+To create a new Helm chart:
+
 ```sh
-$ helm create my-chart
+helm create my-chart
 ```
 
-This command generates a directory structure with default files:
+This generates:
 ```
 my-chart/
   Chart.yaml          # Chart metadata
@@ -55,7 +62,7 @@ my-chart/
   templates/          # Kubernetes resource templates
 ```
 
-<h4>Example Chart.yaml</h4>
+<h3>Example Chart.yaml</h3>
 
 ```yaml
 apiVersion: v2

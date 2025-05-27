@@ -6,9 +6,10 @@ Container images are one of the most common vectors for introducing vulnerabilit
 
 ---
 
-## Image Scanning
+<h2>Image Scanning</h2>
 
-**Image scanning** analyzes container images for known vulnerabilities in operating system packages, libraries, and application dependencies.
+<strong>Image scanning</strong> analyzes container images for known vulnerabilities in operating system packages, libraries, and application dependencies.
+
 
 ### When to Scan:
 - During CI/CD before pushing to a registry

@@ -8,7 +8,7 @@ icon: material/timer-sand
 
 ---
 
-## Why Use Init Containers?
+<h2>Why Use Init Containers?</h2>
 
 - Wait for a database or service to become available
 - Download configuration or secrets from an external source
@@ -34,6 +34,7 @@ flowchart TD
 
 ```
 
+
 - If any init container fails, Kubernetes restarts the entire Pod.
 - Init containers run **sequentially**, not in parallel.
 - Once completed, they’re never run again.
@@ -53,7 +54,7 @@ This init container waits for a database service to be reachable on port 5432 be
 
 ---
 
-## Key Differences vs Regular Containers
+<h2>Key Differences vs Regular Containers</h2>
 
 | Feature              | Init Container       | App Container         |
 |----------------------|----------------------|------------------------|
@@ -64,6 +65,16 @@ This init container waits for a database service to be reachable on port 5432 be
 
 ---
 
-## Summary
+<h2>Summary</h2>
 
 Init containers are a built-in way to prepare your environment before your app runs. They help keep your main containers focused and clean by offloading setup logic. Use them to wait on dependencies, perform one-time actions, or enforce startup ordering.
+
+- <strong>Init containers</strong> run before your main app, handling setup and dependencies.
+- Use them for waiting on services, running migrations, or any pre-launch logic.
+- They run sequentially and must succeed before your main containers start.
+
+
+
+
+---
+

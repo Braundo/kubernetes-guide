@@ -2,28 +2,30 @@
 icon: material/account-lock-outline
 ---
 
-# RBAC (Role-Based Access Control)
+<h1>RBAC (Role-Based Access Control)</h1>
 
-RBAC controls **who can do what** in your Kubernetes cluster. It defines **permissions to access the Kubernetes API**, and is critical for securing multi-user environments.
+RBAC controls <strong>who can do what</strong> in your Kubernetes cluster. It sets permissions for accessing the Kubernetes API and is essential for securing clusters with multiple users or teams.
 
 ---
 
-## Core Concepts
+<h2>Core Concepts</h2>
 
-Kubernetes RBAC works by **granting verbs on resources** to users or service accounts.
+Kubernetes RBAC grants specific actions (verbs) on resources to users or service accounts.
 
-### RBAC Objects
+<h3>RBAC Objects</h3>
 
 | Kind           | Purpose                                       |
 |----------------|-----------------------------------------------|
-| `Role`         | Grants permissions within a single namespace  |
-| `ClusterRole`  | Grants permissions cluster-wide               |
-| `RoleBinding`  | Assigns a Role to a user or group in a namespace |
-| `ClusterRoleBinding` | Assigns a ClusterRole to a user or group across all namespaces |
+| <code>Role</code>         | Grants permissions within a single namespace  |
+| <code>ClusterRole</code>  | Grants permissions cluster-wide               |
+| <code>RoleBinding</code>  | Assigns a Role to a user/group in a namespace |
+| <code>ClusterRoleBinding</code> | Assigns a ClusterRole to a user/group across all namespaces |
+
+
 
 ---
 
-## Example: Read-Only Role in a Namespace
+<h2>Example: Read-Only Role in a Namespace</h2>
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -37,7 +39,7 @@ rules:
     verbs: ["get", "list"]
 ```
 
-### Binding the Role
+<h3>Binding the Role</h3>
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -54,11 +56,11 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-This lets `alice` **read pods in the `dev` namespace** only.
+This lets <code>alice</code> read pods in the <code>dev</code> namespace only.
 
 ---
 
-## Cluster-Wide Example
+<h2>Cluster-Wide Example</h2>
 
 To give a user full access to nodes and persistent volumes across the cluster:
 

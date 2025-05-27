@@ -2,13 +2,13 @@
 icon: material/lock-outline
 ---
 
-# Security Contexts
+<h1>Security Contexts</h1>
 
-A **Security Context** defines privilege and access control settings for a **Pod** or **container**. It’s how you harden workloads against privilege escalation, file system abuse, and host access.
+A <strong>Security Context</strong> defines privilege and access control settings for a <strong>Pod</strong> or <strong>container</strong>. It’s how you harden workloads against privilege escalation, file system abuse, and host access.
 
 ---
 
-## Why It Matters
+<h2>Why It Matters</h2>
 
 By default, containers can:
 
@@ -16,31 +16,31 @@ By default, containers can:
 - Access shared volumes with writable access
 - Escalate privileges if not blocked
 
-Security contexts **restrict and control** this behavior — without needing to modify your image.
+Security contexts <strong>restrict and control</strong> this behavior — without needing to modify your image.
 
 ---
 
-## Pod vs Container Security Contexts
+<h2>Pod vs Container Security Contexts</h2>
 
-- **Pod-level** applies to all containers in the Pod
-- **Container-level** overrides the Pod-level settings
+- <strong>Pod-level</strong> applies to all containers in the Pod
+- <strong>Container-level</strong> overrides the Pod-level settings
 
 ---
 
-## Common Fields
+<h2>Common Fields</h2>
 
 | Field                  | Purpose                                          |
 |------------------------|--------------------------------------------------|
-| `runAsUser`            | Run as specific UID inside the container         |
-| `runAsNonRoot`         | Force non-root user                             |
-| `readOnlyRootFilesystem` | Prevent writing to root FS                  |
-| `allowPrivilegeEscalation` | Block `setuid` or `sudo` actions            |
-| `privileged`           | Gives access to host-level features (avoid)     |
-| `capabilities`         | Add/drop Linux kernel capabilities              |
+| <code>runAsUser</code>            | Run as specific UID inside the container         |
+| <code>runAsNonRoot</code>         | Force non-root user                             |
+| <code>readOnlyRootFilesystem</code> | Prevent writing to root FS                  |
+| <code>allowPrivilegeEscalation</code> | Block <code>setuid</code> or <code>sudo</code> actions            |
+| <code>privileged</code>           | Gives access to host-level features (avoid)     |
+| <code>capabilities</code>         | Add/drop Linux kernel capabilities              |
 
 ---
 
-## Example: Secure Container Context
+<h2>Example: Secure Container Context</h2>
 
 ```yaml
 securityContext:
@@ -85,18 +85,23 @@ This gives full host access — avoid unless you know exactly what you’re doin
 
 ---
 
-## Quick Hardening Checklist
+<h2>Best Practices</h2>
 
-- ✅ `runAsNonRoot: true`
-- ✅ Drop all capabilities unless needed
-- ✅ Use `readOnlyRootFilesystem`
-- ✅ Avoid `privileged: true`
-- ✅ Explicitly set `runAsUser` and `fsGroup` for file access
+ 
+- Always run containers as a non-root user (<code>runAsNonRoot: true</code>).
+- Use <code>readOnlyRootFilesystem: true</code> for immutable containers.
+- Drop all unnecessary Linux capabilities.
+- Avoid privileged mode unless absolutely necessary.
+- Use Pod-level security context for shared settings.
+- Always review and lock down security contexts in production workloads.
+- Start with the most restrictive settings and loosen only as needed.
 
 ---
 
-## Summary
+<h2>Summary</h2>
 
-- Security contexts define **runtime privileges** for Pods and containers
-- Helps enforce **least privilege** and prevent lateral movement
-- Combine with **PodSecurity Admission** and **RBAC** for layered defense
+ 
+- <strong>Security contexts</strong> are critical for hardening workloads.
+- Use them to restrict privileges, enforce non-root, and block escalation.
+- Combine with PodSecurityAdmission and RBAC for a defense-in-depth approach.
+

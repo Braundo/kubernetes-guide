@@ -10,9 +10,9 @@ It’s **declarative**, **versioned**, **extensible**, and serves as the **backb
 
 ---
 
-## What Is the Kubernetes API?
+<h2>What Is the Kubernetes API?</h2>
 
-At its core, the API is a RESTful interface that lets you manage **API objects** such as:
+At its core, the API is a RESTful interface that lets you manage <strong>API objects</strong> such as:
 
 - Pods
 - Deployments
@@ -25,7 +25,7 @@ Everything in Kubernetes — from `kubectl` to the scheduler — interacts with 
 
 ---
 
-## Anatomy of a Kubernetes Object
+<h2>Anatomy of a Kubernetes Object</h2>
 
 Every resource in Kubernetes follows a common structure:
 
@@ -51,9 +51,9 @@ status:                      # Actual state (set by the system)
 
 ---
 
-## API Server Role
+<h2>API Server Role</h2>
 
-The `kube-apiserver` is the **front door** to your cluster. It handles:
+The `kube-apiserver` is the <strong>front door</strong> to your cluster. It handles:
 
 - **All incoming requests** from users, `kubectl`, controllers, and web UIs
 - **Validation** of requests and schemas
@@ -170,31 +170,13 @@ Every API request goes through:
 4. **Validation** – Is the object schema correct?
 5. **Persistence** – If approved, store in etcd
 
-RBAC example:
-
-```yaml
-kind: Role
-rules:
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "list"]
-```
-
 ---
 
-## Common Trouble Spots
+<h2>Summary</h2>
 
-- **Wrong API version**: Resources can move or deprecate (e.g., `apps/v1beta1` is deprecated)
-- **Incorrect Group**: Always verify the group (e.g., `networking.k8s.io` vs `extensions`)
-- **Unregistered CRDs**: You can’t use a CRD before applying its definition
+- The Kubernetes API is the backbone of your cluster—everything goes through it.
+- All operations, from deploying apps to inspecting resources, use the API.
+- Understanding the API is key to mastering Kubernetes automation and troubleshooting.
 
----
-
-## Summary
-
-- The **API server** is the core of the Kubernetes control plane.
-- Everything — even `kubectl` commands — maps to API calls.
-- Understand the object structure (`apiVersion`, `kind`, `metadata`, `spec`)
-- Know how **groups, versions, and resources** are organized and discovered
-- CRDs allow teams to define custom workflows
-- All requests flow through authentication, authorization, and admission control before being persisted and acted upon
+!!! tip
+    Use `kubectl explain <resource>` and the official API docs to understand all available fields and options.

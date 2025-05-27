@@ -2,11 +2,11 @@
 icon: material/puzzle
 ---
 
-# Kubernetes Operators and Custom Resource Definitions (CRDs)
+<h1>Kubernetes Operators and Custom Resource Definitions (CRDs)</h1>
 
 Kubernetes Operators and CRDs extend the functionality of Kubernetes by allowing you to manage complex applications and define custom resources tailored to your needs.
 
-## Understanding Operators
+<h2>Understanding Operators</h2>
 
 <h3>What are Operators?</h3>
 
@@ -14,7 +14,6 @@ Operators are software extensions that use custom resources to manage applicatio
 
 <h3>Purpose of Operators</h3>
 
-Operators automate the lifecycle of complex applications, including:
 
 - **Installation:** Deploying and configuring applications.
 - **Management:** Managing runtime configurations.
@@ -24,17 +23,19 @@ Operators automate the lifecycle of complex applications, including:
 
 <h3>Benefits of Using Operators</h3>
 
+
 - **Consistency:** Provides a consistent way to manage applications.
 - **Automation:** Reduces manual intervention.
 - **Scalability:** Manages resources efficiently.
 
 <h3>Advanced Operator Features</h3>
 
+
 - **Event Handling:** Operators can respond to Kubernetes events to maintain desired state.
 - **Custom Metrics:** Use custom metrics to make informed scaling decisions.
 - **Backup and Restore:** Implement application-specific backup and restore logic.
 
-## Understanding Custom Resource Definitions (CRDs)
+<h2>Understanding Custom Resource Definitions (CRDs)</h2>
 
 <h3>Introduction to CRDs</h3>
 
@@ -42,11 +43,13 @@ CRDs allow you to define custom resources within the Kubernetes API, enabling th
 
 <h3>Benefits of Using CRDs</h3>
 
+
 - **Custom Resources:** Tailor resources to your application's needs.
 - **Declarative Management:** Use Kubernetes' API for management.
 - **Integration:** Seamlessly integrate with Kubernetes tools.
 
 <h3>Advanced CRD Features</h3>
+
 
 - **Schema Validation:** Define validation rules for custom resources to ensure data integrity.
 - **Versioning:** Manage different versions of CRDs to support application evolution.
