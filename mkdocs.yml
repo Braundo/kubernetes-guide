@@ -40,7 +40,7 @@ nav:
     - CKA: cka.md
     - CKAD: ckad.md
     - CKS: cks.md
-
+    - Kubectl Cheat Sheet: kubectl-cheatsheet.md
   - About: about.md
 theme:
   name: material

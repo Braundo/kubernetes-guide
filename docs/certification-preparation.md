@@ -55,7 +55,7 @@ Each guide includes:
 
 | Description                        | Link                                      |
 |------------------------------------|-------------------------------------------|
-| Official Kubernetes documentation. | [Kubernetes Documentation](https://kubernetes.io/docs/){target="_blank"} |
+| Official Kubernetes documentation | [Kubernetes Documentation](https://kubernetes.io/docs/){target="_blank"} |
 
 ### Online Courses
 
