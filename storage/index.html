@@ -1522,7 +1522,7 @@
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 </span></code></pre></div>
 <blockquote>
-<p>Use <code>emptyDir</code> for scratch space or caching — not persistent data.</p>
+<p>Use <code>emptyDir</code> for scratch space or caching - not persistent data.</p>
 </blockquote>
 <hr />
 <h2>PersistentVolumes (PVs) and PersistentVolumeClaims (PVCs)</h2>
@@ -1599,12 +1599,12 @@
 <ul>
 <li>Use <code>ReadWriteOnce</code> unless your workload <strong>requires</strong> multi-node access.</li>
 <li>Leverage <code>StorageClass</code> for automated provisioning.</li>
-<li>Clean up PVCs when no longer needed — they may retain bound disks.</li>
+<li>Clean up PVCs when no longer needed - they may retain bound disks.</li>
 <li>Use StatefulSets if each Pod needs its <strong>own</strong> PVC.</li>
 </ul>
 <hr />
 <h2 id="summary">Summary</h2>
-<p>Storage in Kubernetes is abstracted through PVs and PVCs for flexibility and portability. Whether your app is stateless or stateful, Kubernetes can handle your storage needs — just make sure to pick the right type of volume for the job.</p>
+<p>Storage in Kubernetes is abstracted through PVs and PVCs for flexibility and portability. Whether your app is stateless or stateful, Kubernetes can handle your storage needs - just make sure to pick the right type of volume for the job.</p>
 
 
 
