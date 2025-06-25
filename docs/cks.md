@@ -131,6 +131,6 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ## Summary
 
-CKS is all about **applying security best practices under pressure**. You’ll configure audit logs, write PodSecurity controls, patch RBAC, restrict networks, and scan or sign container images — all in live clusters.
+CKS is all about **applying security best practices under pressure**. You’ll configure audit logs, write PodSecurity controls, patch RBAC, restrict networks, and scan or sign container images - all in live clusters.
 
 Hands-on practice is key. Read YAML fast. Think like an attacker.

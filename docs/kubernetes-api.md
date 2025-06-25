@@ -4,7 +4,7 @@ icon: material/api
 
 # Kubernetes API
 
-The Kubernetes API is the **primary interface** to interact with your cluster. Whether you’re deploying an app, scaling a workload, inspecting a Pod, or running automation — you’re using the Kubernetes API.
+The Kubernetes API is the **primary interface** to interact with your cluster. Whether you’re deploying an app, scaling a workload, inspecting a Pod, or running automation - you’re using the Kubernetes API.
 
 It’s **declarative**, **versioned**, **extensible**, and serves as the **backbone of the control plane**.
 
@@ -21,7 +21,7 @@ At its core, the API is a RESTful interface that lets you manage <strong>API obj
 - Namespaces
 - Custom Resources (via CRDs)
 
-Everything in Kubernetes — from `kubectl` to the scheduler — interacts with the API server.
+Everything in Kubernetes - from `kubectl` to the scheduler - interacts with the API server.
 
 ---
 
@@ -61,7 +61,7 @@ The `kube-apiserver` is the <strong>front door</strong> to your cluster. It hand
 - **Admission control**
 - **Persisting cluster state** in `etcd`
 
-It's stateless and horizontally scalable — multiple API server instances can run behind a load balancer.
+It's stateless and horizontally scalable - multiple API server instances can run behind a load balancer.
 
 ---
 
@@ -117,7 +117,7 @@ kubectl api-resources
 - **Imperative**: You tell Kubernetes *how* to do something (`kubectl run`, `kubectl expose`)
 - **Declarative**: You define the *desired state*, and the system reconciles (`kubectl apply -f`)
 
-Kubernetes is fundamentally declarative — the controller manager continually works to **match the actual state to the desired state**.
+Kubernetes is fundamentally declarative - the controller manager continually works to **match the actual state to the desired state**.
 
 ---
 
@@ -174,7 +174,7 @@ Every API request goes through:
 
 <h2>Summary</h2>
 
-- The Kubernetes API is the backbone of your cluster—everything goes through it.
+- The Kubernetes API is the backbone of your cluster-everything goes through it.
 - All operations, from deploying apps to inspecting resources, use the API.
 - Understanding the API is key to mastering Kubernetes automation and troubleshooting.
 

@@ -16,7 +16,7 @@ By default, containers can:
 - Access shared volumes with writable access
 - Escalate privileges if not blocked
 
-Security contexts <strong>restrict and control</strong> this behavior — without needing to modify your image.
+Security contexts <strong>restrict and control</strong> this behavior - without needing to modify your image.
 
 ---
 
@@ -81,7 +81,7 @@ securityContext:
   privileged: true
 ```
 
-This gives full host access — avoid unless you know exactly what you’re doing (e.g., for a CNI plugin or host-level utility).
+This gives full host access - avoid unless you know exactly what you’re doing (e.g., for a CNI plugin or host-level utility).
 
 ---
 

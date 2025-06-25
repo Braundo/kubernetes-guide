@@ -6,7 +6,7 @@ hide:
 
 <h2>Introduction to Kubernetes</h2>
 
-Kubernetes (K8s) is like the air traffic controller for your applications—making sure everything is running, scaling, and healing automatically. Originally created by Google and now maintained by the CNCF, Kubernetes helps you run containers (small, portable application units) across clusters of computers.
+Kubernetes (K8s) is like the air traffic controller for your applications - making sure everything is running, scaling, and healing automatically. Originally created by Google and now maintained by the CNCF, Kubernetes helps you run containers (small, portable application units) across clusters of computers.
 
 <h2>What is Kubernetes?</h2>
 
@@ -22,7 +22,7 @@ Kubernetes is a platform that automates the deployment, scaling, and management 
 <h2>Key Concepts of Kubernetes</h2>
 
 <h3>Declarative Model</h3>
-Kubernetes uses a "declarative" approach: you describe how you want your system to look, and Kubernetes works to make it so—automatically.
+Kubernetes uses a "declarative" approach: you describe how you want your system to look, and Kubernetes works to make it so - automatically.
 
 **Three key ideas:**
 
@@ -99,11 +99,11 @@ If you use a Deployment or StatefulSet, Kubernetes will:
 
 <h3>Rolling Updates and Rollbacks</h3>
 
-With <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a>, Kubernetes can update your app with zero downtime—gradually swapping out old Pods for new ones. If a problem is detected, it can roll back to the previous version automatically.
+With <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a>, Kubernetes can update your app with zero downtime - gradually swapping out old Pods for new ones. If a problem is detected, it can roll back to the previous version automatically.
 
 ---
 
 <h2>Summary</h2>
-Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly—so you can focus on building, not babysitting, your infrastructure.
+Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly - so you can focus on building, not babysitting, your infrastructure.
 
 Kubernetes is a powerful tool for managing containerized applications, offering automation, scalability, and reliability. By abstracting the underlying infrastructure, it simplifies application deployment and management across various environments. Whether you're running on-premises or in the cloud, Kubernetes provides a consistent and efficient platform for your applications. Before diving into some more details on these topics, let's first cover how you can quickly get your hands on a Kubernetes environment in the next section.

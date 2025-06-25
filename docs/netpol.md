@@ -4,11 +4,11 @@ icon: material/shield-key-outline
 
 <h1>Network Policies</h1>
 
-By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky—especially in multi-tenant clusters or production environments.
+By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky - especially in multi-tenant clusters or production environments.
 
 <strong>NetworkPolicies</strong> let you control <strong>which Pods can talk to which other Pods</strong> (and even external IPs).
 
-> Think of it like a firewall for Pod-to-Pod traffic—but defined in YAML.
+> Think of it like a firewall for Pod-to-Pod traffic - but defined in YAML.
 
 ---
 
@@ -79,7 +79,7 @@ This allows outbound HTTPS traffic only to `10.0.0.0/24`.
 - If a Pod is **not selected by any policy**, it is **open by default**
 - If a Pod **is selected**, and you define `ingress`, **all other traffic is denied**
 - You must allow **DNS** explicitly if you restrict egress (e.g., UDP 53)
-- Labels matter — both on the **target** and the **allowed sources**
+- Labels matter  -  both on the **target** and the **allowed sources**
 
 ---
 
@@ -98,7 +98,7 @@ Not all network plugins support NetworkPolicies. Some common ones that do:
 <h2>Summary</h2>
 
 - <strong>NetworkPolicies</strong> let you control pod-to-pod and pod-to-external communication.
-- By default, all traffic is allowed—add a policy to restrict.
+- By default, all traffic is allowed - add a policy to restrict.
 - Use label selectors to target specific Pods for fine-grained control.
 - NetworkPolicies control **Pod-level traffic** based on labels and CIDRs
 - Define **who can talk to what**, and where traffic can go

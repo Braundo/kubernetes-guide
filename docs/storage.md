@@ -32,7 +32,7 @@ volumes:
     emptyDir: {}
 ```
 
-> Use <code>emptyDir</code> for scratch space or caching — not persistent data.
+> Use <code>emptyDir</code> for scratch space or caching - not persistent data.
 
 ---
 
@@ -125,11 +125,11 @@ storageClassName: fast
 
 - Use `ReadWriteOnce` unless your workload **requires** multi-node access.
 - Leverage `StorageClass` for automated provisioning.
-- Clean up PVCs when no longer needed — they may retain bound disks.
+- Clean up PVCs when no longer needed - they may retain bound disks.
 - Use StatefulSets if each Pod needs its **own** PVC.
 
 ---
 
 ## Summary
 
-Storage in Kubernetes is abstracted through PVs and PVCs for flexibility and portability. Whether your app is stateless or stateful, Kubernetes can handle your storage needs — just make sure to pick the right type of volume for the job.
+Storage in Kubernetes is abstracted through PVs and PVCs for flexibility and portability. Whether your app is stateless or stateful, Kubernetes can handle your storage needs - just make sure to pick the right type of volume for the job.

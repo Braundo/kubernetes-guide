@@ -46,7 +46,7 @@ This guarantees the container gets <strong>at least 256Mi and 250 millicores</st
 
 <h2>CPU Behavior</h2>
 
-- If a container exceeds its <strong>CPU limit</strong>, it is throttled—not killed.
+- If a container exceeds its <strong>CPU limit</strong>, it is throttled - not killed.
 - If you don’t set a limit, the container may consume all available CPU.
 
 ---
@@ -60,7 +60,7 @@ This guarantees the container gets <strong>at least 256Mi and 250 millicores</st
 
 <h2>Best Practices</h2>
 
-- Always set both **requests** and **limits** — especially for memory.
+- Always set both **requests** and **limits** - especially for memory.
 - Set realistic **requests** to ensure proper scheduling.
 - Avoid overly restrictive limits unless you're debugging or need to enforce strict control.
 - Use <strong>LimitRanges</strong> to enforce defaults and maximums in namespaces.

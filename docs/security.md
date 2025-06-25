@@ -4,7 +4,7 @@ icon: material/shield-lock-outline
 
 <h1>Security Primer</h1>
 
-Kubernetes security is like building a fortress with many walls—each layer protects your cluster, workloads, data, and users. Understanding how these layers work together is the key to a secure environment.
+Kubernetes security is like building a fortress with many walls - each layer protects your cluster, workloads, data, and users. Understanding how these layers work together is the key to a secure environment.
 
 ---
 
@@ -109,5 +109,5 @@ Kubernetes security is broad and layered. The upcoming sections break it down in
 - Runtime policies and network controls
 
 <br>
-Security isn't a checkbox — it's a process. Let’s dig into each piece.
+Security isn't a checkbox  -  it's a process. Let’s dig into each piece.
 <br>

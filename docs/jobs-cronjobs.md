@@ -4,7 +4,7 @@ icon: material/clock-outline
 
 <h1>Jobs & CronJobs</h1>
 
-Not all Kubernetes workloads run forever. Sometimes, you just need to run something once—or on a schedule. That’s where <strong>Jobs</strong> and <strong>CronJobs</strong> come in.
+Not all Kubernetes workloads run forever. Sometimes, you just need to run something once - or on a schedule. That’s where <strong>Jobs</strong> and <strong>CronJobs</strong> come in.
 
 ---
 
@@ -15,7 +15,7 @@ A <strong>Job</strong> runs a Pod (or Pods) to completion. Perfect for:
 - Batch processing
 - Migrations or post-deployment hooks
 
-Kubernetes guarantees the Job runs to completion—even if a Pod crashes or a node fails, a new Pod will be scheduled.
+Kubernetes guarantees the Job runs to completion - even if a Pod crashes or a node fails, a new Pod will be scheduled.
 
 <h3>Minimal Job Example</h3>
 

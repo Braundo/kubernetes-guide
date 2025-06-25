@@ -29,8 +29,8 @@ Each guide includes:
 
 ## General Advice
 
-- Practice in a real cluster — don’t rely only on theory
-- Learn to navigate `kubectl` quickly — alias everything
+- Practice in a real cluster  -  don’t rely only on theory
+- Learn to navigate `kubectl` quickly  -  alias everything
 - Master `vim`, `tmux`, and `kubectl explain`
 - Use tab-complete and `kubectl -h` constantly
 - Use `--dry-run=client -o yaml` for rapid manifest generation

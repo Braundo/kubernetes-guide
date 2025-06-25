@@ -4,7 +4,7 @@ icon: material/ship-wheel
 
 <h1>Helm</h1>
 
-Helm is the package manager for Kubernetes. It makes deploying and managing complex apps as easy as installing an app on your phone—just use a "chart" (a package of Kubernetes resources).
+Helm is the package manager for Kubernetes. It makes deploying and managing complex apps as easy as installing an app on your phone - just use a "chart" (a package of Kubernetes resources).
 
 ---
 

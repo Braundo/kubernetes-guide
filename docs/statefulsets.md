@@ -4,7 +4,7 @@ icon: material/database
 
 <h1>StatefulSets</h1>
 
-A <strong>StatefulSet</strong> is a Kubernetes controller for running <strong>stateful apps</strong>—apps that need each Pod to keep its identity and storage, even if rescheduled. Think databases, message queues, or anything that can't just be replaced with a blank copy.
+A <strong>StatefulSet</strong> is a Kubernetes controller for running <strong>stateful apps</strong> - apps that need each Pod to keep its identity and storage, even if rescheduled. Think databases, message queues, or anything that can't just be replaced with a blank copy.
 
 ---
 

@@ -2,7 +2,7 @@
 icon: material/clipboard-check-multiple-outline
 ---
 
-A comprehensive command reference for everyday Kubernetes use — cleaner, deeper, and more practical than the standard cheat sheets.
+A comprehensive command reference for everyday Kubernetes use - cleaner, deeper, and more practical than the standard cheat sheets.
 
 ---
 

@@ -4,7 +4,7 @@ icon: material/server-network
 
 <h1>Services & Networking</h1>
 
-Pods are short-lived—they can appear and disappear at any time. A <strong>Service</strong> gives you a stable way to talk to a group of Pods, no matter how often those Pods restart or move.
+Pods are short-lived - they can appear and disappear at any time. A <strong>Service</strong> gives you a stable way to talk to a group of Pods, no matter how often those Pods restart or move.
 
 ---
 
@@ -34,7 +34,7 @@ This exposes Pods with label <code>app=web</code> on port 80, forwarding traffic
 
 <h2>1. ClusterIP (default)</h2>
 
-A <strong>ClusterIP</strong> Service is for internal communication only. Think of it as a company’s internal phone extension—only people inside the building (cluster) can call it.
+A <strong>ClusterIP</strong> Service is for internal communication only. Think of it as a company’s internal phone extension - only people inside the building (cluster) can call it.
 
 - Internal IP address (e.g., <code>10.x.x.x</code>)
 - DNS: <code>web.default.svc.cluster.local</code>
@@ -141,5 +141,5 @@ spec:
 - **ExternalName** is a DNS-level alias.
 
 <br>
-Understanding how each Service type works — and when to use it — is essential for building reliable, scalable apps in Kubernetes.
+Understanding how each Service type works  -  and when to use it  -  is essential for building reliable, scalable apps in Kubernetes.
 <br>

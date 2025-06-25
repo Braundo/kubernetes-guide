@@ -4,7 +4,7 @@ icon: material/code-tags
 
 # Certified Kubernetes Application Developer (CKAD)
 
-The **CKAD** certification tests your ability to design, build, and run applications in Kubernetes. It's focused on **real-world usage of Kubernetes primitives** — deployments, configs, probes, volumes, and services — from a **developer's perspective**.
+The **CKAD** certification tests your ability to design, build, and run applications in Kubernetes. It's focused on **real-world usage of Kubernetes primitives** - deployments, configs, probes, volumes, and services - from a **developer's perspective**.
 
 ---
 

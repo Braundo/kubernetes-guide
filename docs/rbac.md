@@ -88,7 +88,7 @@ rules:
 
 - Forgetting to bind a Role: RBAC rules do nothing unless bound
 - Using `ClusterRole` when `Role` is safer
-- Not scoping permissions — always **follow least privilege**
+- Not scoping permissions - always **follow least privilege**
 
 ---
 

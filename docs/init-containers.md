@@ -4,7 +4,7 @@ icon: material/timer-sand
 
 # Init Containers
 
-**Init containers** run before regular containers in a Pod start. They’re designed to perform setup tasks that need to complete before your main application launches — like setting config values, creating folders, or waiting for external services.
+**Init containers** run before regular containers in a Pod start. They’re designed to perform setup tasks that need to complete before your main application launches - like setting config values, creating folders, or waiting for external services.
 
 ---
 

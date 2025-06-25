@@ -4,7 +4,7 @@ icon: material/lan
 
 <h1>Networking Overview</h1>
 
-Networking in Kubernetes is simple on the surface, but powerful under the hood. Every Pod gets an IP address, Services provide stable endpoints, and the network model enables communication across the entire cluster — often without needing to understand the low-level implementation details.
+Networking in Kubernetes is simple on the surface, but powerful under the hood. Every Pod gets an IP address, Services provide stable endpoints, and the network model enables communication across the entire cluster - often without needing to understand the low-level implementation details.
 
 ---
 
@@ -18,7 +18,7 @@ Networking in Kubernetes is simple on the surface, but powerful under the hood. 
    - Flat network model (no IP masquerading between Pods)
 
 3. <strong>Services provide stable access to Pods</strong>
-   - Pods are ephemeral — Services give them a consistent IP + DNS name
+   - Pods are ephemeral - Services give them a consistent IP + DNS name
 
 ---
 
@@ -68,7 +68,7 @@ nslookup my-service.default.svc.cluster.local
 <h2>Summary</h2>
 
 - Kubernetes networking gives every Pod a unique IP and makes service discovery simple.
-- All Pods can talk to each other by default—use NetworkPolicies to restrict if needed.
+- All Pods can talk to each other by default-use NetworkPolicies to restrict if needed.
 - Understanding the network model is key for debugging, scaling, and securing your apps.
 
 !!! tip

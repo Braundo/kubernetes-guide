@@ -123,7 +123,7 @@ startupProbe:
 - Use **readiness probes** to avoid routing traffic to unready pods.
 - Use **liveness probes** for self-healing on deadlocks or hung apps.
 - Use **startup probes** for slow-starting applications.
-- Avoid setting `initialDelaySeconds` too low — allow the app to start first.
+- Avoid setting `initialDelaySeconds` too low - allow the app to start first.
 - Prefer HTTP or command probes for rich diagnostics.
 - Avoid hardcoding values inside your images. Use environment variables, ConfigMaps, and Secrets for maximum flexibility and security.
 

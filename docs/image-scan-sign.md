@@ -107,7 +107,7 @@ spec:
 - Continuously monitor for newly discovered CVEs
 - Use image signing to enforce trusted provenance
 - Regularly rotate signing keys and scan SBOMs (Software Bill of Materials)
-- Avoid `:latest` tags — use immutable, versioned image references
+- Avoid `:latest` tags - use immutable, versioned image references
 
 ---
 

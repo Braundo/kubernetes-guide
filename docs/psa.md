@@ -16,7 +16,7 @@ There are <strong>three policy levels</strong>, each defining a different set of
 
 | Level     | Description                                                                |
 |-----------|----------------------------------------------------------------------------|
-| <code>privileged</code> | No restrictions — full access to host features                         |
+| <code>privileged</code> | No restrictions - full access to host features                         |
 | <code>baseline</code>   | Minimally restrictive, prevents known high-risk settings               |
 | <code>restricted</code> | Highly restrictive, follows best practices for multi-tenant hardening  |
 

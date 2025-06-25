@@ -1480,10 +1480,10 @@
 
 
 <h1>Network Policies</h1>
-<p>By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky—especially in multi-tenant clusters or production environments.</p>
+<p>By default, <strong>all Pods in a Kubernetes cluster can talk to each other</strong>. This is convenient, but risky - especially in multi-tenant clusters or production environments.</p>
 <p><strong>NetworkPolicies</strong> let you control <strong>which Pods can talk to which other Pods</strong> (and even external IPs).</p>
 <blockquote>
-<p>Think of it like a firewall for Pod-to-Pod traffic—but defined in YAML.</p>
+<p>Think of it like a firewall for Pod-to-Pod traffic - but defined in YAML.</p>
 </blockquote>
 <hr/>
 <h2>Key Concepts</h2>
@@ -1556,7 +1556,7 @@ Any policy = default deny (for the targeted direction)</p>
 <li>If a Pod is <strong>not selected by any policy</strong>, it is <strong>open by default</strong></li>
 <li>If a Pod <strong>is selected</strong>, and you define <code>ingress</code>, <strong>all other traffic is denied</strong></li>
 <li>You must allow <strong>DNS</strong> explicitly if you restrict egress (e.g., UDP 53)</li>
-<li>Labels matter — both on the <strong>target</strong> and the <strong>allowed sources</strong></li>
+<li>Labels matter  -  both on the <strong>target</strong> and the <strong>allowed sources</strong></li>
 </ul>
 <hr/>
 <h2 id="cni-support">CNI Support</h2>
@@ -1572,7 +1572,7 @@ Any policy = default deny (for the targeted direction)</p>
 <h2>Summary</h2>
 <ul>
 <li><strong>NetworkPolicies</strong> let you control pod-to-pod and pod-to-external communication.</li>
-<li>By default, all traffic is allowed—add a policy to restrict.</li>
+<li>By default, all traffic is allowed - add a policy to restrict.</li>
 <li>Use label selectors to target specific Pods for fine-grained control.</li>
 <li>NetworkPolicies control <strong>Pod-level traffic</strong> based on labels and CIDRs</li>
 <li>Define <strong>who can talk to what</strong>, and where traffic can go</li>

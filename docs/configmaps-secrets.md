@@ -36,7 +36,7 @@ data:
 
 <h2>Secrets (Sensitive Data)</h2>
 
-<strong>Secrets</strong> are also key-value stores—but for private data:
+<strong>Secrets</strong> are also key-value stores - but for private data:
 
 - Passwords, tokens, API keys
 - SSH keys or TLS certs
