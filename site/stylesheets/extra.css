@@ -206,7 +206,7 @@ h2 {
 [data-md-color-scheme="default"] .md-container {
   background-image: url("/images/hex.png");
   background-repeat: repeat;
-  background-size: 4800px auto;
+  background-size: 1200px auto;
   background-position: top left;
 }
 
@@ -214,7 +214,7 @@ h2 {
 [data-md-color-scheme="slate"] .md-container {
   background-image: url("/images/hex-dark.png");
   background-repeat: repeat;
-  background-size: 4800px auto;
+  background-size: 1200px auto;
   background-position: top left;
 }
 
