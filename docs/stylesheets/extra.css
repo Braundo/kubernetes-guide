@@ -205,18 +205,12 @@ h2 {
 /* Light Mode */
 [data-md-color-scheme="default"] .md-container {
   background-image: url("/images/hex.png");
-  background-repeat: repeat;
-  background-size: 2800px auto;
-  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-/* Dark Mode */
-[data-md-color-scheme="slate"] .md-container {
-  background-image: url("/images/hex-dark.png");
-  background-repeat: repeat;
-  background-size: 2800px auto;
-  background-position: top left;
-}
+
 
 .md-nav__title {
   background-color: #26292e !important; /* dark slate */
