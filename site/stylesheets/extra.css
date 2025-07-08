@@ -204,17 +204,17 @@ h2 {
 
 /* Light Mode */
 [data-md-color-scheme="default"] .md-container {
-  background-image: url("/images/dot-grid-light.png");
+  background-image: url("/images/hex.png");
   background-repeat: repeat;
-  background-size: 150px auto;
+  background-size: 4800px auto;
   background-position: top left;
 }
 
 /* Dark Mode */
 [data-md-color-scheme="slate"] .md-container {
-  background-image: url("/images/dot-grid-dark.png");
+  background-image: url("/images/hex-dark.png");
   background-repeat: repeat;
-  background-size: 150px auto;
+  background-size: 4800px auto;
   background-position: top left;
 }
 
