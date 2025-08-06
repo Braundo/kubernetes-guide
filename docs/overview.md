@@ -13,6 +13,7 @@ Kubernetes (K8s) is like the air traffic controller for your applications - maki
 Kubernetes is a platform that automates the deployment, scaling, and management of containerized applications. Think of it as an operating system for your data center, making sure your apps are always running the way you want.
 
 **Key things Kubernetes does for you:**
+
 - <strong>Deployment</strong>: Launches and manages containers for your apps.
 - <strong>Scaling</strong>: Adds or removes copies of your app as needed.
 - <strong>Self-healing</strong>: Restarts or replaces containers if they fail.
@@ -32,6 +33,7 @@ Kubernetes uses a "declarative" approach: you describe how you want your system 
 
 
 **How it works:**
+
 - You tell Kubernetes (with `kubectl` or a YAML file) what you want.
 - Kubernetes saves this in its database (etcd).
 - Controllers keep checking: does reality match what you asked for?

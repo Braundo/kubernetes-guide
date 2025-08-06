@@ -580,11 +580,13 @@
 <p>Kubernetes (K8s) is like the air traffic controller for your applications - making sure everything is running, scaling, and healing automatically. Originally created by Google and now maintained by the CNCF, Kubernetes helps you run containers (small, portable application units) across clusters of computers.</p>
 <h2>What is Kubernetes?</h2>
 <p>Kubernetes is a platform that automates the deployment, scaling, and management of containerized applications. Think of it as an operating system for your data center, making sure your apps are always running the way you want.</p>
-<p><strong>Key things Kubernetes does for you:</strong>
-- <strong>Deployment</strong>: Launches and manages containers for your apps.
-- <strong>Scaling</strong>: Adds or removes copies of your app as needed.
-- <strong>Self-healing</strong>: Restarts or replaces containers if they fail.
-- <strong>Rolling Updates/Rollbacks</strong>: Updates your app with zero downtime and can revert if something goes wrong.</p>
+<p><strong>Key things Kubernetes does for you:</strong></p>
+<ul>
+<li><strong>Deployment</strong>: Launches and manages containers for your apps.</li>
+<li><strong>Scaling</strong>: Adds or removes copies of your app as needed.</li>
+<li><strong>Self-healing</strong>: Restarts or replaces containers if they fail.</li>
+<li><strong>Rolling Updates/Rollbacks</strong>: Updates your app with zero downtime and can revert if something goes wrong.</li>
+</ul>
 <h2>Key Concepts of Kubernetes</h2>
 <h3>Declarative Model</h3>
 <p>Kubernetes uses a "declarative" approach: you describe how you want your system to look, and Kubernetes works to make it so - automatically.</p>
@@ -594,11 +596,13 @@
 <li><strong>Desired State</strong>: What you want running (defined in YAML or JSON).</li>
 <li><strong>Reconciliation</strong>: Kubernetes constantly checks and adjusts to make observed = desired.</li>
 </ol>
-<p><strong>How it works:</strong>
-- You tell Kubernetes (with <code>kubectl</code> or a YAML file) what you want.
-- Kubernetes saves this in its database (etcd).
-- Controllers keep checking: does reality match what you asked for?
-- If not, Kubernetes takes action to fix it.</p>
+<p><strong>How it works:</strong></p>
+<ul>
+<li>You tell Kubernetes (with <code>kubectl</code> or a YAML file) what you want.</li>
+<li>Kubernetes saves this in its database (etcd).</li>
+<li>Controllers keep checking: does reality match what you asked for?</li>
+<li>If not, Kubernetes takes action to fix it.</li>
+</ul>
 <h3>Declarative Approach in Kubernetes</h3>
 <p>You define what you want, Kubernetes keeps it that way. Here’s a visual summary:</p>
 <div style="width: 100%; margin: 0 auto;">
