@@ -16,6 +16,7 @@ This makes your apps more secure, portable, and easier to manage.
 <h2>ConfigMaps (Non-Sensitive Configuration)</h2>
 
 A <strong>ConfigMap</strong> is a key-value store for plain-text configuration. Use it for:
+
 - Environment settings (like <code>LOG_LEVEL</code>, <code>API_BASE_URL</code>)
 - Hostnames, ports, feature flags
 - Complete config files or CLI arguments
