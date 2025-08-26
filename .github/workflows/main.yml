@@ -42,21 +42,25 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      # Upload assets (non-HTML) with long cache, then HTML with short cache.
       - name: Upload to S3
         run: |
+          # 1) Assets (css/js/img) — long cache
           aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --delete \
-            --cache-control max-age=31536000,public \
-            --exclude index.html --exclude 404.html
-          aws s3 cp site/index.html "s3://${SITE_BUCKET}/index.html" \
-            --cache-control max-age=60,public --content-type text/html
-          if [ -f site/404.html ]; then
-            aws s3 cp site/404.html "s3://${SITE_BUCKET}/404.html" \
-              --cache-control max-age=60,public --content-type text/html
-          fi
+            --exclude "*.html" \
+            --cache-control max-age=31536000,public
 
+          # 2) HTML pages (including root index.html) — short cache + correct content-type
+          aws s3 cp site/ "s3://${SITE_BUCKET}/" \
+            --recursive \
+            --exclude "*" --include "*.html" \
+            --cache-control max-age=60,public \
+            --content-type text/html
+
+      # First time: nuke all cached objects so index and pages show up immediately.
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
             --distribution-id "${{ secrets.CLOUDFRONT_DIST_ID }}" \
-            --paths "/index.html" "/404.html"
+            --paths "/*"
