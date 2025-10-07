@@ -24,7 +24,7 @@ nav:
       - Kubernetes API: kubernetes-api.md
       - Quotas & Limits: quotas-limits.md
   - Networking:
-      - Overview: networking.md
+      - Networking Overview: networking.md
       - Services: services-networking.md
   - SecOps:
     - Security Primer: security.md

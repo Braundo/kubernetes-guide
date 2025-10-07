@@ -66,8 +66,6 @@ Now imagine the Deployment as the café manager:
 
 So while a **Pod** is the worker, the **Deployment** manages the workforce and ensures consistency, scalability, and resiliency over time.
 
-**A Deployment always manages Pods** - you typically never run a Deployment without Pods.
-
 When you apply a Deployment spec:
 
 1. Kubernetes creates a **ReplicaSet**.

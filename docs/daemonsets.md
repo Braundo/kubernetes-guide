@@ -2,13 +2,9 @@
 icon: material/content-copy
 ---
 
-<h1>Managing DaemonSets in Kubernetes</h1>
-
-DaemonSets ensure that all (or some) nodes run a copy of a Pod. They are used for deploying system-level applications like log collectors, monitoring agents, and other node-specific services.
-
 <h2>Introduction to DaemonSets</h2>
 
-DaemonSets are designed to manage the deployment of Pods across all nodes in a cluster. They ensure that a specific Pod is running on each node, making them ideal for system-level applications.
+DaemonSets are designed to manage the deployment of Pods across all nodes in a cluster. They ensure that a specific Pod is running on each node, making them ideal for system-level applications like log collectors, monitoring agents, and other node-specific services.
 
 
 <h3>Use Cases for DaemonSets</h3>
@@ -61,6 +57,16 @@ spec:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"
         effect: "NoSchedule"
+```
+
+---
+
+## Best Practices
+
+- **Resource Management:** Define resource requests and limits to ensure efficient use of node resources.
+- **Node Affinity:** Use node affinity to control where Pods are scheduled.
+- **Monitor DaemonSet Health:** Regularly check the status and health of DaemonSets to ensure they are running as expected.
+- **Scaling Considerations:** Plan for scaling by understanding the resource requirements of DaemonSet Pods.
 
 ---
 
@@ -74,9 +80,4 @@ spec:
 > <strong>Best Practice:</strong> Use DaemonSets for system-level workloads that must run everywhere. For app workloads, use Deployments or StatefulSets.
 ```
 
-## Best Practices
 
-- **Resource Management:** Define resource requests and limits to ensure efficient use of node resources.
-- **Node Affinity:** Use node affinity to control where Pods are scheduled.
-- **Monitor DaemonSet Health:** Regularly check the status and health of DaemonSets to ensure they are running as expected.
-- **Scaling Considerations:** Plan for scaling by understanding the resource requirements of DaemonSet Pods.

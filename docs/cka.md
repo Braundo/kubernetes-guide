@@ -104,9 +104,11 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 - Open multiple terminal tabs (one for docs, one for kubectl)
 - Bookmark key doc pages:
-  - [Install tools](https://kubernetes.io/docs/setup/tools/)
-  - [Tasks → Configure Pods](https://kubernetes.io/docs/tasks/)
-  - [Reference](https://kubernetes.io/docs/reference/)
+
+    - [Install tools](https://kubernetes.io/docs/setup/tools/)
+    - [Tasks → Configure Pods](https://kubernetes.io/docs/tasks/)
+    - [Reference](https://kubernetes.io/docs/reference/)
+    
 - Use `/etc/kubernetes/manifests/` for static Pod edits
 - Save `etcd` backup and restore syntax
 

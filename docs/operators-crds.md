@@ -2,15 +2,10 @@
 icon: material/puzzle
 ---
 
-<h1>Kubernetes Operators and Custom Resource Definitions (CRDs)</h1>
-
-Kubernetes Operators and CRDs extend the functionality of Kubernetes by allowing you to manage complex applications and define custom resources tailored to your needs.
 
 <h2>Understanding Operators</h2>
 
-<h3>What are Operators?</h3>
-
-Operators are software extensions that use custom resources to manage applications and their components. They automate tasks beyond the capabilities of standard Kubernetes resources, following Kubernetes principles like the control loop.
+Kubernetes Operators and CRDs extend the functionality of Kubernetes by allowing you to manage complex applications and define custom resources tailored to your needs. Operators are software extensions that use custom resources to manage applications and their components. They automate tasks beyond the capabilities of standard Kubernetes resources, following Kubernetes principles like the control loop.
 
 <h3>Purpose of Operators</h3>
 

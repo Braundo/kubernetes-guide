@@ -115,10 +115,10 @@ alias kaf='kubectl apply -f'
 kubectl run nginx --image=nginx --dry-run=client -o yaml
 ```
 
-- Practice common configs:
-  - YAML for Pods with ConfigMap/Secret env vars
-  - Liveness and readiness probes
-  - Multi-container Pod with shared volume
+Practice common configs:
+- YAML for Pods with ConfigMap/Secret env vars
+- Liveness and readiness probes
+- Multi-container Pod with shared volume
 
 ---
 
@@ -126,9 +126,11 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 - Open docs in one tab, terminal in another
 - Bookmark these:
-  - [Tasks](https://kubernetes.io/docs/tasks/)
-  - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-  - [Workloads Overview](https://kubernetes.io/docs/concepts/workloads/)
+
+    - [Tasks](https://kubernetes.io/docs/tasks/)
+    - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+    - [Workloads Overview](https://kubernetes.io/docs/concepts/workloads/)
+    
 - Use `kubectl explain` to recall spec fields quickly
 - Copy/paste manifest scaffolds from the docs to save time
 

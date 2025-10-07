@@ -11,6 +11,7 @@ The CNCF offers several certifications to validate your Kubernetes knowledge. Th
 - [Certified Kubernetes Security Specialist (CKS)](cks.md)
 
 Each guide includes:
+
 - Core topics you need to master
 - Trusted resources and courses
 - Practical exam tips and environment setup

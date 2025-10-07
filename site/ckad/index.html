@@ -959,7 +959,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 2c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h1v2H2v2h4v2H5c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2H8v-2h8v2h-1c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2h-1v-2h4v-2h-9V9h1c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2zm0 2h4v3h-4zM5 17h4v3H5zm10 0h4v3h-4z"/></svg>
   
   <span class="md-ellipsis">
-    Overview
+    Networking Overview
   </span>
   
 
@@ -1603,21 +1603,25 @@
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>nginx<span class="w"> </span>--image<span class="o">=</span>nginx<span class="w"> </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>yaml
 </span></code></pre></div>
-<ul>
-<li>Practice common configs:</li>
-<li>YAML for Pods with ConfigMap/Secret env vars</li>
-<li>Liveness and readiness probes</li>
-<li>Multi-container Pod with shared volume</li>
-</ul>
+<p>Practice common configs:
+- YAML for Pods with ConfigMap/Secret env vars
+- Liveness and readiness probes
+- Multi-container Pod with shared volume</p>
 <hr/>
 <h2 id="test-environment-tips">🧪 Test Environment Tips</h2>
 <ul>
 <li>Open docs in one tab, terminal in another</li>
-<li>Bookmark these:</li>
+<li>
+<p>Bookmark these:</p>
+<ul>
 <li><a href="https://kubernetes.io/docs/tasks/">Tasks</a></li>
 <li><a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/">kubectl Cheat Sheet</a></li>
 <li><a href="https://kubernetes.io/docs/concepts/workloads/">Workloads Overview</a></li>
-<li>Use <code>kubectl explain</code> to recall spec fields quickly</li>
+</ul>
+</li>
+<li>
+<p>Use <code>kubectl explain</code> to recall spec fields quickly</p>
+</li>
 <li>Copy/paste manifest scaffolds from the docs to save time</li>
 </ul>
 <hr/>

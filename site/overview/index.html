@@ -392,7 +392,7 @@
 <a class="md-nav__link" href="../networking/">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 2c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h1v2H2v2h4v2H5c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2H8v-2h8v2h-1c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2h-1v-2h4v-2h-9V9h1c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2zm0 2h4v3h-4zM5 17h4v3H5zm10 0h4v3h-4z"></path></svg>
 <span class="md-ellipsis">
-    Overview
+    Networking Overview
   </span>
 </a>
 </li>
@@ -576,6 +576,8 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Getting Started</h1>
+<h2 id="historical-background">Historical Background</h2>
+<p>Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at a massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became <em>the</em> standard for container orchestration.</p>
 <h2>Introduction to Kubernetes</h2>
 <p>Kubernetes (K8s) is like the air traffic controller for your applications - making sure everything is running, scaling, and healing automatically. Originally created by Google and now maintained by the CNCF, Kubernetes helps you run containers (small, portable application units) across clusters of computers.</p>
 <h2>What is Kubernetes?</h2>
@@ -637,8 +639,6 @@
 </ul>
 <h3>Services</h3>
 <p>Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically, and give you a stable, long-lived connection point to the underlying Pods.</p>
-<h2 id="historical-background">Historical Background</h2>
-<p>Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at a massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became <em>the</em> standard for container orchestration.</p>
 <h2 id="common-features-primer">Common Features Primer</h2>
 <h3>Pods and Deployments</h3>
 <ul>
@@ -646,16 +646,17 @@
 <li><strong>Deployments:</strong> Higher-level controllers that manage Pods, providing features like scaling, rolling updates, and rollbacks.</li>
 </ul>
 <h3>Self-Healing and Scaling</h3>
-<p>If you use a Deployment or StatefulSet, Kubernetes will:
-- Replace failed Pods automatically
-- Scale your app up or down based on demand
-- Keep your app highly available and efficient</p>
+<p>If you use a Deployment or StatefulSet, Kubernetes will:</p>
+<ul>
+<li>Replace failed Pods automatically</li>
+<li>Scale your app up or down based on demand</li>
+<li>Keep your app highly available and efficient</li>
+</ul>
 <h3>Rolling Updates and Rollbacks</h3>
 <p>With <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a>, Kubernetes can update your app with zero downtime - gradually swapping out old Pods for new ones. If a problem is detected, it can roll back to the previous version automatically.</p>
 <hr/>
 <h2>Summary</h2>
 <p>Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly - so you can focus on building, not babysitting, your infrastructure.</p>
-<p>Kubernetes is a powerful tool for managing containerized applications, offering automation, scalability, and reliability. By abstracting the underlying infrastructure, it simplifies application deployment and management across various environments. Whether you're running on-premises or in the cloud, Kubernetes provides a consistent and efficient platform for your applications. Before diving into some more details on these topics, let's first cover how you can quickly get your hands on a Kubernetes environment in the next section.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

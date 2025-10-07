@@ -959,7 +959,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 2c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h1v2H2v2h4v2H5c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2H8v-2h8v2h-1c-1.11 0-2 .89-2 2v3c0 1.11.89 2 2 2h4c1.11 0 2-.89 2-2v-3c0-1.11-.89-2-2-2h-1v-2h4v-2h-9V9h1c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2zm0 2h4v3h-4zM5 17h4v3H5zm10 0h4v3h-4z"/></svg>
   
   <span class="md-ellipsis">
-    Overview
+    Networking Overview
   </span>
   
 
@@ -1539,9 +1539,15 @@
 <h3 id="2-system-hardening-15">2. System Hardening (15%)</h3>
 <ul>
 <li>Restrict host access: block <code>hostPath</code>, <code>hostNetwork</code>, <code>privileged</code></li>
-<li>Use <code>securityContext</code>:</li>
+<li>
+<p>Use <code>securityContext</code>:</p>
+<ul>
 <li><code>runAsNonRoot</code>, <code>readOnlyRootFilesystem</code>, <code>allowPrivilegeEscalation: false</code></li>
-<li>Restrict capabilities (<code>capabilities.drop: ["ALL"]</code>)</li>
+</ul>
+</li>
+<li>
+<p>Restrict capabilities (<code>capabilities.drop: ["ALL"]</code>)</p>
+</li>
 <li>Pod Security Admission (PSA) with restricted profile</li>
 <li>Runtime namespace protections (AppArmor / seccomp)</li>
 </ul>
@@ -1559,19 +1565,31 @@
 <ul>
 <li>Use trusted registries and signed images</li>
 <li>Scan YAML manifests for insecure configurations (e.g., <code>kubesec</code>, <code>kube-score</code>)</li>
-<li>Admission control:</li>
+<li>
+<p>Admission control:</p>
+<ul>
 <li>Validating/mutating webhooks</li>
 <li>Gatekeeper/OPA policies</li>
-<li>ImagePullPolicy: <code>Always</code></li>
+</ul>
+</li>
+<li>
+<p>ImagePullPolicy: <code>Always</code></p>
+</li>
 </ul>
 <hr/>
 <h3 id="5-monitoring-logging-runtime-security-25">5. Monitoring, Logging &amp; Runtime Security (25%)</h3>
 <ul>
 <li>Audit policy and log filtering</li>
-<li>Tools:</li>
+<li>
+<p>Tools:</p>
+<ul>
 <li><strong>Falco</strong> (real-time threat detection)</li>
 <li><strong>Sysdig</strong>, <strong>AuditD</strong>, or <code>ausearch</code></li>
-<li>Monitor execs, privilege escalation, network anomalies</li>
+</ul>
+</li>
+<li>
+<p>Monitor execs, privilege escalation, network anomalies</p>
+</li>
 <li>Understand and tune Falco rules</li>
 </ul>
 <hr/>
@@ -1588,21 +1606,33 @@
 <li>Practice scanning + signing images:</li>
 <li><code>trivy image nginx:latest</code></li>
 <li><code>cosign sign --key cosign.key myrepo/app:1.0</code></li>
-<li>Create test policies for:</li>
+<li>
+<p>Create test policies for:</p>
+<ul>
 <li>PSA</li>
 <li>RBAC + <code>kubectl auth can-i</code></li>
 <li>NetworkPolicy deny-by-default rules</li>
-<li>Trigger and detect audit events</li>
+</ul>
+</li>
+<li>
+<p>Trigger and detect audit events</p>
+</li>
 <li>Write Falco rules for suspicious behaviors</li>
 </ul>
 <hr/>
 <h2 id="test-environment-tips">🧪 Test Environment Tips</h2>
 <ul>
-<li>Use bookmarks:</li>
+<li>
+<p>Use bookmarks:</p>
+<ul>
 <li><a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/">Pod Security Standards</a></li>
 <li><a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/">Audit Logging</a></li>
 <li><a href="https://falco.org/docs/">Sysdig Falco</a></li>
-<li>Open multiple terminals: cluster work, docs lookup, test scripts</li>
+</ul>
+</li>
+<li>
+<p>Open multiple terminals: cluster work, docs lookup, test scripts</p>
+</li>
 <li>Save frequently used YAML snippets</li>
 </ul>
 <hr/>

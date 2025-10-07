@@ -4,6 +4,10 @@ hide:
   - toc
 ---
 
+## Historical Background
+
+Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at a massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became *the* standard for container orchestration.
+
 <h2>Introduction to Kubernetes</h2>
 
 Kubernetes (K8s) is like the air traffic controller for your applications - making sure everything is running, scaling, and healing automatically. Originally created by Google and now maintained by the CNCF, Kubernetes helps you run containers (small, portable application units) across clusters of computers.
@@ -81,10 +85,6 @@ Kubernetes architecture consists of several key components:
 
 Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically, and give you a stable, long-lived connection point to the underlying Pods.
 
-## Historical Background
-
-Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at a massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became *the* standard for container orchestration.
-
 ## Common Features Primer
 
 <h3>Pods and Deployments</h3>
@@ -95,6 +95,7 @@ Kubernetes was born from Google's internal systems like Borg and Omega, which ma
 <h3>Self-Healing and Scaling</h3>
 
 If you use a Deployment or StatefulSet, Kubernetes will:
+
 - Replace failed Pods automatically
 - Scale your app up or down based on demand
 - Keep your app highly available and efficient
@@ -107,5 +108,3 @@ With <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployme
 
 <h2>Summary</h2>
 Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly - so you can focus on building, not babysitting, your infrastructure.
-
-Kubernetes is a powerful tool for managing containerized applications, offering automation, scalability, and reliability. By abstracting the underlying infrastructure, it simplifies application deployment and management across various environments. Whether you're running on-premises or in the cloud, Kubernetes provides a consistent and efficient platform for your applications. Before diving into some more details on these topics, let's first cover how you can quickly get your hands on a Kubernetes environment in the next section.

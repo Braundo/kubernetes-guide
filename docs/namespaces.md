@@ -113,16 +113,6 @@ spec:
 
 ---
 
-## Cleanup
-
-To delete a namespace and everything inside it:
-
-```shell
-kubectl delete namespace dev-team
-```
-
----
-
 <h2>Summary</h2>
 
 - <strong>Namespaces</strong> provide logical isolation for teams, environments, or applications.

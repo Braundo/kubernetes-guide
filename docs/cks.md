@@ -46,7 +46,9 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 - Restrict host access: block `hostPath`, `hostNetwork`, `privileged`
 - Use `securityContext`:
-  - `runAsNonRoot`, `readOnlyRootFilesystem`, `allowPrivilegeEscalation: false`
+
+    - `runAsNonRoot`, `readOnlyRootFilesystem`, `allowPrivilegeEscalation: false`
+    
 - Restrict capabilities (`capabilities.drop: ["ALL"]`)
 - Pod Security Admission (PSA) with restricted profile
 - Runtime namespace protections (AppArmor / seccomp)
@@ -68,8 +70,10 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 - Use trusted registries and signed images
 - Scan YAML manifests for insecure configurations (e.g., `kubesec`, `kube-score`)
 - Admission control:
-  - Validating/mutating webhooks
-  - Gatekeeper/OPA policies
+
+    - Validating/mutating webhooks
+    - Gatekeeper/OPA policies
+
 - ImagePullPolicy: `Always`
 
 ---
@@ -78,8 +82,10 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 - Audit policy and log filtering
 - Tools:
-  - **Falco** (real-time threat detection)
-  - **Sysdig**, **AuditD**, or `ausearch`
+
+    - **Falco** (real-time threat detection)
+    - **Sysdig**, **AuditD**, or `ausearch`
+
 - Monitor execs, privilege escalation, network anomalies
 - Understand and tune Falco rules
 
@@ -100,9 +106,11 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
   - `trivy image nginx:latest`
   - `cosign sign --key cosign.key myrepo/app:1.0`
 - Create test policies for:
-  - PSA
-  - RBAC + `kubectl auth can-i`
-  - NetworkPolicy deny-by-default rules
+
+    - PSA
+    - RBAC + `kubectl auth can-i`
+    - NetworkPolicy deny-by-default rules
+
 - Trigger and detect audit events
 - Write Falco rules for suspicious behaviors
 
@@ -111,9 +119,11 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 ## 🧪 Test Environment Tips
 
 - Use bookmarks:
-  - [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
-  - [Audit Logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)
-  - [Sysdig Falco](https://falco.org/docs/)
+
+    - [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
+    - [Audit Logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)
+    - [Sysdig Falco](https://falco.org/docs/)
+
 - Open multiple terminals: cluster work, docs lookup, test scripts
 - Save frequently used YAML snippets
 

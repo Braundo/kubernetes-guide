@@ -2,15 +2,9 @@
 icon: material/account-lock-outline
 ---
 
-<h1>RBAC (Role-Based Access Control)</h1>
-
-RBAC controls <strong>who can do what</strong> in your Kubernetes cluster. It sets permissions for accessing the Kubernetes API and is essential for securing clusters with multiple users or teams.
-
----
-
 <h2>Core Concepts</h2>
 
-Kubernetes RBAC grants specific actions (verbs) on resources to users or service accounts.
+RBAC controls <strong>who can do what</strong> in your Kubernetes cluster. It sets permissions for accessing the Kubernetes API and is essential for securing clusters with multiple users or teams. Kubernetes RBAC grants specific actions (verbs) on resources to users or service accounts.
 
 <h3>RBAC Objects</h3>
 
