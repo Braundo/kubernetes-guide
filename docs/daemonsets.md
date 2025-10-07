@@ -78,6 +78,3 @@ spec:
 </ul>
 
 > <strong>Best Practice:</strong> Use DaemonSets for system-level workloads that must run everywhere. For app workloads, use Deployments or StatefulSets.
-```
-
-
