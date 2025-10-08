@@ -5,3 +5,4 @@ mkdocs-mermaid2-plugin==1.1.1
 pymdown-extensions==10.7
 mkdocs-plugin-inline-svg==0.1.0
 mkdocs-simple-hooks==0.1.5
+mkdocs-quiz>=0.0.41
