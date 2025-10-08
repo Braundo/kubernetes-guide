@@ -12,13 +12,13 @@
         <meta name="author" content="Aaron Braundmeier">
       
       
-        <link rel="canonical" href="https://www.k8s.guide/jobs-cronjobs/">
+        <link rel="canonical" href="https://www.k8s.guide/quiz/">
       
       
-        <link rel="prev" href="../helm-package-management/">
+        <link rel="prev" href="../kubectl-cheatsheet/">
       
       
-        <link rel="next" href="../init-containers/">
+        <link rel="next" href="../about/">
       
       
       <link rel="icon" href="/images/logo.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Jobs & Cronjobs - Kubernetes Guide</title>
+        <title>Quiz - Kubernetes Guide</title>
       
     
     
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Jobs & Cronjobs
+              Quiz
             
           </span>
         </div>
@@ -243,12 +243,10 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../pods-deployments/" class="md-tabs__link">
           
   
@@ -353,9 +351,11 @@
         
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../quiz/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
     
@@ -401,7 +401,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -466,30 +468,25 @@
       
   
   
-    
   
   
-  
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -500,7 +497,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Workloads
@@ -603,17 +600,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../jobs-cronjobs/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
@@ -624,7 +614,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1451,10 +1440,17 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../quiz/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1463,6 +1459,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1495,6 +1492,8 @@
             
             
               
+                
+              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -1518,95 +1517,58 @@
                   
 
 
-<h1>Jobs &amp; CronJobs</h1>
-<p>Not all Kubernetes workloads run forever. Sometimes, you just need to run something once - or on a schedule. That’s where <strong>Jobs</strong> and <strong>CronJobs</strong> come in.</p>
-<hr/>
-<h2>Jobs</h2>
-<p>A <strong>Job</strong> runs a Pod (or Pods) to completion. Perfect for:
-- One-time tasks
-- Batch processing
-- Migrations or post-deployment hooks</p>
-<p>Kubernetes guarantees the Job runs to completion - even if a Pod crashes or a node fails, a new Pod will be scheduled.</p>
-<h3>Minimal Job Example</h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Job</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
-</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">          </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"echo"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"Hello</span><span class="nv"> </span><span class="s">World"</span><span class="p p-Indicator">]</span>
-</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">      </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never</span>
-</span></code></pre></div>
-<blockquote>
-<p><strong>Tip:</strong> The <code>restartPolicy</code> for Jobs must be <code>Never</code> or <code>OnFailure</code>.</p>
-</blockquote>
-<hr/>
-<h2>CronJobs</h2>
-<p>A <strong>CronJob</strong> runs Jobs on a repeating schedule, just like Linux cron.</p>
-<p>Use CronJobs for:
-- Periodic cleanup tasks
-- Scheduled reports
-- Time-based batch jobs</p>
-<h3>Cron Syntax Example</h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CronJob</span>
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">"0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span><span class="w">  </span><span class="c1"># every hour</span>
-</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">jobTemplate</span><span class="p">:</span>
-</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">      </span><span class="nt">template</span><span class="p">:</span>
-</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">          </span><span class="nt">containers</span><span class="p">:</span>
-</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">task</span>
-</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">              </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
-</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">              </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"echo"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"Hourly</span><span class="nv"> </span><span class="s">job"</span><span class="p p-Indicator">]</span>
-</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">          </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
-</span></code></pre></div>
-<blockquote>
-<p>CronJobs use the same <code>jobTemplate</code> spec as regular Jobs.</p>
-</blockquote>
-<hr/>
-<h2 id="cron-syntax-quick-guide">Cron Syntax Quick Guide</h2>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Minute</td>
-<td>0–59</td>
-</tr>
-<tr>
-<td>Hour</td>
-<td>0–23</td>
-</tr>
-<tr>
-<td>Day of Month</td>
-<td>1–31</td>
-</tr>
-<tr>
-<td>Month</td>
-<td>1–12</td>
-</tr>
-<tr>
-<td>Day of Week</td>
-<td>0–6 (Sun=0)</td>
-</tr>
-</tbody>
-</table>
-<p>Examples:
-- <code>0 0 * * *</code> = Every day at midnight
-- <code>*/5 * * * *</code> = Every 5 minutes</p>
-<hr/>
-<h2 id="summary">Summary</h2>
-<ul>
-<li>Use a <strong>Job</strong> for tasks that need to run once and finish.</li>
-<li>Use a <strong>CronJob</strong> to schedule Jobs using cron syntax.</li>
-<li>Both are useful for batch jobs, cleanup scripts, and other non-service workloads.</li>
-</ul><style type="text/css">.quiz {
+  <h1>Quiz</h1>
+
+<div class="quiz"><h3>Which command lists all Pods in the current namespace?</h3><form><fieldset><div><input correct="" id="quiz-0-0" name="answer" type="radio" value="0"/><label for="quiz-0-0">kubectl get pods</label></div><div><input id="quiz-0-1" name="answer" type="radio" value="1"/><label for="quiz-0-1">kubectl list pods</label></div><div><input id="quiz-0-2" name="answer" type="radio" value="2"/><label for="quiz-0-2">kubectl pods</label></div><div><input id="quiz-0-3" name="answer" type="radio" value="3"/><label for="quiz-0-3">kubectl ps</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What is the smallest deployable unit in Kubernetes?</h3><form><fieldset><div><input correct="" id="quiz-1-0" name="answer" type="radio" value="0"/><label for="quiz-1-0">Pod</label></div><div><input id="quiz-1-1" name="answer" type="radio" value="1"/><label for="quiz-1-1">Container</label></div><div><input id="quiz-1-2" name="answer" type="radio" value="2"/><label for="quiz-1-2">Deployment</label></div><div><input id="quiz-1-3" name="answer" type="radio" value="3"/><label for="quiz-1-3">Job</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which file format is most commonly used for Kubernetes manifests?</h3><form><fieldset><div><input correct="" id="quiz-2-0" name="answer" type="radio" value="0"/><label for="quiz-2-0">YAML</label></div><div><input id="quiz-2-1" name="answer" type="radio" value="1"/><label for="quiz-2-1">JSON</label></div><div><input id="quiz-2-2" name="answer" type="radio" value="2"/><label for="quiz-2-2">INI</label></div><div><input id="quiz-2-3" name="answer" type="radio" value="3"/><label for="quiz-2-3">TOML</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which object manages stateless replicas and rolling updates?</h3><form><fieldset><div><input correct="" id="quiz-3-0" name="answer" type="radio" value="0"/><label for="quiz-3-0">Deployment</label></div><div><input id="quiz-3-1" name="answer" type="radio" value="1"/><label for="quiz-3-1">StatefulSet</label></div><div><input id="quiz-3-2" name="answer" type="radio" value="2"/><label for="quiz-3-2">DaemonSet</label></div><div><input id="quiz-3-3" name="answer" type="radio" value="3"/><label for="quiz-3-3">Service</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which component runs on every node and manages containers?</h3><form><fieldset><div><input correct="" id="quiz-4-0" name="answer" type="radio" value="0"/><label for="quiz-4-0">kubelet</label></div><div><input id="quiz-4-1" name="answer" type="radio" value="1"/><label for="quiz-4-1">kube-proxy</label></div><div><input id="quiz-4-2" name="answer" type="radio" value="2"/><label for="quiz-4-2">scheduler</label></div><div><input id="quiz-4-3" name="answer" type="radio" value="3"/><label for="quiz-4-3">etcd</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What is etcd’s primary role in Kubernetes?</h3><form><fieldset><div><input correct="" id="quiz-5-0" name="answer" type="radio" value="0"/><label for="quiz-5-0">Store cluster state and configuration</label></div><div><input id="quiz-5-1" name="answer" type="radio" value="1"/><label for="quiz-5-1">Balance network traffic</label></div><div><input id="quiz-5-2" name="answer" type="radio" value="2"/><label for="quiz-5-2">Run Pods on nodes</label></div><div><input id="quiz-5-3" name="answer" type="radio" value="3"/><label for="quiz-5-3">Provide container runtime</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which object exposes a set of Pods as a stable network endpoint?</h3><form><fieldset><div><input correct="" id="quiz-6-0" name="answer" type="radio" value="0"/><label for="quiz-6-0">Service</label></div><div><input id="quiz-6-1" name="answer" type="radio" value="1"/><label for="quiz-6-1">Ingress</label></div><div><input id="quiz-6-2" name="answer" type="radio" value="2"/><label for="quiz-6-2">EndpointSlice</label></div><div><input id="quiz-6-3" name="answer" type="radio" value="3"/><label for="quiz-6-3">NetworkPolicy</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>The default Service type is…</h3><form><fieldset><div><input correct="" id="quiz-7-0" name="answer" type="radio" value="0"/><label for="quiz-7-0">ClusterIP</label></div><div><input id="quiz-7-1" name="answer" type="radio" value="1"/><label for="quiz-7-1">NodePort</label></div><div><input id="quiz-7-2" name="answer" type="radio" value="2"/><label for="quiz-7-2">LoadBalancer</label></div><div><input id="quiz-7-3" name="answer" type="radio" value="3"/><label for="quiz-7-3">ExternalName</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which command shows detailed info about a specific Pod?</h3><form><fieldset><div><input correct="" id="quiz-8-0" name="answer" type="radio" value="0"/><label for="quiz-8-0">kubectl describe pod <name></name></label></div><div><input id="quiz-8-1" name="answer" type="radio" value="1"/><label for="quiz-8-1">kubectl info pod <name></name></label></div><div><input id="quiz-8-2" name="answer" type="radio" value="2"/><label for="quiz-8-2">kubectl details pod <name></name></label></div><div><input id="quiz-8-3" name="answer" type="radio" value="3"/><label for="quiz-8-3">kubectl show pod <name></name></label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What does a ConfigMap store?</h3><form><fieldset><div><input correct="" id="quiz-9-0" name="answer" type="radio" value="0"/><label for="quiz-9-0">Non-sensitive configuration data</label></div><div><input id="quiz-9-1" name="answer" type="radio" value="1"/><label for="quiz-9-1">TLS private keys</label></div><div><input id="quiz-9-2" name="answer" type="radio" value="2"/><label for="quiz-9-2">Container images</label></div><div><input id="quiz-9-3" name="answer" type="radio" value="3"/><label for="quiz-9-3">Node credentials</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which object should store passwords or API keys?</h3><form><fieldset><div><input correct="" id="quiz-10-0" name="answer" type="radio" value="0"/><label for="quiz-10-0">Secret</label></div><div><input id="quiz-10-1" name="answer" type="radio" value="1"/><label for="quiz-10-1">ConfigMap</label></div><div><input id="quiz-10-2" name="answer" type="radio" value="2"/><label for="quiz-10-2">ServiceAccount</label></div><div><input id="quiz-10-3" name="answer" type="radio" value="3"/><label for="quiz-10-3">Role</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>A DaemonSet ensures that a Pod…</h3><form><fieldset><div><input correct="" id="quiz-11-0" name="answer" type="radio" value="0"/><label for="quiz-11-0">Runs on every (or selected) node</label></div><div><input id="quiz-11-1" name="answer" type="radio" value="1"/><label for="quiz-11-1">Has persistent storage</label></div><div><input id="quiz-11-2" name="answer" type="radio" value="2"/><label for="quiz-11-2">Scales with CPU usage</label></div><div><input id="quiz-11-3" name="answer" type="radio" value="3"/><label for="quiz-11-3">Can receive external traffic</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>A StatefulSet primarily provides…</h3><form><fieldset><div><input correct="" id="quiz-12-0" name="answer" type="radio" value="0"/><label for="quiz-12-0">Stable network IDs and ordered, persistent Pods</label></div><div><input id="quiz-12-1" name="answer" type="radio" value="1"/><label for="quiz-12-1">Automatic image updates</label></div><div><input id="quiz-12-2" name="answer" type="radio" value="2"/><label for="quiz-12-2">Node-level logging</label></div><div><input id="quiz-12-3" name="answer" type="radio" value="3"/><label for="quiz-12-3">In-cluster DNS records</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which command applies a manifest file?</h3><form><fieldset><div><input correct="" id="quiz-13-0" name="answer" type="radio" value="0"/><label for="quiz-13-0">kubectl apply -f file.yaml</label></div><div><input id="quiz-13-1" name="answer" type="radio" value="1"/><label for="quiz-13-1">kubectl use file.yaml</label></div><div><input id="quiz-13-2" name="answer" type="radio" value="2"/><label for="quiz-13-2">kubectl run file.yaml</label></div><div><input id="quiz-13-3" name="answer" type="radio" value="3"/><label for="quiz-13-3">kubectl start -f file.yaml</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>NodePort Services…</h3><form><fieldset><div><input correct="" id="quiz-14-0" name="answer" type="radio" value="0"/><label for="quiz-14-0">Expose the Service on the same port across all nodes</label></div><div><input id="quiz-14-1" name="answer" type="radio" value="1"/><label for="quiz-14-1">Expose only within the cluster</label></div><div><input id="quiz-14-2" name="answer" type="radio" value="2"/><label for="quiz-14-2">Require an Ingress controller</label></div><div><input id="quiz-14-3" name="answer" type="radio" value="3"/><label for="quiz-14-3">Always allocate port 443</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which controller ensures a specified number of identical Pods are running?</h3><form><fieldset><div><input correct="" id="quiz-15-0" name="answer" type="radio" value="0"/><label for="quiz-15-0">ReplicaSet</label></div><div><input id="quiz-15-1" name="answer" type="radio" value="1"/><label for="quiz-15-1">Job</label></div><div><input id="quiz-15-2" name="answer" type="radio" value="2"/><label for="quiz-15-2">CronJob</label></div><div><input id="quiz-15-3" name="answer" type="radio" value="3"/><label for="quiz-15-3">EndpointSlice</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which object provides HTTP routing and TLS termination at L7?</h3><form><fieldset><div><input correct="" id="quiz-16-0" name="answer" type="radio" value="0"/><label for="quiz-16-0">Ingress (with controller)</label></div><div><input id="quiz-16-1" name="answer" type="radio" value="1"/><label for="quiz-16-1">Service ClusterIP</label></div><div><input id="quiz-16-2" name="answer" type="radio" value="2"/><label for="quiz-16-2">Endpoint</label></div><div><input id="quiz-16-3" name="answer" type="radio" value="3"/><label for="quiz-16-3">NodePort only</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What does kubectl logs show?</h3><form><fieldset><div><input correct="" id="quiz-17-0" name="answer" type="radio" value="0"/><label for="quiz-17-0">Container logs from a Pod</label></div><div><input id="quiz-17-1" name="answer" type="radio" value="1"/><label for="quiz-17-1">Node kernel logs</label></div><div><input id="quiz-17-2" name="answer" type="radio" value="2"/><label for="quiz-17-2">API server audit logs</label></div><div><input id="quiz-17-3" name="answer" type="radio" value="3"/><label for="quiz-17-3">etcd change log</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>The Kubernetes scheduler is responsible for…</h3><form><fieldset><div><input correct="" id="quiz-18-0" name="answer" type="radio" value="0"/><label for="quiz-18-0">Placing Pods on suitable nodes</label></div><div><input id="quiz-18-1" name="answer" type="radio" value="1"/><label for="quiz-18-1">Creating ReplicaSets</label></div><div><input id="quiz-18-2" name="answer" type="radio" value="2"/><label for="quiz-18-2">Upgrading the control plane</label></div><div><input id="quiz-18-3" name="answer" type="radio" value="3"/><label for="quiz-18-3">Persisting cluster state</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>RoleBinding grants permissions…</h3><form><fieldset><div><input correct="" id="quiz-19-0" name="answer" type="radio" value="0"/><label for="quiz-19-0">To a subject within a specific namespace</label></div><div><input id="quiz-19-1" name="answer" type="radio" value="1"/><label for="quiz-19-1">Cluster-wide to all users</label></div><div><input id="quiz-19-2" name="answer" type="radio" value="2"/><label for="quiz-19-2">Only to nodes</label></div><div><input id="quiz-19-3" name="answer" type="radio" value="3"/><label for="quiz-19-3">Only to ServiceAccounts in kube-system</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>ClusterRole vs. Role difference?</h3><form><fieldset><div><input correct="" id="quiz-20-0" name="answer" type="radio" value="0"/><label for="quiz-20-0">ClusterRole can apply cluster-wide; Role is namespace-scoped</label></div><div><input id="quiz-20-1" name="answer" type="radio" value="1"/><label for="quiz-20-1">ClusterRole is for nodes only</label></div><div><input id="quiz-20-2" name="answer" type="radio" value="2"/><label for="quiz-20-2">Role is immutable</label></div><div><input id="quiz-20-3" name="answer" type="radio" value="3"/><label for="quiz-20-3">ClusterRole can only read resources</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Taints on a node…</h3><form><fieldset><div><input correct="" id="quiz-21-0" name="answer" type="radio" value="0"/><label for="quiz-21-0">Repel Pods unless they tolerate the taint</label></div><div><input id="quiz-21-1" name="answer" type="radio" value="1"/><label for="quiz-21-1">Force Pods to co-locate</label></div><div><input id="quiz-21-2" name="answer" type="radio" value="2"/><label for="quiz-21-2">Expose node ports externally</label></div><div><input id="quiz-21-3" name="answer" type="radio" value="3"/><label for="quiz-21-3">Remove labels from nodes</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What’s the counterpart allowing Pods onto tainted nodes?</h3><form><fieldset><div><input correct="" id="quiz-22-0" name="answer" type="radio" value="0"/><label for="quiz-22-0">Tolerations</label></div><div><input id="quiz-22-1" name="answer" type="radio" value="1"/><label for="quiz-22-1">Affinity</label></div><div><input id="quiz-22-2" name="answer" type="radio" value="2"/><label for="quiz-22-2">Selectors</label></div><div><input id="quiz-22-3" name="answer" type="radio" value="3"/><label for="quiz-22-3">Annotations</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Node selectors on a Pod…</h3><form><fieldset><div><input correct="" id="quiz-23-0" name="answer" type="radio" value="0"/><label for="quiz-23-0">Constrain scheduling to nodes with matching labels</label></div><div><input id="quiz-23-1" name="answer" type="radio" value="1"/><label for="quiz-23-1">Configure network ACLs</label></div><div><input id="quiz-23-2" name="answer" type="radio" value="2"/><label for="quiz-23-2">Set resource limits</label></div><div><input id="quiz-23-3" name="answer" type="radio" value="3"/><label for="quiz-23-3">Select Services by label</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Pod anti-affinity does what?</h3><form><fieldset><div><input correct="" id="quiz-24-0" name="answer" type="radio" value="0"/><label for="quiz-24-0">Encourages Pods to avoid co-locating on the same node</label></div><div><input id="quiz-24-1" name="answer" type="radio" value="1"/><label for="quiz-24-1">Forces Pods to run on the same node</label></div><div><input id="quiz-24-2" name="answer" type="radio" value="2"/><label for="quiz-24-2">Blocks scheduling entirely</label></div><div><input id="quiz-24-3" name="answer" type="radio" value="3"/><label for="quiz-24-3">Auto-scales Pods</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which probe determines if traffic should be sent to a container?</h3><form><fieldset><div><input correct="" id="quiz-25-0" name="answer" type="radio" value="0"/><label for="quiz-25-0">readinessProbe</label></div><div><input id="quiz-25-1" name="answer" type="radio" value="1"/><label for="quiz-25-1">livenessProbe</label></div><div><input id="quiz-25-2" name="answer" type="radio" value="2"/><label for="quiz-25-2">startupProbe</label></div><div><input id="quiz-25-3" name="answer" type="radio" value="3"/><label for="quiz-25-3">healthProbe</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Liveness vs Readiness—pick the best statement.</h3><form><fieldset><div><input correct="" id="quiz-26-0" name="answer" type="radio" value="0"/><label for="quiz-26-0">Liveness checks if the process is alive; Readiness gates traffic</label></div><div><input id="quiz-26-1" name="answer" type="radio" value="1"/><label for="quiz-26-1">Both gate traffic only</label></div><div><input id="quiz-26-2" name="answer" type="radio" value="2"/><label for="quiz-26-2">Readiness restarts the container</label></div><div><input id="quiz-26-3" name="answer" type="radio" value="3"/><label for="quiz-26-3">Liveness exposes a Service</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What is a Job used for?</h3><form><fieldset><div><input correct="" id="quiz-27-0" name="answer" type="radio" value="0"/><label for="quiz-27-0">Run Pods to completion (once or a set number)</label></div><div><input id="quiz-27-1" name="answer" type="radio" value="1"/><label for="quiz-27-1">Maintain a fixed number of replicas</label></div><div><input id="quiz-27-2" name="answer" type="radio" value="2"/><label for="quiz-27-2">Expose workloads externally</label></div><div><input id="quiz-27-3" name="answer" type="radio" value="3"/><label for="quiz-27-3">Persist cluster config</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>CronJob adds which capability?</h3><form><fieldset><div><input correct="" id="quiz-28-0" name="answer" type="radio" value="0"/><label for="quiz-28-0">Time-based scheduling for Jobs</label></div><div><input id="quiz-28-1" name="answer" type="radio" value="1"/><label for="quiz-28-1">Horizontal scaling</label></div><div><input id="quiz-28-2" name="answer" type="radio" value="2"/><label for="quiz-28-2">Pod priority</label></div><div><input id="quiz-28-3" name="answer" type="radio" value="3"/><label for="quiz-28-3">Blue/green deployment</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What is a LimitRange?</h3><form><fieldset><div><input correct="" id="quiz-29-0" name="answer" type="radio" value="0"/><label for="quiz-29-0">Policy to set default/maximum resource requests &amp; limits per object</label></div><div><input id="quiz-29-1" name="answer" type="radio" value="1"/><label for="quiz-29-1">Node CPU hard cap</label></div><div><input id="quiz-29-2" name="answer" type="radio" value="2"/><label for="quiz-29-2">Storage quota per namespace</label></div><div><input id="quiz-29-3" name="answer" type="radio" value="3"/><label for="quiz-29-3">A Pod anti-affinity rule</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>ResourceQuota does what?</h3><form><fieldset><div><input correct="" id="quiz-30-0" name="answer" type="radio" value="0"/><label for="quiz-30-0">Caps aggregate resource consumption per namespace</label></div><div><input id="quiz-30-1" name="answer" type="radio" value="1"/><label for="quiz-30-1">Enforces Pod security policies</label></div><div><input id="quiz-30-2" name="answer" type="radio" value="2"/><label for="quiz-30-2">Manages node pool size</label></div><div><input id="quiz-30-3" name="answer" type="radio" value="3"/><label for="quiz-30-3">Schedules critical Pods first</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>NetworkPolicy objects can restrict…</h3><form><fieldset><div><input correct="" id="quiz-31-0" name="answer" type="radio" value="0"/><label for="quiz-31-0">Ingress and egress traffic to/from Pods</label></div><div><input id="quiz-31-1" name="answer" type="radio" value="1"/><label for="quiz-31-1">Service creation</label></div><div><input id="quiz-31-2" name="answer" type="radio" value="2"/><label for="quiz-31-2">Node taints</label></div><div><input id="quiz-31-3" name="answer" type="radio" value="3"/><label for="quiz-31-3">etcd access control lists</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>The kube-proxy component primarily…</h3><form><fieldset><div><input correct="" id="quiz-32-0" name="answer" type="radio" value="0"/><label for="quiz-32-0">Implements Service virtual IPs and simple load-balancing</label></div><div><input id="quiz-32-1" name="answer" type="radio" value="1"/><label for="quiz-32-1">Schedules Pods</label></div><div><input id="quiz-32-2" name="answer" type="radio" value="2"/><label for="quiz-32-2">Stores API objects</label></div><div><input id="quiz-32-3" name="answer" type="radio" value="3"/><label for="quiz-32-3">Mounts volumes</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>A CustomResourceDefinition (CRD) allows you to…</h3><form><fieldset><div><input correct="" id="quiz-33-0" name="answer" type="radio" value="0"/><label for="quiz-33-0">Extend the Kubernetes API with new resource types</label></div><div><input id="quiz-33-1" name="answer" type="radio" value="1"/><label for="quiz-33-1">Replace the API server</label></div><div><input id="quiz-33-2" name="answer" type="radio" value="2"/><label for="quiz-33-2">Modify kubelet flags on nodes</label></div><div><input id="quiz-33-3" name="answer" type="radio" value="3"/><label for="quiz-33-3">Create new namespaces automatically</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>An Admission Controller can…</h3><form><fieldset><div><input correct="" id="quiz-34-0" name="answer" type="radio" value="0"/><label for="quiz-34-0">Intercept/validate/mutate API requests before persistence</label></div><div><input id="quiz-34-1" name="answer" type="radio" value="1"/><label for="quiz-34-1">Assign Pod IPs</label></div><div><input id="quiz-34-2" name="answer" type="radio" value="2"/><label for="quiz-34-2">Balance traffic across Services</label></div><div><input id="quiz-34-3" name="answer" type="radio" value="3"/><label for="quiz-34-3">Manage node OS upgrades</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which command shows current resource usage (metrics) for Pods?</h3><form><fieldset><div><input correct="" id="quiz-35-0" name="answer" type="radio" value="0"/><label for="quiz-35-0">kubectl top pods</label></div><div><input id="quiz-35-1" name="answer" type="radio" value="1"/><label for="quiz-35-1">kubectl htop</label></div><div><input id="quiz-35-2" name="answer" type="radio" value="2"/><label for="quiz-35-2">kubectl metrics pods</label></div><div><input id="quiz-35-3" name="answer" type="radio" value="3"/><label for="quiz-35-3">kubectl get metrics</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>PersistentVolumeClaim (PVC) represents…</h3><form><fieldset><div><input correct="" id="quiz-36-0" name="answer" type="radio" value="0"/><label for="quiz-36-0">A user’s request for storage resources</label></div><div><input id="quiz-36-1" name="answer" type="radio" value="1"/><label for="quiz-36-1">A node’s local disk</label></div><div><input id="quiz-36-2" name="answer" type="radio" value="2"/><label for="quiz-36-2">A storage class driver</label></div><div><input id="quiz-36-3" name="answer" type="radio" value="3"/><label for="quiz-36-3">A snapshot policy</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>A StorageClass is used to…</h3><form><fieldset><div><input correct="" id="quiz-37-0" name="answer" type="radio" value="0"/><label for="quiz-37-0">Dynamically provision volumes with parameters and reclaim policies</label></div><div><input id="quiz-37-1" name="answer" type="radio" value="1"/><label for="quiz-37-1">Label nodes for storage</label></div><div><input id="quiz-37-2" name="answer" type="radio" value="2"/><label for="quiz-37-2">Encrypt Secrets</label></div><div><input id="quiz-37-3" name="answer" type="radio" value="3"/><label for="quiz-37-3">Expose storage via NodePort</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What does imagePullPolicy: IfNotPresent do?</h3><form><fieldset><div><input correct="" id="quiz-38-0" name="answer" type="radio" value="0"/><label for="quiz-38-0">Pulls the image only if it’s not cached on the node</label></div><div><input id="quiz-38-1" name="answer" type="radio" value="1"/><label for="quiz-38-1">Always pulls the image</label></div><div><input id="quiz-38-2" name="answer" type="radio" value="2"/><label for="quiz-38-2">Never pulls the image</label></div><div><input id="quiz-38-3" name="answer" type="radio" value="3"/><label for="quiz-38-3">Pulls once per namespace</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>PodDisruptionBudget (PDB) helps…</h3><form><fieldset><div><input correct="" id="quiz-39-0" name="answer" type="radio" value="0"/><label for="quiz-39-0">Limit voluntary disruptions to maintain minimum available Pods</label></div><div><input id="quiz-39-1" name="answer" type="radio" value="1"/><label for="quiz-39-1">Limit CPU throttling</label></div><div><input id="quiz-39-2" name="answer" type="radio" value="2"/><label for="quiz-39-2">Configure NetworkPolicy defaults</label></div><div><input id="quiz-39-3" name="answer" type="radio" value="3"/><label for="quiz-39-3">Force node cordon during updates</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What is kubeadm primarily used for?</h3><form><fieldset><div><input correct="" id="quiz-40-0" name="answer" type="radio" value="0"/><label for="quiz-40-0">Bootstrap/upgrade a secure Kubernetes cluster</label></div><div><input id="quiz-40-1" name="answer" type="radio" value="1"/><label for="quiz-40-1">Package charts</label></div><div><input id="quiz-40-2" name="answer" type="radio" value="2"/><label for="quiz-40-2">Provide CNI plugins</label></div><div><input id="quiz-40-3" name="answer" type="radio" value="3"/><label for="quiz-40-3">Collect node logs</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which field ensures Pods start in a defined order in StatefulSets?</h3><form><fieldset><div><input correct="" id="quiz-41-0" name="answer" type="radio" value="0"/><label for="quiz-41-0">podManagementPolicy (OrderedReady)</label></div><div><input id="quiz-41-1" name="answer" type="radio" value="1"/><label for="quiz-41-1">runPolicy: Sequential</label></div><div><input id="quiz-41-2" name="answer" type="radio" value="2"/><label for="quiz-41-2">startupProbe: serial</label></div><div><input id="quiz-41-3" name="answer" type="radio" value="3"/><label for="quiz-41-3">initOrder: ascending</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Pod priority and preemption allow…</h3><form><fieldset><div><input correct="" id="quiz-42-0" name="answer" type="radio" value="0"/><label for="quiz-42-0">Higher-priority Pods to evict lower-priority ones during pressure</label></div><div><input id="quiz-42-1" name="answer" type="radio" value="1"/><label for="quiz-42-1">Nodes to share CPU</label></div><div><input id="quiz-42-2" name="answer" type="radio" value="2"/><label for="quiz-42-2">Services to gain public IPs automatically</label></div><div><input id="quiz-42-3" name="answer" type="radio" value="3"/><label for="quiz-42-3">CRDs to load earlier</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>An Init Container runs…</h3><form><fieldset><div><input correct="" id="quiz-43-0" name="answer" type="radio" value="0"/><label for="quiz-43-0">Before app containers start, to perform setup tasks</label></div><div><input id="quiz-43-1" name="answer" type="radio" value="1"/><label for="quiz-43-1">After all containers exit</label></div><div><input id="quiz-43-2" name="answer" type="radio" value="2"/><label for="quiz-43-2">Only on the first node</label></div><div><input id="quiz-43-3" name="answer" type="radio" value="3"/><label for="quiz-43-3">Concurrently with all containers</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What does a Sidecar container commonly provide?</h3><form><fieldset><div><input correct="" id="quiz-44-0" name="answer" type="radio" value="0"/><label for="quiz-44-0">Auxiliary features like logging, proxying, or config reloading</label></div><div><input id="quiz-44-1" name="answer" type="radio" value="1"/><label for="quiz-44-1">Storage provisioning</label></div><div><input id="quiz-44-2" name="answer" type="radio" value="2"/><label for="quiz-44-2">Node health checks</label></div><div><input id="quiz-44-3" name="answer" type="radio" value="3"/><label for="quiz-44-3">etcd clustering</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>EndpointSlice improves over Endpoints by…</h3><form><fieldset><div><input correct="" id="quiz-45-0" name="answer" type="radio" value="0"/><label for="quiz-45-0">Scaling better for large numbers of endpoints</label></div><div><input id="quiz-45-1" name="answer" type="radio" value="1"/><label for="quiz-45-1">Encrypting all pod-to-pod traffic</label></div><div><input id="quiz-45-2" name="answer" type="radio" value="2"/><label for="quiz-45-2">Replacing Services entirely</label></div><div><input id="quiz-45-3" name="answer" type="radio" value="3"/><label for="quiz-45-3">Forcing sticky sessions</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which object defines fine-grained pod-to-pod DNS records?</h3><form><fieldset><div><input correct="" id="quiz-46-0" name="answer" type="radio" value="0"/><label for="quiz-46-0">Headless Service</label></div><div><input id="quiz-46-1" name="answer" type="radio" value="1"/><label for="quiz-46-1">NodePort Service</label></div><div><input id="quiz-46-2" name="answer" type="radio" value="2"/><label for="quiz-46-2">Ingress</label></div><div><input id="quiz-46-3" name="answer" type="radio" value="3"/><label for="quiz-46-3">NetworkPolicy</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>Which kubectl command lets you run a command inside a running container?</h3><form><fieldset><div><input correct="" id="quiz-47-0" name="answer" type="radio" value="0"/><label for="quiz-47-0">kubectl exec -it <pod> -- <cmd></cmd></pod></label></div><div><input id="quiz-47-1" name="answer" type="radio" value="1"/><label for="quiz-47-1">kubectl run -it <pod> <cmd></cmd></pod></label></div><div><input id="quiz-47-2" name="answer" type="radio" value="2"/><label for="quiz-47-2">kubectl attach <cmd></cmd></label></div><div><input id="quiz-47-3" name="answer" type="radio" value="3"/><label for="quiz-47-3">kubectl shell <pod></pod></label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>What label key is commonly used by Services to select Pods?</h3><form><fieldset><div><input correct="" id="quiz-48-0" name="answer" type="radio" value="0"/><label for="quiz-48-0">app or app.kubernetes.io/name</label></div><div><input id="quiz-48-1" name="answer" type="radio" value="1"/><label for="quiz-48-1">podIP</label></div><div><input id="quiz-48-2" name="answer" type="radio" value="2"/><label for="quiz-48-2">controller-revision-hash</label></div><div><input id="quiz-48-3" name="answer" type="radio" value="3"/><label for="quiz-48-3">node-role.kubernetes.io/control-plane</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div>
+<div class="quiz"><h3>An IngressClass resource…</h3><form><fieldset><div><input correct="" id="quiz-49-0" name="answer" type="radio" value="0"/><label for="quiz-49-0">Selects which controller should implement a given Ingress</label></div><div><input id="quiz-49-1" name="answer" type="radio" value="1"/><label for="quiz-49-1">Assigns public IPs to Services</label></div><div><input id="quiz-49-2" name="answer" type="radio" value="2"/><label for="quiz-49-2">Creates TLS certificates</label></div><div><input id="quiz-49-3" name="answer" type="radio" value="3"/><label for="quiz-49-3">Configures kube-proxy modes</label></div></fieldset><button class="quiz-button" type="submit">Submit</button></form><section class="content hidden"></section></div><style type="text/css">.quiz {
   border: 1px solid black;
   padding: 1rem;
   margin: 1rem 0;
@@ -1732,6 +1694,8 @@ function resetFieldset(fieldset) {
   
 
 
+  
+
 
 
                 
@@ -1754,10 +1718,12 @@ function resetFieldset(fieldset) {
   
     
       
+        
+      
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../helm-package-management/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Helm">
+          <a href="../kubectl-cheatsheet/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Kubectl Cheat Sheet">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1767,20 +1733,20 @@ function resetFieldset(fieldset) {
                 Previous
               </span>
               <div class="md-ellipsis">
-                Helm
+                Kubectl Cheat Sheet
               </div>
             </div>
           </a>
         
         
           
-          <a href="../init-containers/" class="md-footer__link md-footer__link--next" aria-label="Next: Init Containers">
+          <a href="../about/" class="md-footer__link md-footer__link--next" aria-label="Next: About">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Init Containers
+                About
               </div>
             </div>
             <div class="md-footer__button md-icon">

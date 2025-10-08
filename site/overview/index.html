@@ -18,7 +18,8 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Fira Code"}</style>
-<link href="/stylesheets/extra.css" rel="stylesheet"/>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<link href="../stylesheets/quiz.custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-WF0BEBS62L"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-WF0BEBS62L",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-WF0BEBS62L",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
@@ -167,6 +168,16 @@
   Cert Prep
 
         </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../quiz/">
+        
+  
+    
+  
+  Quiz
+
+      </a>
 </li>
 <li class="md-tabs__item">
 <a class="md-tabs__link" href="../about/">
@@ -554,6 +565,13 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../quiz/">
+<span class="md-ellipsis">
+    Quiz
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../about/">
 <span class="md-ellipsis">
     About
@@ -656,7 +674,117 @@
 <p>With <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a>, Kubernetes can update your app with zero downtime - gradually swapping out old Pods for new ones. If a problem is detected, it can roll back to the previous version automatically.</p>
 <hr/>
 <h2>Summary</h2>
-<p>Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly - so you can focus on building, not babysitting, your infrastructure.</p>
+<p>Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly - so you can focus on building, not babysitting, your infrastructure.</p><style type="text/css">.quiz {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+/* Set margin-top of first quiz child */
+.quiz > *:first-child {
+  margin-top: 0;
+}
+.hidden {
+  display: none;
+}
+
+form button {
+  background-color: var(--md-primary-fg-color);
+  border: none;
+  color: var(--md-primary-bg-color);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.8rem;
+}
+
+.wrong label {
+  color: red;
+}
+.correct label {
+  color: green;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+fieldset input {
+  margin: 0 10px;
+}
+fieldset label {
+  margin: 0 10px;
+}
+
+label.correct {
+  color: green;
+}
+label.wrong {
+  color: red;
+}
+input[type='radio'].correct {
+  accent-color: green;
+}
+input[type='radio'].wrong {
+  accent-color: red;
+}
+.content {
+  margin: 10px;
+}
+</style><script defer="" type="text/javascript">document.querySelectorAll('.quiz').forEach((quiz) => {
+  let form = quiz.querySelector('form');
+  let fieldset = form.querySelector('fieldset');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let selectedAnswers = form.querySelectorAll('input[name="answer"]:checked');
+    let correctAnswers = fieldset.querySelectorAll(
+      'input[name="answer"][correct]'
+    );
+    // Check if all correct answers are selected
+    let is_correct = selectedAnswers.length === correctAnswers.length;
+    for (let i = 0; i < selectedAnswers.length; i++) {
+      if (!selectedAnswers[i].hasAttribute('correct')) {
+        is_correct = false;
+        break;
+      }
+    }
+    let section = quiz.querySelector('section');
+    if (is_correct) {
+      section.classList.remove('hidden');
+      resetFieldset(fieldset);
+      // Mark all fields with colors
+      const allAnswers = fieldset.querySelectorAll('input[name="answer"]');
+      for (let i = 0; i < allAnswers.length; i++) {
+        if (allAnswers[i].hasAttribute('correct')) {
+          allAnswers[i].parentElement.classList.add('correct');
+        } else {
+          allAnswers[i].parentElement.classList.add('wrong');
+        }
+      }
+    } else {
+      section.classList.add('hidden');
+      resetFieldset(fieldset);
+      // Mark wrong fields with colors
+      for (let i = 0; i < selectedAnswers.length; i++) {
+        if (!selectedAnswers[i].hasAttribute('correct')) {
+          selectedAnswers[i].parentElement.classList.add('wrong');
+        } else {
+          selectedAnswers[i].parentElement.classList.add('correct');
+        }
+      }
+    }
+  });
+});
+
+function resetFieldset(fieldset) {
+  const fieldsetChildren = fieldset.children;
+  for (let i = 0; i < fieldsetChildren.length; i++) {
+    fieldsetChildren[i].classList.remove('wrong');
+    fieldsetChildren[i].classList.remove('correct');
+  }
+}
+</script>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -710,5 +838,6 @@
 <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../javascripts/extra.js"></script>
 <script src="../javascripts/adsense.js"></script>
+<script src="../javascripts/quiz.custom.js"></script>
 </body>
 </html>

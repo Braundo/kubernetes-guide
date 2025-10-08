@@ -52,7 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="/stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/quiz.custom.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -345,6 +347,23 @@
         </a>
       </li>
     
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quiz/" class="md-tabs__link">
+        
+  
+    
+  
+  Quiz
+
+      </a>
+    </li>
   
 
       
@@ -1435,6 +1454,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../about/" class="md-nav__link">
         
   
@@ -1567,7 +1606,117 @@
 <li><strong>Testing:</strong> Implement thorough testing to ensure reliability.</li>
 <li><strong>Documentation:</strong> Provide clear documentation for usage and maintenance.</li>
 <li><strong>Security:</strong> Follow security best practices to protect data and configurations.</li>
-</ul>
+</ul><style type="text/css">.quiz {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+/* Set margin-top of first quiz child */
+.quiz > *:first-child {
+  margin-top: 0;
+}
+.hidden {
+  display: none;
+}
+
+form button {
+  background-color: var(--md-primary-fg-color);
+  border: none;
+  color: var(--md-primary-bg-color);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.8rem;
+}
+
+.wrong label {
+  color: red;
+}
+.correct label {
+  color: green;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+fieldset input {
+  margin: 0 10px;
+}
+fieldset label {
+  margin: 0 10px;
+}
+
+label.correct {
+  color: green;
+}
+label.wrong {
+  color: red;
+}
+input[type='radio'].correct {
+  accent-color: green;
+}
+input[type='radio'].wrong {
+  accent-color: red;
+}
+.content {
+  margin: 10px;
+}
+</style><script type="text/javascript" defer>document.querySelectorAll('.quiz').forEach((quiz) => {
+  let form = quiz.querySelector('form');
+  let fieldset = form.querySelector('fieldset');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let selectedAnswers = form.querySelectorAll('input[name="answer"]:checked');
+    let correctAnswers = fieldset.querySelectorAll(
+      'input[name="answer"][correct]'
+    );
+    // Check if all correct answers are selected
+    let is_correct = selectedAnswers.length === correctAnswers.length;
+    for (let i = 0; i < selectedAnswers.length; i++) {
+      if (!selectedAnswers[i].hasAttribute('correct')) {
+        is_correct = false;
+        break;
+      }
+    }
+    let section = quiz.querySelector('section');
+    if (is_correct) {
+      section.classList.remove('hidden');
+      resetFieldset(fieldset);
+      // Mark all fields with colors
+      const allAnswers = fieldset.querySelectorAll('input[name="answer"]');
+      for (let i = 0; i < allAnswers.length; i++) {
+        if (allAnswers[i].hasAttribute('correct')) {
+          allAnswers[i].parentElement.classList.add('correct');
+        } else {
+          allAnswers[i].parentElement.classList.add('wrong');
+        }
+      }
+    } else {
+      section.classList.add('hidden');
+      resetFieldset(fieldset);
+      // Mark wrong fields with colors
+      for (let i = 0; i < selectedAnswers.length; i++) {
+        if (!selectedAnswers[i].hasAttribute('correct')) {
+          selectedAnswers[i].parentElement.classList.add('wrong');
+        } else {
+          selectedAnswers[i].parentElement.classList.add('correct');
+        }
+      }
+    }
+  });
+});
+
+function resetFieldset(fieldset) {
+  const fieldsetChildren = fieldset.children;
+  for (let i = 0; i < fieldsetChildren.length; i++) {
+    fieldsetChildren[i].classList.remove('wrong');
+    fieldsetChildren[i].classList.remove('correct');
+  }
+}
+</script>
 
 
 
@@ -1668,6 +1817,8 @@
         <script src="../javascripts/extra.js"></script>
       
         <script src="../javascripts/adsense.js"></script>
+      
+        <script src="../javascripts/quiz.custom.js"></script>
       
     
   </body>
