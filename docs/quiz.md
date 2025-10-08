@@ -5,10 +5,10 @@ hide:
 
 <?quiz?>
 question: Which command lists all Pods in the current namespace?
-answer-correct: <code>kubectl get pods
-answer: <code>kubectl list pods
-answer: <code>kubectl pods
-answer: <code>kubectl ps
+answer-correct: <code>kubectl get pods</code>
+answer: <code>kubectl list pods</code>
+answer: <code>kubectl pods</code>
+answer: <code>kubectl ps</code>
 content:
 <?/quiz?>
 
@@ -77,10 +77,10 @@ content:
 
 <?quiz?>
 question: Which command shows detailed info about a specific Pod?
-answer-correct: <code>kubectl describe pod <name>
-answer: <code>kubectl info pod <name>
-answer: <code>kubectl details pod <name>
-answer: <code>kubectl show pod <name>
+answer-correct: <code>kubectl describe pod <name></code>
+answer: <code>kubectl info pod <name></code>
+answer: <code>kubectl details pod <name></code>
+answer: <code>kubectl show pod <name></code>
 content:
 <?/quiz?>
 
@@ -122,10 +122,10 @@ content:
 
 <?quiz?>
 question: Which command applies a manifest file?
-answer-correct: <code>kubectl apply -f file.yaml
-answer: <code>kubectl use file.yaml
-answer: <code>kubectl run file.yaml
-answer: <code>kubectl start -f file.yaml
+answer-correct: <code>kubectl apply -f file.yaml</code>
+answer: <code>kubectl use file.yaml</code>
+answer: <code>kubectl run file.yaml</code>
+answer: <code>kubectl start -f file.yaml</code>
 content:
 <?/quiz?>
 
@@ -157,7 +157,7 @@ content:
 <?/quiz?>
 
 <?quiz?>
-question: What does <code>kubectl logs show?
+question: What does <code>kubectl logs</code> show?
 answer-correct: Container logs from a Pod
 answer: Node kernel logs
 answer: API server audit logs
@@ -320,10 +320,10 @@ content:
 
 <?quiz?>
 question: Which command shows current resource usage (metrics) for Pods?
-answer-correct: <code>kubectl top pods
-answer: <code>kubectl htop
-answer: <code>kubectl metrics pods
-answer: <code>kubectl get metrics
+answer-correct: <code>kubectl top pods</code>
+answer: <code>kubectl htop</code>
+answer: <code>kubectl metrics pods</code>
+answer: <code>kubectl get metrics</code>
 content:
 <?/quiz?>
 
@@ -375,9 +375,9 @@ content:
 <?quiz?>
 question: Which field ensures Pods start in a defined order in StatefulSets?
 answer-correct: <code>podManagementPolicy</code> (OrderedReady)
-answer: <code>runPolicy: Sequential
-answer: <code>startupProbe: serial
-answer: <code>initOrder: ascending
+answer: <code>runPolicy: Sequential</code>
+answer: <code>startupProbe: serial</code>
+answer: <code>initOrder: ascending</code>
 content:
 <?/quiz?>
 
@@ -428,19 +428,19 @@ content:
 
 <?quiz?>
 question: Which <code>kubectl command lets you run a command inside a running container?
-answer-correct: <code>kubectl exec -it <pod> -- <cmd>
-answer: <code>kubectl run -it <pod> <cmd>
-answer: <code>kubectl attach <cmd>
-answer: <code>kubectl shell <pod>
+answer-correct: <code>kubectl exec -it <pod> -- <cmd></code>
+answer: <code>kubectl run -it <pod> <cmd></code>
+answer: <code>kubectl attach <cmd></code>
+answer: <code>kubectl shell <pod></code>
 content:
 <?/quiz?>
 
 <?quiz?>
 question: What label key is commonly used by Services to select Pods?
-answer-correct: <code>app or app.kubernetes.io/name
-answer: <code>podIP
-answer: <code>controller-revision-hash
-answer: <code>node-role.kubernetes.io/control-plane
+answer-correct: <code>app or app.kubernetes.io/name</code>
+answer: <code>podIP</code>
+answer: <code>controller-revision-hash</code>
+answer: <code>node-role.kubernetes.io/control-plane</code>
 content:
 <?/quiz?>
 
