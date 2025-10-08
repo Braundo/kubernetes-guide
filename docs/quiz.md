@@ -5,10 +5,10 @@ hide:
 
 <?quiz?>
 question: Which command lists all Pods in the current namespace?
-answer-correct: kubectl get pods
-answer: kubectl list pods
-answer: kubectl pods
-answer: kubectl ps
+answer-correct: <code>kubectl get pods
+answer: <code>kubectl list pods
+answer: <code>kubectl pods
+answer: <code>kubectl ps
 content:
 <?/quiz?>
 
@@ -77,10 +77,10 @@ content:
 
 <?quiz?>
 question: Which command shows detailed info about a specific Pod?
-answer-correct: kubectl describe pod <name>
-answer: kubectl info pod <name>
-answer: kubectl details pod <name>
-answer: kubectl show pod <name>
+answer-correct: <code>kubectl describe pod <name>
+answer: <code>kubectl info pod <name>
+answer: <code>kubectl details pod <name>
+answer: <code>kubectl show pod <name>
 content:
 <?/quiz?>
 
@@ -122,10 +122,10 @@ content:
 
 <?quiz?>
 question: Which command applies a manifest file?
-answer-correct: kubectl apply -f file.yaml
-answer: kubectl use file.yaml
-answer: kubectl run file.yaml
-answer: kubectl start -f file.yaml
+answer-correct: <code>kubectl apply -f file.yaml
+answer: <code>kubectl use file.yaml
+answer: <code>kubectl run file.yaml
+answer: <code>kubectl start -f file.yaml
 content:
 <?/quiz?>
 
@@ -157,7 +157,7 @@ content:
 <?/quiz?>
 
 <?quiz?>
-question: What does kubectl logs show?
+question: What does <code>kubectl logs show?
 answer-correct: Container logs from a Pod
 answer: Node kernel logs
 answer: API server audit logs
@@ -238,7 +238,7 @@ content:
 <?/quiz?>
 
 <?quiz?>
-question: Liveness vs Readiness—pick the best statement.
+question: Liveness vs Readiness - pick the best statement.
 answer-correct: Liveness checks if the process is alive; Readiness gates traffic
 answer: Both gate traffic only
 answer: Readiness restarts the container
@@ -320,10 +320,10 @@ content:
 
 <?quiz?>
 question: Which command shows current resource usage (metrics) for Pods?
-answer-correct: kubectl top pods
-answer: kubectl htop
-answer: kubectl metrics pods
-answer: kubectl get metrics
+answer-correct: <code>kubectl top pods
+answer: <code>kubectl htop
+answer: <code>kubectl metrics pods
+answer: <code>kubectl get metrics
 content:
 <?/quiz?>
 
@@ -374,10 +374,10 @@ content:
 
 <?quiz?>
 question: Which field ensures Pods start in a defined order in StatefulSets?
-answer-correct: podManagementPolicy (OrderedReady)
-answer: runPolicy: Sequential
-answer: startupProbe: serial
-answer: initOrder: ascending
+answer-correct: <code>podManagementPolicy</code> (OrderedReady)
+answer: <code>runPolicy: Sequential
+answer: <code>startupProbe: serial
+answer: <code>initOrder: ascending
 content:
 <?/quiz?>
 
@@ -427,20 +427,20 @@ content:
 <?/quiz?>
 
 <?quiz?>
-question: Which kubectl command lets you run a command inside a running container?
-answer-correct: kubectl exec -it <pod> -- <cmd>
-answer: kubectl run -it <pod> <cmd>
-answer: kubectl attach <cmd>
-answer: kubectl shell <pod>
+question: Which <code>kubectl command lets you run a command inside a running container?
+answer-correct: <code>kubectl exec -it <pod> -- <cmd>
+answer: <code>kubectl run -it <pod> <cmd>
+answer: <code>kubectl attach <cmd>
+answer: <code>kubectl shell <pod>
 content:
 <?/quiz?>
 
 <?quiz?>
 question: What label key is commonly used by Services to select Pods?
-answer-correct: app or app.kubernetes.io/name
-answer: podIP
-answer: controller-revision-hash
-answer: node-role.kubernetes.io/control-plane
+answer-correct: <code>app or app.kubernetes.io/name
+answer: <code>podIP
+answer: <code>controller-revision-hash
+answer: <code>node-role.kubernetes.io/control-plane
 content:
 <?/quiz?>
 

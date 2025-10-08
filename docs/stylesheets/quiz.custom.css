@@ -126,3 +126,12 @@
 .md-typeset .quiz section{ margin-top:.9rem; padding:.85rem 1rem; border-radius:12px;
   border:1px solid var(--quiz-border); background:color-mix(in oklab, var(--quiz-fg) 5%, transparent); }
 .md-typeset .quiz section.hidden{ display:none!important; }
+
+.quiz-row code {
+  font-family: var(--md-code-font-family, monospace);
+  background-color: var(--md-code-bg-color);
+  color: var(--md-code-fg-color);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
