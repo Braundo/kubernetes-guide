@@ -125,8 +125,6 @@ plugins:
   - search
   - inline-svg
   - mkdocs_quiz
-  - quiz:
-      enable_feedback: true
 extra_javascript:
   - ./javascripts/extra.js
   - ./javascripts/adsense.js
