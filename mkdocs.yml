@@ -42,6 +42,7 @@ nav:
     - CKAD: ckad.md
     - CKS: cks.md
     - Kubectl Cheat Sheet: kubectl-cheatsheet.md
+  - Quiz: quiz.md
   - About: about.md
 theme:
   name: material
@@ -76,7 +77,8 @@ theme:
     - content.code.copy
     - content.code.select
 extra_css:
-  - /stylesheets/extra.css
+  - ./stylesheets/extra.css
+  - ./stylesheets/quiz.custom.css
 extra:
   generator: false
   analytics:
@@ -122,6 +124,10 @@ plugins:
   - mermaid2
   - search
   - inline-svg
+  - mkdocs_quiz
+  - quiz:
+      enable_feedback: true
 extra_javascript:
   - ./javascripts/extra.js
   - ./javascripts/adsense.js
+  - ./javascripts/quiz.custom.js
