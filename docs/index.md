@@ -17,7 +17,7 @@ title: ""
 
 Welcome to the **Kubernetes Guide**, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!
 
-One thing to note about text formatting in this guide: you'll notice some terms always start with a capital letter (i.e. Service, Pod, etc.). This is intentional and an attempt to adhere to standard formatting as laid out in the official Kubernetes documentation. Kubernetes API objects (like the ones just mentioned) should start with a capital letter.
+One thing to note about text formatting in this guide: you'll notice some terms start with a capital letter (i.e. Service, Pod, etc.). This is intentional and an attempt to adhere to standard formatting as laid out in the official Kubernetes documentation. Kubernetes API objects (like the ones just mentioned) should start with a capital letter.
 
 ---
 

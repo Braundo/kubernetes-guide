@@ -427,7 +427,7 @@ content:
 <?/quiz?>
 
 <?quiz?>
-question: Which <code>kubectl command lets you run a command inside a running container?
+question: Which <code>kubectl</code> command lets you run a command inside a running container?
 answer-correct: <code>kubectl exec -it <pod> -- <cmd></code>
 answer: <code>kubectl run -it <pod> <cmd></code>
 answer: <code>kubectl attach <cmd></code>
