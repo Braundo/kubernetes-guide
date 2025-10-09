@@ -27,5 +27,16 @@ One thing to note about text formatting in this guide: you'll notice some terms 
 
 ---
 
-[:material-linkedin: Connect with me](https://www.linkedin.com/in/aaronbraundmeier/)  
-[:material-github: Suggest changes](https://github.com/Braundo/kubernetes-guide)
+<br>
+
+k8s.guide is a free Kubernetes learning site I created and maintain in my spare time.
+
+If it’s helped you, consider supporting it to help offset hosting and maintenance costs. Thanks for your support!
+
+<a href="https://buymeacoffee.com/braundmeier" target="_blank" rel="noopener">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+       alt="Buy Me A Coffee"
+       style="height:50px;width:217px;border:0;">
+</a>
+
+<br>

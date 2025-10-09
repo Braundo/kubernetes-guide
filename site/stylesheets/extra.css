@@ -1,150 +1,84 @@
-.md-header {
-    background: #4051b5 !important;
-}
+/* =========================
+   Header / Tabs / Nav
+   ========================= */
+.md-header { background-color: #2A2E35 !important; }
+.md-tabs   { background-color: #2A2E35 !important; }
 
+.md-footer-meta { display: none; }
 
-.md-footer-meta {
-    display: none;
-}
+.md-nav__link:hover { color:#4051b5 !important; }
+.md-nav__link--active { font-weight: bold; color:#4051b5 !important; }
 
-.md-nav__link:hover {
-    color:#4051b5 !important;
-}
+.md-nav { font-size: 0.9rem; }                /* sidebar */
+.md-nav--secondary { font-size: 0.85rem; }    /* page TOC */
 
-.md-nav__link--active {
-    font-weight: bold;
-    color:#4051b5 !important;
-}
+.md-tabs__link { font-size: 1rem; }           /* top tabs text */
 
-h1 {
-    font-style: bold !important;
-}
-
-h2 {
-    font-weight: bold !important;
-}
-
-.dark-mode-image {
-    display: none;
+@media (min-width: 1024px) {
+  .md-grid {
+    max-width: 95% !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
-  
-  .light-mode-image {
-    display: block;
-  }
-  
-  body[data-md-color-scheme="slate"] .dark-mode-image {
-    display: block;
-  }
-  
-  body[data-md-color-scheme="slate"] .light-mode-image {
-    display: none;
-  }
-  
-/* Base font scaling */
+}
+
+.md-tabs__item--active {
+  font-size: 20px !important;
+  font-weight: 850 !important;
+  color: #FFFFFF;
+  position: relative;
+}
+.md-tabs__item--active::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 5px;
+  background-color: #FFFFFF;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.md-tabs__link:hover { color: #FFFFFF !important; position: relative; }
+
+.md-header__button.md-logo img { height: 40px !important; }
+.md-header__button.md-logo { align-items: center !important; }
+.md-header__title { font-size: 1.4rem; font-weight: 600; }
+
+.md-nav__title { background-color: #26292e !important; color: #fff !important; }
+
+/* =========================
+   Typography
+   ========================= */
 :root {
-    --md-typeset-font-size: 1rem;   /* default is 0.8rem */
-    --md-typeset-line-height: 1.75;
-  }
-
-/* Nav sidebar font size */
-.md-nav {
-    font-size: 0.9rem;
-  }
-  
-  /* TOC font size */
-  .md-nav--secondary {
-    font-size: 0.85rem;
-  }
-
-  /* Increase font size in the top nav bar */
-.md-tabs__link {
-    font-size: 1rem;  /* default is ~0.8rem */
-  }
-
-  @media (min-width: 1024px) {
-    .md-grid {
-      max-width: 95% !important;
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-
-  
-  .md-tabs__item--active {
-    font-size: 20px !important;
-    font-weight: 850 !important;
-    color: #FFFFFF;
-    position: relative; /* Allow positioning of the pseudo-element */
-  }
-  
-  .md-tabs__item--active::after {
-    content: ""; /* Creates the underline effect */
-    display: block;
-    width: 100%; /* Span the width of the link */
-    height: 5px; /* Thickness of the underline */
-    background-color: #FFFFFF; /* Adjust to match your active color */
-    color: #FFFFFF !important;
-    position: absolute; /* Position relative to the parent */
-    bottom: 0px; /* Moves the underline lower */
-    left: 0;
-    font-weight: bold !important;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-  }
-  
-  .md-tabs__link:hover {
-    
-    color: #FFFFFF !important;
-    position: relative; /* Allow positioning of the pseudo-element */
-  }
-
-  /* Increase header logo size */
-.md-header__button.md-logo img {
-  height: 40px !important;  /* You can adjust this up to 48px or so */
+  --md-typeset-font-size: 1rem;   /* default ~0.8rem */
+  --md-typeset-line-height: 1.75;
 }
-.md-header__button.md-logo {
-  align-items: center !important;
-}
-/* Increase site title font size in the header */
-.md-header__title {
-  font-size: 1.4rem;   /* Default is ~1.1rem — adjust as needed */
-  font-weight: 600;    /* Optional: make it bolder */
-}
+h1 { font-weight: bold !important; }  /* was font-style */
+h2 { font-weight: bold !important; }
 
-.md-header {
-  background-color: #2A2E35 !important;
-}
+/* =========================
+   Image toggles for dark/light
+   ========================= */
+.dark-mode-image { display: none; }
+.light-mode-image { display: block; }
+body[data-md-color-scheme="slate"] .dark-mode-image { display: block; }
+body[data-md-color-scheme="slate"] .light-mode-image { display: none; }
 
-.md-tabs {
-  background-color: #2A2E35 !important;
-}
-
-/* Flex layout to keep image + h1 on same line */
-.hero-title {
-  display: flex;
-  align-items: center;
-  gap: 1rem; /* spacing between image and h1 */
-}
-
-/* Custom styling for that specific h1 */
-.hero-title h1 {
-  font-size: 2.5rem;
-  margin: 0;
-  padding: 0;
-  font-weight: 700;
-}
+/* =========================
+   Hero / Cards polish
+   ========================= */
+.hero-title { display: flex; align-items: center; gap: 1rem; }
+.hero-title h1 { font-size: 2.5rem; margin: 0; padding: 0; font-weight: 700; }
 
 .id-card {
-  display: inline-block; /* shrink-wrap around image */
+  display: inline-block;
   border-radius: 16px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
-  overflow: hidden; /* make border-radius clip the image */
+  overflow: hidden;
 }
-
-.id-img {
-  width: 280px; /* or 25%, or any size you want */
-  display: block; /* remove inline whitespace gap */
-}
+.id-img { width: 280px; display: block; }
 
 .grid.cards li, .grid.cards .card {
   border-radius: 16px;
@@ -153,66 +87,45 @@ h2 {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #FFFFFF;
 }
-
 [data-md-color-scheme="default"] .grid.cards li,
-[data-md-color-scheme="default"] .grid.cards .card {
-  background-color: #ffffff;
-}
-
+[data-md-color-scheme="default"] .grid.cards .card { background-color: #ffffff; }
 [data-md-color-scheme="slate"] .grid.cards li,
 [data-md-color-scheme="slate"] .grid.cards .card {
   background-color: #1B1E25;
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-
-
-.grid.cards li {
-  perspective: 1000px;
-}
-
-
+.grid.cards li { perspective: 1000px; }
 .grid.cards img {
-  max-width: 250px;
-  height: auto;
-  margin: 0 auto 16px auto;
-  display: block;
-  transition: transform 0.8s ease;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+  max-width: 250px; height: auto; margin: 0 auto 16px auto; display: block;
+  transition: transform 0.8s ease; transform-style: preserve-3d; backface-visibility: hidden;
 }
-
-
 .issuer {
-  font-style: italic; /* Italics */
-  font-size: 0.9em; /* Slightly smaller font size */
-  display: block; /* Ensures the text is on its own line */
-  margin-top: auto !important; /* Push the text to the bottom of the card */
-  text-align: center; /* Center-align the text */
-  font-weight: lighter;
-}  
-
-.cert-title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 12px;
-  margin-bottom: 8px;
+  font-style: italic; font-size: 0.9em; display: block; margin-top: auto !important;
+  text-align: center; font-weight: lighter;
 }
+.cert-title { text-align: center; font-weight: bold; font-size: 1.1rem; margin: 12px 0 8px; }
 
+/* =========================
+   Keep content wrappers transparent
+   (so the body background shows through)
+   ========================= */
+.md-container, .md-main, .md-content { background: transparent !important; }
 
-/* Light Mode */
-[data-md-color-scheme="default"] .md-container {
+/* =========================
+   LIGHT MODE BACKGROUND
+   (uses your 4800x2463 image, tiled at native size)
+   ========================= */
+body[data-md-color-scheme="default"] {
+  /* use a relative path so it works under subpaths */
   background-image: url("/images/hex.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-repeat: repeat;              /* tile it */
+  background-position: top left;
+  background-size: 4800px 2463px;         /* EXACT native size to avoid seams */
+  background-color: #ffffff;              /* fallback */
+  background-attachment: scroll;          /* safe on mobile */
 }
-
-
-
-.md-nav__title {
-  background-color: #26292e !important; /* dark slate */
-  color: #fff !important;
+/* Optional: desktop-only parallax feel */
+@media (min-width: 1024px) {
+  body[data-md-color-scheme="default"] { background-attachment: fixed; }
 }
