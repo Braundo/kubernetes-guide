@@ -44,7 +44,7 @@ Upgrading your Kubernetes cluster ensures you have the latest features, security
 
 2. **Upgrade Control Plane and Nodes**
 
-    - Follow [official Kubernetes documentation]((https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/){:target="_blank"}) for upgrading components.
+    - Follow [official Kubernetes documentation](https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/){:target="_blank"} for upgrading components.
     - Upgrade `kubelet` and `kubectl` on nodes.
 
 <h2>Best Practices</h2>
