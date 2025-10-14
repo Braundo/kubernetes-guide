@@ -1,3 +1,5 @@
+/* quiz.css — modern aesthetic, dark mode, dual score bars,
+   minimal marking, inline explainer for correct & incorrect. */
 
 /* Tokens */
 :root {
@@ -122,16 +124,30 @@
   background: color-mix(in oklab, var(--quiz-wrong) 18%, transparent);
 }
 
-/* Explanation */
-.md-typeset .quiz section{ margin-top:.9rem; padding:.85rem 1rem; border-radius:12px;
-  border:1px solid var(--quiz-border); background:color-mix(in oklab, var(--quiz-fg) 5%, transparent); }
-.md-typeset .quiz section.hidden{ display:none!important; }
+/* Suppress the plugin's default explanation section; we inject inline cards instead */
+.md-typeset .quiz section{ display:none !important; }
 
-.quiz-row code {
-  font-family: var(--md-code-font-family, monospace);
-  background-color: var(--md-code-bg-color);
-  color: var(--md-code-fg-color);
-  padding: 0.1em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
+/* Inline explainer card */
+.quiz-explain-inline{
+  margin-top:.6rem; margin-left:.1rem; margin-right:.1rem;
+  padding:.85rem 1rem;
+  border-radius:12px;
 }
+.quiz-explain-inline.correct{
+  border:1px solid color-mix(in oklab, var(--quiz-correct) 40%, transparent);
+  background:color-mix(in oklab, var(--quiz-correct) 18%, transparent);
+}
+.quiz-explain-inline.wrong{
+  border:1px solid color-mix(in oklab, var(--quiz-wrong) 40%, transparent);
+  background:color-mix(in oklab, var(--quiz-wrong) 18%, transparent);
+}
+
+.quiz-explain-inline__head{
+  display:flex; align-items:center; gap:.5rem;
+  font-weight:800; margin-bottom:.35rem;
+}
+.quiz-explain-inline__icon{
+  width:1rem; height:1rem; display:inline-grid; place-items:center;
+  font-weight:900;
+}
+.quiz-explain-inline__body{ line-height:1.5; }
