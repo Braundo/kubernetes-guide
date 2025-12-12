@@ -2,138 +2,138 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://www.k8s.guide/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/about/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/audit-logging/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/certification-preparation/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/cka/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/ckad/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/cks/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/configmaps-secrets/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/daemonsets/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/env-var/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/helm-package-management/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/image-scan-sign/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/init-containers/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/jobs-cronjobs/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/kubectl-cheatsheet/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/kubernetes-api/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/limits-requests/</loc>
-         <lastmod>2025-10-07</lastmod>
-    </url>
-    <url>
-         <loc>https://www.k8s.guide/local-setup/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/maintenance/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/namespaces/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/netpol/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/networking/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/operators-crds/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/overview/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/pods-deployments/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/psa/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
+    </url>
+    <url>
+         <loc>https://www.k8s.guide/quiz/</loc>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/quotas-limits/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/rbac/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/sec-context/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/security/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/services-networking/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/statefulsets/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/storage/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
     <url>
          <loc>https://www.k8s.guide/troubleshooting/</loc>
-         <lastmod>2025-10-07</lastmod>
+         <lastmod>2025-12-12</lastmod>
     </url>
 </urlset>
