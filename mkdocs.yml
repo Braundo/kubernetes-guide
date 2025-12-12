@@ -51,7 +51,7 @@ theme:
   favicon: /images/logo.png
   font:
     text: Ubuntu
-    code: Fira Code
+    code: JetBrains Mono
   palette:
     - scheme: default
       primary: 'indigo'

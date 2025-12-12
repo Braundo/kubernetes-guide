@@ -8,7 +8,7 @@ hide:
 </div>
 
 
-My name is Aaron Braundmeier and I've been working in the tech industry for over a decade at companies such as Mastercard, VMware, Broadcom and CVS. I've long been a Kubernetes fan and had the privilege of working hands-on in that space during my time within the [Tanzu](https://tanzu.vmware.com/platform) business unit at VMware. Please note that all opinions and content on this site belong to me and do not reflect the opinions, plans, or designs of any of my current or former employers.
+My name is Aaron Braundmeier and I've been working in the tech industry for over a decade at companies such as Mastercard, VMware, Broadcom and CVS. I've long been a Kubernetes fan and had the privilege of working hands-on in that space for many years. I am currently the Director of Kubernetes & Container Platforms at Mastercard where I have the privilege of helping to shape the landscape of Kubernetes usage there. Please note that all opinions and content on this site belong to me and do not reflect the opinions, plans, or designs of any of my current or former employers.
 
 <br>
 
@@ -74,6 +74,15 @@ If you're interested in connecting, I can be reached in the following ways:
     <hr />
     <a href="https://www.credly.com/badges/9ed2a14b-4dc7-4ce2-9890-9ee07f2bdf7f/public_url" target="_blank">
       <img src="/images/capa.png">
+    </a>
+    <span class="issuer">Issuer: The Linux Foundation</span>
+  </div>
+
+  <div class="card">
+    <div class="cert-title">Certified GitOps Associate</div>
+    <hr />
+    <a href="https://www.credly.com/badges/9d600372-f703-4368-9185-91a103699988/public_url" target="_blank">
+      <img src="/images/cgoa.png">
     </a>
     <span class="issuer">Issuer: The Linux Foundation</span>
   </div>
