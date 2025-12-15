@@ -147,6 +147,67 @@ containers:
 
 ---
 
+Kubernetes allows you to configure runtime behavior of containers using **environment variables**, and to monitor their health using **liveness** and **readiness probes**. These features are essential for building reliable, configurable, and observable applications in the cluster.
+
+---
+
+<h2>Environment Variables</h2>
+
+You can pass key-value pairs into containers using environment variables. These can be hardcoded, referenced from ConfigMaps, Secrets, or even dynamically derived from field references.
+
+
+### Static Environment Variables
+
+```yaml
+env:
+  - name: LOG_LEVEL
+    value: "debug"
+```
+
+### From ConfigMap
+
+```yaml
+envFrom:
+  - configMapRef:
+      name: app-config
+```
+
+Or individual keys:
+
+```yaml
+env:
+  - name: APP_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: app-config
+        key: port
+```
+
+### From Secret
+
+```yaml
+env:
+  - name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: db-secret
+        key: password
+```
+
+### From Pod Metadata
+
+```yaml
+env:
+  - name: POD_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.name
+```
+
+---
+
+
+
 <h2>Using ConfigMaps & Secrets</h2>
 
 You can mount ConfigMaps and Secrets as environment variables or files inside your Pods. This keeps your app configuration flexible and secure.

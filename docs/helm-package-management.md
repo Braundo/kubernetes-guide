@@ -2,82 +2,186 @@
 icon: material/ship-wheel
 ---
 
-<h1>Helm</h1>
+# Helm: The Package Manager
 
-Helm is the package manager for Kubernetes. Helm lets you define, install, and upgrade Kubernetes applications using packages called <strong>charts</strong>. It makes deploying and managing complex apps as easy as installing an app on your phone - just use a "chart" and you're off to the races.
+Deploying a single Pod is easy. Deploying a production application - which needs a Deployment, Service, Ingress, ConfigMap, Secret, and HPA - is hard.
 
----
+Managing that same application across Dev, Staging, and Production (with different replica counts and image tags for each) is a nightmare.
 
-<h2>Benefits of Using Helm</h2>
-<ul>
-<li><strong>Simplifies Deployment:</strong> Bundle all your resources in one chart for easy deployment.</li>
-<li><strong>Versioning:</strong> Upgrade and roll back apps with a single command.</li>
-<li><strong>Reuse:</strong> Share charts across teams and environments.</li>
-<li><strong>Customization:</strong> Use templates and values to adapt to any setup.</li>
-<li><strong>Dependency Management:</strong> Charts can depend on other charts.</li>
-</ul>
+**Helm** solves this. It is the "apt-get" or "npm" for Kubernetes. It allows you to bundle related YAML files into a single package called a **Chart**.
 
----
+-----
 
-<h2>Helm Architecture</h2>
+## The "Cookie Cutter" Analogy
 
-- <strong>Helm Client:</strong> Command-line tool for managing charts.
-- <strong>Helm Server (Tiller):</strong> Only in Helm v2. In Helm v3+, the client talks directly to the Kubernetes API server (no Tiller).
+Think of your Kubernetes YAML files as "Cookies."
 
----
+  * **Without Helm:** You hand-craft every single cookie (YAML file). If you need 10 cookies, you write 10 files. If you want to change the flavor, you edit 10 files.
+  * **With Helm:** You create a **Mold** (Template).
+      * You pour "dough" (Configuration Values) into the mold.
+      * Helm presses the button and generates perfect YAML files for you every time.
 
-<h2>How Helm Works</h2>
-<ul>
-<li><strong>Charts:</strong> Collections of files describing Kubernetes resources.</li>
-<li><strong>Values Files:</strong> Override default settings for different environments.</li>
-<li><strong>Templates:</strong> Dynamically generate manifests.</li>
-<li><strong>Releases:</strong> Each deployment of a chart is a release.</li>
-<li><strong>Repositories:</strong> Collections of charts you can share and reuse.</li>
-</ul>
+-----
 
----
+## Core Concepts
 
-<h2>Creating and Using Helm Charts</h2>
+| Term | Definition |
+| :--- | :--- |
+| **Chart** | The package itself. A directory containing templates and metadata. (The "Mold") |
+| **Values** | The configuration settings. (The "Dough"). Defined in `values.yaml`. |
+| **Release** | An instance of a Chart running in your cluster. (The "Cookie"). You can install the same chart 5 times to get 5 different releases. |
+| **Repository** | A place to store and share Charts (like Docker Hub, but for Helm). |
 
-<h3>Creating a Helm Chart</h3>
+-----
 
-To create a new Helm chart:
+## Helm Architecture (v3+)
 
-```sh
-helm create my-chart
-```
+**Forget Tiller.**
+In the old days (Helm v2), there was a component called Tiller that ran inside your cluster with full admin rights. It was a massive security hole.
 
-This generates:
-```
+**Helm v3** is client-only.
+When you run `helm install`, the Helm binary on your laptop:
+
+1.  Reads your local charts/values.
+2.  Generates the final YAML manifests.
+3.  Talks directly to the Kubernetes API to apply them.
+4.  Stores the "state" of the release in a Kubernetes Secret (in the same namespace).
+
+-----
+
+## The Directory Structure
+
+When you run `helm create my-chart`, you get this standard layout:
+
+```text
 my-chart/
-  Chart.yaml          # Chart metadata
-  values.yaml         # Default configuration values
-  charts/             # Dependency charts
-  templates/          # Kubernetes resource templates
+  Chart.yaml          # Metadata (Name, Version, Dependencies)
+  values.yaml         # Default configuration (The "Variables")
+  charts/             # Sub-charts (Dependencies go here)
+  templates/          # The Logic
+    deployment.yaml   # A Deployment, but with {{ placeholders }}
+    service.yaml      # A Service, but with {{ placeholders }}
+    _helpers.tpl      # Reusable code snippets
 ```
 
-<h3>Example Chart.yaml</h3>
+-----
+
+## The Templating Engine
+
+Helm uses the **Go Templating** language. This is what makes it powerful.
+
+**1. The Template (`templates/deployment.yaml`)**
+Instead of hardcoding "nginx", you use a variable.
 
 ```yaml
-apiVersion: v2
-name: my-chart
-version: 0.1.0
-description: A Helm chart for Kubernetes
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  containers:
+    - name: my-app
+      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
 ```
 
-<h3>Advanced Helm Features</h3>
+**2. The Values (`values.yaml`)**
+You define the defaults here.
 
-- **Hooks:** Allow you to run scripts at specific points in a release lifecycle.
-- **Lifecycle Management:** Manage the lifecycle of applications with upgrade and rollback capabilities.
-- **Managing Dependencies:** Use the `requirements.yaml` file to manage chart dependencies.
+```yaml
+replicaCount: 3
+image:
+  repository: nginx
+  tag: 1.21
+```
 
-<h3>Customizing Helm Charts</h3>
+**3. The Result (Rendered Manifest)**
+Helm combines them to create valid Kubernetes YAML.
 
-Customize charts for different environments by using values files and templates to override default settings.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  replicas: 3
+  containers:
+    - name: my-app
+      image: "nginx:1.21"
+```
 
-## Best Practices
+-----
 
-- **Version Control:** Keep your charts in version control for easy tracking and collaboration.
-- **Testing:** Test your charts in different environments to ensure compatibility.
-- **Security:** Regularly update your charts to include the latest security patches.
-- **Documentation:** Provide clear documentation for using and customizing your charts.
+## Daily Commands (Cheat Sheet)
+
+### 1\. Installation
+
+Install a chart from a repo (like Bitnami).
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-redis bitnami/redis
+```
+
+### 2\. Customizing Values
+
+You almost never use the default values. You override them.
+
+```bash
+# Option A: Command line flags (good for quick tests)
+helm install my-web ./my-chart --set replicaCount=5
+
+# Option B: Custom values file (Best Practice)
+helm install my-web ./my-chart -f values-prod.yaml
+```
+
+### 3\. Upgrading (Day 2 Operations)
+
+Changed a value? Just run upgrade. Helm calculates the "diff" and patches the resources.
+
+```bash
+helm upgrade my-web ./my-chart -f values-prod.yaml
+```
+
+### 4\. Rollbacks (The "Undo" Button)
+
+Did your upgrade break production? Helm keeps a history of every release.
+
+```bash
+helm history my-web
+# REVISION    UPDATED     STATUS      CHART
+# 1           ...         SUPERSEDED  my-chart-1.0
+# 2           ...         DEPLOYED    my-chart-1.1
+
+# Rollback to revision 1 immediately
+helm rollback my-web 1
+```
+
+-----
+
+## Managing Dependencies
+
+In Helm v3, you declare dependencies in `Chart.yaml` (not `requirements.yaml`).
+
+```yaml
+# Chart.yaml
+dependencies:
+  - name: postgresql
+    version: 10.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+```
+
+Then run:
+
+```bash
+helm dependency build
+```
+
+This downloads the postgres chart into your `charts/` folder automatically.
+
+-----
+
+## Summary
+
+  * **Helm** is the standard for packaging Kubernetes apps.
+  * It separates **Configuration** (`values.yaml`) from **Code** (`templates/`).
+  * It handles **Dependencies** (installing a database alongside your app).
+  * It provides **Revision History** and **Rollbacks** out of the box.
+  * **Pro Tip:** Always use `--dry-run --debug` before installing a complex chart to see exactly what YAML will be generated without actually applying it.

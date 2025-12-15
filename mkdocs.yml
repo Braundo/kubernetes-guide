@@ -5,45 +5,48 @@ site_description: "A comprehensive, easy-to-follow guide for Kubernetes"
 site_author: "Aaron Braundmeier"
 nav:
   - Home: index.md
-  - Getting Started: overview.md
-  - Workloads:
+  - Workloads & Config:
+      - Getting Started: overview.md
       - Pods & Deployments: pods-deployments.md
+      - Scaling & HPA: scaling-hpa.md
+      - StatefulSets: statefulsets.md
       - DaemonSets: daemonsets.md
-      - Operators & CRDs: operators-crds.md
-      - Helm: helm-package-management.md
       - Jobs & Cronjobs: jobs-cronjobs.md
       - Init Containers: init-containers.md
-  - State & Config:
-      - ConfigMaps & Secrets: configmaps-secrets.md
-      - Storage: storage.md
-      - StatefulSets: statefulsets.md
-      - Limits & Requests: limits-requests.md
-      - Env. Variables & Probes: env-var.md
-  - Cluster:
-      - Namespaces: namespaces.md
+      - Services & Networking:
+          - Services: services-networking.md
+          - Ingress: ingress.md
+      - Configuration:
+          - ConfigMaps & Secrets: configmaps-secrets.md
+          - Health Probes: probes.md
+          - Limits & Requests: limits-requests.md
+      - Storage:
+          - Overview: storage.md
+  - Cluster Mgmt:
       - Kubernetes API: kubernetes-api.md
+      - Namespaces: namespaces.md
+      - Helm: helm-package-management.md
+      - Operators & CRDs: operators-crds.md
       - Quotas & Limits: quotas-limits.md
-  - Networking:
-      - Networking Overview: networking.md
-      - Services: services-networking.md
+      - Network Policies: netpol.md
   - SecOps:
-    - Security Primer: security.md
-    - Pod Security: psa.md
-    - Audit & Logging: audit-logging.md
-    - Image Scanning & Signing: image-scan-sign.md
-    - RBAC: rbac.md
-    - Security Context: sec-context.md
-    - Network Policies: netpol.md
-    - Troubleshooting: troubleshooting.md
-    - Maintenance: maintenance.md
-  - Cert Prep:
-    - Cert Prep: certification-preparation.md
-    - CKA: cka.md
-    - CKAD: ckad.md
-    - CKS: cks.md
-    - Kubectl Cheat Sheet: kubectl-cheatsheet.md
-  - Quiz: quiz.md
-  - About: about.md
+      - Security Primer: security.md
+      - RBAC: rbac.md
+      - Pod Security (PSA): psa.md
+      - Security Context: sec-context.md
+      - Image Scanning: image-scan-sign.md
+      - Troubleshooting: troubleshooting.md
+      - Audit & Logging: audit-logging.md
+      - Maintenance: maintenance.md
+  - Certifications:
+      - Guide Overview: certification-preparation.md
+      - CKA (Admin): cka.md
+      - CKAD (Developer): ckad.md
+      - CKS (Security): cks.md
+  - Resources:
+      - Kubectl Cheat Sheet: kubectl-cheatsheet.md
+      - Quiz: quiz.md
+      - About: about.md
 theme:
   name: material
   custom_dir: overrides

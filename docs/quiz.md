@@ -1,6 +1,5 @@
 ---
-hide:
-  - navigation
+icon: material/help-box-multiple
 ---
 
 <?quiz?>
@@ -366,7 +365,7 @@ content:
 <?quiz?>
 question: Which concept defines Pod scheduling preference rather than enforcement?
 answer: Taint [why: Prevents scheduling unless tolerated.]
-answer-correct: Node Affinity (preferredDuringSchedulingIgnoredDuringExecution) [why: Expresses soft scheduling preferences that the scheduler tries to honor.]
+answer-correct: Node Affinity [why: Expresses soft scheduling preferences that the scheduler tries to honor.]
 answer: Toleration [why: Allows Pods onto tainted nodes but doesn’t express preference.]
 answer: Selector [why: Filters resources, doesn’t define preference strength.]
 content:

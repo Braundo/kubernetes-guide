@@ -2,134 +2,157 @@
 icon: material/database-outline
 ---
 
-<h1>Storage in Kubernetes</h1>
+# Storage (PV, PVC, StorageClass)
 
-Kubernetes provides flexible ways to <strong>persist data</strong>, from temporary in-Pod storage to persistent disks that survive Pod and node failure. You’ll most commonly use <strong>Volumes</strong>, <strong>PersistentVolumes (PVs)</strong>, and <strong>PersistentVolumeClaims (PVCs)</strong> to manage storage in production.
+Containers are ephemeral. When a container crashes or stops, all the files created inside it are lost.
 
----
+For many apps (like web servers), this is fine. For others (databases, queues, key-value stores), this is catastrophic. Kubernetes solves this with a robust **Storage** system that decouples "Disk" from "Pod."
 
-<h2>Types of Storage</h2>
+-----
 
-Kubernetes supports several storage mechanisms:
+## 1\. Ephemeral Storage (The Temporary Stuff)
 
-| Type                  | Description                                               |
-|-----------------------|-----------------------------------------------------------|
-| <code>emptyDir</code>            | Temporary, pod-level storage. Deleted when Pod is gone.   |
-| <code>hostPath</code>            | Mounts a path on the host node. Avoid in production.      |
-| <code>configMap</code> / <code>secret</code>| Used for injecting configs/secrets into containers.       |
-| <code>persistentVolume</code>    | Abstracts physical storage (EBS, NFS, GCE PD, etc.).      |
-| <code>volumeClaimTemplate</code> | Used by StatefulSets to dynamically provision volumes.    |
+Before jumping to disks, know that you can store data temporarily without any complex setup.
 
----
+### `emptyDir`
 
-<h2>Volumes</h2>
+This creates a temporary directory on the Node's disk that is mounted into your Pod.
 
-Basic <code>volumes</code> are attached to a Pod spec and live as long as the Pod.
+  * **Lifespan:** Deleted immediately when the Pod is deleted.
+  * **Use Case:** Cache files, scratch space, sorting large data sets.
+
+<!-- end list -->
 
 ```yaml
 volumes:
-  - name: cache
-    emptyDir: {}
+  - name: cache-volume
+    emptyDir: {} # Creates a temp directory on the host
 ```
 
-> Use <code>emptyDir</code> for scratch space or caching - not persistent data.
+### `hostPath`
 
----
+This mounts a file or directory from the **host node's filesystem** directly into your Pod.
 
-<h2>PersistentVolumes (PVs) and PersistentVolumeClaims (PVCs)</h2>
+  * **Risk:** If the Pod moves to a different Node, the data is gone (or different). It is also a huge security risk (giving a Pod access to `/var/lib/docker` or `/etc`).
+  * **Use Case:** Only for system agents (like Log Collectors) that *need* to read host internals. **Avoid in normal apps.**
 
-To persist data <strong>beyond the life of a Pod</strong>, use the <strong>PV + PVC model</strong>:
+-----
 
-- A <strong>PV</strong> is a piece of actual storage (disk, NFS, etc.)
-- A <strong>PVC</strong> is a user’s request for storage
-- Kubernetes binds them together dynamically
+## 2\. The Big Three: PV, PVC, and StorageClass
 
-<h3>PVC Example</h3>
+To save data forever (or at least until you say so), Kubernetes uses three distinct API objects.
+
+| Object | Analogy | Who Creates It? |
+| :--- | :--- | :--- |
+| **PersistentVolume (PV)** | **The Parking Spot.** The actual piece of storage (AWS EBS, Google Disk, NFS share). | Admin (or Auto-provisioner) |
+| **PersistentVolumeClaim (PVC)** | **The Ticket.** A request for a spot ("I need 10GB of fast storage"). | Developer |
+| **StorageClass (SC)** | **The Valet.** An automated system that creates PVs on demand based on PVCs. | Admin |
+
+### The Workflow
+
+```mermaid
+graph LR
+    Dev["Developer"] -->|Creates| PVC["PVC (Request)"]
+    PVC -->|Points to| SC["StorageClass"]
+    SC -->|Dynamically Creates| PV["PV (Actual Disk)"]
+    PV -->|Binds to| PVC
+    
+    subgraph "Bound Pair"
+    PVC -.-> PV
+    end
+    
+    Pod -->|Mounts| PVC
+```
+
+-----
+
+## 3\. PersistentVolumeClaim (The Request)
+
+As a developer, this is usually the only YAML you write. You are asking Kubernetes for storage.
 
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: app-storage
+  name: db-data
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
+  storageClassName: standard # Requests a specific "Valet"
 ```
 
-<h3>Pod using the PVC</h3>
+### Access Modes
 
-```yaml
-volumes:
-  - name: app-data
-    persistentVolumeClaim:
-      claimName: app-storage
+Be careful here. "ReadWriteMany" does not mean "Magic Cloud Drive." It depends heavily on the underlying hardware.
 
-containers:
-  - name: web
-    volumeMounts:
-      - name: app-data
-        mountPath: /data
-```
+  * **`ReadWriteOnce` (RWO):** Can be mounted by **one Node** (e.g., standard EBS/disk).
+  * **`ReadWriteOncePod` (RWOP):** *New & Safer.* Can be mounted by **one Pod**. Prevents two Pods on the same node from fighting over the disk.
+  * **`ReadWriteMany` (RWX):** Can be mounted by **many Nodes** at once (e.g., NFS, EFS, AzureFile). *Block storage (AWS EBS, Azure Disk) generally cannot do this.*
 
----
+-----
 
-## Volume Modes & Access
+## 4\. StorageClass (The Automation)
 
-**Volume Modes:**
+In the old days ("Static Provisioning"), an Admin had to manually create 100 PVs and hope they matched the PVCs. Today, we use **Dynamic Provisioning** via StorageClasses.
 
-  - `Filesystem` (default): mounts as a directory
-  - `Block`: exposes the raw device
-
-<br>
-
-**Access Modes:**
-
-  - `ReadWriteOnce`: one node read/write
-  - `ReadOnlyMany`: multiple nodes read-only
-  - `ReadWriteMany`: shared read/write (NFS, etc.)
-
----
-
-## StorageClasses
-
-A `StorageClass` defines **how** storage should be provisioned dynamically.
+The StorageClass defines *what kind* of disk to create.
 
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: fast
-provisioner: kubernetes.io/gce-pd
+  name: fast-ssd
+provisioner: kubernetes.io/aws-ebs
 parameters:
-  type: pd-ssd
+  type: gp3
+  encrypted: "true"
+reclaimPolicy: Delete # Critical Setting!
+allowVolumeExpansion: true
 ```
 
-> The cluster admin defines StorageClasses; PVCs can request one by name.
+### Reclaim Policies (Crucial\!)
+
+What happens to your data when you delete the PVC?
+
+  * **`Delete` (Default):** The PV (and the actual cloud disk) is **deleted**. Data is lost.
+  * **`Retain`:** The PV is released but keeps the data. An admin must manually clean it up or reconnect it.
+  * **`Recycle`:** (Deprecated) Scrubs the data and makes the PV available again.
+
+!!! tip "Pro Tip"
+    For production databases, consider setting `reclaimPolicy: Retain` so you don't accidentally wipe your database by running `kubectl delete pvc`.
+
+-----
+
+## 5\. How to use it in a Pod
+
+Once you have a PVC, you treat it just like a regular Volume.
 
 ```yaml
-storageClassName: fast
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  volumes:
+    - name: my-storage
+      persistentVolumeClaim:
+        claimName: db-data # Matches the PVC Name
+  containers:
+    - name: app
+      image: nginx
+      volumeMounts:
+        - mountPath: "/var/www/html"
+          name: my-storage
 ```
 
----
+-----
 
-## Dynamic vs Static Provisioning
+## Summary & Best Practices
 
-- **Dynamic:** PVC automatically provisions a volume using a `StorageClass`.
-- **Static:** Admin manually creates PVs, and users bind to them with matching PVCs.
-
----
-
-## Best Practices
-
-- Use `ReadWriteOnce` unless your workload **requires** multi-node access.
-- Leverage `StorageClass` for automated provisioning.
-- Clean up PVCs when no longer needed - they may retain bound disks.
-- Use StatefulSets if each Pod needs its **own** PVC.
-
----
-
-## Summary
-
-Storage in Kubernetes is abstracted through PVs and PVCs for flexibility and portability. Whether your app is stateless or stateful, Kubernetes can handle your storage needs - just make sure to pick the right type of volume for the job.
+1.  **Prefer Dynamic Provisioning:** Use StorageClasses. Don't create PVs manually unless you have to (e.g., connecting to a legacy NFS share).
+2.  **Match the Access Mode:** Don't ask for `ReadWriteMany` on a standard AWS/GCP disk; the Pod will fail to start.
+3.  **Watch the Reclaim Policy:** Know if your data disappears when the PVC is deleted.
+4.  **StatefulSets:** If you are running a replicated database (e.g., 3 replicas), don't use a single Deployment + PVC (they will all share the same disk\!). Use a **StatefulSet**, which generates a unique PVC for *every* Pod.

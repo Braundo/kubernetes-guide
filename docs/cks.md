@@ -8,7 +8,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ---
 
-## 🧠 Exam Overview
+## Exam Overview
 
 - **Format**: Hands-on lab with scenarios
 - **Duration**: 2 hours
@@ -18,7 +18,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ---
 
-## 📋 Domains & Weights
+## Domains & Weights
 
 | Domain                      | Weight |
 |-----------------------------|--------|
@@ -31,7 +31,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ---
 
-## ✅ What You Should Master
+## What You Should Master
 
 ### 1. Cluster Setup (10%)
 
@@ -100,7 +100,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ---
 
-## ⚙️ Practice Tips
+## Practice Tips
 
 - Practice scanning + signing images:
   - `trivy image nginx:latest`
@@ -116,7 +116,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ---
 
-## 🧪 Test Environment Tips
+## Test Environment Tips
 
 - Use bookmarks:
 
@@ -129,7 +129,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 ---
 
-## 📚 Recommended Resources
+## Recommended Resources
 
 - [Kubernetes Official Docs](https://kubernetes.io/docs/)
 - [Killer.sh Simulator (CKS)](https://killer.sh/cks/)

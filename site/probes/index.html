@@ -7,12 +7,12 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="A comprehensive, easy-to-follow guide for Kubernetes" name="description"/>
 <meta content="Aaron Braundmeier" name="author"/>
-<link href="https://www.k8s.guide/netpol/" rel="canonical"/>
-<link href="../quotas-limits/" rel="prev"/>
-<link href="../security/" rel="next"/>
+<link href="https://www.k8s.guide/probes/" rel="canonical"/>
+<link href="../configmaps-secrets/" rel="prev"/>
+<link href="../limits-requests/" rel="next"/>
 <link href="/images/logo.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.0" name="generator"/>
-<title>Network Policies - Kubernetes Guide</title>
+<title>Health Probes - Kubernetes Guide</title>
 <link href="../assets/stylesheets/main.618322db.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -50,7 +50,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Network Policies
+              Health Probes
             
           </span>
 </div>
@@ -112,7 +112,7 @@
 
       </a>
 </li>
-<li class="md-tabs__item">
+<li class="md-tabs__item md-tabs__item--active">
 <a class="md-tabs__link" href="../overview/">
           
   
@@ -121,7 +121,7 @@
 
         </a>
 </li>
-<li class="md-tabs__item md-tabs__item--active">
+<li class="md-tabs__item">
 <a class="md-tabs__link" href="../kubernetes-api/">
           
   
@@ -187,9 +187,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -200,7 +200,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_2">
 <span class="md-nav__icon md-icon"></span>
             
@@ -301,9 +301,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_8" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="0">
+<label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -353,9 +353,9 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_2_9" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="0">
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -366,7 +366,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_9_label" class="md-nav" data-md-level="2">
+<nav aria-expanded="true" aria-labelledby="__nav_2_9_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_9">
 <span class="md-nav__icon md-icon"></span>
             
@@ -389,8 +389,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../probes/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg>
 <span class="md-ellipsis">
     
@@ -418,9 +419,9 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_10" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_10" id="__nav_2_10_label" tabindex="0">
+<label class="md-nav__link" for="__nav_2_10" id="__nav_2_10_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -460,9 +461,9 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -473,7 +474,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
 <span class="md-nav__icon md-icon"></span>
             
@@ -548,9 +549,8 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../netpol/">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m0-15a3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83V14h2v2h-2v2h-2v-6.17A2.99 2.99 0 0 1 9 9a3 3 0 0 1 3-3m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg>
 <span class="md-ellipsis">
     
@@ -853,139 +853,155 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Network Policies</h1>
-<p>By default, Kubernetes is an "Open Network."</p>
-<ul>
-<li>Any Pod can talk to any other Pod.</li>
-<li>A hacked web server in the <code>default</code> namespace can port-scan your database in the <code>secure</code> namespace.</li>
-</ul>
-<p><strong>NetworkPolicies</strong> are the firewall rules of Kubernetes. They let you enforce a <strong>Zero Trust</strong> environment where traffic is blocked unless explicitly allowed.</p>
+<h1>Health Probes</h1>
+<p>Distributed systems are messy. Apps hang, freeze, or take 3 minutes to warm up. Kubernetes needs to know the difference between "I'm busy starting up" and "I am dead, please restart me."</p>
+<p>That is where <strong>Probes</strong> come in. They are the health checks that let Kubernetes automate the repair and routing of your applications.</p>
 <hr/>
-<h2 id="1-the-isolation-switch">1. The "Isolation" Switch</h2>
-<p>Network Policies work differently than traditional firewalls.</p>
+<h2 id="the-traffic-light-analogy">The "Traffic Light" Analogy</h2>
+<p>Think of your Pod like a car trying to enter a highway.</p>
 <ol>
-<li><strong>No Policy:</strong> The Pod is "Non-Isolated." It accepts traffic from anywhere.</li>
-<li><strong>Policy Exists:</strong> As soon as a NetworkPolicy <strong>selects</strong> a Pod, that Pod becomes "Isolated."<ul>
-<li>It immediately blocks <strong>ALL</strong> traffic that isn't explicitly allowed by the policy.</li>
+<li><strong>Startup Probe (The Ignition):</strong> "Has the engine started?"<ul>
+<li><em>If No:</em> Keep turning the key. Don't check anything else yet.</li>
+<li><em>If Yes:</em> Okay, move on to the other checks.</li>
+</ul>
+</li>
+<li><strong>Readiness Probe (The Green Light):</strong> "Is it safe to merge into traffic?"<ul>
+<li><em>If No:</em> Stop sending cars (requests) to this vehicle. Let it idle on the shoulder until it's ready. <strong>Do not kill it.</strong></li>
+<li><em>If Yes:</em> Add its IP to the Service load balancer.</li>
+</ul>
+</li>
+<li><strong>Liveness Probe (The Heartbeat):</strong> "Is the driver still conscious?"<ul>
+<li><em>If No:</em> The driver has had a heart attack. Call the ambulance (Restart the Pod).</li>
+<li><em>If Yes:</em> Keep driving.</li>
 </ul>
 </li>
 </ol>
-<h3 id="visualizing-the-switch">Visualizing the Switch</h3>
-<pre class="mermaid"><code>graph TD
-    subgraph "Scenario A: No Policy"
-    Web1[Web Pod] --&gt;|Allowed| DB1[DB Pod]
-    Hacker1[Hacker Pod] --&gt;|Allowed!| DB1
-    end
-
-    subgraph "Scenario B: With NetworkPolicy"
-    Web2[Web Pod] --&gt;|Allowed by Rule| DB2[DB Pod]
-    Hacker2[Hacker Pod] -- "Blocked (Default Deny)" --&gt; DB2
-
-    NP[NetworkPolicy] -.-&gt;|Selects| DB2
-    end
-
-    style DB2 stroke:#ff0000</code></pre>
 <hr/>
-<h2 id="2-the-default-deny-start-here">2. The "Default Deny" (Start Here)</h2>
-<p>The best practice for security is to start by <strong>locking everything down</strong>, and then punching holes for what you need.</p>
-<p>This policy acts as a "Catch-All" to block all incoming and outgoing traffic for every Pod in the namespace.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default-deny-all</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"> </span><span class="c1"># Selects ALL pods in this namespace</span>
-</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">policyTypes</span><span class="p">:</span>
-</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
-</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Egress</span>
-</span></code></pre></div>
-<p><em>Once you apply this, your application will stop working.</em> Now you must explicitly allow traffic.</p>
-<hr/>
-<h2 id="3-allow-specific-traffic-ingress">3. Allow Specific Traffic (Ingress)</h2>
-<p>Let's say we want to allow our <code>backend</code> to receive traffic from the <code>frontend</code>, but nothing else.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
-</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-frontend-to-backend</span>
-</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span>
-</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span><span class="w"> </span><span class="c1"># The target (Who gets protected?)</span>
-</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span>
-</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">              </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frontend</span><span class="w"> </span><span class="c1"># The source (Who can knock?)</span>
-</span><span id="__span-1-14"><a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-1-15"><a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
-</span><span id="__span-1-16"><a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<h2 id="1-startup-probe-the-slow-starter">1. Startup Probe (The "Slow Starter")</h2>
+<p><strong>Purpose:</strong> Protect slow-starting apps from being killed by the Liveness Probe.</p>
+<p>Legacy Java or Windows apps might take 2-3 minutes to boot. If you set a Liveness Probe to check every 10 seconds, it will kill the app before it ever finishes booting.</p>
+<p>The Startup Probe pauses all other probes until it passes once.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">startupProbe</span><span class="p">:</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nt">httpGet</span><span class="p">:</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/healthz</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="c1"># Allow up to 5 minutes (30 * 10s) for startup</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 </span></code></pre></div>
 <hr/>
-<h2 id="4-the-namespace-gotcha">4. The "Namespace" Gotcha</h2>
-<p>A common mistake is trying to allow traffic from a different namespace using <code>podSelector</code>. <strong><code>podSelector</code> only works within the same namespace.</strong></p>
-<p>To allow traffic from <em>any</em> Pod in the <code>monitoring</code> namespace:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span>
-</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring</span><span class="w"> </span><span class="c1"># Requires the namespace to have this label!</span>
+<h2 id="2-readiness-probe-the-traffic-controller">2. Readiness Probe (The "Traffic Controller")</h2>
+<p><strong>Purpose:</strong> Control whether the Pod receives traffic from the Service.</p>
+<p>Use this to handle temporary load spikes or "warm-up" periods. If a dependency (like a database) is momentarily unreachable, you might want your app to fail readiness so traffic stops flowing to it, but you <strong>don't</strong> want to restart the whole Pod.</p>
+<ul>
+<li><strong>Failure Action:</strong> Remove Pod IP from the Service endpoints. (No restart).</li>
+</ul>
+<!-- end list -->
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">readinessProbe</span><span class="p">:</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">httpGet</span><span class="p">:</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/ready</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+</span></code></pre></div>
+<hr/>
+<h2 id="3-liveness-probe-the-defibrillator">3. Liveness Probe (The "Defibrillator")</h2>
+<p><strong>Purpose:</strong> Catch deadlocks or frozen processes.</p>
+<p>If your app has a bug where it enters an infinite loop and stops responding, a Liveness Probe detects this and restarts the container to reset the state.</p>
+<ul>
+<li><strong>Failure Action:</strong> <strong>RESTART</strong> the container.</li>
+</ul>
+<!-- end list -->
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">livenessProbe</span><span class="p">:</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">httpGet</span><span class="p">:</span>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/healthz</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Label Your Namespaces!</p>
-<p><code>namespaceSelector</code> selects based on <strong>Labels</strong>, not the Namespace name. You must run:
-<code>kubectl label namespace monitoring name=monitoring</code></p>
+<p class="admonition-title">The Liveness Loop of Death</p>
+<p>Be very careful with Liveness Probes. If your <code>initialDelaySeconds</code> is too short, Kubernetes will kill your app before it finishes booting. It will then restart, fail again, and restart again forever. <strong>Always use a Startup Probe for slow apps.</strong></p>
 </div>
 <hr/>
-<h2 id="5-egress-the-dns-trap">5. Egress &amp; The DNS Trap</h2>
-<p>If you block Egress (outbound traffic), <strong>you block DNS lookups too.</strong>
-If your Pod can't reach the DNS server (CoreDNS), it can't resolve <code>google.com</code> or <code>my-db</code>, and your app will crash.</p>
-<p><strong>Always allow UDP port 53 if you restrict Egress.</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
-</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
-</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-dns-egress</span>
-</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"> </span><span class="c1"># Apply to all pods</span>
-</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span><span class="nt">policyTypes</span><span class="p">:</span>
-</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Egress</span>
-</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="nt">egress</span><span class="p">:</span>
-</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span>
-</span><span id="__span-3-11"><a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span>
-</span><span id="__span-3-12"><a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">          </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-3-13"><a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span><span class="w"> </span><span class="c1"># Where CoreDNS lives</span>
-</span><span id="__span-3-14"><a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-3-15"><a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">53</span>
-</span><span id="__span-3-16"><a href="#__codelineno-3-16" id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UDP</span>
-</span><span id="__span-3-17"><a href="#__codelineno-3-17" id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">53</span>
-</span><span id="__span-3-18"><a href="#__codelineno-3-18" id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<h2 id="probe-mechanisms-how-to-check">Probe Mechanisms: How to Check?</h2>
+<p>You can check health in three ways. Choose the one that matches your app's architecture.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">How it works</th>
+<th style="text-align: left;">Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>HTTP Get</strong></td>
+<td style="text-align: left;">K8s sends a GET request. Codes 200-399 are "Success".</td>
+<td style="text-align: left;">Web Servers, APIs</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TCP Socket</strong></td>
+<td style="text-align: left;">K8s tries to open a TCP connection to the port.</td>
+<td style="text-align: left;">Databases, Redis, Non-HTTP apps</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Exec Command</strong></td>
+<td style="text-align: left;">K8s runs a command inside the container. Exit code 0 is "Success".</td>
+<td style="text-align: left;">Apps that write status files, CLI tools</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>gRPC</strong></td>
+<td style="text-align: left;">K8s sends a standard gRPC Health Check request.</td>
+<td style="text-align: left;">gRPC Microservices</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-exec-probe-checking-a-file">Example: Exec Probe (Checking a File)</h3>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">livenessProbe</span><span class="p">:</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">exec</span><span class="p">:</span>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span>
+</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat</span>
+</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/healthy</span>
+</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 </span></code></pre></div>
 <hr/>
-<h2 id="6-combining-selectors-and-vs-or">6. Combining Selectors (AND vs OR)</h2>
-<p>Be careful with your YAML indentation. It changes the logic completely.</p>
-<p><strong>Logic: OR (Any of these)</strong>
-Traffic allowed from <code>frontend</code> <strong>OR</strong> from <code>monitoring</code>.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> app</span><span class="p">:</span><span class="w"> </span><span class="nv">frontend</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">monitoring</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span></code></pre></div>
-<p><strong>Logic: AND (Must match BOTH)</strong>
-Traffic allowed only from a pod labeled <code>frontend</code> <strong>running inside</strong> the <code>monitoring</code> namespace.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> app</span><span class="p">:</span><span class="w"> </span><span class="nv">frontend</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">      </span><span class="nt">namespaceSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">monitoring</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span></code></pre></div>
+<h2 id="tuning-your-probes">Tuning Your Probes</h2>
+<p>Don't stick with the defaults. Tune these fields to match your application's reality.</p>
+<ul>
+<li><strong><code>initialDelaySeconds</code></strong>: How long to wait before the <em>first</em> check.</li>
+<li><strong><code>periodSeconds</code></strong>: How often to check. (Default: 10s).</li>
+<li><strong><code>timeoutSeconds</code></strong>: How long to wait for a response before calling it a "failure". (Default: 1s).</li>
+<li><strong><code>failureThreshold</code></strong>: How many times it must fail before taking action. (Default: 3). "Flapping" protection.</li>
+</ul>
+<hr/>
+<h2 id="visualizing-the-decision-logic">Visualizing the Decision Logic</h2>
+<pre class="mermaid"><code>graph TD
+    Start[Pod Starts] --&gt; Startup{Startup Probe&lt;br/&gt;Passed?}
+
+    Startup -- No --&gt; Wait[Wait / Check Again]
+    Startup -- Fails limit --&gt; Kill[Kill &amp; Restart]
+
+    Startup -- Yes --&gt; Phase2[Start Main Loops]
+
+    subgraph "Main Loop"
+    Phase2 --&gt; LiveCheck{Liveness&lt;br/&gt;Probe Passed?}
+    Phase2 --&gt; ReadyCheck{Readiness&lt;br/&gt;Probe Passed?}
+
+    LiveCheck -- No --&gt; Kill
+
+    ReadyCheck -- Yes --&gt; Service[Add to Service/Traffic]
+    ReadyCheck -- No --&gt; Block[Remove from Service]
+    end</code></pre>
 <hr/>
 <h2 id="summary">Summary</h2>
 <ul>
-<li><strong>NetworkPolicies</strong> require a CNI that supports them (Calico, Cilium, Antrea).</li>
-<li>They act as a <strong>firewall</strong> for Pods.</li>
-<li><strong>Default Behavior:</strong> Allow All.</li>
-<li><strong>Selected Behavior:</strong> Deny Everything Else.</li>
-<li><strong>Best Practice:</strong> Apply a "Default Deny" policy first.</li>
-<li><strong>Critical Gotcha:</strong> If you block Egress, remember to <strong>Allow DNS (Port 53)</strong>, or nothing will work.</li>
+<li><strong>Startup Probes</strong> are for slow-booting legacy apps.</li>
+<li><strong>Readiness Probes</strong> determine if the Pod should get traffic.</li>
+<li><strong>Liveness Probes</strong> determine if the Pod should be restarted.</li>
+<li>Use <strong>HTTP</strong> checks for web apps and <strong>TCP</strong> checks for databases.</li>
+<li><strong>Never</strong> make your Readiness probe depend on an external service (like "Is https://www.google.com/ up?"). If the internet blips, you will take down your entire cluster.</li>
 </ul><style type="text/css">.quiz {
   border: 1px solid black;
   padding: 1rem;
@@ -1108,7 +1124,7 @@ function resetFieldset(fieldset) {
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Quotas &amp; Limits" class="md-footer__link md-footer__link--prev" href="../quotas-limits/">
+<a aria-label="Previous: ConfigMaps &amp; Secrets" class="md-footer__link md-footer__link--prev" href="../configmaps-secrets/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -1117,17 +1133,17 @@ function resetFieldset(fieldset) {
                 Previous
               </span>
 <div class="md-ellipsis">
-                Quotas &amp; Limits
+                ConfigMaps &amp; Secrets
               </div>
 </div>
 </a>
-<a aria-label="Next: Security Primer" class="md-footer__link md-footer__link--next" href="../security/">
+<a aria-label="Next: Limits &amp; Requests" class="md-footer__link md-footer__link--next" href="../limits-requests/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Security Primer
+                Limits &amp; Requests
               </div>
 </div>
 <div class="md-footer__button md-icon">

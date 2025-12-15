@@ -1,7 +1,5 @@
 ---
-hide:
-  - navigation
-  - toc
+icon: material/book-open-variant
 ---
 
 ## Historical Background

@@ -8,7 +8,7 @@ The **Certified Kubernetes Administrator (CKA)** exam tests your ability to inst
 
 ---
 
-## 🧠 Exam Overview
+## Exam Overview
 
 - **Format**: Hands-on, performance-based lab
 - **Duration**: 2 hours
@@ -18,7 +18,7 @@ The **Certified Kubernetes Administrator (CKA)** exam tests your ability to inst
 
 ---
 
-## 📋 Domains & Weights
+## Domains & Weights
 
 | Domain                              | Weight |
 |-------------------------------------|--------|
@@ -30,7 +30,7 @@ The **Certified Kubernetes Administrator (CKA)** exam tests your ability to inst
 
 ---
 
-## ✅ What You Should Master
+## What You Should Master
 
 ### 1. Cluster Architecture & Setup (25%)
 
@@ -77,7 +77,7 @@ The **Certified Kubernetes Administrator (CKA)** exam tests your ability to inst
 
 ---
 
-## ⚙️ Practice Tips
+## Practice Tips
 
 - Set up a local cluster using `kubeadm` (or use labs like Killer.sh)
 - Use `kubectl explain` often to understand object structure
@@ -100,7 +100,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 ---
 
-## 🧪 Test Environment Tips
+## Test Environment Tips
 
 - Open multiple terminal tabs (one for docs, one for kubectl)
 - Bookmark key doc pages:
@@ -114,7 +114,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 ---
 
-## 📚 Recommended Resources
+## Recommended Resources
 
 - [Kubernetes Official Docs](https://kubernetes.io/docs/)
 - [Killer.sh Simulator (free with CKA)](https://killer.sh)

@@ -1,6 +1,5 @@
 ---
-hide:
-  - navigation
+icon: material/information
 ---
 
 <div class="id-card">

@@ -2,112 +2,82 @@
 icon: material/shield-lock-outline
 ---
 
-<h1>Security Primer</h1>
+# Security Primer
 
-Kubernetes security is like building a fortress with many walls - each layer protects your cluster, workloads, data, and users. Understanding how these layers work together is the key to a secure environment.
+Security in Kubernetes is not a single feature you turn on. It is a **process**.
 
----
+Because Kubernetes abstracts so much (networks, storage, compute), it also abstracts the attack surface. A hacker doesn't need physical access to your server if they can trick your API server into launching a privileged pod that mounts the host's filesystem.
 
-<h2>The 4Cs of Kubernetes Security</h2>
+To secure a cluster, we use a "Defense in Depth" strategy known as the **4Cs of Cloud Native Security**.
 
-Kubernetes security is built on the <strong>4Cs</strong> model:
+-----
 
-1. <strong>Cloud / Infrastructure</strong>
-2. <strong>Cluster</strong>
-3. <strong>Container</strong>
-4. <strong>Code</strong>
+## 1\. The 4Cs Model
 
-> <strong>Analogy:</strong> Think of the 4Cs as security gates: each one must be strong to keep your cluster safe.
+Think of security like an onion. If an attacker peels back one layer, they shouldn't immediately reach the core.
 
-Each layer is an opportunity for both defense and attack. True security means securing <strong>every</strong> level.
+| Layer | Responsibility | Key Defenses |
+| :--- | :--- | :--- |
+| **Cloud** | The Datacenter / Hardware | Firewall rules, IAM User access, Encrypted Disks. |
+| **Cluster** | The Control Plane | **RBAC**, API Audit Logging, Etcd Encryption. |
+| **Container** | The Image & Runtime | **Image Scanning**, Signing, limiting root users. |
+| **Code** | Your Application | Static Analysis, Dependency Checks, HTTPS. |
 
----
+!!! tip "The Weakest Link Rule"
+    You can have the best Firewall (Cloud) and the strictest RBAC (Cluster), but if your developer hardcodes an AWS Secret Key into their Python script (Code), you are hacked.
 
-<h2>Common Threat Vectors</h2>
+-----
 
-| Surface Area        | Risk Example                                 |
-|---------------------|-----------------------------------------------|
-| Misconfigured RBAC  | Users can access or delete sensitive resources|
-| Insecure Pods       | Privileged containers, exposed hostPath       |
-| Unsafe Images       | Vulnerable base images or untrusted sources   |
-| Over-permissive Network | No NetworkPolicy = open lateral movement |
-| Secrets in plain text | Poorly handled sensitive data               |
+## 2\. The Attack Chain (How Hackers Break In)
 
-> <strong>Tip:</strong> Most real-world incidents result from misconfigurations, not zero-day exploits.
+Understanding *how* you get hacked helps you understand *why* we need these controls.
 
----
+1.  **The Exploit:** An attacker finds a vulnerability in your web app (e.g., Log4j).
+2.  **The Foothold:** They get a shell inside your Container.
+3.  **The Escalation:** They notice the container is running as `root` and has a ServiceAccount mounted.
+4.  **The Lateral Move:** They use the ServiceAccount to talk to the Kubernetes API and list all Secrets in the cluster.
+5.  **The Goal:** They find a database password in a Secret and steal your data.
 
-<h2>Key Kubernetes Security Concepts</h2>
+**Your Goal:** Break this chain at every single step.
 
-Quick overview of what matters most:
+-----
 
-<h3>🔐 Authentication & Authorization</h3>
-- <strong>Authentication</strong>: Who are you?
-- <strong>Authorization (RBAC)</strong>: What are you allowed to do?
-- <strong>Admission Controllers</strong>: Should this action be allowed or changed?
+## 3\. The Defense Toolkit
 
-These protect access to the Kubernetes API and workloads.
+Here is how they fit together.
 
----
+### 1. Cluster Access (The Front Door)
 
-<h3>🧱 Pod Security</h3>
-- Prevent privilege escalation
-- Block host access
-- Apply security contexts
-- Enforce using <strong>Pod Security Admission (PSA)</strong>
+  * **Authentication:** Who are you? (OIDC, Certificates).
+  * **Authorization (RBAC):** What can you do? (Roles, Bindings).
 
----
+### 2. Workload Hardening (The Cells)
 
-<h3>🕵️‍♂️ Audit Logs</h3>
-- Record every API request
-- Help detect suspicious or unauthorized behavior
-- Required for compliance in regulated environments
+  * **Pod Security Admission (PSA):** Prevent "super-user" containers. Disallow privileged mode and host mounts.
+  * **Security Context:** Force containers to run as non-root users.
 
----
+### 3. Network Segmentation (The Walls)
 
-### 🔍 Image Scanning
+  * **Network Policies:** By default, every Pod can talk to every other Pod. Use Policies to block traffic between "Frontend" and "Database" unless explicitly allowed.
 
-- Analyze container images for known vulnerabilities
-- Prevent deployment of unsafe workloads
-- Tools: Trivy, Grype, Cosign, Clair
+### 4. Supply Chain (The Ingredients)
 
----
+  * **Image Scanning:** Check your Docker images for known CVEs before they ever reach the cluster.
+  * **Signing:** Ensure only *your* trusted images are allowed to run.
 
-### 🔐 Secrets Management
+-----
 
-- Use `Secret` objects (with encryption at rest)
-- Avoid embedding secrets in images or environment variables
-- Consider sealed secrets or external tools like Vault
+## 4\. Shift Left: DevSecOps
 
----
+In the old days, security was a "gate" at the end. In Kubernetes, security must be defined in the YAML.
 
-### 🔒 Network Security
+  * **Linting:** Use tools like `kube-linter` or `checkov` to scan your YAML files for mistakes (like `privileged: true`) *before* you commit them to Git.
+  * **Admission Controllers:** Use tools like **OPA Gatekeeper** or **Kyverno** to reject insecure YAMLs at the API level.
 
-- Use **NetworkPolicies** to restrict Pod-to-Pod traffic
-- Combine with Ingress controllers and TLS
-- Isolate workloads by namespace or label
-
----
-
-## Shift Left: DevSecOps in Kubernetes
-
-Modern Kubernetes security integrates with CI/CD pipelines:
-
-- Scan containers during build
-- Validate policies (e.g., with OPA/Gatekeeper)
-- Reject non-compliant resources before deployment
-
----
+-----
 
 ## Summary
 
-Kubernetes security is broad and layered. The upcoming sections break it down into actionable areas like:
-
-- Pod-level hardening (PSA)
-- Audit and observability
-- Image security and scanning
-- Runtime policies and network controls
-
-<br>
-Security isn't a checkbox  -  it's a process. Let’s dig into each piece.
-<br>
+  * **Security is layered.** Don't rely on just one tool.
+  * **Misconfiguration is the \#1 threat.** Most breaches happen because someone left a door open (permissive RBAC, no NetworkPolicy), not because of a sophisticated zero-day.
+  * **Least Privilege:** Give every user, pod, and service account the *minimum* permission they need to work. Nothing more.

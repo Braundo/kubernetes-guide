@@ -2,200 +2,132 @@
 icon: material/clipboard-check-multiple-outline
 ---
 
-A comprehensive command reference for everyday Kubernetes use - cleaner, deeper, and more practical than the standard cheat sheets.
+This isn't just a list of commands; it's a collection of the workflows you use every day.
+From switching contexts to debugging crashed pods, this reference cuts through the noise.
 
----
+-----
 
-## 🔧 Context & Configuration
+## Setup & Configuration
 
-| Command | Description |
-|--------|-------------|
-| `kubectl config get-contexts` | List all contexts |
-| `kubectl config use-context <context>` | Switch to a different context |
-| `kubectl config current-context` | Show the active context |
-| `kubectl config view --minify` | View config of current context |
-| `kubectl config set-context` | Create or modify a context |
-| `kubectl config set-cluster` | Set a cluster config |
-| `kubectl config set-credentials` | Configure user credentials |
-| `kubectl config unset users.<user>` | Remove a user from config |
+Before you do anything, make sure you are talking to the right cluster.
 
----
+| Action | Command |
+| :--- | :--- |
+| **List Contexts** | `kubectl config get-contexts` |
+| **Switch Cluster** | `kubectl config use-context <context_name>` |
+| **Switch Namespace** | `kubectl config set-context --current --namespace=<ns>` |
+| **View Config** | `kubectl config view --minify` |
+| **Who Am I?** | `kubectl auth can-i create pods` (Check your own permissions) |
 
-## 📦 Pods
+!!! tip "Pro Tip"
+    Install `kubectx` and `kubens`. Stop typing long commands. Use these standard tools:
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get pods` | List all pods in current namespace |
-| `kubectl get pods -A` | List pods across all namespaces |
-| `kubectl get pod <name> -o wide` | Show pod details including IP and node |
-| `kubectl describe pod <name>` | Detailed pod information |
-| `kubectl logs <pod>` | Logs from main container |
-| `kubectl logs <pod> -c <container>` | Logs from a specific container |
-| `kubectl exec -it <pod> -- /bin/sh` | Open shell session in pod |
-| `kubectl delete pod <pod>` | Delete a pod (useful for restart) |
+    * `kubectx my-cluster` (Switch cluster)
+    * `kubens my-namespace` (Switch namespace)
 
----
+-----
 
-## 🚀 Deployments
+## Inspection & Observation
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get deploy` | List deployments |
-| `kubectl describe deploy <name>` | View deployment details |
-| `kubectl scale deploy <name> --replicas=3` | Scale deployment |
-| `kubectl rollout status deploy <name>` | Track rollout progress |
-| `kubectl rollout history deploy <name>` | Show rollout history |
-| `kubectl rollout undo deploy <name>` | Roll back to previous revision |
-| `kubectl edit deploy <name>` | Edit deployment in-place |
-| `kubectl delete deploy <name>` | Delete a deployment |
+The "Read" operations. Most of your day is spent here.
 
----
+| Object | Command | Notes |
+| :--- | :--- | :--- |
+| **Pods** | `kubectl get pods -o wide` | Shows Node IP and Pod IP. |
+| **All Namespaces** | `kubectl get pods -A` | The "God View" of the cluster. |
+| **Watch Live** | `kubectl get pods -w` | Live stream of status changes. |
+| **Events** | `kubectl get events --sort-by=.metadata.creationTimestamp` | **Crucial:** Shows errors chronologically. |
+| **Labels** | `kubectl get pods --show-labels` | Debug Selector issues. |
+| **Resource Usage** | `kubectl top pod --containers` | Requires metrics-server. |
 
-## 📋 Services
+-----
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get svc` | List services |
-| `kubectl describe svc <name>` | Detailed service info |
-| `kubectl expose pod nginx --port=80 --type=ClusterIP` | Expose pod as service |
-| `kubectl port-forward svc/<svc> 8080:80` | Forward local port to service |
-| `kubectl get endpoints` | Show service endpoints |
+## Debugging (The "Fix It" Phase)
 
----
+When things go red, run these in order.
 
-## 🌐 Ingress
+| Scenario | Command | Why use it? |
+| :--- | :--- | :--- |
+| **Why did it die?** | `kubectl describe pod <pod>` | Read the "Events" section at the bottom. |
+| **App Logs** | `kubectl logs <pod>` | Standard output of the app. |
+| **Previous Logs** | `kubectl logs <pod> --previous` | **Gold.** See logs of the container *before* it crashed. |
+| **Specific Container**| `kubectl logs <pod> -c <sidecar>` | For multi-container pods (like Service Mesh). |
+| **Shell Access** | `kubectl exec -it <pod> -- /bin/sh` | Jump inside to check files/network. |
+| **Distroless Debug** | `kubectl debug -it <pod> --image=busybox --target=<container>` | Attaches a shell to a locked-down pod. |
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get ingress` | List ingress resources |
-| `kubectl describe ingress <name>` | Details of an ingress resource |
+-----
 
----
+## Creation & Modification
 
-## 📦 ConfigMaps & Secrets
+The "Write" operations.
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get configmap` | List ConfigMaps |
-| `kubectl create configmap <name> --from-literal=key=value` | Create from literal |
-| `kubectl create configmap <name> --from-file=file.txt` | Create from file |
-| `kubectl get secret` | List Secrets |
-| `kubectl create secret generic <name> --from-literal=password=secret` | Create basic secret |
-| `kubectl get secret <name> -o yaml` | View base64-encoded secret |
-| `kubectl get secret <name> -o jsonpath="{.data.key}" \| base64 -d` | Decode a secret |
+| Action | Command |
+| :--- | :--- |
+| **Apply YAML** | `kubectl apply -f my-app.yaml` |
+| **Restart App** | `kubectl rollout restart deployment/my-app` (Zero downtime\!) |
+| **Scale Up** | `kubectl scale deployment/my-app --replicas=5` |
+| **Edit Live** | `kubectl edit svc/my-service` (Opens in VI/Nano) |
+| **Force Delete** | `kubectl delete pod <pod> --grace-period=0 --force` (Use responsibly\!) |
+| **Quick Job** | `kubectl create job manual-job --image=busybox -- echo "Done"` |
 
----
+-----
 
-## 🔐 RBAC & ServiceAccounts
+## Power User Tricks (JSONPath)
 
-| Command | Description |
-|--------|-------------|
-| `kubectl create sa <name>` | Create a ServiceAccount |
-| `kubectl get sa` | List ServiceAccounts |
-| `kubectl get clusterrolebinding -A` | List all ClusterRoleBindings |
-| `kubectl describe clusterrolebinding <name>` | Show details of binding |
-| `kubectl auth can-i get pods --as=system:serviceaccount:ns:sa` | Check access for a ServiceAccount |
+Stop using `grep`. Use native filtering to get exactly the data you need.
 
----
+**1. Get only the Pod IPs:**
 
-## 📂 Namespaces
+```bash
+kubectl get pods -o jsonpath='{.items[*].status.podIP}'
+```
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get ns` | List namespaces |
-| `kubectl create ns <name>` | Create a namespace |
-| `kubectl delete ns <name>` | Delete a namespace |
-| `kubectl config set-context --current --namespace=<ns>` | Set default namespace for current context |
+**2. List all images running in the cluster:**
 
----
+```bash
+kubectl get pods -A -o jsonpath='{.items[*].spec.containers[*].image}'
+```
 
-## 🛠 Jobs & CronJobs
+**3. Find which node a specific pod is on:**
+
+```bash
+kubectl get pod my-pod -o jsonpath='{.spec.nodeName}'
+```
+
+**4. Decode a Secret instantly:**
+
+```bash
+kubectl get secret my-secret -o jsonpath='{.data.password}' | base64 -d
+```
+
+-----
+
+## Housekeeping
+
+Keep your cluster clean.
 
 | Command | Description |
-|--------|-------------|
-| `kubectl create job hello --image=busybox -- echo Hello` | Run one-time job |
-| `kubectl get jobs` | List jobs |
-| `kubectl delete job <name>` | Delete a job |
-| `kubectl create cronjob hello --image=busybox --schedule="*/5 * * * *" -- echo Hi` | Schedule recurring job |
-| `kubectl get cronjob` | List CronJobs |
+| :--- | :--- |
+| `kubectl delete pod --field-selector=status.phase=Failed -A` | Delete all "Evicted" or "Failed" pods. |
+| `kubectl api-resources` | List every object type your cluster supports. |
+| `kubectl explain pod.spec.containers.livenessProbe` | **Documentation:** Read the manual for any field without leaving the terminal. |
 
----
+-----
 
-## 📦 Storage (PVs & PVCs)
+## Shell Aliases (Save Your Fingers)
 
-| Command | Description |
-|--------|-------------|
-| `kubectl get pv` | List PersistentVolumes |
-| `kubectl get pvc` | List PersistentVolumeClaims |
-| `kubectl describe pvc <name>` | PVC details |
-| `kubectl delete pvc <name>` | Delete a PVC |
+Add these to your `.bashrc` or `.zshrc`. You will thank yourself later.
 
----
+```bash
+alias k="kubectl"
+alias kg="kubectl get"
+alias kgp="kubectl get pods"
+alias kga="kubectl get pods -A"
+alias kd="kubectl describe"
+alias kdel="kubectl delete"
+alias klogs="kubectl logs"
+alias kex="kubectl exec -it"
+```
 
-## 🔍 Debugging & Troubleshooting
-
-| Command | Description |
-|--------|-------------|
-| `kubectl get events --sort-by=.metadata.creationTimestamp` | Show recent events |
-| `kubectl logs <pod> --previous` | Logs from a crashed pod |
-| `kubectl exec -it <pod> -- /bin/sh` | Open shell in pod |
-| `kubectl debug -it <pod> --image=busybox --target=<container>` | Ephemeral debug container |
-| `kubectl top pod` | Show pod CPU/memory usage |
-| `kubectl get pods -o wide` | Show node assignments and IPs |
-
----
-
-## 📤 YAML & Apply
-
-| Command | Description |
-|--------|-------------|
-| `kubectl apply -f <file>.yaml` | Apply a YAML manifest |
-| `kubectl delete -f <file>.yaml` | Delete resource defined in YAML |
-| `kubectl apply -f <file>.yaml --dry-run=client -o yaml` | Preview resource definition |
-| `kubectl explain <resource>` | Show schema for a resource |
-
----
-
-## 📊 Output Formatting
-
-| Command | Description |
-|--------|-------------|
-| `-o wide` | Show more details (e.g. IPs, nodes) |
-| `-o yaml` | Output full YAML |
-| `-o jsonpath="{.items[*].metadata.name}"` | Query JSON paths |
-| `--field-selector status.phase=Running` | Filter by field |
-| `-l app=nginx` | Filter by label |
-| `--sort-by=.metadata.name` | Sort output |
-
----
-
-## 🔁 Port Forwarding & Proxies
-
-| Command | Description |
-|--------|-------------|
-| `kubectl port-forward pod/<pod> 8080:80` | Port forward to pod |
-| `kubectl port-forward svc/<svc> 9090:80` | Port forward to service |
-| `kubectl proxy` | Run API proxy at localhost:8001 |
-
----
-
-## 🧼 Cleanup & Deletion
-
-| Command | Description |
-|--------|-------------|
-| `kubectl delete all --all` | Delete all resources in namespace |
-| `kubectl delete pod,svc -l app=nginx` | Delete resources by label |
-| `kubectl delete pvc --all` | Remove all PVCs |
-
----
-
-## 🧪 Common Shortcuts
-
-| Task | Command |
-|------|---------|
-| Restart a pod | `kubectl delete pod <pod>` (Deployment auto-recreates) |
-| Watch pod status | `watch kubectl get pods` |
-| Quick deploy NGINX | `kubectl create deploy nginx --image=nginx` |
-| Expose NGINX | `kubectl expose deploy nginx --port=80 --type=LoadBalancer` |
-
----
+Now you can just type:
+`kex my-pod -- bash`

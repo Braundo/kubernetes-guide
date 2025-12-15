@@ -2,56 +2,139 @@
 icon: material/bug
 ---
 
-<h1>Troubleshooting Kubernetes</h1>
+When a Pod breaks, don't guess. Follow the evidence.
 
-Troubleshooting is a crucial skill for managing Kubernetes clusters. This section provides strategies and tools for diagnosing and resolving common issues.
+Kubernetes is incredibly transparent - it almost always tells you exactly what is wrong, provided you know where to look. This guide outlines a systematic workflow for diagnosing clusters.
 
-<h2>Common Issues and Solutions</h2>
+-----
 
-| Issue                       | Description                                                                 | Solution                                                                                       |
-|-----------------------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| <strong>CrashLoopBackOff</strong>        | Pod repeatedly crashing.                                                    | Check logs with <code>kubectl logs &lt;pod-name&gt;</code>.                                                    |
-| <strong>ImagePullBackOff</strong>        | Kubernetes cannot pull the container image.                                 | Verify the image name and credentials.                                                         |
-| <strong>Node Not Ready</strong>          | Node is not functioning correctly.                                          | Check node status with <code>kubectl get nodes</code> and review the kubelet logs.                        |
-| <strong>Disk Pressure</strong>           | Node runs low on disk space.                                                | Free up space or add more storage.                                                             |
-| <strong>Service Not Accessible</strong>  | Service configuration or endpoints issue.                                   | Check service configuration with <code>kubectl get svc</code> and <code>kubectl describe svc &lt;service-name&gt;</code>. |
-| <strong>DNS Resolution Failures</strong> | DNS pod status or configuration issue.                                      | Verify DNS pod status and configuration with <code>kubectl get pods -n kube-system</code>.               |
-| <strong>Pod Eviction</strong>            | Pods are evicted due to resource constraints.                               | Check node resource usage and adjust limits or requests.                                       |
-| <strong>High CPU Usage</strong>          | Pods or nodes experiencing high CPU usage.                                  | Analyze CPU usage with <code>kubectl top</code> and optimize application resource requests.               |
-| <strong>Network Latency</strong>         | High latency in network communication between Pods.                         | Check network policies and configurations, and ensure sufficient bandwidth.                    |
+## The Triage Flowchart
 
-<h2>Tools for Troubleshooting</h2>
+Before running random commands, mentally locate where the failure is occurring.
 
-| Command      | Description                                      | Example Usage                                   |
-|--------------|--------------------------------------------------|-------------------------------------------------|
-| <strong>describe</strong> | Provides detailed information about resources.   | <code>kubectl describe pod &lt;pod-name&gt;</code>               |
-| <strong>logs</strong>     | Retrieves logs from containers.                  | <code>kubectl logs &lt;pod-name&gt;</code>                       |
-| <strong>exec</strong>     | Executes commands in a container.                | <code>kubectl exec -it &lt;pod-name&gt; -- /bin/sh</code>        |
+```mermaid
+graph TD
+    Start["Pod Issue"] --> Status{"Check Pod Status"}
+    
+    Status -- "Pending" --> Scheduler["Scheduler Issue<br/>(No resources, Taints?)"]
+    Status -- "ImagePullBackOff" --> Image["Registry Issue<br/>(Auth, Typo?)"]
+    Status -- "CrashLoopBackOff" --> App["App Issue<br/>(Bug, Config?)"]
+    Status -- "CreateContainerConfigError" --> Config["Config Issue<br/>(Missing Secret/Map?)"]
+    Status -- "Running" --> Net{"Network Issue?"}
+    
+    Net -- "Can't connect" --> Service["Check Service/DNS"]
+    Net -- "500 Error" --> AppLogs["Check App Logs"]
+```
 
-<h3>Monitoring and Logging</h3>
+-----
 
-- **Prometheus:** Collects metrics and provides alerts. It's highly customizable and integrates well with Kubernetes. [Learn more](https://prometheus.io/)
+## Phase 1: The "Big Three" Commands
 
-- **Grafana:** Visualizes metrics collected by Prometheus and other sources. It offers a rich set of dashboards and visualization tools. [Learn more](https://grafana.com/)
+In 90% of cases, you can solve the problem using just these three commands in order.
 
-- **Elasticsearch, Fluentd, Kibana (EFK) Stack:** Centralizes logging and provides search capabilities. Elasticsearch stores logs, Fluentd collects and forwards them, and Kibana visualizes the data. [Learn more about Elasticsearch](https://www.elastic.co/elasticsearch/), [Fluentd](https://www.fluentd.org/), [Kibana](https://www.elastic.co/kibana/)
+### 1\. `kubectl describe pod <name>`
 
-<h2>Best Practices</h2>
+**The "Crime Scene Report".**
+This tells you *what Kubernetes thinks* happened. Look at the **Events** section at the bottom.
 
-- <strong>Regular Monitoring:</strong> Continuously monitor cluster health and performance.
+  * *Did the scheduler fail to find a node?*
+  * *Did the Liveness probe fail?*
+  * *Did the volume fail to mount?*
 
-- <strong>Automated Alerts:</strong> Set up alerts for critical issues to ensure timely response.
+### 2\. `kubectl logs <name>`
 
-- <strong>Documentation:</strong> Keep detailed records of issues and solutions for future reference.
+**The "Victim's Last Words".**
+This shows the application's standard output (stdout).
 
----
+  * *Did the app throw a Python stack trace?*
+  * *Did it say "Database Connection Refused"?*
 
-<h2>Summary</h2>
+!!! tip "Pro Tip"
+    If your pod is in a restart loop, `kubectl logs` might show you the *current* (empty) container starting up. To see why the *last* one died, use:
+    `kubectl logs my-pod --previous`
 
-- Troubleshooting is a core skill for any Kubernetes admin.
-- Use <code>kubectl</code> commands, logs, and monitoring tools to diagnose issues.
-- Document common issues and solutions for your team.
+### 3\. `kubectl get pod <name> -o yaml`
+
+**The "Blueprint".**
+Check the configuration.
+
+  * *Did you typo the ConfigMap name?*
+  * *Are you pulling the `latest` tag by accident?*
+  * *Did you verify the `command` arguments?*
+
+-----
+
+## Phase 2: Decoding Common States
+
+| State | Translation | Where to look |
+| :--- | :--- | :--- |
+| **Pending** | "I'm waiting for a home." The Scheduler cannot find a node that fits this Pod (CPU/Mem limits, Taints, or Affinity). | `kubectl describe pod` |
+| **ImagePullBackOff** | "I can't get the package." The registry path is wrong, the tag doesn't exist, or you forgot the `imagePullSecret`. | `kubectl describe pod` |
+| **CrashLoopBackOff** | "I started, but I died immediately." The app is buggy or misconfigured. | `kubectl logs` |
+| **CreateContainerConfigError** | "I can't find my keys." You referenced a Secret or ConfigMap that doesn't exist. | `kubectl describe pod` |
+| **OOMKilled** | "I ate too much." The app used more RAM than the `limit` allowed. | `kubectl get pod` (Look for Exit Code 137) |
+
+-----
+
+## Phase 3: Advanced Debugging Tools
+
+Sometimes logs aren't enough. You need to get inside.
+
+### 1\. `kubectl exec` (The Standard Way)
+
+If the Pod is running (e.g., a web server that is returning 500 errors), jump inside to poke around.
+
+```bash
+kubectl exec -it my-pod -- /bin/sh
+# Inside:
+# curl localhost:8080
+# cat /etc/config/app.conf
+```
+
+### 2\. `kubectl debug` (The Modern Way)
+
+**Use this when:** The Pod is crashing (`CrashLoopBackOff`) or is a "Distroless" image (has no shell/bash installed).
+
+`kubectl debug` spins up a *new* container attached to the broken Pod. It shares the process namespace but brings its own tools.
+
+```bash
+# Attach a "busybox" container to your broken "my-app" pod
+kubectl debug -it my-app --image=busybox --target=my-app-container
+```
+
+### 3\. Networking Debugging
+
+If Service A can't talk to Service B:
+
+1.  **Check DNS:** `nslookup my-service` (Does it return an IP?)
+2.  **Check Service Selector:** Does the Service actually point to any pods?
+      * `kubectl get endpoints my-service` (If this is empty, your labels are wrong).
+
+-----
+
+## Phase 4: Exit Codes (The Cheat Sheet)
+
+Computers speak in numbers. Here is how to translate them.
+
+| Code | Meaning | Likely Cause |
+| :--- | :--- | :--- |
+| **0** | Success | The process finished its job and exited. (Normal for Jobs, bad for Deployments). |
+| **1** | Application Error | Generic app crash. Check logs. |
+| **137** | **SIGKILL (OOM)** | Out of Memory. Increase memory `limits`. |
+| **143** | SIGTERM | Kubernetes asked the Pod to stop (normal during scale-down). |
+| **255** | Node Error | The Node itself failed (disk full, network partition). |
+
+-----
+
+## Summary
+
+1.  **Don't Panic.** Read the status.
+2.  **Events First:** Always run `kubectl describe` before anything else.
+3.  **Logs Second:** Check `kubectl logs` (and `--previous`).
+4.  **Validate Config:** Ensure Secrets/ConfigMaps exist before the Pod starts.
+5.  **Use `debug`:** Learn `kubectl debug` for difficult crashes.
 
 !!! tip
-
-    Build a troubleshooting playbook and share it with your team. Review and update it after every incident.
+    **The "Rubber Duck" Method**
+    
+    If you are stuck, read the `kubectl describe` output out loud line-by-line. You will almost always find the error staring you in the face (e.g., `MountVolume.SetUp failed for volume "secret-key": secret "my-secret" not found`).

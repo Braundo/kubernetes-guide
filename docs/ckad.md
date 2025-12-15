@@ -8,7 +8,7 @@ The **CKAD** certification tests your ability to design, build, and run applicat
 
 ---
 
-## 🧠 Exam Overview
+## Exam Overview
 
 - **Format**: Hands-on, browser-based lab
 - **Duration**: 2 hours
@@ -18,7 +18,7 @@ The **CKAD** certification tests your ability to design, build, and run applicat
 
 ---
 
-## 📋 Domains & Weights
+## Domains & Weights
 
 | Domain                         | Weight |
 |--------------------------------|--------|
@@ -32,7 +32,7 @@ The **CKAD** certification tests your ability to design, build, and run applicat
 
 ---
 
-## ✅ What You Should Master
+## What You Should Master
 
 ### 1. Core Concepts (13%)
 
@@ -99,7 +99,7 @@ The **CKAD** certification tests your ability to design, build, and run applicat
 
 ---
 
-## ⚙️ Practice Tips
+## Practice Tips
 
 - Alias often-used commands:
 
@@ -122,7 +122,7 @@ Practice common configs:
 
 ---
 
-## 🧪 Test Environment Tips
+## Test Environment Tips
 
 - Open docs in one tab, terminal in another
 - Bookmark these:
@@ -136,7 +136,7 @@ Practice common configs:
 
 ---
 
-## 📚 Recommended Resources
+## Recommended Resources
 
 - [Kubernetes Official Docs](https://kubernetes.io/docs/)
 - [Killer.sh Simulator](https://killer.sh)

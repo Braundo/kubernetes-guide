@@ -7,12 +7,12 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="A comprehensive, easy-to-follow guide for Kubernetes" name="description"/>
 <meta content="Aaron Braundmeier" name="author"/>
-<link href="https://www.k8s.guide/netpol/" rel="canonical"/>
-<link href="../quotas-limits/" rel="prev"/>
-<link href="../security/" rel="next"/>
+<link href="https://www.k8s.guide/ingress/" rel="canonical"/>
+<link href="../services-networking/" rel="prev"/>
+<link href="../configmaps-secrets/" rel="next"/>
 <link href="/images/logo.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.0" name="generator"/>
-<title>Network Policies - Kubernetes Guide</title>
+<title>Ingress - Kubernetes Guide</title>
 <link href="../assets/stylesheets/main.618322db.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -50,7 +50,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Network Policies
+              Ingress
             
           </span>
 </div>
@@ -112,7 +112,7 @@
 
       </a>
 </li>
-<li class="md-tabs__item">
+<li class="md-tabs__item md-tabs__item--active">
 <a class="md-tabs__link" href="../overview/">
           
   
@@ -121,7 +121,7 @@
 
         </a>
 </li>
-<li class="md-tabs__item md-tabs__item--active">
+<li class="md-tabs__item">
 <a class="md-tabs__link" href="../kubernetes-api/">
           
   
@@ -187,9 +187,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -200,7 +200,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_2">
 <span class="md-nav__icon md-icon"></span>
             
@@ -301,9 +301,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_2_8" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="0">
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -314,7 +314,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_8_label" class="md-nav" data-md-level="2">
+<nav aria-expanded="true" aria-labelledby="__nav_2_8_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_8">
 <span class="md-nav__icon md-icon"></span>
             
@@ -337,8 +337,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../ingress/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17 3 5.25 4.5L17 12l5.25 4.5L17 21v-3h-2.74l-2.82-2.82 2.12-2.12L15.5 15H17V9h-1.5l-9 9H2v-3h3.26l9-9H17zM2 6h4.5l2.82 2.82-2.12 2.12L5.26 9H2z"></path></svg>
 <span class="md-ellipsis">
     
@@ -353,9 +354,9 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_9" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="0">
+<label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -418,9 +419,9 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_10" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_10" id="__nav_2_10_label" tabindex="0">
+<label class="md-nav__link" for="__nav_2_10" id="__nav_2_10_label" tabindex="">
 <span class="md-ellipsis">
     
   
@@ -460,9 +461,9 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -473,7 +474,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
 <span class="md-nav__icon md-icon"></span>
             
@@ -548,9 +549,8 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../netpol/">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m0-15a3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83V14h2v2h-2v2h-2v-6.17A2.99 2.99 0 0 1 9 9a3 3 0 0 1 3-3m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg>
 <span class="md-ellipsis">
     
@@ -853,140 +853,147 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Network Policies</h1>
-<p>By default, Kubernetes is an "Open Network."</p>
-<ul>
-<li>Any Pod can talk to any other Pod.</li>
-<li>A hacked web server in the <code>default</code> namespace can port-scan your database in the <code>secure</code> namespace.</li>
-</ul>
-<p><strong>NetworkPolicies</strong> are the firewall rules of Kubernetes. They let you enforce a <strong>Zero Trust</strong> environment where traffic is blocked unless explicitly allowed.</p>
+<h1>Ingress</h1>
+<p>Up until now, we’ve looked at how to network Pods <em>inside</em> the cluster (ClusterIP) and crude ways to get traffic <em>in</em> (NodePort, LoadBalancer).</p>
+<p>But what if you have a complex application? What if you want <code>my-app.com</code> to go to your frontend, and <code>my-app.com/api</code> to go to your backend? Do you need a separate expensive cloud LoadBalancer for every single service?</p>
+<p>No. You need an <strong>Ingress</strong>.</p>
+<p>Ingress is the smart receptionist for your cluster. It sits at the edge, accepts incoming HTTP/S traffic, and routes it to the correct internal backend Services based on rules you define (like hostnames or URL paths).</p>
 <hr/>
-<h2 id="1-the-isolation-switch">1. The "Isolation" Switch</h2>
-<p>Network Policies work differently than traditional firewalls.</p>
+<h2 id="the-hotel-concierge-analogy">The "Hotel Concierge" Analogy</h2>
+<p>Think of your Kubernetes cluster as a large hotel.</p>
 <ol>
-<li><strong>No Policy:</strong> The Pod is "Non-Isolated." It accepts traffic from anywhere.</li>
-<li><strong>Policy Exists:</strong> As soon as a NetworkPolicy <strong>selects</strong> a Pod, that Pod becomes "Isolated."<ul>
-<li>It immediately blocks <strong>ALL</strong> traffic that isn't explicitly allowed by the policy.</li>
+<li><strong>Services (ClusterIP)</strong> are the actual rooms where people stay.</li>
+<li><strong>NodePort/LoadBalancer</strong> is like opening a side door directly from the street into a specific room. It works, but it’s not secure or scalable if you have 500 rooms.</li>
+<li><strong>Ingress</strong> is the hotel concierge standing in the main lobby.<ul>
+<li>Guests arrive at the main entrance (a single public IP).</li>
+<li>They approach the concierge and say, "I'm here for the Smith convention" (hostname) or "I need the restaurant" (URL path).</li>
+<li>The concierge looks at their list of rules and directs the guest to the correct room number (internal Service).</li>
 </ul>
 </li>
 </ol>
-<h3 id="visualizing-the-switch">Visualizing the Switch</h3>
-<pre class="mermaid"><code>graph TD
-    subgraph "Scenario A: No Policy"
-    Web1[Web Pod] --&gt;|Allowed| DB1[DB Pod]
-    Hacker1[Hacker Pod] --&gt;|Allowed!| DB1
-    end
-
-    subgraph "Scenario B: With NetworkPolicy"
-    Web2[Web Pod] --&gt;|Allowed by Rule| DB2[DB Pod]
-    Hacker2[Hacker Pod] -- "Blocked (Default Deny)" --&gt; DB2
-
-    NP[NetworkPolicy] -.-&gt;|Selects| DB2
-    end
-
-    style DB2 stroke:#ff0000</code></pre>
+<p>Ingress operates at <strong>Layer 7 (Application Layer)</strong> of the OSI model, meaning it understands HTTP. It can look at headers, paths, and hostnames to make smart routing decisions.</p>
 <hr/>
-<h2 id="2-the-default-deny-start-here">2. The "Default Deny" (Start Here)</h2>
-<p>The best practice for security is to start by <strong>locking everything down</strong>, and then punching holes for what you need.</p>
-<p>This policy acts as a "Catch-All" to block all incoming and outgoing traffic for every Pod in the namespace.</p>
+<h2 id="crucial-concept-resource-vs-controller">Crucial Concept: Resource vs. Controller</h2>
+<p>This is the #1 point of confusion for Kubernetes beginners, so let’s get it out of the way first. Ingress is a two-part system.</p>
+<h3 id="1-the-ingress-resource-the-rules">1. The Ingress Resource (The "Rules")</h3>
+<p>This is a YAML file that you write. It is a standard Kubernetes object that defines the routing rules.</p>
+<ul>
+<li><em>"If traffic comes for <code>api.example.com</code>, send it to the <code>backend-service</code> on port 8080."</em></li>
+</ul>
+<p>If you only create this resource, <strong>nothing will happen</strong>. It's just a piece of paper with rules on it.</p>
+<h3 id="2-the-ingress-controller-the-implementation">2. The Ingress Controller (The "Implementation")</h3>
+<p>This is a piece of software (usually a Pod itself, running a reverse proxy like Nginx or Traefik) that runs in your cluster. It monitors the Kubernetes API for new Ingress Resources. When it sees one, it automatically reconfigures its own internal routing tables to make those rules reality.</p>
+<p><strong>Kubernetes does not come with an Ingress Controller by default.</strong> You must choose one and install it (usually via Helm).</p>
+<p><strong>Popular Controllers:</strong></p>
+<ul>
+<li><strong>Nginx Ingress Controller:</strong> The community standard and most common choice.</li>
+<li><strong>Traefik:</strong> Popular, modern alternative.</li>
+<li><strong>Cloud Provider specific:</strong> (e.g., AWS ALB Ingress Controller) which turns Ingress rules into actual AWS ALBs.</li>
+</ul>
+<hr/>
+<h2 id="how-traffic-flows">How traffic flows</h2>
+<p>Here is how traffic moves from a user's browser to your application Pod. In this example, we assume you have installed the Nginx Ingress Controller.</p>
+<pre class="mermaid"><code>graph LR
+    User(User Browser) -- "https://example.com/api" --&gt; PublicIP(Public Cloud LB IP)
+    PublicIP --&gt; ControllerService(K8s Service: Nginx Controller LoadBalancer)
+    ControllerService --&gt; ControllerPod(Pod: Nginx Ingress Controller)
+
+    subgraph "Inside Cluster"
+    ControllerPod -- "Reads Ingress Rules &amp; Routes" --&gt; BackendService(K8s Service: Backend ClusterIP)
+    BackendService -- "Loads balances" --&gt; BackendPod1(App Pod 1)
+    BackendService --&gt; BackendPod2(App Pod 2)
+    end</code></pre>
+<ol>
+<li>The user hits the one public IP address exposed by your cluster's Ingress Controller.</li>
+<li>The request lands on the Ingress Controller Pod (e.g., Nginx).</li>
+<li>Nginx checks the headers: "Oh, you want <code>example.com/api</code>? My rules say that goes to the <code>backend</code> service."</li>
+<li>Nginx forwards the traffic to the internal ClusterIP of the backend service.</li>
+<li>The backend service balances it to an actual application Pod.</li>
+</ol>
+<hr/>
+<h2 id="common-use-cases-examples">Common Use Cases &amp; Examples</h2>
+<p>You define Ingress rules in the <code>spec.rules</code> section of the YAML.</p>
+<h3 id="1-path-based-routing-the-fanout">1. Path-Based Routing (The "Fanout")</h3>
+<p>This is the most common scenario: hosting multiple microservices under one domain name, separated by URL paths.</p>
+<ul>
+<li><code>example.com/web</code> -&gt; goes to Frontend Service</li>
+<li><code>example.com/api</code> -&gt; goes to Backend Service</li>
+</ul>
+<!-- end list -->
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default-deny-all</span>
-</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"> </span><span class="c1"># Selects ALL pods in this namespace</span>
-</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">policyTypes</span><span class="p">:</span>
-</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
-</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Egress</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple-fanout</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">ingressClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span><span class="w"> </span><span class="c1"># Telling the Nginx controller to handle this</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">http</span><span class="p">:</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/web</span>
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">        </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span>
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">        </span><span class="nt">backend</span><span class="p">:</span>
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">          </span><span class="nt">service</span><span class="p">:</span>
+</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frontend-service</span>
+</span><span id="__span-0-16"><a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">            </span><span class="nt">port</span><span class="p">:</span>
+</span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/api</span>
+</span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">        </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span>
+</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">        </span><span class="nt">backend</span><span class="p">:</span>
+</span><span id="__span-0-21"><a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">          </span><span class="nt">service</span><span class="p">:</span>
+</span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend-service</span>
+</span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">            </span><span class="nt">port</span><span class="p">:</span>
+</span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
 </span></code></pre></div>
-<p><em>Once you apply this, your application will stop working.</em> Now you must explicitly allow traffic.</p>
-<hr/>
-<h2 id="3-allow-specific-traffic-ingress">3. Allow Specific Traffic (Ingress)</h2>
-<p>Let's say we want to allow our <code>backend</code> to receive traffic from the <code>frontend</code>, but nothing else.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
-</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-frontend-to-backend</span>
-</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span>
-</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span><span class="w"> </span><span class="c1"># The target (Who gets protected?)</span>
-</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span>
-</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">              </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frontend</span><span class="w"> </span><span class="c1"># The source (Who can knock?)</span>
-</span><span id="__span-1-14"><a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-1-15"><a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
-</span><span id="__span-1-16"><a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
-</span></code></pre></div>
-<hr/>
-<h2 id="4-the-namespace-gotcha">4. The "Namespace" Gotcha</h2>
-<p>A common mistake is trying to allow traffic from a different namespace using <code>podSelector</code>. <strong><code>podSelector</code> only works within the same namespace.</strong></p>
-<p>To allow traffic from <em>any</em> Pod in the <code>monitoring</code> namespace:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span>
-</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring</span><span class="w"> </span><span class="c1"># Requires the namespace to have this label!</span>
-</span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Label Your Namespaces!</p>
-<p><code>namespaceSelector</code> selects based on <strong>Labels</strong>, not the Namespace name. You must run:
-<code>kubectl label namespace monitoring name=monitoring</code></p>
-</div>
-<hr/>
-<h2 id="5-egress-the-dns-trap">5. Egress &amp; The DNS Trap</h2>
-<p>If you block Egress (outbound traffic), <strong>you block DNS lookups too.</strong>
-If your Pod can't reach the DNS server (CoreDNS), it can't resolve <code>google.com</code> or <code>my-db</code>, and your app will crash.</p>
-<p><strong>Always allow UDP port 53 if you restrict Egress.</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
-</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
-</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-dns-egress</span>
-</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"> </span><span class="c1"># Apply to all pods</span>
-</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span><span class="nt">policyTypes</span><span class="p">:</span>
-</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Egress</span>
-</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="nt">egress</span><span class="p">:</span>
-</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span>
-</span><span id="__span-3-11"><a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span>
-</span><span id="__span-3-12"><a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">          </span><span class="nt">matchLabels</span><span class="p">:</span>
-</span><span id="__span-3-13"><a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span><span class="w"> </span><span class="c1"># Where CoreDNS lives</span>
-</span><span id="__span-3-14"><a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-3-15"><a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">53</span>
-</span><span id="__span-3-16"><a href="#__codelineno-3-16" id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UDP</span>
-</span><span id="__span-3-17"><a href="#__codelineno-3-17" id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">53</span>
-</span><span id="__span-3-18"><a href="#__codelineno-3-18" id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<h3 id="2-host-based-routing-virtual-hosts">2. Host-Based Routing (Virtual Hosts)</h3>
+<p>This is used when you want different domains to route to different services within the same cluster.</p>
+<ul>
+<li><code>foo.example.com</code> -&gt; Service A</li>
+<li><code>bar.example.com</code> -&gt; Service B</li>
+</ul>
+<!-- end list -->
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo.example.com</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">http</span><span class="p">:</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">      </span><span class="c1"># ... points to Service A ...</span>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar.example.com</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">http</span><span class="p">:</span>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">      </span><span class="c1"># ... points to Service B ...</span>
 </span></code></pre></div>
 <hr/>
-<h2 id="6-combining-selectors-and-vs-or">6. Combining Selectors (AND vs OR)</h2>
-<p>Be careful with your YAML indentation. It changes the logic completely.</p>
-<p><strong>Logic: OR (Any of these)</strong>
-Traffic allowed from <code>frontend</code> <strong>OR</strong> from <code>monitoring</code>.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> app</span><span class="p">:</span><span class="w"> </span><span class="nv">frontend</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">monitoring</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<h2 id="tlsssl-termination">TLS/SSL Termination</h2>
+<p>One of the biggest benefits of an Ingress is centralizing your SSL certificates.</p>
+<p>Instead of managing certificates in every single one of your application Pods, you put the certificate in a Kubernetes Secret and tell the Ingress Controller to use it.</p>
+<p>The Ingress Controller handles the encrypted HTTPS connection from the user, decrypts it, and sends plain HTTP to your internal backend services. This is called "TLS termination" and it offloads a lot of computational work from your app.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">tls</span><span class="p">:</span>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-site-cert-secret</span><span class="w"> </span><span class="c1"># A secret containing tls.crt and tls.key</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="c1"># ... routing rules ...</span>
 </span></code></pre></div>
-<p><strong>Logic: AND (Must match BOTH)</strong>
-Traffic allowed only from a pod labeled <code>frontend</code> <strong>running inside</strong> the <code>monitoring</code> namespace.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">ingress</span><span class="p">:</span>
-</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
-</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> app</span><span class="p">:</span><span class="w"> </span><span class="nv">frontend</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">      </span><span class="nt">namespaceSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">monitoring</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span></code></pre></div>
+<hr/>
+<h2 id="a-note-on-the-future-gateway-api">A Note on the Future: Gateway API</h2>
+<p>While learning Ingress is essential today, you should be aware that a new standard called the <strong>Gateway API</strong> is evolving to eventually replace it.</p>
+<p>Ingress is great for simple HTTP routing, but it struggles with advanced concepts like traffic splitting (e.g., "send 10% of traffic to the canary version") or non-HTTP protocols. The Gateway API is designed to handle these complex, modern networking needs.</p>
+<p>For now, focus on mastering Ingress, as it is still the standard for 95% of deployments.</p>
 <hr/>
 <h2 id="summary">Summary</h2>
 <ul>
-<li><strong>NetworkPolicies</strong> require a CNI that supports them (Calico, Cilium, Antrea).</li>
-<li>They act as a <strong>firewall</strong> for Pods.</li>
-<li><strong>Default Behavior:</strong> Allow All.</li>
-<li><strong>Selected Behavior:</strong> Deny Everything Else.</li>
-<li><strong>Best Practice:</strong> Apply a "Default Deny" policy first.</li>
-<li><strong>Critical Gotcha:</strong> If you block Egress, remember to <strong>Allow DNS (Port 53)</strong>, or nothing will work.</li>
-</ul><style type="text/css">.quiz {
+<li><strong>Services</strong> (ClusterIP) provide stable networking <em>inside</em> the cluster.</li>
+<li><strong>Ingress</strong> is a Layer 7 router that gets traffic from <em>outside</em> to the right internal Service.</li>
+<li>An <strong>Ingress Resource</strong> is just a list of rules (YAML).</li>
+<li>You must install an <strong>Ingress Controller</strong> (like Nginx) to actually make those rules work.</li>
+<li>Ingress is perfect for path-based routing, host-based routing, and centralizing SSL termination.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If your Ingress isn't working, 90% of the time the issue isn't in your application Pod logs. Check the logs of the <strong>Ingress Controller Pod</strong> (e.g., in the <code>ingress-nginx</code> namespace). It will tell you if your YAML rules made sense or if it can't find the backend service.</p>
+</div><style type="text/css">.quiz {
   border: 1px solid black;
   padding: 1rem;
   margin: 1rem 0;
@@ -1108,7 +1115,7 @@ function resetFieldset(fieldset) {
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Quotas &amp; Limits" class="md-footer__link md-footer__link--prev" href="../quotas-limits/">
+<a aria-label="Previous: Services" class="md-footer__link md-footer__link--prev" href="../services-networking/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -1117,17 +1124,17 @@ function resetFieldset(fieldset) {
                 Previous
               </span>
 <div class="md-ellipsis">
-                Quotas &amp; Limits
+                Services
               </div>
 </div>
 </a>
-<a aria-label="Next: Security Primer" class="md-footer__link md-footer__link--next" href="../security/">
+<a aria-label="Next: ConfigMaps &amp; Secrets" class="md-footer__link md-footer__link--next" href="../configmaps-secrets/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Security Primer
+                ConfigMaps &amp; Secrets
               </div>
 </div>
 <div class="md-footer__button md-icon">

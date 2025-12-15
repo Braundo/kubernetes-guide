@@ -81,6 +81,6 @@ Each guide includes:
 
 Choose your path:
 
-- 👉 [CKA – Admin-focused](cka.md)
-- 👉 [CKAD – Developer-focused](ckad.md)
-- 👉 [CKS – Security-focused](cks.md)
+- [CKA – Admin-focused](cka.md)
+- [CKAD – Developer-focused](ckad.md)
+- [CKS – Security-focused](cks.md)
