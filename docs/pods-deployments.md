@@ -82,7 +82,7 @@ graph TD
 
 The other superpower of Deployments is updates.
 
-When you change the image version in a Deployment (e.g., `v1` $\rightarrow$ `v2`), it doesn't kill everything at once. It performs a **Rolling Update**:
+When you change the image version in a Deployment (e.g., `v1` to `v2`), it doesn't kill everything at once. It performs a **Rolling Update**:
 
 1.  It spins up **one** new Pod (v2).
 2.  It waits for it to become "Ready."
