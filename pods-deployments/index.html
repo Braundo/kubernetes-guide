@@ -914,7 +914,7 @@ Sometimes, you need multiple containers to work together tightly - like they are
 <hr/>
 <h2 id="rolling-updates-zero-downtime">Rolling Updates (Zero Downtime)</h2>
 <p>The other superpower of Deployments is updates.</p>
-<p>When you change the image version in a Deployment (e.g., <code>v1</code> $\rightarrow$ <code>v2</code>), it doesn't kill everything at once. It performs a <strong>Rolling Update</strong>:</p>
+<p>When you change the image version in a Deployment (e.g., <code>v1</code> to <code>v2</code>), it doesn't kill everything at once. It performs a <strong>Rolling Update</strong>:</p>
 <ol>
 <li>It spins up <strong>one</strong> new Pod (v2).</li>
 <li>It waits for it to become "Ready."</li>
