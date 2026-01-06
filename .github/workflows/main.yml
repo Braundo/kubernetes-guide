@@ -29,17 +29,21 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install build tooling
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # Install any repo-pinned deps (if you still have a requirements.txt from MkDocs days)
+
+          # Force a modern Zensical that actually provides the CLI
+          python -m pip install "zensical==0.0.15"
+          zensical --version
+
+          # Install any additional repo deps (optional)
+          # NOTE: Make sure requirements.txt no longer includes MkDocs pins,
+          # otherwise pip may waste time resolving or pull in old stacks.
           if [ -f requirements.txt ]; then
             python -m pip install -r requirements.txt
           fi
-          # Always install Zensical so the CLI exists
-          python -m pip install zensical
-          zensical --version
 
       - name: Build site
         run: |
@@ -52,18 +56,17 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # Upload assets (non-HTML) with long cache, then HTML with short cache.
       - name: Upload to S3
         run: |
           set -euo pipefail
 
-          # 1) Assets (css/js/img/etc.) — long cache
+          # 1) Non-HTML assets — long cache
           aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --delete \
             --exclude "*.html" \
             --cache-control "max-age=31536000,public"
 
-          # 2) HTML pages — short cache + correct content-type
+          # 2) HTML — short cache
           aws s3 cp site/ "s3://${SITE_BUCKET}/" \
             --recursive \
             --exclude "*" --include "*.html" \
