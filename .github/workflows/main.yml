@@ -1,4 +1,4 @@
-name: Deploy MkDocs to S3 + CloudFront
+name: Deploy Zensical to S3 + CloudFront
 
 on:
   push:
@@ -19,6 +19,7 @@ jobs:
     env:
       AWS_REGION: us-east-2
       SITE_BUCKET: k8s-guide-site
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,15 +27,24 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install zensical; fi
+          # Install any repo-pinned deps (if you still have a requirements.txt from MkDocs days)
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          fi
+          # Always install Zensical so the CLI exists
+          python -m pip install zensical
+          zensical --version
 
       - name: Build site
-        run: zensical build --clean
+        run: |
+          set -euo pipefail
+          zensical build --clean
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
@@ -42,25 +52,27 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # Upload assets (non-HTML) with long cache, then HTML with short cache. 
+      # Upload assets (non-HTML) with long cache, then HTML with short cache.
       - name: Upload to S3
         run: |
-          # 1) Assets (css/js/img) — long cache
+          set -euo pipefail
+
+          # 1) Assets (css/js/img/etc.) — long cache
           aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --delete \
             --exclude "*.html" \
-            --cache-control max-age=31536000,public
+            --cache-control "max-age=31536000,public"
 
-          # 2) HTML pages (including root index.html) — short cache + correct content-type
+          # 2) HTML pages — short cache + correct content-type
           aws s3 cp site/ "s3://${SITE_BUCKET}/" \
             --recursive \
             --exclude "*" --include "*.html" \
-            --cache-control max-age=60,public \
-            --content-type text/html
+            --cache-control "max-age=60,public" \
+            --content-type "text/html"
 
-      # First time: nuke all cached objects so index and pages show up immediately.
       - name: Invalidate CloudFront
         run: |
+          set -euo pipefail
           aws cloudfront create-invalidation \
             --distribution-id "${{ secrets.CLOUDFRONT_DIST_ID }}" \
             --paths "/*"
