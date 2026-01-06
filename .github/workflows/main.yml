@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: deploy-mkdocs
+  group: deploy-zensical-site
   cancel-in-progress: true
 
 jobs:
@@ -31,10 +31,10 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install mkdocs mkdocs-material; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install zensical; fi
 
       - name: Build site
-        run: mkdocs build --clean
+        run: zensical build --clean
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4

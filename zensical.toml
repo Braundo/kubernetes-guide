@@ -1,0 +1,248 @@
+# ============================================================================
+#
+# The configuration produced by default is meant to highlight the features
+# that Zensical provides and to serve as a starting point for your own
+# projects.
+#
+# ============================================================================
+
+[project]
+
+# The site_name is shown in the page header and the browser window title
+#
+# Read more: https://zensical.org/docs/setup/basics/#site_name
+site_name = "Kubernetes Guide"
+
+# The site_description is included in the HTML head and should contain a
+# meaningful description of the site content for use by search engines.
+#
+# Read more: https://zensical.org/docs/setup/basics/#site_description
+site_description = "A new project generated from the default template project."
+
+# The site_author attribute. This is used in the HTML head element.
+#
+# Read more: https://zensical.org/docs/setup/basics/#site_author
+site_author = "Aaron Braundmeier"
+
+# The site_url is the canonical URL for your site. When building online
+# documentation you should set this.
+# Read more: https://zensical.org/docs/setup/basics/#site_url
+#site_url = "https://www.example.com/"
+
+# The copyright notice appears in the page footer and can contain an HTML
+# fragment.
+#
+# Read more: https://zensical.org/docs/setup/basics/#copyright
+copyright = """
+Copyright &copy; 2025 The authors
+"""
+
+# Zensical supports both implicit navigation and explicitly defined navigation.
+# If you decide not to define a navigation here then Zensical will simply
+# derive the navigation structure from the directory structure of your
+# "docs_dir". The definition below demonstrates how a navigation structure
+# can be defined using TOML syntax.
+#
+# Read more: https://zensical.org/docs/setup/navigation/
+nav = [
+  { "Home" = "index.md" },
+  { "Getting Started" = [
+    { "Overview" = "getting-started/overview.md" },
+    { "Kubernetes API" = "getting-started/kubernetes-api.md" },
+    { "Namespaces" = "getting-started/namespaces.md" },
+  ]},
+  { "Workloads" = [
+    { "Pods" = "workloads/pods-deployments.md" },
+    { "Scaling & HPA" = "workloads/scaling-hpa.md" },
+    { "StatefulSets" = "workloads/statefulsets.md" },
+    { "DaemonSets" = "workloads/daemonsets.md" },
+    { "Jobs & CronJobs" = "workloads/jobs-cronjobs.md" },
+    { "Init Containers" = "workloads/init-containers.md" },
+  ]},
+  { "Networking" = [
+    { "Overview" = "networking/networking.md" },
+    { "Services" = "networking/services-networking.md" },
+    { "Ingress" = "networking/ingress.md" },
+    { "Network Policies" = "networking/netpol.md" },
+  ]},
+  { "Configuration" = [
+    { "ConfigMaps" = "configuration/configmaps-secrets.md" },
+    { "Health Probes" = "configuration/probes.md" },
+    { "Resource Limits" = "configuration/limits-requests.md" },
+    { "Quotas" = "configuration/quotas-limits.md" },
+  ]},
+  { "Storage" = [
+    { "Overview" = "storage/storage.md" },
+  ]},
+  { "Security" = [
+    { "Security Primer" = "security/security.md" },
+    { "RBAC" = "security/rbac.md" },
+    { "Pod Security" = "security/psa.md" },
+    { "Security Context" = "security/sec-context.md" },
+    { "Image Scanning" = "security/image-scan-sign.md" },
+    { "Audit & Logging" = "security/audit-logging.md" },
+  ]},
+  { "Operations" = [
+    { "Helm" = "operations/helm-package-management.md" },
+    { "Operators & CRDs" = "operations/operators-crds.md" },
+    { "Troubleshooting" = "operations/troubleshooting.md" },
+    { "Maintenance" = "operations/maintenance.md" },
+  ]},
+  { "Certifications" = [
+    { "Cert Overview" = "certifications/certification-preparation.md" },
+    { "CKA (Admin)" = "certifications/cka.md" },
+    { "CKAD (Developer)" = "certifications/ckad.md" },
+    { "CKS (Security)" = "certifications/cks.md" },
+  ]},
+  { "Resources" = [
+    { "Kubectl Cheat Sheet" = "resources/kubectl-cheatsheet.md" },
+    { "About" = "resources/about.md" },
+  ]},
+]
+
+# With the "extra_css" option you can add your own CSS styling to customize
+# your Zensical project according to your needs. You can add any number of
+# CSS files.
+#
+# The path provided should be relative to the "docs_dir".
+#
+# Read more: https://zensical.org/docs/customization/#additional-css
+#
+extra_css = ["stylesheets/extra.css"]
+
+# With the `extra_javascript` option you can add your own JavaScript to your
+# project to customize the behavior according to your needs.
+#
+# The path provided should be relative to the "docs_dir".
+#
+# Read more: https://zensical.org/docs/customization/#additional-javascript
+#extra_javascript = ["javascripts/extra.js"]
+
+# ----------------------------------------------------------------------------
+# Section for configuring theme options
+# ----------------------------------------------------------------------------
+[project.theme]
+logo = "./images/logo.png"
+font.text = "Inter"
+font.code = "JetBrains Mono"
+
+
+# change this to "classic" to use the traditional Material for MkDocs look.
+#variant = "classic"
+
+# Zensical allows you to override specific blocks, partials, or whole
+# templates as well as to define your own templates. To do this, uncomment
+# the custom_dir setting below and set it to a directory in which you
+# keep your template overrides.
+#
+# Read more:
+# - https://zensical.org/docs/customization/#extending-the-theme
+#
+#custom_dir = "overrides"
+
+# With the "favicon" option you can set your own image to use as the icon
+# browsers will use in the browser title bar or tab bar. The path provided
+# must be relative to the "docs_dir".
+#
+# Read more:
+# - https://zensical.org/docs/setup/logo-and-icons/#favicon
+# - https://developer.mozilla.org/en-US/docs/Glossary/Favicon
+#
+#favicon = "images/favicon.png"
+
+# Zensical supports more than 60 different languages. This means that the
+# labels and tooltips that Zensical's templates produce are translated.
+# The "language" option allows you to set the language used. This language
+# is also indicated in the HTML head element to help with accessibility
+# and guide search engines and translation tools.
+#
+# The default language is "en" (English). It is possible to create
+# sites with multiple languages and configure a language selector. See
+# the documentation for details.
+#
+# Read more:
+# - https://zensical.org/docs/setup/language/
+#
+language = "en"
+
+# Zensical provides a number of feature toggles that change the behavior
+# of the documentation site.
+features = [
+    "announce.dismiss",
+    "content.code.annotate",
+    "content.code.copy",
+    "content.code.select",
+    "content.footnote.tooltips",
+    "content.tabs.link",
+    "content.tooltips",
+    "header.autohide",
+    "navigation.footer",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.prefetch",
+    "navigation.instant.progress",
+    "navigation.path",
+    "navigation.top",
+    "navigation.tracking",
+    "search.highlight",
+]
+
+# ----------------------------------------------------------------------------
+# In the "palette" subsection you can configure options for the color scheme.
+# You can configure different color # schemes, e.g., to turn on dark mode,
+# that the user can switch between. Each color scheme can be further
+# customized.
+#
+# Read more:
+# - https://zensical.org/docs/setup/colors/
+# ----------------------------------------------------------------------------
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+# ----------------------------------------------------------------------------
+# In the "font" subsection you can configure the fonts used. By default, fonts
+# are loaded from Google Fonts, giving you a wide range of choices from a set
+# of suitably licensed fonts. There are options for a normal text font and for
+# a monospaced font used in code blocks.
+# ----------------------------------------------------------------------------
+#[project.theme.font]
+#text = "Inter"
+#code = "Jetbrains Mono"
+
+# ----------------------------------------------------------------------------
+# You can configure your own logo to be shown in the header using the "logo"
+# option in the "icons" subsection. The logo can be a path to a file in your
+# "docs_dir" or it can be a path to an icon.
+#
+# Likewise, you can customize the logo used for the repository section of the
+# header. Zensical derives the default logo for this from the repository URL.
+# See below...
+#
+# There are other icons you can customize. See the documentation for details.
+#
+# Read more:
+# - https://zensical.org/docs/setup/logo-and-icons
+# - https://zensical.org/docs/authoring/icons-emojis/#search
+# ----------------------------------------------------------------------------
+#[project.theme.icon]
+#logo = "lucide/smile"
+#repo = "lucide/smile"
+
+# ----------------------------------------------------------------------------
+# The "extra" section contains miscellaneous settings.
+# ----------------------------------------------------------------------------
+#[[project.extra.social]]
+#icon = "fontawesome/brands/github"
+#link = "https://github.com/user/repo"
+
+
+[project.extra.analytics]
+provider = "google"
+property = "G-WF0BEBS62L"
