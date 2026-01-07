@@ -209,14 +209,14 @@ Gateway API supports multiple TLS patterns:
 
 - Gateway forwards encrypted traffic
 - Useful for:
-  - mutual TLS
-  - protocol-aware backends
+
+    * mutual TLS
+    * protocol-aware backends
 
 TLS configuration is explicit and typed - not inferred.
 
 ### Policy Attachment
-Gateway API introduces policy attachment, allowing reusable, targetable policies.
-Examples:
+Gateway API introduces policy attachment, allowing reusable, targetable policies:
 
 - timeouts
 - retries
@@ -278,6 +278,95 @@ It reflects how Kubernetes is actually operated in real organizations:
 - long-lived platforms
 
 If Ingress was Kubernetes’ first draft for traffic management, Gateway API is the version written after a decade of production experience.
+
+## Diagrams
+
+### Gateway API Object Model
+``` mermaid
+flowchart TB
+  subgraph Cluster[" "]
+    GC["<b>GatewayClass</b><br>(cluster-scoped)<br>Defines implementation/controller"]
+    GW["<b>Gateway</b><br>(namespaced)<br>Entry point + listeners (ports/protocol/TLS)"]
+
+    subgraph Routes["Routes (namespaced)"]
+      HR["<b>HTTPRoute</b><br>(host/path/header matches)"]
+      TR["<b>TCPRoute</b><br>(SNI/port matches)"]
+      UR["<b>UDPRoute</b><br>(port matches)"]
+      TLSR["<b>TLSRoute</b><br>(TLS passthrough)"]
+    end
+
+    SVC["<b>Service</b><br>(stable VIP + load balancing)"]
+    PODS["<b>Pods</b><br>(application backends)"]
+  end
+
+  %% relationships
+  GC -->|gatewayClassName| GW
+  GW -->|parentRefs| HR
+  GW -->|parentRefs| TR
+  GW -->|parentRefs| UR
+  GW -->|parentRefs| TLSR
+
+  HR -->|backendRefs| SVC
+  TR -->|backendRefs| SVC
+  UR -->|backendRefs| SVC
+  TLSR -->|backendRefs| SVC
+
+  SVC --> PODS
+```
+
+<br><br>
+
+### Request path + role separation
+``` mermaid
+flowchart LR
+  C[Client] -->|HTTPS :443| GW[Gateway<br/>listeners + TLS]
+  GW -->|"Route match<br/>(host/path)"| R[HTTPRoute]
+  R -->|backendRefs| S[Service]
+  S --> P[Pods]
+
+  subgraph Platform team
+    GC[GatewayClass]
+    GW
+  end
+
+  subgraph App team
+    R
+    S
+    P
+  end
+
+  GC --> GW
+```
+
+<br><br>
+
+### Delegation + allowedRoutes boundary
+```mermaid
+flowchart TD
+  subgraph Platform["Platform Namespace"]
+    GW["<b>Gateway</b><br>networking/prod-gateway<br>Listeners + TLS"]
+    AR["<b>allowedRoutes</b><br>NamespaceSelector / SameNamespace / All"]
+  end
+
+  subgraph AppA["App Namespace (team-a)"]
+    HRa["<b>HTTPRoute</b><br>team-a/app-route"]
+    SVCa["<b>Service</b><br>team-a/app-service"]
+  end
+
+  subgraph AppB["App Namespace (team-b)"]
+    HRb["<b>HTTPRoute<</b>br>team-b/app-route"]
+    SVCb["<b>Service</b><br>team-b/app-service"]
+  end
+
+  GW --> AR
+  HRa -->|parentRefs| GW
+  HRb -->|parentRefs| GW
+  HRa -->|backendRefs| SVCa
+  HRb -->|backendRefs| SVCb
+
+  AR -.controls who may attach.-> HRa
+  AR -.controls who may attach.-> HRb
+```
 
 
 ## Related Concepts
