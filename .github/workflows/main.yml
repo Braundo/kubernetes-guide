@@ -31,6 +31,7 @@ jobs:
 
       - name: Install Python deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m pip show zensical
@@ -38,6 +39,7 @@ jobs:
 
       - name: Build site
         run: |
+          set -euo pipefail
           rm -rf site
           python -m zensical build --clean
 
@@ -47,22 +49,50 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Upload to S3 (safe caching defaults)
+      - name: Upload to S3 (correct caching)
         run: |
-          # 1) Default: short cache for everything
+          set -euo pipefail
+
+          # Remove stray macOS files if present
+          find site -name ".DS_Store" -delete || true
+
+          # 1) Fingerprinted theme assets (hashed) — cache forever
           aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --delete \
-            --cache-control "max-age=300,public"
+            --exclude "*" \
+            --include "assets/*" \
+            --include "assets/**" \
+            --cache-control "max-age=31536000,public,immutable"
 
-          # 2) HTML: force revalidation so clients pick up new pages immediately
-          aws s3 cp site/ "s3://${SITE_BUCKET}/" \
-            --recursive \
+          # 2) Images — long cache (safe)
+          aws s3 sync site/ "s3://${SITE_BUCKET}/" \
+            --exclude "*" \
+            --include "images/*" \
+            --include "images/**" \
+            --cache-control "max-age=31536000,public"
+
+          # 3) Non-fingerprinted “named” files — short cache + revalidate
+          aws s3 sync site/ "s3://${SITE_BUCKET}/" \
+            --exclude "*" \
+            --include "stylesheets/*" \
+            --include "stylesheets/**" \
+            --include "javascripts/*" \
+            --include "javascripts/**" \
+            --include "search.json" \
+            --include "sitemap.xml" \
+            --include "logo.png" \
+            --include "favicon.png" \
+            --cache-control "max-age=300,public,must-revalidate"
+
+          # 4) HTML — no-cache so clients always revalidate
+          aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --exclude "*" --include "*.html" \
             --cache-control "no-cache, no-store, must-revalidate" \
             --content-type "text/html"
 
       - name: Invalidate CloudFront
         run: |
+          set -euo pipefail
           aws cloudfront create-invalidation \
             --distribution-id "${{ secrets.CLOUDFRONT_DIST_ID }}" \
             --paths "/*"
