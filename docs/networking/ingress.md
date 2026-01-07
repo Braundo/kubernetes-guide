@@ -194,3 +194,5 @@ For now, focus on mastering Ingress, as it is still the standard for 95% of depl
 - [Kubernetes Services](services-networking/)
 - [Network Policies](netpol/)
 - [Kubernetes Security](../security/security/)
+- [Kubernetes Gateway API](/networking/gateway-api/)
+

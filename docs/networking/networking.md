@@ -85,3 +85,4 @@ nslookup my-service.default.svc.cluster.local
 - [Kubernetes Services](services-networking/)
 - [Ingress and HTTP Routing](ingress/)
 - [Network Policies](netpol/) for traffic security
+- [Kubernetes Gateway API](/networking/gateway-api/) for advanced, role-oriented traffic management
