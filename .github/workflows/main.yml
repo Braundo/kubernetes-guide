@@ -29,26 +29,17 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install build tooling
+      - name: Install Python deps
         run: |
-          set -euo pipefail
           python -m pip install --upgrade pip
-
-          # Force a modern Zensical that actually provides the CLI
-          python -m pip install "zensical==0.0.15"
-          zensical --version
-
-          # Install any additional repo deps (optional)
-          # NOTE: Make sure requirements.txt no longer includes MkDocs pins,
-          # otherwise pip may waste time resolving or pull in old stacks.
-          if [ -f requirements.txt ]; then
-            python -m pip install -r requirements.txt
-          fi
+          python -m pip install -r requirements.txt
+          python -m pip show zensical
+          python -m pip check
 
       - name: Build site
         run: |
-          set -euo pipefail
-          zensical build --clean
+          rm -rf site
+          python -m zensical build --clean
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
@@ -56,26 +47,22 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Upload to S3
+      - name: Upload to S3 (safe caching defaults)
         run: |
-          set -euo pipefail
-
-          # 1) Non-HTML assets — long cache
+          # 1) Default: short cache for everything
           aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --delete \
-            --exclude "*.html" \
-            --cache-control "max-age=31536000,public"
+            --cache-control "max-age=300,public"
 
-          # 2) HTML — short cache
+          # 2) HTML: force revalidation so clients pick up new pages immediately
           aws s3 cp site/ "s3://${SITE_BUCKET}/" \
             --recursive \
             --exclude "*" --include "*.html" \
-            --cache-control "max-age=60,public" \
+            --cache-control "no-cache, no-store, must-revalidate" \
             --content-type "text/html"
 
       - name: Invalidate CloudFront
         run: |
-          set -euo pipefail
           aws cloudfront create-invalidation \
             --distribution-id "${{ secrets.CLOUDFRONT_DIST_ID }}" \
             --paths "/*"
