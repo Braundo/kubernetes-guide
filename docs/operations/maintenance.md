@@ -137,7 +137,7 @@ Kubernetes runs on Linux. You still need to patch the underlying OS (Ubuntu, RHE
 ## Summary
 
   * **Backup First:** Always snapshot etcd before an upgrade.
-  * **Order Matters:** Control Plane $\rightarrow$ Workers.
+  * **Order Matters:** Control Plane → Workers.
   * **Drain Safely:** Use `kubectl drain` to move workloads without downtime.
   * **Watch Certs:** Remember the 1-year expiration on `kubeadm` clusters.
   * **Automate Reboots:** Use Kured to handle OS patching reboots safely.

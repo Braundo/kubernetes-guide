@@ -18,7 +18,7 @@ In Kubernetes, a Pod is not just a single container. It can hold multiple contai
 
   * **Security:** Your main app image can be small and secure (e.g., `distroless`), while the Init Container contains the heavy tools (curl, git, netcat) needed for setup.
   * **Blocking Startup:** You can force your app to wait until a Database or API is actually online.
-  * **Sequential Setup:** You can chain multiple steps: "Clone Git Repo" $\rightarrow$ "Decrypt Secrets" $\rightarrow$ "Start App".
+  * **Sequential Setup:** You can chain multiple steps: "Clone Git Repo" → "Decrypt Secrets" → "Start App".
 
 -----
 
