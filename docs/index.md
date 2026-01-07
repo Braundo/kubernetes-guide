@@ -8,7 +8,7 @@ icon: lucide/home
 
 <div style="text-align: center;">
 
-<img src="/images/logo.png" width="30%">
+<img src="/images/logo-v2.png" width="30%">
 
 </div>
 
