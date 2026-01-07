@@ -1,5 +1,9 @@
 ---
 icon: lucide/database-zap
+title: Kubernetes StatefulSets Explained (Stateful Applications and Identity)
+description: Learn how StatefulSets manage stateful workloads, stable identities, and persistent storage in Kubernetes.
+hide:
+  - footer
 ---
 
 <h1>StatefulSets</h1>
@@ -129,3 +133,11 @@ These volumes are **retained** even if the Pod is deleted.
 
 !!! tip
     Only use StatefulSets when you really need sticky identity or storage. For most apps, Deployments are simpler and easier to manage.
+
+---
+
+## Related Concepts
+
+- [Pods vs Deployments](pods-deployments/) for stateless workloads
+- [Kubernetes Storage](../storage/storage/) and persistent volumes
+- [Headless Services](../networking/services-networking/) for stable network identity

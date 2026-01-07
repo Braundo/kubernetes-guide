@@ -1,5 +1,9 @@
 ---
 icon: lucide/hourglass
+title: Kubernetes Init Containers Explained (Startup Logic and Dependencies)
+description: Learn how init containers work, how they differ from sidecars, and common patterns for startup checks and initialization.
+hide:
+  - footer
 ---
 
 # Init Containers
@@ -115,3 +119,11 @@ initContainers:
   * Use them to **wait for dependencies** or **configure data**.
   * Use **Shared Volumes** to pass data from the Init Container to the Main Container.
   * **New Feature:** Use `restartPolicy: Always` to create Native Sidecars that start first but keep running.
+
+---
+
+## Related Concepts
+
+- [Pods vs Deployments](pods-deployments/)
+- [Kubernetes Configuration](../configuration/configmaps-secrets/)
+- [Kubernetes Security Contexts](../security/sec-context/)

@@ -1,5 +1,9 @@
 ---
 icon: lucide/ship-wheel
+title: Helm and Package Management in Kubernetes Explained
+description: Learn how Helm works, how charts are structured, and how Helm simplifies application deployment in Kubernetes.
+hide:
+  - footer
 ---
 
 # Helm: The Package Manager

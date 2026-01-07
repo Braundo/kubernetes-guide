@@ -1,5 +1,9 @@
 ---
 icon: lucide/archive
+title: Kubernetes Storage Explained (Persistent Volumes and Claims)
+description: Learn how Kubernetes storage works, including PersistentVolumes, PersistentVolumeClaims, and storage classes.
+hide:
+  - footer
 ---
 
 # Storage Overview

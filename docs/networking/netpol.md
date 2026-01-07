@@ -1,5 +1,9 @@
 ---
 icon: lucide/shield-check
+title: Kubernetes Network Policies Explained (Traffic Control and Security)
+description: Learn how Kubernetes Network Policies control traffic between Pods and namespaces to improve security and isolation.
+hide:
+  - footer
 ---
 
 # Network Policies
@@ -174,3 +178,11 @@ ingress:
   * **Selected Behavior:** Deny Everything Else.
   * **Best Practice:** Apply a "Default Deny" policy first.
   * **Critical Gotcha:** If you block Egress, remember to **Allow DNS (Port 53)**, or nothing will work.
+
+---
+
+## Related Concepts
+
+- [Kubernetes Networking](networking/)
+- [Kubernetes Security](../security/security/)
+- [RBAC](../security/rbac/) for access control

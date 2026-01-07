@@ -1,5 +1,9 @@
 ---
 icon: lucide/circle-gauge
+title: Kubernetes Resource Requests and Limits Explained (CPU and Memory)
+description: Learn how CPU and memory requests and limits work in Kubernetes and how they affect scheduling and performance.
+hide:
+  - footer
 ---
 
 # Resource Limits
@@ -128,3 +132,11 @@ Kubernetes assigns every Pod a "Quality of Service" (QoS) class based on how you
   * **Memory Limit Hit** = Death (OOMKill).
   * **Millicores (m)** = 1/1000th of a core. `1000m` = 1 vCPU.
   * **QoS Classes** determine eviction order. Aim for **Burstable** or **Guaranteed** in production.
+
+---
+
+## Related Concepts
+
+- [Horizontal Pod Autoscaling](../workloads/scaling-hpa/)
+- [Kubernetes Scheduling](../workloads/pods-deployments/)
+- [Resource Quotas](quotas-limits/)

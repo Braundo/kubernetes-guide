@@ -1,5 +1,9 @@
 ---
 icon: lucide/book-open-text
+title: Kubernetes Overview for Beginners (Core Concepts Explained)
+description: A beginner-friendly overview of Kubernetes, explaining what it is, why it exists, and how its core components work together.
+hide:
+  - footer
 ---
 
 ## Historical Background

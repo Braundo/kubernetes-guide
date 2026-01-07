@@ -1,5 +1,9 @@
 ---
 icon: lucide/shuffle
+title: Kubernetes Ingress Explained (Routing, TLS, Controllers, and Gateway API)
+description: Learn how Kubernetes Ingress works, request routing basics, TLS termination, and how it compares to the Kubernetes Gateway API.
+hide:
+  - footer
 ---
 
 Up until now, we’ve looked at how to network Pods *inside* the cluster (ClusterIP) and crude ways to get traffic *in* (NodePort, LoadBalancer).
@@ -182,3 +186,11 @@ For now, focus on mastering Ingress, as it is still the standard for 95% of depl
 
 !!! tip
     If your Ingress isn't working, 90% of the time the issue isn't in your application Pod logs. Check the logs of the **Ingress Controller Pod** (e.g., in the `ingress-nginx` namespace). It will tell you if your YAML rules made sense or if it can't find the backend service.
+
+---
+
+## Related Concepts
+
+- [Kubernetes Services](services-networking/)
+- [Network Policies](netpol/)
+- [Kubernetes Security](../security/security/)

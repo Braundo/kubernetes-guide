@@ -1,5 +1,9 @@
 ---
 icon: lucide/badge-info
+title: Certified Kubernetes Administrator (CKA) Exam Guide
+description: Learn what to expect on the CKA exam and how to prepare for Kubernetes administration topics.
+hide:
+  - footer
 ---
 
 # Certified Kubernetes Administrator (CKA)

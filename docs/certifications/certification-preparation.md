@@ -1,5 +1,9 @@
 ---
 icon: material/school-outline
+title: Kubernetes Certification Preparation Guide (CKA, CKAD, CKS)
+description: A guide to preparing for Kubernetes certifications, including exam focus areas and recommended study strategies.
+hide:
+  - footer
 ---
 
 # Kubernetes Certification Preparation

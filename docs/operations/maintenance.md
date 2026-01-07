@@ -1,5 +1,9 @@
 ---
 icon: lucide/circle-fading-arrow-up
+title: Kubernetes Cluster Maintenance Explained (Upgrades, Drains, and Care)
+description: Learn how to perform Kubernetes cluster maintenance tasks safely, including node draining, upgrades, and lifecycle management.
+hide:
+  - footer
 ---
 
 Maintenance is the most nerve-wracking part of being a Kubernetes Admin.

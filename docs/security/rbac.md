@@ -1,5 +1,9 @@
 ---
 icon: lucide/shield-user
+title: Kubernetes RBAC Explained (Roles, RoleBindings, and Best Practices)
+description: Learn Kubernetes RBAC concepts, how Roles and RoleBindings work, and best practices for least-privilege access with examples.
+hide:
+  - footer
 ---
 
 In Kubernetes, **Authentication** asks "Who are you?" (Alice, Bob, or a Robot).
@@ -148,3 +152,12 @@ The default `admin` ClusterRole is an aggregated role. If you install a CRD (lik
 
 !!! danger "Security Warning"
     Be extremely careful with the `cluster-admin` ClusterRole. It allows users to do anything, including deleting the entire cluster or reading all secrets. Follow **Least Privilege**: Only grant the specific verbs (`get`, `list`) needed for the specific resource (`pods`, `services`).
+
+
+---
+
+## Related Security Concepts
+
+- [Kubernetes Security Overview](security/)
+- [Pod Security Standards](psa/)
+- [Audit Logging](audit-logging/)

@@ -1,5 +1,9 @@
 ---
 icon: lucide/heart-pulse
+title: Kubernetes Health Probes Explained (Liveness, Readiness, Startup)
+description: Learn how Kubernetes health probes work and how to design liveness, readiness, and startup probes correctly.
+hide:
+  - footer
 ---
 
 # Health Probes
@@ -158,3 +162,10 @@ graph TD
   * **Liveness Probes** determine if the Pod should be restarted.
   * Use **HTTP** checks for web apps and **TCP** checks for databases.
   * **Never** make your Readiness probe depend on an external service (like "Is https://www.google.com/ up?"). If the internet blips, you will take down your entire cluster.
+
+---
+
+## Related Concepts
+
+- [Pods and Deployments](../workloads/pods-deployments/)
+- [Kubernetes Troubleshooting](../operations/troubleshooting/)

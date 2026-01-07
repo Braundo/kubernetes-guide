@@ -80,6 +80,8 @@ jobs:
             --include "javascripts/**" \
             --include "search.json" \
             --include "sitemap.xml" \
+            --include "robots.txt" \
+            --include "site.webmanifest" \
             --include "logo.png" \
             --include "favicon.png" \
             --cache-control "max-age=300,public,must-revalidate"
@@ -88,6 +90,19 @@ jobs:
           aws s3 sync site/ "s3://${SITE_BUCKET}/" \
             --exclude "*" --include "*.html" \
             --cache-control "no-cache, no-store, must-revalidate" \
+            --content-type "text/html"
+
+      - name: Create legacy redirects (retired pages)
+        run: |
+          set -euo pipefail
+
+          # Retired URL in Google Search Console (avoid 404; preserve equity)
+          # Old: /scheduling-and-eviction/taints-and-tolerations/
+          # New: /workloads/pods-deployments/
+          aws s3api put-object \
+            --bucket "${SITE_BUCKET}" \
+            --key "scheduling-and-eviction/taints-and-tolerations/index.html" \
+            --website-redirect-location "/workloads/pods-deployments/" \
             --content-type "text/html"
 
       - name: Invalidate CloudFront

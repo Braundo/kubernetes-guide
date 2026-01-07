@@ -1,5 +1,9 @@
 ---
 icon: lucide/box
+title: Pods vs Deployments in Kubernetes (What They Are and How They Work)
+description: Understand Kubernetes Pods and Deployments, how they relate, and when to use each—plus common patterns, pitfalls, and practical examples.
+hide:
+  - footer
 ---
 
 # Pods & Deployments
@@ -156,3 +160,12 @@ replicaset.apps/my-web-6d4b   1         1         1       5m  <-- The Counter
 | **Production?** | No (Debug only) | **Yes** (Always use this) |
 
 **Key Takeaway:** Pods are the "atoms" of Kubernetes, but Deployments are the "molecules" you actually work with. Always use a Deployment to keep your Pods healthy, scalable, and up-to-date.
+
+---
+
+## Related Kubernetes Workload Concepts
+
+- [Init Containers](init-containers/) for startup dependencies
+- [Jobs and CronJobs](jobs-cronjobs/) for batch and scheduled workloads
+- [StatefulSets](statefulsets/) for stateful applications
+- [Horizontal Pod Autoscaling](scaling-hpa/) for dynamic scaling

@@ -1,5 +1,9 @@
 ---
 icon: lucide/timer
+title: Kubernetes Jobs and CronJobs Explained (Batch and Scheduled Workloads)
+description: Learn how Kubernetes Jobs and CronJobs work, how retries and scheduling behave, and common batch-processing patterns.
+hide:
+  - footer
 ---
 
 # Jobs & CronJobs
@@ -170,3 +174,11 @@ spec:
     ``` bash
     kubectl create job --from=cronjob/nightly-backup manual-test-run
     ```
+
+---
+
+## Related Concepts
+
+- [Pods and Deployments](pods-deployments/) for long-running services
+- [Kubernetes Scheduling](../configuration/limits-requests/) and resource control
+- [Troubleshooting Jobs](../operations/troubleshooting/)

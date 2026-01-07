@@ -1,5 +1,9 @@
 ---
 icon: lucide/maximize-2
+title: Kubernetes Horizontal Pod Autoscaling Explained (HPA and Metrics)
+description: Learn how Kubernetes HPA works, how metrics drive scaling decisions, and common autoscaling patterns and pitfalls.
+hide:
+  - footer
 ---
 
 # Scaling & HPA
@@ -134,3 +138,11 @@ The **Cluster Autoscaler** watches for pending Pods that cannot be scheduled due
 
 !!! tip
     Scaling is not instant. It takes time for Metrics Server to gather data, time for the HPA to calculate the change, and time for the new application Pod to start up and pass its readiness probes. Don't set your target too high (e.g., 95%), or your app might crash from overload before the new Pods are ready to help. A target of 50-70% is a common starting point.
+
+---
+
+## Related Concepts
+
+- [Pods and Deployments](pods-deployments/)
+- [Resource Requests and Limits](../configuration/limits-requests/)
+- [Kubernetes Metrics and Observability](../operations/troubleshooting/)

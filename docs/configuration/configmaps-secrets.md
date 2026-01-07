@@ -1,5 +1,9 @@
 ---
 icon: lucide/key-round
+title: ConfigMaps and Secrets in Kubernetes (Configuration Management Explained)
+description: Learn how ConfigMaps and Secrets store and inject configuration data into Pods, and best practices for managing sensitive values.
+hide:
+  - footer
 ---
 
 <h1>ConfigMaps & Secrets</h1>
@@ -230,3 +234,11 @@ You can mount ConfigMaps and Secrets as environment variables or files inside yo
 <li><strong>Secrets</strong>: For sensitive data, encoded for transport.</li>
 <li>Both improve security, portability, and flexibility in your Kubernetes apps.</li>
 </ul>
+
+---
+
+## Related Concepts
+
+- [Init Containers](../workloads/init-containers/)
+- [Kubernetes Security Contexts](../security/sec-context/)
+- [Pods and Deployments](../workloads/pods-deployments/)

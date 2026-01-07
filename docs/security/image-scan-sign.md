@@ -1,5 +1,9 @@
 ---
 icon: lucide/scan-eye
+title: Kubernetes Image Scanning and Signing Explained (Supply Chain Security)
+description: Learn how container image scanning and signing improve Kubernetes supply chain security and reduce risk.
+hide:
+  - footer
 ---
 
 # Image Scanning

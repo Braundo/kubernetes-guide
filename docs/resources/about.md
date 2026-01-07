@@ -1,5 +1,9 @@
 ---
 icon: lucide/circle-user-round
+title: About This Kubernetes Guide
+description: Learn more about the purpose, scope, and goals of this Kubernetes learning guide.
+hide:
+  - footer
 ---
 
 <div class="id-card">

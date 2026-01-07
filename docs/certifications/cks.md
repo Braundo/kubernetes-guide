@@ -1,5 +1,9 @@
 ---
 icon: lucide/badge-info
+title: Certified Kubernetes Security Specialist (CKS) Exam Guide
+description: Learn what to expect on the CKS exam and how to prepare for Kubernetes security concepts and hands-on tasks.
+hide:
+  - footer
 ---
 
 # Certified Kubernetes Security Specialist (CKS)

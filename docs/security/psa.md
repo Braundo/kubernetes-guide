@@ -1,5 +1,9 @@
 ---
 icon: lucide/file-lock
+title: Kubernetes Pod Security Standards Explained (Restricted, Baseline, Privileged)
+description: Learn how Kubernetes Pod Security Standards work and how to enforce secure workload configurations.
+hide:
+  - footer
 ---
 
 # Pod Security
@@ -156,3 +160,11 @@ spec:
   * **Modes:** `Enforce` (Block), `Audit` (Log), `Warn` (Notify).
   * **Configuration:** Done strictly via labels on the Namespace.
   * **Production Tip:** Pin your versions (don't use `latest`) and use `Warn/Audit` modes before switching `Enforce` to a stricter level.
+
+---
+
+## Related Security Concepts
+
+- [Security Contexts](sec-context/)
+- [Kubernetes RBAC](rbac/)
+- [Kubernetes Security Overview](security/)

@@ -1,5 +1,9 @@
 ---
 icon: lucide/badge-info
+title: Certified Kubernetes Application Developer (CKAD) Exam Guide
+description: Learn what to expect on the CKAD exam and how to prepare for Kubernetes application development topics.
+hide:
+  - footer
 ---
 
 # Certified Kubernetes Application Developer (CKAD)

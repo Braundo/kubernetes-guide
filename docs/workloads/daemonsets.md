@@ -1,5 +1,9 @@
 ---
 icon: lucide/copy
+title: Kubernetes DaemonSets Explained (Node-Level Workloads and Use Cases)
+description: Learn how DaemonSets work in Kubernetes and when to use them for node-level agents like logging, monitoring, and security.
+hide:
+  - footer
 ---
 
 # DaemonSets

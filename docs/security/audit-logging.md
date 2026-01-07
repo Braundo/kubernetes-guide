@@ -1,5 +1,9 @@
 ---
 icon: lucide/logs
+title: Kubernetes Audit Logging Explained (Tracking and Investigating Activity)
+description: Learn how Kubernetes audit logs work and how they help detect, investigate, and respond to security events.
+hide:
+  - footer
 ---
 
 # Audit Logging

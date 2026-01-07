@@ -1,5 +1,9 @@
 ---
 icon: lucide/brick-wall-shield
+title: Kubernetes Security Context Explained (Privileges, Users, and Capabilities)
+description: Learn how Kubernetes security contexts control container privileges, user IDs, and Linux capabilities.
+hide:
+  - footer
 ---
 
 # Security Context
@@ -136,3 +140,11 @@ spec:
   * **`runAsNonRoot`** protects you from root-level exploits.
   * **`capabilities: drop: ["ALL"]`** is the gold standard for least privilege.
   * **`fsGroup`** is the magic fix when your non-root container can't write to its PVC.
+
+---
+
+## Related Security Concepts
+
+- [Pod Security Standards](psa/)
+- [RBAC](rbac/)
+- [Kubernetes Workloads](../workloads/pods-deployments/)

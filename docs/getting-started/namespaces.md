@@ -1,5 +1,9 @@
 ---
 icon: lucide/square-dashed
+title: Kubernetes Namespaces Explained (Isolation, Use Cases, and Best Practices)
+description: Learn how Kubernetes namespaces work, when to use them, and common patterns for organizing workloads and environments.
+hide:
+  - footer
 ---
 
 # Namespaces

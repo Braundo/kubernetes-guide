@@ -1,5 +1,9 @@
 ---
 icon: material/help-box-multiple
+title: Kubernetes Practice Quiz (Test Your Knowledge)
+description: Test your Kubernetes knowledge with practical quiz questions covering core concepts, workloads, networking, and security.
+hide:
+  - footer
 ---
 
 <?quiz?>

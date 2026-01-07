@@ -1,5 +1,9 @@
 ---
 icon: lucide/network
+title: Kubernetes Services Explained (ClusterIP, NodePort, LoadBalancer)
+description: Learn how Kubernetes Services work, how traffic flows to Pods, and when to use ClusterIP, NodePort, and LoadBalancer with real examples.
+hide:
+  - footer
 ---
 
 <h1>Services & Networking</h1>
@@ -143,3 +147,11 @@ spec:
 <br>
 Understanding how each Service type works  -  and when to use it  -  is essential for building reliable, scalable apps in Kubernetes.
 <br>
+
+---
+
+## Related Concepts
+
+- [Kubernetes Networking Overview](networking/)
+- [Ingress](ingress/) for HTTP routing
+- [Pods and Deployments](../workloads/pods-deployments/)

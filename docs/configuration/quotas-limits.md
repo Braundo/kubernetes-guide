@@ -1,5 +1,9 @@
 ---
 icon: lucide/scale
+title: Kubernetes Resource Quotas Explained (Controlling Resource Usage)
+description: Learn how Kubernetes ResourceQuotas limit resource consumption at the namespace level and prevent noisy-neighbor issues.
+hide:
+  - footer
 ---
 
 # Quotas
@@ -174,3 +178,10 @@ When these policies block you, the error messages are specific.
 
 1.  Create a **ResourceQuota** on every namespace to prevent accidents.
 2.  Create a **LimitRange** on every namespace to inject default requests/limits for developers who forget them.
+
+---
+
+## Related Concepts
+
+- [Resource Requests and Limits](limits-requests/)
+- [Namespaces](../getting-started/namespaces/)

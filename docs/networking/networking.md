@@ -1,5 +1,9 @@
 ---
 icon: lucide/share-2
+title: Kubernetes Networking Explained (Pod-to-Pod, Service, and Cluster Networking)
+description: Understand Kubernetes networking fundamentals, including pod communication, service networking, and cluster-level traffic flow.
+hide:
+  - footer
 ---
 
 # Networking Concepts
@@ -73,3 +77,11 @@ nslookup my-service.default.svc.cluster.local
 
 !!! tip
     Use DNS names for service discovery, and always test network policies and connectivity in staging before rolling out to production.
+
+---
+
+## Core Kubernetes Networking Topics
+
+- [Kubernetes Services](services-networking/)
+- [Ingress and HTTP Routing](ingress/)
+- [Network Policies](netpol/) for traffic security

@@ -1,5 +1,9 @@
 ---
 icon: lucide/brain-circuit
+title: The Kubernetes API Explained (Resources, Objects, and Control Plane)
+description: Learn how the Kubernetes API works, how resources are represented, and how kubectl and controllers interact with the control plane.
+hide:
+  - footer
 ---
 
 # Kubernetes API

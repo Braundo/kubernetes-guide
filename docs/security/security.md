@@ -1,5 +1,9 @@
 ---
 icon: lucide/shield-ellipsis
+title: Kubernetes Security Overview (Core Concepts and Threat Areas)
+description: An overview of Kubernetes security concepts, threat surfaces, and the controls used to protect clusters and workloads.
+hide:
+  - footer
 ---
 
 # Security Primer
@@ -81,3 +85,13 @@ In the old days, security was a "gate" at the end. In Kubernetes, security must 
   * **Security is layered.** Don't rely on just one tool.
   * **Misconfiguration is the \#1 threat.** Most breaches happen because someone left a door open (permissive RBAC, no NetworkPolicy), not because of a sophisticated zero-day.
   * **Least Privilege:** Give every user, pod, and service account the *minimum* permission they need to work. Nothing more.
+
+---
+
+## Core Kubernetes Security Topics
+
+- [RBAC and Access Control](rbac/)
+- [Pod Security Standards](psa/)
+- [Security Contexts](sec-context/)
+- [Image Scanning and Signing](image-scan-sign/)
+- [Audit Logging](audit-logging/)

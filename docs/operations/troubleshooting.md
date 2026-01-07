@@ -1,5 +1,9 @@
 ---
 icon: lucide/cog
+title: Kubernetes Troubleshooting Guide (Debugging Common Issues)
+description: Learn how to troubleshoot common Kubernetes issues using kubectl, logs, events, and diagnostic techniques.
+hide:
+  - footer
 ---
 
 When a Pod breaks, don't guess. Follow the evidence.
@@ -138,3 +142,11 @@ Computers speak in numbers. Here is how to translate them.
     **The "Rubber Duck" Method**
     
     If you are stuck, read the `kubectl describe` output out loud line-by-line. You will almost always find the error staring you in the face (e.g., `MountVolume.SetUp failed for volume "secret-key": secret "my-secret" not found`).
+
+---
+
+## Related Concepts
+
+- [Pods and Deployments](../workloads/pods-deployments/)
+- [Kubernetes Networking](../networking/networking/)
+- [Kubernetes Security](../security/security/)
