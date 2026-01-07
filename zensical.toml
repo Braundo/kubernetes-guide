@@ -122,8 +122,8 @@ extra_css = ["stylesheets/extra-v2.css"]
 # Section for configuring theme options
 # ----------------------------------------------------------------------------
 [project.theme]
-logo = "./images/logo.png"
-favicon = "./images/logo.png"
+logo = "./images/logo-v2.png"
+favicon = "./images/logo-v2.png"
 font.text = "Inter"
 font.code = "JetBrains Mono"
 
