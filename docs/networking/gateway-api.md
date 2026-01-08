@@ -36,23 +36,21 @@ Gateway API was created to solve these problems without breaking Kubernetes’ d
 Gateway API is built on four key ideas:
 
 ### 1. Explicit roles and ownership
-- Different Kubernetes personas manage different resources:
+Different Kubernetes personas manage different resources:
 - Platform / Infra teams manage gateways and infrastructure
 - App teams manage routes
 - Security teams manage policies
 - This is enforced through separate resource types, not conventions.
 
 ### 2. Strong typing instead of annotations
-Ingress relied heavily on controller-specific annotations.
-Gateway API:
+Ingress relied heavily on controller-specific annotations. Instead, Gateway API:
 
 - uses typed resources
 - supports portable policies
 - reduces “magic strings” and implicit behavior
 
 ### 3. Protocol extensibility
-Ingress is HTTP-only.
-Gateway API supports:
+Ingress is HTTP-only. Gateway API supports:
 
 - HTTP
 - HTTPS
