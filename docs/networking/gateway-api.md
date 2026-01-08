@@ -37,6 +37,7 @@ Gateway API is built on four key ideas:
 
 ### 1. Explicit roles and ownership
 Different Kubernetes personas manage different resources:
+
 - Platform / Infra teams manage gateways and infrastructure
 - App teams manage routes
 - Security teams manage policies
