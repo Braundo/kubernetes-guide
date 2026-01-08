@@ -19,7 +19,7 @@ Gateway API is not just “Ingress v2”. It introduces a fundamentally differen
 - portability across implementations
 
 ## Why Gateway API Exists
-Gateway API was designed to address many of the architectural limitations of Kubernetes Ingress, particularly around ownership, extensibility, and multi-team usage (see [Ingress](networking/ingress/)).
+Gateway API was designed to address many of the architectural limitations of Kubernetes Ingress, particularly around ownership, extensibility, and multi-team usage (see [Ingress](ingress/)).
 
 Ingress succeeded because it standardized basic HTTP routing. Ingress struggled because it tried to do everything with a single resource.
 
