@@ -40,7 +40,7 @@ Different Kubernetes personas manage different resources:
 - Platform / Infra teams manage gateways and infrastructure
 - App teams manage routes
 - Security teams manage policies
-- This is enforced through separate resource types, not conventions.
+    * This is enforced through separate resource types, not conventions.
 
 ### 2. Strong typing instead of annotations
 Ingress relied heavily on controller-specific annotations. Instead, Gateway API:
