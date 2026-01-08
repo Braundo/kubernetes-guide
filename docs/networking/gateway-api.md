@@ -29,7 +29,8 @@ Ingress succeeded because it standardized basic HTTP routing. Ingress struggled 
 - Annotations became de facto APIs (controller-specific, fragile)
 - Poor support for advanced routing, TLS delegation, or non-HTTP protocols
 - Difficult to reason about permissions and ownership
-- Gateway API was created to solve these problems without breaking Kubernetes’ declarative model.
+
+Gateway API was created to solve these problems without breaking Kubernetes’ declarative model.
 
 ## Core Design Principles
 Gateway API is built on four key ideas:
