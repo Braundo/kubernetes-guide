@@ -1,5 +1,5 @@
 ---
-icon: material/school-outline
+icon: lucide/graduation-cap
 title: Kubernetes Certification Preparation Guide (CKA, CKAD, CKS)
 description: A guide to preparing for Kubernetes certifications, including exam focus areas and recommended study strategies.
 hide:
@@ -46,15 +46,15 @@ Each guide includes:
 
 ### Books
 
-| Book Title               | Link                                                                                           |
-|--------------------------|-----------------------------------------------------------------------------------------------|
-| Kubernetes Up & Running  | [Kubernetes Up & Running](https://amzn.to/3XX7uaG){target="_blank"} |
-| The Kubernetes Book      | [The Kubernetes Book](https://amzn.to/41sLaqy){target="_blank"}     |
-| Certified Kubernetes Administrator Study Guide | [Certified Kubernetes Administrator Study Guide](https://amzn.to/4hkpoex){target="_blank"} |
-| Quick Start Kubernetes | [Quick Start Kubernetes](https://amzn.to/4bBZAt8){target="_blank"} |
-| Networking & Kubernetes | [Networking & Kubernetes](https://amzn.to/4hBuYt3){target="_blank"} |
-| Kubernetes Best Practices | [Kubernetes Best Practices](https://amzn.to/4iBuunT){target="_blank"} |
-| The Book of Kubernetes | [The Book of Kubernetes](https://amzn.to/3Fy3Nlv){target="_blank"} |
+| Book Title               | Notes |
+|--------------------------|-------|
+| Kubernetes Up & Running  | Strong foundational and practical reference text |
+| The Kubernetes Book      | Broad conceptual overview for operators |
+| Certified Kubernetes Administrator Study Guide | CKA-focused exam prep and exercises |
+| Quick Start Kubernetes | Fast-start orientation for newcomers |
+| Networking & Kubernetes | Useful for service and traffic model depth |
+| Kubernetes Best Practices | Operational patterns and common pitfalls |
+| The Book of Kubernetes | Practical cluster operations primer |
 
 ### Documentation
 
@@ -66,14 +66,14 @@ Each guide includes:
 
 | Course                              | Link                                                                                           |
 |-------------------------------------|-----------------------------------------------------------------------------------------------|
-| CKA Course on Udemy                 | [CKA Course on Udemy](https://www.udemy.com/course/certified-kubernetes-administrator/){target="_blank"}       |
+| CKA Course on KodeKloud             | [CKA Course on KodeKloud](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/){target="_blank"}       |
 | CKAD Design & Build on Pluralsight | [CKAD Design & Build on Pluralsight](https://www.pluralsight.com/courses/ckad-application-design-build-cert){target="_blank"} |
 
 ### Practice Labs
 
 | Description                     | Link                                                                                           |
 |---------------------------------|-----------------------------------------------------------------------------------------------|
-| Katacoda                       | [Katacoda](https://www.katacoda.com/){target="_blank"}                                                          |
+| Killercoda                    | [Killercoda](https://killercoda.com/){target="_blank"}                                                          |
 | Play with Kubernetes           | [Play with Kubernetes](https://labs.play-with-k8s.com/){target="_blank"}                                        |
 | Killer Shell  | [killer.sh](https://killer.sh/){target="_blank"} |
 

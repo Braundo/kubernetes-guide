@@ -1,115 +1,204 @@
-import sys, os, time, hashlib, re, logging
-import feedparser, requests
-from datetime import datetime, timezone
-from db import get_db, insert_item, item_exists_by_url
+import sys
+import os
+import time
+import hashlib
+import re
+import logging
+from datetime import datetime, timezone, timedelta
 
-logging.basicConfig(level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s")
+import feedparser
+import requests
+
+from db import get_db, insert_item, item_exists_by_url
+from content_policy import infer_category, is_approved_url, normalize_space
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
 log = logging.getLogger("crawler")
 
-UA = "k8s-guide-bot/1.0 (+https://k8s.guide)"
-TIMEOUT, DELAY, RETRIES = 30, 2, 2
+UA = "k8s-guide-updates-bot/2.0 (+https://k8s.guide)"
+TIMEOUT = 30
+DELAY = 2
+RETRIES = 2
 
 RSS_SOURCES = [
-    {"url": "https://kubernetes.io/feed.xml",
-     "category": "releases", "name": "Kubernetes Blog"},
-    {"url": "https://www.cncf.io/feed/",
-     "category": "ecosystem", "name": "CNCF Blog"},
-    {"url": "https://sysdig.com/blog/feed/",
-     "category": "security", "name": "Sysdig Security"},
-    {"url": "https://blog.aquasec.com/rss.xml",
-     "category": "security", "name": "Aqua Security Blog"},
-    {"url": "https://www.armosec.io/blog/feed/",
-     "category": "security", "name": "ARMO Security Blog"},
+    {
+        "url": "https://kubernetes.io/feed.xml",
+        "default_category": "releases",
+        "name": "Kubernetes Blog",
+    },
+    {
+        "url": "https://www.cncf.io/feed/",
+        "default_category": "ecosystem",
+        "name": "CNCF Blog",
+    },
+    {
+        "url": "https://blog.aquasec.com/rss.xml",
+        "default_category": "security",
+        "name": "Aqua Security Blog",
+    },
+    {
+        "url": "https://sysdig.com/blog/feed/",
+        "default_category": "security",
+        "name": "Sysdig Security Blog",
+    },
+    {
+        "url": "https://www.armosec.io/blog/feed/",
+        "default_category": "security",
+        "name": "ARMO Security Blog",
+    },
 ]
+
 
 def fetch_rss(source):
     url = source["url"]
     log.info(f"Fetching: {url}")
+
+    resp = None
     for attempt in range(RETRIES + 1):
         try:
-            resp = requests.get(url, headers={"User-Agent": UA},
-                                timeout=TIMEOUT)
+            resp = requests.get(url, headers={"User-Agent": UA}, timeout=TIMEOUT)
             resp.raise_for_status()
             break
-        except requests.RequestException as e:
+        except requests.RequestException as exc:
             if attempt < RETRIES:
                 time.sleep(DELAY * (attempt + 1))
             else:
-                log.error(f"Failed {url}: {e}")
+                log.error(f"Failed {url}: {exc}")
                 return []
+
     feed = feedparser.parse(resp.text)
     items = []
     for entry in feed.entries:
-        title = entry.get("title", "").strip()
-        link = entry.get("link", "").strip()
-        if not title or not link: continue
-        pub = ""
+        title = normalize_space(entry.get("title", ""))
+        link = normalize_space(entry.get("link", ""))
+        if not title or not link:
+            continue
+        if not is_approved_url(link):
+            continue
+
+        published = ""
         for attr in ("published_parsed", "updated_parsed"):
-            pp = getattr(entry, attr, None)
-            if pp:
-                pub = datetime(*pp[:6], tzinfo=timezone.utc).isoformat()
+            parsed = getattr(entry, attr, None)
+            if parsed:
+                published = datetime(*parsed[:6], tzinfo=timezone.utc).isoformat()
                 break
-        summary = re.sub(r"<[^>]+>", "",
-            entry.get("summary", entry.get("description", ""))
-        ).strip()[:1000]
-        items.append({"url": link, "title": title, "summary": summary,
-            "published": pub, "source_name": source["name"],
-            "category_hint": source["category"],
-            "content_hash": hashlib.sha256(
-                f"{title}|{link}".encode()).hexdigest()[:16]})
+
+        raw_summary = entry.get("summary", entry.get("description", ""))
+        summary = re.sub(r"<[^>]+>", "", raw_summary).strip()
+        summary = normalize_space(summary)[:1200]
+
+        category = infer_category(
+            title=title,
+            summary=summary,
+            default=source["default_category"],
+            url=link,
+        )
+
+        items.append(
+            {
+                "url": link,
+                "title": title,
+                "summary": summary,
+                "published": published,
+                "source_name": source["name"],
+                "category_hint": category,
+                "content_hash": hashlib.sha256(f"{title}|{link}".encode()).hexdigest()[:16],
+                "stars": 0,
+                "forks": 0,
+                "open_issues": 0,
+                "watchers": 0,
+                "last_pushed": "",
+            }
+        )
+
     log.info(f"  {len(items)} items from {source['name']}")
     return items
 
+
 def fetch_github():
-    token = os.environ.get("GITHUB_TOKEN")
+    token = (os.environ.get("GITHUB_TOKEN") or "").strip()
     if not token:
-        log.info("No GITHUB_TOKEN; skipping.")
+        log.info("No GITHUB_TOKEN; skipping GitHub tool scan.")
         return []
-    log.info("Searching GitHub...")
+
+    log.info("Searching GitHub for emerging Kubernetes tools")
+    pushed_since = (datetime.now(timezone.utc) - timedelta(days=90)).strftime("%Y-%m-%d")
     try:
-        resp = requests.get("https://api.github.com/search/repositories",
-            headers={"Authorization": f"Bearer {token}",
-                     "Accept": "application/vnd.github+json",
-                     "User-Agent": UA},
-            params={"q": "topic:kubernetes created:>2025-12-01 stars:>50",
-                    "sort": "stars", "order": "desc", "per_page": 20},
-            timeout=TIMEOUT)
+        resp = requests.get(
+            "https://api.github.com/search/repositories",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/vnd.github+json",
+                "User-Agent": UA,
+            },
+            params={
+                "q": f"topic:kubernetes stars:>150 pushed:>{pushed_since}",
+                "sort": "stars",
+                "order": "desc",
+                "per_page": 20,
+            },
+            timeout=TIMEOUT,
+        )
         resp.raise_for_status()
-    except Exception as e:
-        log.error(f"GitHub failed: {e}")
+    except Exception as exc:
+        log.error(f"GitHub fetch failed: {exc}")
         return []
+
     items = []
-    for r in resp.json().get("items", []):
-        items.append({"url": r["html_url"],
-            "title": f"{r['full_name']}: {r.get('description','')[:150]}",
-            "summary": r.get("description", "")[:500],
-            "published": r.get("created_at", ""),
-            "source_name": "GitHub Trending",
-            "category_hint": "tool-radar",
-            "content_hash": hashlib.sha256(
-                r["html_url"].encode()).hexdigest()[:16],
-            "stars": r.get("stargazers_count", 0)})
-    log.info(f"  {len(items)} repos")
+    for repo in resp.json().get("items", []):
+        link = repo.get("html_url", "")
+        if not link or not is_approved_url(link):
+            continue
+
+        title = f"{repo.get('full_name', '')}: {repo.get('description', '')}".strip(": ")
+        summary = normalize_space(repo.get("description", ""))[:600]
+        items.append(
+            {
+                "url": link,
+                "title": title,
+                "summary": summary,
+                "published": repo.get("created_at", ""),
+                "source_name": "GitHub Trending",
+                "category_hint": "tool-radar",
+                "content_hash": hashlib.sha256(link.encode()).hexdigest()[:16],
+                "stars": int(repo.get("stargazers_count", 0) or 0),
+                "forks": int(repo.get("forks_count", 0) or 0),
+                "open_issues": int(repo.get("open_issues_count", 0) or 0),
+                "watchers": int(repo.get("watchers_count", 0) or 0),
+                "last_pushed": repo.get("pushed_at", ""),
+            }
+        )
+
+    log.info(f"  {len(items)} GitHub repos")
     return items
+
 
 def run_crawl(include_github=False):
     db = get_db()
     total = 0
-    for src in RSS_SOURCES:
-        for item in fetch_rss(src):
-            if not item_exists_by_url(db, item["url"]):
-                insert_item(db, item)
-                total += 1
+
+    for source in RSS_SOURCES:
+        for item in fetch_rss(source):
+            if item_exists_by_url(db, item["url"]):
+                continue
+            insert_item(db, item)
+            total += 1
         time.sleep(DELAY)
+
     if include_github:
         for item in fetch_github():
-            if not item_exists_by_url(db, item["url"]):
-                insert_item(db, item)
-                total += 1
+            if item_exists_by_url(db, item["url"]):
+                continue
+            insert_item(db, item)
+            total += 1
+
     log.info(f"Crawl done. {total} new items.")
     db.close()
     return total
+
 
 if __name__ == "__main__":
     run_crawl("--github" in sys.argv)

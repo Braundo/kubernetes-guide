@@ -144,7 +144,7 @@ Practice common configs:
 
 - [Kubernetes Official Docs](https://kubernetes.io/docs/)
 - [Killer.sh Simulator](https://killer.sh)
-- [KodeKloud CKAD Course](https://kodekloud.com/p/kubernetes-for-developers/)
+- [KodeKloud CKAD Course](https://kodekloud.com/courses/certified-kubernetes-application-developer-ckad/)
 - [Linux Foundation CKAD Training](https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/)
 - [YouTube: TechWorld with Nana – CKAD Series](https://www.youtube.com/watch?v=d6WC5n9G_sM)
 

@@ -11,13 +11,13 @@
 # The site_name is shown in the page header and the browser window title
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_name
-site_name = "Kubernetes Guide"
+site_name = "k8s.guide"
 
 # The site_description is included in the HTML head and should contain a
 # meaningful description of the site content for use by search engines.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "A new project generated from the default template project."
+site_description = "Kubernetes updates and reference hub for operators, platform teams, and security engineers."
 
 # The site_author attribute. This is used in the HTML head element.
 #
@@ -35,7 +35,7 @@ site_url = "https://www.k8s.guide/"
 #
 # Read more: https://zensical.org/docs/setup/basics/#copyright
 copyright = """
-Copyright &copy; 2025 The authors
+Copyright &copy; 2026 k8s.guide
 """
 
 # Zensical supports both implicit navigation and explicitly defined navigation.
@@ -47,65 +47,71 @@ Copyright &copy; 2025 The authors
 # Read more: https://zensical.org/docs/setup/navigation/
 nav = [
   { "Home" = "index.md" },
-  { "Getting Started" = [
-    { "Overview" = "getting-started/overview.md" },
-    { "Kubernetes API" = "getting-started/kubernetes-api.md" },
-    { "Namespaces" = "getting-started/namespaces.md" },
+  { "Learn Kubernetes" = [
+    { "Learning Paths" = "learn/index.md" },
+    { "Foundations" = [
+      { "Overview" = "getting-started/overview.md" },
+      { "Kubernetes API" = "getting-started/kubernetes-api.md" },
+      { "Namespaces" = "getting-started/namespaces.md" },
+    ]},
+    { "Workloads" = [
+      { "Pods & Deployments" = "workloads/pods-deployments.md" },
+      { "Scaling & HPA" = "workloads/scaling-hpa.md" },
+      { "StatefulSets" = "workloads/statefulsets.md" },
+      { "DaemonSets" = "workloads/daemonsets.md" },
+      { "Jobs & CronJobs" = "workloads/jobs-cronjobs.md" },
+      { "Init Containers" = "workloads/init-containers.md" },
+    ]},
+    { "Networking" = [
+      { "Overview" = "networking/networking.md" },
+      { "Services" = "networking/services-networking.md" },
+      { "Ingress" = "networking/ingress.md" },
+      { "Gateway API" = "networking/gateway-api.md" },
+      { "Network Policies" = "networking/netpol.md" },
+    ]},
+    { "Configuration" = [
+      { "ConfigMaps & Secrets" = "configuration/configmaps-secrets.md" },
+      { "Health Probes" = "configuration/probes.md" },
+      { "Resource Limits & Requests" = "configuration/limits-requests.md" },
+      { "Quotas & Limits" = "configuration/quotas-limits.md" },
+      { "Storage" = "storage/storage.md" },
+    ]},
+    { "Security Fundamentals" = [
+      { "Security Primer" = "security/security.md" },
+      { "RBAC" = "security/rbac.md" },
+      { "Pod Security" = "security/psa.md" },
+      { "Security Context" = "security/sec-context.md" },
+      { "Image Scanning" = "security/image-scan-sign.md" },
+      { "Audit & Logging" = "security/audit-logging.md" },
+    ]},
+    { "Operations" = [
+      { "Troubleshooting" = "operations/troubleshooting.md" },
+      { "Helm" = "operations/helm-package-management.md" },
+      { "Operators & CRDs" = "operations/operators-crds.md" },
+      { "Maintenance" = "operations/maintenance.md" },
+      { "Kubectl Cheat Sheet" = "resources/kubectl-cheatsheet.md" },
+    ]},
   ]},
-  { "Workloads" = [
-    { "Pods" = "workloads/pods-deployments.md" },
-    { "Scaling & HPA" = "workloads/scaling-hpa.md" },
-    { "StatefulSets" = "workloads/statefulsets.md" },
-    { "DaemonSets" = "workloads/daemonsets.md" },
-    { "Jobs & CronJobs" = "workloads/jobs-cronjobs.md" },
-    { "Init Containers" = "workloads/init-containers.md" },
-  ]},
-  { "Networking" = [
-    { "Overview" = "networking/networking.md" },
-    { "Services" = "networking/services-networking.md" },
-    { "Ingress" = "networking/ingress.md" },
-    { "Gateway API" = "networking/gateway-api.md" },
-    { "Network Policies" = "networking/netpol.md" },
-  ]},
-  { "Configuration" = [
-    { "ConfigMaps" = "configuration/configmaps-secrets.md" },
-    { "Health Probes" = "configuration/probes.md" },
-    { "Resource Limits" = "configuration/limits-requests.md" },
-    { "Quotas" = "configuration/quotas-limits.md" },
-  ]},
-  { "Storage" = [
-    { "Overview" = "storage/storage.md" },
-  ]},
-  { "Security" = [
-    { "Security Primer" = "security/security.md" },
-    { "RBAC" = "security/rbac.md" },
-    { "Pod Security" = "security/psa.md" },
-    { "Security Context" = "security/sec-context.md" },
-    { "Image Scanning" = "security/image-scan-sign.md" },
-    { "Audit & Logging" = "security/audit-logging.md" },
-  ]},
-  { "Operations" = [
-    { "Helm" = "operations/helm-package-management.md" },
-    { "Operators & CRDs" = "operations/operators-crds.md" },
-    { "Troubleshooting" = "operations/troubleshooting.md" },
-    { "Maintenance" = "operations/maintenance.md" },
-  ]},
-  { "Certifications" = [
-    { "Cert Overview" = "certifications/certification-preparation.md" },
+  { "Certificates" = [
+    { "Cert Prep Guide" = "certifications/certification-preparation.md" },
     { "CKA (Admin)" = "certifications/cka.md" },
     { "CKAD (Developer)" = "certifications/ckad.md" },
     { "CKS (Security)" = "certifications/cks.md" },
   ]},
-  { "News" = [
-    { "Latest" = "news/index.md" },
-    { "Release Notes" = "news/releases/index.md" },
-    { "Security Advisories" = "news/security/index.md" },
-    { "Ecosystem" = "news/ecosystem/index.md" },
-    { "Tool Radar" = "news/tool-radar/index.md" },
+  { "Updates" = [
+    { "Release Updates" = "updates/releases/index.md" },
+    { "Security Updates" = "updates/security/index.md" },
+    { "Ecosystem Updates" = "updates/ecosystem/index.md" },
+    { "Tool Radar" = "updates/tool-radar/index.md" },
   ]},
-  { "Resources" = [
-    { "Kubectl Cheat Sheet" = "resources/kubectl-cheatsheet.md" },
-    { "About" = "resources/about.md" },
+  { "Jobs" = [
+    { "Listings" = "jobs/listings.md" },
+    { "Contact" = "jobs/contact.md" },
+  ]},
+  { "About" = [
+    { "About k8s.guide" = "about/index.md" },
+    { "Sponsor" = "sponsor/index.md" },
+    { "Recommended Resources" = "resources/recommended-resources.md" },
   ]},
 ]
 
@@ -133,7 +139,7 @@ extra_css = ["stylesheets/extra-v2.css"]
 [project.theme]
 logo = "./images/logo-v2.png"
 favicon = "./images/logo-v2.png"
-font.text = "Inter"
+font.text = "IBM Plex Sans"
 font.code = "JetBrains Mono"
 
 
@@ -187,7 +193,6 @@ features = [
     "content.tooltips",
     "header.autohide",
     "navigation.footer",
-    "navigation.indexes",
     "navigation.instant",
     "navigation.instant.prefetch",
     "navigation.instant.progress",

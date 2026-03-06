@@ -109,7 +109,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 - Open multiple terminal tabs (one for docs, one for kubectl)
 - Bookmark key doc pages:
 
-    - [Install tools](https://kubernetes.io/docs/setup/tools/)
+    - [Install tools](https://kubernetes.io/docs/tasks/tools/)
     - [Tasks → Configure Pods](https://kubernetes.io/docs/tasks/)
     - [Reference](https://kubernetes.io/docs/reference/)
     
@@ -122,7 +122,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 - [Kubernetes Official Docs](https://kubernetes.io/docs/)
 - [Killer.sh Simulator (free with CKA)](https://killer.sh)
-- [KodeKloud CKA Course](https://kodekloud.com/p/certified-kubernetes-administrator/)
+- [KodeKloud CKA Course](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/)
 - [Linux Foundation CKA Training](https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/)
 - [YouTube: TechWorld with Nana – CKA Series](https://www.youtube.com/watch?v=X48VuDVv0do)
 

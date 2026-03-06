@@ -1,158 +1,218 @@
-import os, logging, requests
-from datetime import datetime, timezone
+import os
+import logging
+import requests
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("llm")
 TIMEOUT = 120
 
-ARTICLE_PROMPT = '''You are a senior technical writer for k8s.guide, a respected
-community resource read by platform engineers and SREs who run Kubernetes
-in production. Your writing is direct, opinionated, and grounded in
-operational experience.
+COMMON_RULES = """
+Rules:
+- Be concise, specific, and operationally useful.
+- Do not invent facts outside provided item context.
+- Use clean Markdown, no code fences around full output.
+- Avoid hype, filler, and broad marketing language.
+- No em dashes.
+"""
 
-Write an article about this item. Base it ONLY on the provided summary.
-Do not invent facts.
+SECURITY_PROMPT = """You are writing for k8s.guide security updates.
 
-ITEM:
+Write Markdown with exactly these sections:
+
+## Advisory Summary
+## Affected Components and Versions
+## Why It Matters
+## What to Do
+
+Use the provided item only.
+
+Item:
 - Title: {title}
-- Category: {category}
 - Published: {published}
 - Source: {url}
 - Summary: {summary}
 
-Use EXACTLY this structure (raw Markdown, no code fences around output):
+{rules}
+"""
 
-## Summary
+RELEASE_PROMPT = """You are writing for k8s.guide release updates.
 
-3-4 sentences. State precisely what happened. Include version numbers,
-CVE IDs, or project names. Be factual and specific.
+Write Markdown with exactly these sections:
 
-## Why It Matters
+## Release Summary
+## Key Changes
+## Breaking Changes and Deprecations
+## Why It Matters for Operators
+## Suggested Actions
 
-2-3 paragraphs of expert analysis. Connect this to real operational
-concerns: upgrade paths, security posture, architecture decisions,
-migration timelines, breaking changes. Reference Kubernetes concepts
-(Gateway API, RBAC, control plane, etcd, CRDs) where relevant.
-Write like a staff engineer briefing their platform team Monday morning.
+Use the provided item only.
 
-## What You Should Do
+Item:
+- Title: {title}
+- Published: {published}
+- Source: {url}
+- Summary: {summary}
 
-4-5 numbered action items. Each MUST be concrete:
-- Bad: Review the release notes
-- Good: Run kubectl version --short to confirm your cluster version,
-  then compare against the patched version in the advisory.
-Include commands, config snippets, or specific checks.
+{rules}
+"""
 
-## Further Reading
+TOOL_PROMPT = """You are writing for k8s.guide tool radar.
 
-3-4 bullet points with links. Always include the source article.
-Add Kubernetes docs, KEPs, or GitHub issues where relevant.
+Write Markdown with exactly these sections:
 
-RULES:
-- Max 500 words
-- No filler phrases ("in this article", "lets dive in", "in conclusion")
-- Technical accuracy over completeness
-- Present tense for current state, past tense for events
-- No Markdown code fences around the entire output
-- Never use em dashes. Use commas, periods, hyphens or semicolons instead.
-'''
+## What the Tool Does
+## Why It Is Worth Watching
+## Maturity and Adoption Notes
+## Category
 
-NEWSLETTER_PROMPT = '''You are the editor of the k8s.guide weekly newsletter,
-read by Kubernetes practitioners and platform engineers.
+Use the provided item only.
 
-Write a weekly digest newsletter from these articles published this week.
-The newsletter should feel like a knowledgeable colleague summarizing the
-week in Kubernetes over coffee.
+Item:
+- Title: {title}
+- Published: {published}
+- Source: {url}
+- Summary: {summary}
 
-ARTICLES THIS WEEK:
-{articles_summary}
+{rules}
+"""
 
-Write the newsletter in Markdown using this structure:
+ECOSYSTEM_PROMPT = """You are writing a curated Kubernetes ecosystem roundup for operators.
+
+Write Markdown with exactly these sections:
+
+## Curated Intro
+## Top Signals This Cycle
+
+For "Top Signals This Cycle", include 3 to 7 numbered items. Each item must include:
+- signal summary
+- one short "Why it matters" sentence
+
+Roundup sources:
+{sources}
+
+{rules}
+"""
+
+NEWSLETTER_PROMPT = """You are the editor of the k8s.guide weekly newsletter.
+
+Write Markdown with this structure:
 
 # This Week in Kubernetes
-
-One paragraph (3-4 sentences) overview of the weeks themes.
-
 ## Highlights
-
-For each article, write 2-3 sentences summarizing it and why readers
-should care. Use bullet points. Link to each article on k8s.guide.
-
 ## Quick Takes
-
-2-3 sentences of editorial perspective: what patterns you see across
-this weeks news, what to watch for next week.
-
 ## One Thing to Do This Week
 
-A single, specific action item that applies to most readers based on
-this weeks news.
+Articles:
+{articles_summary}
 
-RULES:
-- Friendly but professional tone -- not corporate, not casual
+Rules:
 - Max 600 words
-- No "dear readers" or "thanks for reading" -- just content
-- Include links to articles using the provided URLs
-'''
+- Focus on operator impact and actionability
+- No filler greetings
+"""
+
 
 def _call_anthropic(prompt):
-    r = requests.post("https://api.anthropic.com/v1/messages",
-        headers={"x-api-key": os.environ.get("LLM_API_KEY",""),
-                 "anthropic-version": "2023-06-01",
-                 "content-type": "application/json"},
-        json={"model": os.environ.get("LLM_MODEL","claude-sonnet-4-5-20250929"),
-              "max_tokens": 1500,
-              "messages": [{"role":"user","content": prompt}]},
-        timeout=TIMEOUT)
-    r.raise_for_status()
-    return r.json()["content"][0]["text"]
+    response = requests.post(
+        "https://api.anthropic.com/v1/messages",
+        headers={
+            "x-api-key": os.environ.get("LLM_API_KEY", ""),
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+        json={
+            "model": os.environ.get("LLM_MODEL", "claude-sonnet-4-5-20250929"),
+            "max_tokens": 1500,
+            "messages": [{"role": "user", "content": prompt}],
+        },
+        timeout=TIMEOUT,
+    )
+    response.raise_for_status()
+    return response.json()["content"][0]["text"]
+
 
 def _call_openai(prompt):
-    r = requests.post("https://api.openai.com/v1/chat/completions",
-        headers={"Authorization": f"Bearer {os.environ.get('LLM_API_KEY','')}",
-                 "Content-Type": "application/json"},
-        json={"model": os.environ.get("LLM_MODEL","gpt-4o-mini"),
-              "max_tokens": 1500,
-              "messages": [
-                  {"role":"system","content":
-                   "You are a senior Kubernetes technical writer."},
-                  {"role":"user","content": prompt}]},
-        timeout=TIMEOUT)
-    r.raise_for_status()
-    return r.json()["choices"][0]["message"]["content"]
+    response = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {os.environ.get('LLM_API_KEY', '')}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": os.environ.get("LLM_MODEL", "gpt-4o-mini"),
+            "max_tokens": 1500,
+            "messages": [
+                {"role": "system", "content": "You are a senior Kubernetes technical editor."},
+                {"role": "user", "content": prompt},
+            ],
+        },
+        timeout=TIMEOUT,
+    )
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
+
 
 def _call(prompt):
-    p = os.environ.get("LLM_PROVIDER","anthropic").lower()
-    if p == "anthropic": return _call_anthropic(prompt)
-    elif p == "openai": return _call_openai(prompt)
-    else: raise ValueError(f"Unknown provider: {p}")
+    provider = (os.environ.get("LLM_PROVIDER", "anthropic") or "anthropic").lower()
+    if provider == "anthropic":
+        return _call_anthropic(prompt)
+    if provider == "openai":
+        return _call_openai(prompt)
+    raise ValueError(f"Unknown provider: {provider}")
+
+
+def _sources_text(item):
+    sources = item.get("sources") or []
+    if not sources:
+        return f"- {item.get('title', '')} ({item.get('url', '')})"
+
+    lines = []
+    for src in sources[:7]:
+        lines.append(f"- {src.get('title', '')} ({src.get('url', '')})")
+    return "\n".join(lines)
+
 
 def write_article(item):
-    prompt = ARTICLE_PROMPT.format(
-        title=item.get("title",""), category=item.get("category_hint",""),
-        published=item.get("published","")[:10], url=item.get("url",""),
-        summary=item.get("summary",""))
-    log.info(f"LLM writing: {item.get('title','')[:60]}")
+    category = item.get("category_hint", "ecosystem")
+    payload = {
+        "title": item.get("title", ""),
+        "published": (item.get("published", "") or "")[:10],
+        "url": item.get("url", ""),
+        "summary": item.get("summary", ""),
+        "rules": COMMON_RULES,
+    }
+
+    if category == "security":
+        prompt = SECURITY_PROMPT.format(**payload)
+    elif category == "releases":
+        prompt = RELEASE_PROMPT.format(**payload)
+    elif category == "tool-radar":
+        prompt = TOOL_PROMPT.format(**payload)
+    else:
+        prompt = ECOSYSTEM_PROMPT.format(sources=_sources_text(item), rules=COMMON_RULES)
+
+    log.info(f"LLM writing {category}: {item.get('title', '')[:80]}")
     try:
         return _call(prompt)
-    except Exception as e:
-        log.error(f"LLM failed: {e}")
+    except Exception as exc:
+        log.error(f"LLM failed: {exc}")
         return None
+
 
 def write_newsletter(articles):
     summaries = []
-    for a in articles:
-        cat = a.get("category_hint","")
-        url_slug = a.get("generated_file","").replace(".md","")
-        site_url = f"https://k8s.guide/news/{cat}/{url_slug}/"
-        summaries.append(f"- [{a['title']}]({site_url}) "
-                        f"(Category: {cat}, Published: "
-                        f"{a.get('published','')[:10]})")
-    prompt = NEWSLETTER_PROMPT.format(
-        articles_summary="\n".join(summaries))
+    for article in articles:
+        category = article.get("category_hint", "")
+        generated_file = (article.get("generated_file") or "").replace(".md", "")
+        site_url = f"https://k8s.guide/updates/{category}/{generated_file}/"
+        summaries.append(
+            f"- [{article.get('title', '')}]({site_url}) (Category: {category}, Published: {(article.get('published') or '')[:10]})"
+        )
+
+    prompt = NEWSLETTER_PROMPT.format(articles_summary="\n".join(summaries))
     log.info(f"LLM writing newsletter ({len(articles)} articles)")
     try:
         return _call(prompt)
-    except Exception as e:
-        log.error(f"Newsletter LLM failed: {e}")
+    except Exception as exc:
+        log.error(f"Newsletter LLM failed: {exc}")
         return None

@@ -137,7 +137,7 @@ The **CKS** certification tests your ability to secure Kubernetes clusters and w
 
 - [Kubernetes Official Docs](https://kubernetes.io/docs/)
 - [Killer.sh Simulator (CKS)](https://killer.sh/cks/)
-- [KodeKloud CKS Course](https://kodekloud.com/p/certified-kubernetes-security-specialist/)
+- [KodeKloud CKS Course](https://kodekloud.com/courses/certified-kubernetes-security-specialist-cks/)
 - [Linux Foundation CKS Training](https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist-cks/)
 - [Sysdig Falco + GitHub rules](https://github.com/falcosecurity/falco)
 

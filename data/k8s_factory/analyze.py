@@ -1,72 +1,229 @@
-import json, os, re, logging
+import json
+import os
+import re
+import logging
 from datetime import datetime, timezone
-from db import get_db, get_unprocessed_items
 
-logging.basicConfig(level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s")
+from db import get_db, get_unprocessed_items
+from content_policy import (
+    CATEGORY_CONFIG,
+    CATEGORY_TARGET_SHARE,
+    RUN_CAPS,
+    DAILY_CAPS,
+    WEEKLY_CAPS,
+    QUALITY_THRESHOLDS,
+    MAX_ITEMS_PER_RUN,
+    DOMAIN_SCORE_BOOSTS,
+    get_domain,
+    count_recent_files,
+)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
 log = logging.getLogger("analyze")
 
 PLAN = os.path.join(os.path.dirname(os.path.abspath(__file__)), "plan.json")
-MAX = {"security": 5, "releases": 3, "ecosystem": 3, "tool-radar": 3}
 
-def score(item):
-    cat, title = item.get("category_hint",""), item.get("title","").lower()
-    s = {"security":80,"releases":60,"ecosystem":40,"tool-radar":30}.get(cat,20)
-    if cat == "security" and "cve" in title: s += 10
-    if cat == "releases" and re.search(r"v\d+\.\d+", title): s += 20
-    if "kubernetes" in item.get("source_name","").lower(): s += 10
-    if "cncf" in item.get("source_name","").lower(): s += 5
-    s += min(int(item.get("stars",0)/100), 30)
-    pub = item.get("published","")
-    if pub:
-        try:
-            age = (datetime.now(timezone.utc) -
-                   datetime.fromisoformat(pub.replace("Z","+00:00"))).days
-            if age <= 7: s += 10
-            elif age <= 14: s += 5
-        except: pass
-    return min(s, 100)
+BASE_SCORES = {
+    "security": 72,
+    "releases": 64,
+    "tool-radar": 60,
+    "ecosystem": 56,
+}
 
-def titles_too_similar(title_a, title_b):
-    words_a = set(title_a.lower().split())
-    words_b = set(title_b.lower().split())
-    overlap = len(words_a & words_b)
-    max_len = max(len(words_a), len(words_b))
-    if max_len == 0:
+CATEGORY_ORDER = ["security", "releases", "tool-radar", "ecosystem"]
+
+
+def canonical_title(title):
+    cleaned = re.sub(r"[^a-z0-9\s]", " ", (title or "").lower())
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    tokens = [t for t in cleaned.split() if len(t) > 2]
+    return " ".join(tokens)
+
+
+def titles_too_similar(a, b):
+    aa = set(canonical_title(a).split())
+    bb = set(canonical_title(b).split())
+    if not aa or not bb:
         return False
-    return overlap > 0.6 * max_len
+    overlap = len(aa & bb)
+    return overlap >= max(4, int(0.7 * min(len(aa), len(bb))))
+
+
+def score_item(item):
+    cat = item.get("category_hint", "ecosystem")
+    title = (item.get("title") or "").lower()
+    summary = (item.get("summary") or "").lower()
+    domain = get_domain(item.get("url", ""))
+
+    score = BASE_SCORES.get(cat, 50)
+    score += DOMAIN_SCORE_BOOSTS.get(domain, 0)
+
+    if cat == "security" and re.search(r"\bcve-\d{4}-\d+\b", title):
+        score += 12
+    if cat == "releases" and re.search(r"\bv\d+\.\d+\b", title):
+        score += 8
+    if cat == "releases" and "kubernetes" in title:
+        score += 6
+    if cat == "tool-radar":
+        stars = int(item.get("stars", 0) or 0)
+        score += min(stars // 100, 12)
+    if "kubecon" in title and cat == "ecosystem":
+        score -= 8
+    if "announcement" in title and cat == "ecosystem":
+        score -= 4
+
+    if len(summary) > 250:
+        score += 5
+    elif len(summary) < 80:
+        score -= 8
+
+    published = item.get("published", "")
+    if published:
+        try:
+            days = (datetime.now(timezone.utc) - datetime.fromisoformat(published.replace("Z", "+00:00"))).days
+            if days <= 2:
+                score += 10
+            elif days <= 7:
+                score += 6
+            elif days <= 21:
+                score += 2
+            elif days > 90:
+                score -= 10
+        except Exception:
+            pass
+
+    return max(0, min(score, 100))
+
+
+def passes_frequency_guardrails(category):
+    daily_cap = DAILY_CAPS.get(category, 1)
+    weekly_cap = WEEKLY_CAPS.get(category, 5)
+
+    if count_recent_files(category, days=1) >= daily_cap:
+        return False
+    if count_recent_files(category, days=7) >= weekly_cap:
+        return False
+    return True
+
+
+def select_by_category(items):
+    selected = []
+    seen_titles = []
+
+    by_cat = {k: [] for k in CATEGORY_CONFIG.keys()}
+    for item in items:
+        by_cat.setdefault(item.get("category_hint", "ecosystem"), []).append(item)
+
+    # Curate ecosystem into one roundup candidate with 3-7 sources.
+    eco_candidates = by_cat.get("ecosystem", [])
+    curated_eco = None
+    if eco_candidates and passes_frequency_guardrails("ecosystem"):
+        top = []
+        for candidate in eco_candidates:
+            if candidate["score"] < QUALITY_THRESHOLDS["ecosystem"]:
+                continue
+            if any(titles_too_similar(candidate.get("title", ""), t) for t in [x.get("title", "") for x in top]):
+                continue
+            top.append(candidate)
+            if len(top) == 7:
+                break
+        if len(top) >= 3:
+            now = datetime.now(timezone.utc)
+            curated_eco = {
+                "id": None,
+                "title": f"Kubernetes ecosystem roundup - {now.strftime('%Y-%m-%d')}",
+                "summary": "Curated ecosystem signals for operators, generated from approved sources.",
+                "published": now.isoformat(),
+                "source_name": "Curated Ecosystem Feed",
+                "category_hint": "ecosystem",
+                "url": top[0].get("url", ""),
+                "content_hash": f"ecosystem-roundup-{now.strftime('%Y%m%d')}",
+                "sources": [
+                    {
+                        "title": src.get("title", ""),
+                        "url": src.get("url", ""),
+                        "source_name": src.get("source_name", ""),
+                        "published": src.get("published", ""),
+                    }
+                    for src in top[:7]
+                ],
+                "source_item_ids": [src.get("id") for src in top[:7] if src.get("id")],
+                "score": max(src.get("score", 0) for src in top),
+            }
+
+    for category in CATEGORY_ORDER:
+        if category == "ecosystem":
+            if curated_eco:
+                selected.append(curated_eco)
+            continue
+
+        if not passes_frequency_guardrails(category):
+            continue
+
+        cap = RUN_CAPS.get(category, 1)
+        threshold = QUALITY_THRESHOLDS.get(category, 60)
+
+        chosen = 0
+        for item in by_cat.get(category, []):
+            if chosen >= cap:
+                break
+            if item["score"] < threshold:
+                continue
+            title = item.get("title", "")
+            if any(titles_too_similar(title, seen) for seen in seen_titles):
+                continue
+            selected.append(item)
+            seen_titles.append(title)
+            chosen += 1
+
+    # Enforce global cap while preserving category order and score.
+    selected.sort(
+        key=lambda x: (
+            CATEGORY_ORDER.index(x.get("category_hint", "ecosystem"))
+            if x.get("category_hint", "ecosystem") in CATEGORY_ORDER
+            else 99,
+            -x.get("score", 0),
+        )
+    )
+    selected = selected[:MAX_ITEMS_PER_RUN]
+    return selected
+
 
 def generate_plan():
     db = get_db()
     items = get_unprocessed_items(db)
     db.close()
+
     if not items:
         log.info("Nothing to plan.")
-        return {"items": []}
-    for i in items: i["score"] = score(i)
+        plan = {"generated_at": datetime.now(timezone.utc).isoformat(), "items": []}
+        with open(PLAN, "w") as handle:
+            json.dump(plan, handle, indent=2)
+        return plan
+
+    for item in items:
+        item["score"] = score_item(item)
+
     items.sort(key=lambda x: x["score"], reverse=True)
-    sel, counts, seen_titles = [], {}, []
-    for i in items:
-        c = i.get("category_hint","ecosystem")
-        if counts.get(c,0) < MAX.get(c,3):
-            title = i.get("title","")
-            skip = False
-            for seen in seen_titles:
-                if titles_too_similar(title, seen):
-                    log.info(f"Skipping (too similar): {title[:60]}")
-                    skip = True
-                    break
-            if skip:
-                continue
-            sel.append(i)
-            seen_titles.append(title)
-            counts[c] = counts.get(c,0) + 1
-    plan = {"generated_at": datetime.now(timezone.utc).isoformat(),
-            "total_selected": len(sel), "items": sel}
-    with open(PLAN, "w") as f:
-        json.dump(plan, f, indent=2, default=str)
-    log.info(f"Plan: {len(sel)} items selected")
+    selected = select_by_category(items)
+
+    plan = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "target_mix": CATEGORY_TARGET_SHARE,
+        "total_candidates": len(items),
+        "total_selected": len(selected),
+        "items": selected,
+    }
+
+    with open(PLAN, "w") as handle:
+        json.dump(plan, handle, indent=2, default=str)
+
+    log.info(f"Plan: selected {len(selected)} from {len(items)} candidates")
     return plan
+
 
 if __name__ == "__main__":
     generate_plan()

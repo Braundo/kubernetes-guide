@@ -1,118 +1,161 @@
 #!/usr/bin/env python3
-#Full pipeline orchestrator
-import sys, os, logging, traceback, subprocess
+import os
+import sys
+import logging
+import traceback
+import subprocess
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from db import get_db, log_run_start, log_run_end
 from crawler import run_crawl
 from analyze import generate_plan
 from generate import run_generate
+from content_policy import CATEGORY_CONFIG
 
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[logging.StreamHandler(),
-              logging.FileHandler(os.path.join(
-                  os.path.dirname(os.path.abspath(__file__)), "run.log"))])
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(os.path.join(os.path.dirname(os.path.abspath(__file__)), "run.log")),
+    ],
+)
 log = logging.getLogger("pipeline")
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
-def verify():
-    errs = []
-    for root, _, files in os.walk(os.path.join(REPO, "docs", "automation")):
-        for f in files:
-            if f.endswith(".md") and f != "index.md":
-                p = os.path.join(root, f)
-                with open(p) as fh: c = fh.read()
-                if "---" not in c: errs.append(f"{p}: no frontmatter")
-                if len(c) < 200: errs.append(f"{p}: too short")
-    for e in errs: log.error(f"VERIFY: {e}")
-    return len(errs) == 0
+
+def verify_generated_markdown():
+    errors = []
+    for config in CATEGORY_CONFIG.values():
+        root = config["output_dir"]
+        if not os.path.isdir(root):
+            continue
+        for name in os.listdir(root):
+            if name == "index.md" or not name.endswith(".md"):
+                continue
+            path = os.path.join(root, name)
+            with open(path) as handle:
+                content = handle.read()
+            if "---" not in content:
+                errors.append(f"{path}: missing front matter")
+            required = ["## Source Links", "## Related Pages"]
+            for marker in required:
+                if marker not in content:
+                    errors.append(f"{path}: missing section {marker}")
+
+    for err in errors:
+        log.error(f"VERIFY: {err}")
+    return len(errors) == 0
+
 
 def git_push():
     os.chdir(REPO)
-    r1 = subprocess.run(["git","diff","--quiet","docs/news/"],
-                        capture_output=True)
+    tracked_paths = [
+        "docs/updates/",
+        "data/k8s_factory/plan.json",
+    ]
+
+    diff_cmd = ["git", "diff", "--quiet", "--", *tracked_paths]
+    changed = subprocess.run(diff_cmd).returncode != 0
+
     untracked = subprocess.run(
-        ["git","ls-files","--others","--exclude-standard","docs/news/"],
-        capture_output=True, text=True)
-    if r1.returncode == 0 and not untracked.stdout.strip():
-        log.info("No changes.")
+        [
+            "git",
+            "ls-files",
+            "--others",
+            "--exclude-standard",
+            "docs/updates/",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    if not changed and not untracked.stdout.strip():
+        log.info("No generated changes to commit.")
         return 0
-    subprocess.run(["git","add","docs/news/"], check=True)
-    subprocess.run(["git","add","data/k8s_factory/plan.json"], check=False)
-    count = subprocess.run(["git","diff","--cached","--name-only"],
-        capture_output=True, text=True)
-    n = sum(1 for l in count.stdout.strip().split("\n")
-            if l.endswith(".md")) if count.stdout.strip() else 0
+
+    subprocess.run(["git", "add", "docs/updates/"], check=True)
+    subprocess.run(["git", "add", "data/k8s_factory/plan.json"], check=False)
+
+    changed_files = subprocess.run(["git", "diff", "--cached", "--name-only"], capture_output=True, text=True)
+    generated_count = sum(1 for line in changed_files.stdout.splitlines() if line.endswith(".md") and "index.md" not in line)
+
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    subprocess.run(["git","commit","-m",
-        f"feat(news): add {n} new articles [{ts}]"], check=True)
-    subprocess.run(["git","push","origin","main"], check=True)
-    log.info(f"Pushed {n} articles.")
-    return n
+    message = f"feat(updates): publish {generated_count} curated updates [{ts}]"
+    subprocess.run(["git", "commit", "-m", message], check=True)
+    subprocess.run(["git", "push", "origin", "main"], check=True)
+    log.info(f"Pushed {generated_count} generated page(s).")
+    return generated_count
+
 
 def notify_openclaw(message):
-    #Send notification via OpenClaw if available.
     try:
         sock_path = os.path.expanduser("~/.openclaw/daemon.sock")
         if not os.path.exists(sock_path):
             return
-        # Use the openclaw CLI to send a notification to yourself
-        subprocess.run(["openclaw", "notify", message],
-                       capture_output=True, timeout=10)
+        subprocess.run(["openclaw", "notify", message], capture_output=True, timeout=10)
         log.info("OpenClaw notification sent.")
-    except Exception as e:
-        log.debug(f"OpenClaw notify skipped: {e}")
+    except Exception as exc:
+        log.debug(f"OpenClaw notify skipped: {exc}")
+
 
 def main():
-    gh = "--github" in sys.argv
+    include_github = "--github" in sys.argv
     log.info("=== Pipeline starting ===")
+
     db = get_db()
-    rid = log_run_start(db)
+    run_id = log_run_start(db)
     db.close()
+
     try:
         log.info("--- Crawl ---")
-        new = run_crawl(include_github=gh)
+        crawled = run_crawl(include_github=include_github)
+
         log.info("--- Analyze ---")
         plan = generate_plan()
-        planned = len(plan.get("items",[]))
-        if planned == 0:
-            log.info("No new items. Done.")
+        selected = len(plan.get("items", []))
+        if selected == 0:
+            log.info("No high-signal items selected. Done.")
             db = get_db()
-            log_run_end(db, rid, new, 0, "success_noop")
+            log_run_end(db, run_id, crawled, 0, "success_noop")
             db.close()
             return 0
-        log.info(f"--- Generate ({planned} items) ---")
-        gen = run_generate()
+
+        log.info(f"--- Generate ({selected} item(s)) ---")
+        generated = run_generate()
+
         log.info("--- Verify ---")
-        if not verify():
+        if not verify_generated_markdown():
             log.error("Verification failed.")
             db = get_db()
-            log_run_end(db, rid, new, gen, "failed_verify")
+            log_run_end(db, run_id, crawled, generated, "failed_verify")
             db.close()
             return 1
+
         log.info("--- Commit & Push ---")
         pushed = git_push()
-        db = get_db()
-        log_run_end(db, rid, new, gen, "success")
-        db.close()
-        with open(os.path.join(os.path.dirname(
-                os.path.abspath(__file__)), ".last_run"), "w") as f:
-            f.write(datetime.now(timezone.utc).isoformat())
 
-        # Notify
-        msg = f"k8s.guide pipeline: {gen} articles published to site."
-        notify_openclaw(msg)
-        log.info(f"=== Done: {gen} articles published ===")
-        return 0
-    except Exception as e:
-        log.error(f"FAILED: {e}\n{traceback.format_exc()}")
         db = get_db()
-        log_run_end(db, rid, 0, 0, "failed", str(e))
+        log_run_end(db, run_id, crawled, generated, "success")
         db.close()
-        notify_openclaw(f"k8s.guide pipeline FAILED: {e}")
+
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".last_run"), "w") as handle:
+            handle.write(datetime.now(timezone.utc).isoformat())
+
+        notify_openclaw(f"k8s.guide updates pipeline: {generated} pages generated, {pushed} pushed.")
+        log.info(f"=== Done: {generated} page(s) generated ===")
+        return 0
+
+    except Exception as exc:
+        log.error(f"FAILED: {exc}\n{traceback.format_exc()}")
+        db = get_db()
+        log_run_end(db, run_id, 0, 0, "failed", str(exc))
+        db.close()
+        notify_openclaw(f"k8s.guide pipeline FAILED: {exc}")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

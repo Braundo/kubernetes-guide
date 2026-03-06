@@ -1,14 +1,14 @@
 ---
 icon: lucide/home
-title: Kubernetes Guide (Clear Explanations + Practical Examples)
-description: A modern Kubernetes learning guide with clear explanations of pods, deployments, services, ingress, security, and operations—plus practical examples.
+title: k8s.guide | Kubernetes Learning, News, and Insights
+description: Clear Kubernetes learning paths, practical certification prep, and curated release, security, ecosystem, and tool updates.
 hide:
   - footer
 ---
 
-# 
-
 <meta name="google-adsense-account" content="ca-pub-4744916432619667">
+
+# Kubernetes Learning, News, and Insights
 
 <div style="text-align: center;">
 
@@ -16,18 +16,53 @@ hide:
 
 </div>
 
+<br>
+
+<center><h4>k8s.guide helps engineers build practical Kubernetes skills and stay current on high-impact changes.</h4>
+</center>
+<br>
+
+<div class="grid cards" markdown>
+
+-   **Learn Kubernetes**
+
+    ---
+    Follow structured paths from fundamentals through production operations.
+
+    [Open Learning Paths](learn/index.md)
+
+-   **Certificates**
+
+    ---
+    Prepare for CKA, CKAD, and CKS with focused exam guides.
+
+    [Open Certificate Prep](certifications/certification-preparation.md)
+
+-   **Updates**
+
+    ---
+    Track release, security, ecosystem, and tooling updates in one section.
+
+    [Open Release Updates](updates/releases/index.md)
+
+-   **Kubernetes Jobs**
+
+    ---
+    Browse and submit platform engineering and SRE roles.
+
+    [Open Job Listings](jobs/listings.md)
+
+</div>
+
 <br><br>
 
-Welcome to the **Kubernetes Guide**, a quick and easy-to-digest summary of core Kubernetes concepts intended to help get you from zero to proficient!
+----
 
 <br>
 
-> **Note:** This site focuses on clear explanations and practical learning. For official specifications and upstream documentation, see the [Kubernetes Documentation](https://kubernetes.io/docs/).
-
-
 <style>
 .newsletter-container {
-  max-width: 550px;
+  max-width: 700px;
   margin: 2rem auto;
   padding: 1.75rem;
   border-radius: 14px;
@@ -132,32 +167,4 @@ Short, practical Kubernetes insights for engineers and platform teams.
 </div>
 
 </div>
-
 <br><br>
-
-## Start Learning Kubernetes
-
-If you're new to Kubernetes, start with these core concepts and build your understanding step by step:
-
-- [Kubernetes Overview](getting-started/overview/)
-- [Pods vs Deployments](workloads/pods-deployments/)
-- [Kubernetes Services](networking/services-networking/)
-- [Ingress and Traffic Routing](networking/ingress/)
-- [Kubernetes Security Fundamentals](security/security/)
-
-
-<br><br>
-
-!!! info "Support"
-
-    k8s.guide is a free Kubernetes learning site I created and maintain in my spare time.
-
-    If it’s helped you, consider supporting it to help offset hosting and maintenance costs. Thanks for your support!
-
-    <a href="https://buymeacoffee.com/braundmeier" target="_blank" rel="noopener">
-      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png"
-          alt="Buy Me A Coffee"
-          style="height:50px;width:217px;border:0;">
-    </a>
-
-<br>
