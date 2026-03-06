@@ -96,6 +96,13 @@ nav = [
     { "CKAD (Developer)" = "certifications/ckad.md" },
     { "CKS (Security)" = "certifications/cks.md" },
   ]},
+  { "News" = [
+    { "Latest" = "news/index.md" },
+    { "Release Notes" = "news/releases/index.md" },
+    { "Security Advisories" = "news/security/index.md" },
+    { "Ecosystem" = "news/ecosystem/index.md" },
+    { "Tool Radar" = "news/tool-radar/index.md" },
+  ]},
   { "Resources" = [
     { "Kubectl Cheat Sheet" = "resources/kubectl-cheatsheet.md" },
     { "About" = "resources/about.md" },
