@@ -27,6 +27,15 @@ def score(item):
         except: pass
     return min(s, 100)
 
+def titles_too_similar(title_a, title_b):
+    words_a = set(title_a.lower().split())
+    words_b = set(title_b.lower().split())
+    overlap = len(words_a & words_b)
+    max_len = max(len(words_a), len(words_b))
+    if max_len == 0:
+        return False
+    return overlap > 0.6 * max_len
+
 def generate_plan():
     db = get_db()
     items = get_unprocessed_items(db)
@@ -36,11 +45,21 @@ def generate_plan():
         return {"items": []}
     for i in items: i["score"] = score(i)
     items.sort(key=lambda x: x["score"], reverse=True)
-    sel, counts = [], {}
+    sel, counts, seen_titles = [], {}, []
     for i in items:
         c = i.get("category_hint","ecosystem")
         if counts.get(c,0) < MAX.get(c,3):
+            title = i.get("title","")
+            skip = False
+            for seen in seen_titles:
+                if titles_too_similar(title, seen):
+                    log.info(f"Skipping (too similar): {title[:60]}")
+                    skip = True
+                    break
+            if skip:
+                continue
             sel.append(i)
+            seen_titles.append(title)
             counts[c] = counts.get(c,0) + 1
     plan = {"generated_at": datetime.now(timezone.utc).isoformat(),
             "total_selected": len(sel), "items": sel}

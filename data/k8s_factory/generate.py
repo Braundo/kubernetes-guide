@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO,
 log = logging.getLogger("generate")
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-DOCS = os.path.join(REPO, "docs", "automation")
+DOCS = os.path.join(REPO, "docs", "news")
 PLAN = os.path.join(os.path.dirname(os.path.abspath(__file__)), "plan.json")
 
 def slugify(t, n=60):

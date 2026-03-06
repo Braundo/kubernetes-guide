@@ -54,6 +54,7 @@ RULES:
 - Technical accuracy over completeness
 - Present tense for current state, past tense for events
 - No Markdown code fences around the entire output
+- Never use em dashes. Use commas, periods, hyphens or semicolons instead.
 '''
 
 NEWSLETTER_PROMPT = '''You are the editor of the k8s.guide weekly newsletter,
