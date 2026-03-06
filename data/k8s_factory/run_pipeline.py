@@ -47,8 +47,7 @@ def git_push():
             if l.endswith(".md")) if count.stdout.strip() else 0
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     subprocess.run(["git","commit","-m",
-        f"feat(automation): add {n} new articles [{ts}]"], check=True)
-    subprocess.run(["git","pull","--rebase","origin","main"], check=True)
+        f"feat(news): add {n} new articles [{ts}]"], check=True)
     subprocess.run(["git","push","origin","main"], check=True)
     log.info(f"Pushed {n} articles.")
     return n

@@ -13,10 +13,14 @@ TIMEOUT, DELAY, RETRIES = 30, 2, 2
 RSS_SOURCES = [
     {"url": "https://kubernetes.io/feed.xml",
      "category": "releases", "name": "Kubernetes Blog"},
-    {"url": "https://kubernetes.io/security/advisories/feed.xml",
-     "category": "security", "name": "K8s Security Advisories"},
     {"url": "https://www.cncf.io/feed/",
      "category": "ecosystem", "name": "CNCF Blog"},
+    {"url": "https://sysdig.com/blog/feed/",
+     "category": "security", "name": "Sysdig Security"},
+    {"url": "https://blog.aquasec.com/rss.xml",
+     "category": "security", "name": "Aqua Security Blog"},
+    {"url": "https://www.armosec.io/blog/feed/",
+     "category": "security", "name": "ARMO Security Blog"},
 ]
 
 def fetch_rss(source):
