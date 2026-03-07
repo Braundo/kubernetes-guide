@@ -10,7 +10,13 @@ import feedparser
 import requests
 
 from db import get_db, insert_item, item_exists_by_url
-from content_policy import infer_category, is_approved_url, normalize_space
+from content_policy import (
+    infer_category,
+    is_approved_url,
+    normalize_space,
+    source_default_category,
+    truncate_text,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,7 +32,7 @@ RETRIES = 2
 RSS_SOURCES = [
     {
         "url": "https://kubernetes.io/feed.xml",
-        "default_category": "releases",
+        "default_category": "ecosystem",
         "name": "Kubernetes Blog",
     },
     {
@@ -106,12 +112,12 @@ def fetch_rss(source):
         raw_summary = entry.get("summary", entry.get("description", ""))
         summary = re.sub(r"<[^>]+>", "", raw_summary).strip()
         summary = strip_byline_sentences(summary)
-        summary = normalize_space(summary)[:1200]
+        summary = truncate_text(summary, max_chars=1200, prefer_sentence=True)
 
         category = infer_category(
             title=title,
             summary=summary,
-            default=source["default_category"],
+            default=source_default_category(source["name"], source["default_category"]),
             url=link,
         )
 

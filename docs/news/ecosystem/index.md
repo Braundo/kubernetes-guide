@@ -14,7 +14,8 @@ Only recent publications are listed here to keep ecosystem coverage actionable.
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| - | No news yet | New entries will appear here after curation. |
+| 2026-03-06 | [Spotlight on SIG Architecture API Governance](2026-03-06-spotlight-sig-architecture-api-governance.md) | Kubernetes API Governance decides what enters the core API, how versions graduate, and how deprecations are enforced. This SIG Architecture spotlight is a practical planning signal for platform teams. |
+| 2026-03-06 | [Ingress-NGINX Migration Risk Signals Before March 2026 Retirement](2026-03-06-ingress-nginx-migration-risk-signals.md) | Ingress-NGINX retirement in March 2026 introduces migration risk from controller-specific behavior. Teams should validate regex, rewrite, redirect, and policy assumptions before moving to Gateway API. |
 <!-- AUTO-LATEST:END -->
 
 ## Related

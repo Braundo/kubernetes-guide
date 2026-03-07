@@ -104,9 +104,108 @@ SLUG_STOP_WORDS = {
     "is", "are", "be", "as", "this", "that", "all", "you", "your", "now", "into", "over",
 }
 
+SOURCE_DEFAULT_CATEGORY = {
+    "Kubernetes Blog": "ecosystem",
+    "CNCF Blog": "ecosystem",
+    "Aqua Security Blog": "security",
+    "Sysdig Security Blog": "security",
+    "Trail of Bits Blog": "security",
+    "GitHub Trending": "tool-radar",
+}
+
+_VERSION_RE = re.compile(
+    r"\b(?:kubernetes|k8s)?\s*v?1\.\d{1,2}(?:\.\d+)?(?:\s*(?:rc|alpha|beta)\d*)?\b",
+    re.IGNORECASE,
+)
+
+RELEASE_URL_HINTS = (
+    "/releases/",
+    "/release-notes",
+    "/changelog",
+    "/kubernetes-",
+)
+
+RELEASE_TEXT_HINTS = (
+    "release notes",
+    "release note",
+    "changelog",
+    "patch release",
+    "minor release",
+    "major release",
+    "release candidate",
+    "upgrade guide",
+    "version skew",
+    "breaking changes",
+    "deprecations",
+)
+
+RELEASE_VERSION_CONTEXT_HINTS = (
+    "release",
+    "upgrade",
+    "deprecat",
+    "beta",
+    "alpha",
+    "ga",
+    "stable",
+    "removed in",
+    "breaking",
+)
+
+NON_RELEASE_GOVERNANCE_HINTS = (
+    "spotlight",
+    "interview",
+    "community update",
+    "case study",
+    "maintainer profile",
+    "sig ",
+    "working group",
+)
+
+SECURITY_RE = re.compile(
+    r"\b("
+    r"cve-\d{4}-\d+|"
+    r"vulnerability|"
+    r"advisory|"
+    r"exploit|"
+    r"malware|"
+    r"supply chain|"
+    r"privilege escalation|"
+    r"remote code execution|"
+    r"rce"
+    r")\b",
+    re.IGNORECASE,
+)
+
+TOOL_HINTS = (
+    "tool radar",
+    "operator",
+    "plugin",
+    "sdk",
+)
+
 
 def normalize_space(text):
     return re.sub(r"\s+", " ", (text or "").strip())
+
+
+def truncate_text(text, max_chars=220, prefer_sentence=False):
+    content = normalize_space(text)
+    if len(content) <= max_chars:
+        return content
+
+    sample = content[: max_chars + 1]
+
+    if prefer_sentence:
+        sentence_cut = max(sample.rfind(". "), sample.rfind("! "), sample.rfind("? "))
+        if sentence_cut >= int(max_chars * 0.45):
+            return sample[: sentence_cut + 1].strip()
+
+    word_cut = sample.rfind(" ")
+    if word_cut < int(max_chars * 0.6):
+        word_cut = max_chars
+
+    trimmed = sample[:word_cut].rstrip(" ,;:-")
+    return f"{trimmed}…"
 
 
 def now_local():
@@ -137,20 +236,52 @@ def is_approved_url(url):
     return domain in APPROVED_DOMAINS
 
 
+def source_default_category(source_name, fallback="ecosystem"):
+    fallback_value = fallback if fallback in CATEGORY_CONFIG else "ecosystem"
+    return SOURCE_DEFAULT_CATEGORY.get((source_name or "").strip(), fallback_value)
+
+
+def _looks_like_release_update(text, url):
+    content = (text or "").lower()
+    link = (url or "").lower()
+    has_version = _VERSION_RE.search(content) is not None
+    has_release_url = any(hint in link for hint in RELEASE_URL_HINTS)
+    has_release_text = any(hint in content for hint in RELEASE_TEXT_HINTS)
+    has_version_context = any(hint in content for hint in RELEASE_VERSION_CONTEXT_HINTS)
+    has_non_release_hint = any(hint in content for hint in NON_RELEASE_GOVERNANCE_HINTS)
+
+    if has_release_url and (has_version or "kubernetes" in content or "k8s" in content):
+        return True
+
+    if has_release_text and ("kubernetes" in content or "k8s" in content or has_version):
+        return True
+
+    if has_version and ("kubernetes" in content or "k8s" in content) and has_version_context:
+        return True
+
+    if has_non_release_hint and not (has_version and has_release_text):
+        return False
+
+    return False
+
+
 def infer_category(title, summary, default="ecosystem", url=""):
+    default_category = default if default in CATEGORY_CONFIG else "ecosystem"
     text = f"{title or ''} {summary or ''}".lower()
-    if re.search(r"\bcve-\d{4}-\d+\b", text):
+    link = (url or "").lower()
+
+    if SECURITY_RE.search(text):
         return "security"
-    if any(k in text for k in ["vulnerability", "advisory", "exploit", "security", "malware", "supply chain"]):
-        return "security"
-    if any(k in text for k in ["kubernetes v", "upgrade", "release", "deprecation", "ga", "beta", "alpha"]):
-        if "kubernetes" in text:
-            return "releases"
-    if "github.com" in (url or ""):
+
+    if "github.com" in link:
         return "tool-radar"
-    if any(k in text for k in ["tool", "operator", "sdk", "platform", "plugin", "project"]):
-        return default if default != "ecosystem" else "ecosystem"
-    return default
+    if any(hint in text for hint in TOOL_HINTS) and default_category == "tool-radar":
+        return "tool-radar"
+
+    if _looks_like_release_update(text, link):
+        return "releases"
+
+    return default_category
 
 
 def today_utc():

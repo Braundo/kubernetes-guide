@@ -71,12 +71,15 @@ Then pushes to `origin main`, which triggers site publish.
 ## Editorial quality controls
 
 - Drafts are generated with source-page context excerpts, not RSS summaries alone.
+- Category inference is re-evaluated during planning and generation, so non-release posts are routed to ecosystem instead of release templates.
 - The writer retries a limited number of times when quality checks fail (default: 2 attempts, configurable).
 - Hard quality gates reject drafts that are:
   - too short by category
   - missing required section depth
   - using banned filler phrases (for example "details were not provided")
+  - using mechanical inline labels (for example `Operator takeaway:`)
   - using bot-like placeholders such as `Curated Intro`.
+- Deck/summary text is sentence-safe truncated to avoid cutoff words in page intros and index tables.
 - `run_pipeline.py` performs a final markdown quality verification before commit/push.
 
 ## Anthropic rate-limit safeguards

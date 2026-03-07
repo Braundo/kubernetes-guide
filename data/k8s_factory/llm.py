@@ -39,6 +39,7 @@ Editorial rules:
 - No hype language, no fluff, no self-referential AI wording.
 - Never include source bylines, editor names, or author credits.
 - Never use placeholder phrases like "details were not provided".
+- Do not use mechanical label phrases inside paragraphs (for example: "Operator takeaway:", "Why it matters:").
 """
 
 SECURITY_PROMPT = """You are writing publication-grade security news for k8s.guide.
@@ -115,14 +116,16 @@ Write Markdown with exactly these H2 sections in this order:
 
 Formatting requirements for "Top Stories and Operator Takeaways":
 - Include 3 to 6 H3 story subheadings in this format: `### <story title>`.
-- Under each story subheading, include:
-  1) what changed and why the signal matters in context
-  2) a clear operator takeaway with near-term implications/actions
+- Under each story subheading, write 2 short paragraphs:
+  1) first paragraph: what changed, with context and implications
+  2) second paragraph: practical near-term response for platform teams
+- Integrate implications naturally; do not use explicit labels like "Operator takeaway:".
 
 Depth requirements:
-- Target 520-900 words.
+- Target 620-1000 words.
 - The article must read like an editorial briefing, not scraped notes.
 - Do not use headings like "Curated Intro" or "Top Signals This Cycle".
+- Avoid one-liner story blurbs; each story should contain substantive analysis.
 
 {context_block}
 

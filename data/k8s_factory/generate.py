@@ -11,6 +11,9 @@ from content_policy import (
     MAX_SLUG_LENGTH,
     SLUG_STOP_WORDS,
     now_local,
+    infer_category,
+    source_default_category,
+    truncate_text,
 )
 from editorial_quality import assess_markdown_quality
 
@@ -191,8 +194,8 @@ def normalize_ecosystem_top_stories(text):
             rebuilt.append(paragraph)
         else:
             rebuilt.append(
-                "Operator takeaway: Validate whether this development changes platform "
-                "roadmap, cluster policy, or day-2 operations."
+                "Validate whether this development changes platform roadmap, "
+                "cluster policy, upgrade sequencing, or day-2 operations."
             )
         rebuilt.append("")
 
@@ -222,7 +225,8 @@ def first_sentence(text):
     if not content:
         return "Operator-focused Kubernetes news generated from curated sources."
     parts = re.split(r"(?<=[.!?])\s+", content)
-    return parts[0][:220]
+    seed = parts[0] if parts else content
+    return truncate_text(seed, max_chars=220, prefer_sentence=False)
 
 
 def deck_from_body(body, fallback):
@@ -236,7 +240,7 @@ def deck_from_body(body, fallback):
             continue
         candidate = re.sub(r"\s+", " ", ln).strip()
         if len(candidate) >= 50:
-            return candidate[:220]
+            return truncate_text(candidate, max_chars=220, prefer_sentence=True)
     return fallback
 
 
@@ -301,7 +305,7 @@ def extract_excerpt(path):
             continue
         if is_byline_line(ln) or BYLINE_SENTENCE_RE.search(ln):
             continue
-        return ln[:220]
+        return truncate_text(ln, max_chars=220, prefer_sentence=True)
     return ""
 
 
@@ -488,6 +492,7 @@ def render_index_entries(category):
         excerpt = meta.get("description") or extract_excerpt(path)
         if BYLINE_SENTENCE_RE.search(excerpt):
             excerpt = "Operator-focused news."
+        excerpt = truncate_text(excerpt, max_chars=220, prefer_sentence=True)
         entries.append((date, title, name, excerpt))
 
     rows = []
@@ -561,7 +566,22 @@ def run_generate(plan_items=None):
     touched_categories = set()
 
     for item in items:
-        category = item.get("category_hint", "ecosystem")
+        original = item.get("category_hint", "ecosystem")
+        default = source_default_category(item.get("source_name", ""), original)
+        category = infer_category(
+            title=item.get("title", ""),
+            summary=item.get("summary", ""),
+            default=default,
+            url=item.get("url", ""),
+        )
+        if category != original:
+            log.info(
+                "Reclassified generate candidate: %s -> %s | %s",
+                original,
+                category,
+                item.get("title", "")[:90],
+            )
+        item["category_hint"] = category
         cfg = CATEGORY_CONFIG.get(category)
         if not cfg:
             log.warning(f"Unknown category: {category}")

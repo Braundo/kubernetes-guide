@@ -19,6 +19,8 @@ from content_policy import (
     count_recent_files,
     now_local,
     parse_datetime,
+    infer_category,
+    source_default_category,
 )
 
 logging.basicConfig(
@@ -246,6 +248,22 @@ def generate_plan():
         return plan
 
     for item in items:
+        original = item.get("category_hint", "ecosystem")
+        default = source_default_category(item.get("source_name", ""), original)
+        inferred = infer_category(
+            title=item.get("title", ""),
+            summary=item.get("summary", ""),
+            default=default,
+            url=item.get("url", ""),
+        )
+        if inferred != original:
+            log.info(
+                "Reclassified plan candidate: %s -> %s | %s",
+                original,
+                inferred,
+                item.get("title", "")[:90],
+            )
+        item["category_hint"] = inferred
         item["score"] = score_item(item)
 
     items.sort(key=lambda x: x["score"], reverse=True)

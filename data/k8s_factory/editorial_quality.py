@@ -29,7 +29,7 @@ REQUIRED_SECTIONS = {
 MIN_TOTAL_WORDS = {
     "security": 260,
     "releases": 340,
-    "ecosystem": 420,
+    "ecosystem": 560,
     "tool-radar": 240,
 }
 
@@ -48,8 +48,8 @@ MIN_SECTION_WORDS = {
         "Upgrade Actions": 55,
     },
     "ecosystem": {
-        "Overview": 90,
-        "Top Stories and Operator Takeaways": 240,
+        "Overview": 120,
+        "Top Stories and Operator Takeaways": 320,
     },
     "tool-radar": {
         "What the Tool Does": 45,
@@ -71,6 +71,8 @@ BANNED_PHRASES = [
     "editors:",
     "author:",
     "authors:",
+    "operator takeaway:",
+    "why it matters:",
 ]
 
 WORD_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9'/-]*")
@@ -149,12 +151,14 @@ def assess_markdown_quality(category, markdown_text):
             issues.append("ecosystem section should not exceed 7 story subheadings (###)")
         for title, body in stories:
             wc = word_count(body)
-            if wc < 45:
-                issues.append(f"story '{title}' is too short: {wc} words (minimum 45)")
+            if wc < 80:
+                issues.append(f"story '{title}' is too short: {wc} words (minimum 80)")
 
     if category == "releases" and "Breaking Changes and Deprecations" in sections:
         body = sections["Breaking Changes and Deprecations"].lower()
         if "none" in body and word_count(body) < 45:
             issues.append("breaking changes section is vague; add concrete audit/verification steps")
+        if "not a code release" in lower or "process and governance artifact" in lower:
+            issues.append("release article appears misclassified; route this item to ecosystem")
 
     return issues

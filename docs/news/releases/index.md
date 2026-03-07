@@ -14,8 +14,7 @@ Only recent publications are listed here to keep this feed timely.
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| 2026-03-06 | [Spotlight on SIG Architecture: API Governance](2026-03-06-spotlight-sig-architecture-api-governance.md) | The Kubernetes SIG Architecture blog series has published its fifth installment, this time focusing on the API Governance sub-project. The piece is an interview with Jordan Liggitt, who has served as an API reviewer sinc |
-| 2026-03-06 | [Before You Migrate: Five Surprising Ingress-NGINX Behaviors You Need to Know](2026-03-06-before-migrate-five-surprising-ingress-nginx-behaviors-need.md) | Kubernetes will retire Ingress-NGINX in March 2026, following the November 2025 announcement. This retirement forces immediate migration planning for one of the most widely deployed ingress controllers in the ecosystem. |
+| - | No news yet | New entries will appear here after curation. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
