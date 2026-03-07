@@ -93,6 +93,36 @@ div[style*="text-align: center"] {
   width: 275px;       /* Adjust size as needed */
   height: auto;       /* Keeps aspect ratio */
 }
+
+/* Mobile tables: wrap text instead of forcing horizontal scrolling */
+@media screen and (max-width: 48rem) {
+  .md-typeset__scrollwrap,
+  .md-typeset__table {
+    overflow-x: visible !important;
+  }
+
+  .md-typeset table:not([class]) {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .md-typeset table:not([class]) th,
+  .md-typeset table:not([class]) td {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    vertical-align: top;
+  }
+
+  .md-typeset table:not([class]) td a,
+  .md-typeset table:not([class]) th a,
+  .md-typeset table:not([class]) td code {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
 /* Light/Dark mode image switching */
 [data-md-color-scheme="slate"] img[src"#only-light"],
 [data-md-color-scheme="default"] img[src"#only-dark"] {
