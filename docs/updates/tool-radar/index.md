@@ -33,6 +33,7 @@ Tool Radar tracks Kubernetes-adjacent projects with practical evaluation context
 | 2026-03-06 | [Crossplane Tool Radar (Cloud Control Plane APIs)](2026-03-crossplane-control-plane-radar.md) | Radar update for Crossplane as a Kubernetes-native control plane for infrastructure APIs. |
 | 2026-03-06 | [Cilium Tool Radar (eBPF Networking and Security)](2026-03-cilium-networking-radar.md) | Radar update for Cilium as a high-adoption Kubernetes networking and security platform. |
 | 2026-03-06 | [Argo CD Tool Radar (GitOps Delivery)](2026-03-argo-cd-gitops-radar.md) | Radar update for Argo CD as a leading GitOps control plane for Kubernetes delivery. |
+| 2026-01-17 | [atilladeniz/Kubeli: A modern, native Kubernetes GUI management desktop app for macOS & Windows. Multi-cluster support, real-time monitoring, AI assistant, terminal access](2026-01-17-atilladeniz-kubeli-modern-native-kubernetes-gui-management.md) | A modern, native Kubernetes GUI management desktop app for macOS & Windows. |
 | 2025-12-16 | [Port Killer Tool Radar (Kubernetes Dev Workflow)](2025-12-port-killer-devex-radar.md) | Tool radar briefing for Port Killer and its relevance to local Kubernetes development workflows. |
 | 2025-12-17 | [OpenSandbox Tool Radar (AI Workload Isolation)](2025-12-opensandbox-ai-sandbox-radar.md) | Tool radar briefing for Alibaba OpenSandbox and where it fits in Kubernetes platform stacks. |
 <!-- AUTO-LATEST:END -->

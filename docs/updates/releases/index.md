@@ -12,6 +12,7 @@ Release updates focus on operator impact: behavior changes, potential breakage, 
 <!-- AUTO-LATEST:START -->
 | Date | Update | Summary |
 | --- | --- | --- |
+| 2025-12-17 | [Kubernetes v1.35: Timbernetes (The World Tree Release)](2025-12-17-kubernetes-v1-35-timbernetes-world-tree-release.md) | Editors: Aakanksha Bhende, Arujjwal Negi, Chad M. |
 | 2025-09-15 | [Kubernetes v1.34 Upgrade Briefing for Platform Teams](2025-09-15-kubernetes-1-34-upgrade-guide.md) | Operator-focused upgrade briefing for Kubernetes v1.34 with priorities, risks, and rollout actions. |
 | 2025-09-12 | [Kubernetes v1.34 Cgroup Driver Autoconfiguration Reaches GA](2025-09-12-kubernetes-1-34-cgroup-driver-ga.md) | Kubelet cgroup driver lookup from CRI is GA in v1.34, reducing node bootstrap failures. |
 | 2025-09-09 | [Kubernetes v1.34 Snapshottable API Server Cache Briefing](2025-09-09-kubernetes-1-34-api-server-cache.md) | What the snapshottable API server cache means for control-plane performance and reliability. |
