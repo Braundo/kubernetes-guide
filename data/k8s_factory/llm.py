@@ -2,93 +2,111 @@ import os
 import logging
 import requests
 
+from editorial_quality import assess_markdown_quality
+from source_context import fetch_source_excerpt
+
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("llm")
 TIMEOUT = 120
+MAX_ATTEMPTS = 3
 
 COMMON_RULES = """
-Rules:
-- Be concise, specific, and operationally useful.
-- Do not invent facts outside provided item context.
-- Use clean Markdown, no code fences around full output.
-- Avoid hype, filler, and broad marketing language.
-- No em dashes.
+Editorial rules:
+- Write like a senior platform engineer briefing peers.
+- Prioritize concrete operator impact, not generic commentary.
+- Do not invent facts beyond the provided context blocks.
+- Use clean Markdown only, no code fences around the full response.
+- No hype language, no fluff, no self-referential AI wording.
+- Never include source bylines, editor names, or author credits.
+- Never use placeholder phrases like "details were not provided".
 """
 
-SECURITY_PROMPT = """You are writing for k8s.guide security updates.
+SECURITY_PROMPT = """You are writing publication-grade security news for k8s.guide.
 
-Write Markdown with exactly these sections:
+Write Markdown with exactly these H2 sections in this order:
 
 ## Advisory Summary
 ## Affected Components and Versions
 ## Why It Matters
-## What to Do
+## Recommended Actions
 
-Use the provided item only.
+Depth requirements:
+- Target 350-750 words.
+- Every section must include meaningful details.
+- "Recommended Actions" must include a numbered plan with concrete validation steps.
 
-Item:
-- Title: {title}
-- Published: {published}
-- Source: {url}
-- Summary: {summary}
+{context_block}
+
+{revision_block}
 
 {rules}
 """
 
-RELEASE_PROMPT = """You are writing for k8s.guide release updates.
+RELEASE_PROMPT = """You are writing publication-grade release news for k8s.guide.
 
-Write Markdown with exactly these sections:
+Write Markdown with exactly these H2 sections in this order:
 
 ## Release Summary
 ## Key Changes
 ## Breaking Changes and Deprecations
 ## Why It Matters for Operators
-## Suggested Actions
+## Upgrade Actions
 
-Use the provided item only.
+Depth requirements:
+- Target 450-900 words.
+- Use concrete release details from source context.
+- "Breaking Changes and Deprecations" must include specific risk checks.
+- If an official source does not enumerate deprecations, provide a concrete audit checklist instead of vague disclaimers.
 
-Item:
-- Title: {title}
-- Published: {published}
-- Source: {url}
-- Summary: {summary}
+{context_block}
+
+{revision_block}
 
 {rules}
 """
 
-TOOL_PROMPT = """You are writing for k8s.guide tool radar.
+TOOL_PROMPT = """You are writing publication-grade tool radar coverage for k8s.guide.
 
-Write Markdown with exactly these sections:
+Write Markdown with exactly these H2 sections in this order:
 
 ## What the Tool Does
-## Why It Is Worth Watching
-## Maturity and Adoption Notes
-## Category
+## Why It Matters
+## Adoption and Maturity Signals
+## Recommended Use Cases
 
-Use the provided item only.
+Depth requirements:
+- Target 320-650 words.
+- Connect capabilities to real Kubernetes platform workflows.
+- "Recommended Use Cases" should include where this tool fits and where it may not fit.
 
-Item:
-- Title: {title}
-- Published: {published}
-- Source: {url}
-- Summary: {summary}
+{context_block}
+
+{revision_block}
 
 {rules}
 """
 
-ECOSYSTEM_PROMPT = """You are writing a curated Kubernetes ecosystem roundup for operators.
+ECOSYSTEM_PROMPT = """You are writing a high-signal Kubernetes ecosystem briefing for k8s.guide.
 
-Write Markdown with exactly these sections:
+Write Markdown with exactly these H2 sections in this order:
 
-## Curated Intro
-## Top Signals This Cycle
+## Overview
+## Top Stories and Operator Takeaways
 
-For "Top Signals This Cycle", include 3 to 7 numbered items. Each item must include:
-- signal summary
-- one short "Why it matters" sentence
+Formatting requirements for "Top Stories and Operator Takeaways":
+- Include 3 to 6 H3 story subheadings in this format: `### <story title>`.
+- Under each story subheading, include:
+  1) what changed and why the signal matters in context
+  2) a clear operator takeaway with near-term implications/actions
 
-Roundup sources:
-{sources}
+Depth requirements:
+- Target 600-1100 words.
+- The article must read like an editorial briefing, not scraped notes.
+- Do not use headings like "Curated Intro" or "Top Signals This Cycle".
+
+{context_block}
+
+{revision_block}
 
 {rules}
 """
@@ -122,7 +140,7 @@ def _call_anthropic(prompt):
         },
         json={
             "model": os.environ.get("LLM_MODEL", "claude-sonnet-4-5-20250929"),
-            "max_tokens": 1500,
+            "max_tokens": 2200,
             "messages": [{"role": "user", "content": prompt}],
         },
         timeout=TIMEOUT,
@@ -140,7 +158,7 @@ def _call_openai(prompt):
         },
         json={
             "model": os.environ.get("LLM_MODEL", "gpt-4o-mini"),
-            "max_tokens": 1500,
+            "max_tokens": 2200,
             "messages": [
                 {"role": "system", "content": "You are a senior Kubernetes technical editor."},
                 {"role": "user", "content": prompt},
@@ -161,42 +179,129 @@ def _call(prompt):
     raise ValueError(f"Unknown provider: {provider}")
 
 
-def _sources_text(item):
+def _limit(text, max_chars):
+    content = (text or "").strip()
+    if len(content) <= max_chars:
+        return content
+    return content[: max_chars - 1].rstrip() + "…"
+
+
+def _revision_block(issues):
+    if not issues:
+        return ""
+    bullets = "\n".join(f"- {issue}" for issue in issues[:8])
+    return (
+        "Revise the draft to fix these quality issues before finalizing:\n"
+        f"{bullets}\n"
+    )
+
+
+def _item_context(item):
+    lines = [
+        "Primary source context:",
+        f"- Title: {item.get('title', '')}",
+        f"- Source URL: {item.get('url', '')}",
+        f"- Source published date: {(item.get('published', '') or '')[:10] or 'unknown'}",
+        f"- Feed summary: {_limit(item.get('summary', '') or '', 800)}",
+    ]
+
+    source_excerpt = fetch_source_excerpt(item.get("url", ""), max_chars=2400)
+    if source_excerpt:
+        lines.append("\nSource page excerpt:\n" + _limit(source_excerpt, 2400))
+
+    if item.get("category_hint") == "tool-radar":
+        lines.extend(
+            [
+                "",
+                "GitHub signals:",
+                f"- Stars: {int(item.get('stars', 0) or 0):,}",
+                f"- Forks: {int(item.get('forks', 0) or 0):,}",
+                f"- Open issues: {int(item.get('open_issues', 0) or 0):,}",
+                f"- Watchers: {int(item.get('watchers', 0) or 0):,}",
+                f"- Last push: {(item.get('last_pushed', '') or '')[:10] or 'unknown'}",
+            ]
+        )
+
+    return "\n".join(lines).strip()
+
+
+def _roundup_context(item):
     sources = item.get("sources") or []
     if not sources:
-        return f"- {item.get('title', '')} ({item.get('url', '')})"
+        return _item_context(item)
 
     lines = []
-    for src in sources[:7]:
-        lines.append(f"- {src.get('title', '')} ({src.get('url', '')})")
-    return "\n".join(lines)
+    lines.append("Roundup source set:")
+    for idx, src in enumerate(sources[:7], 1):
+        title = src.get("title", "")
+        url = src.get("url", "")
+        published = (src.get("published", "") or "")[:10] or "unknown"
+        excerpt = fetch_source_excerpt(url, max_chars=1000)
+        lines.append(f"\n{idx}. {title}")
+        lines.append(f"   - URL: {url}")
+        lines.append(f"   - Published: {published}")
+        if excerpt:
+            lines.append(f"   - Source excerpt: {_limit(excerpt, 900)}")
+    return "\n".join(lines).strip()
+
+
+def _build_prompt(category, payload, issues):
+    revision_block = _revision_block(issues)
+    context_block = payload.get("context_block", "")
+    rules = payload.get("rules", COMMON_RULES)
+
+    if category == "security":
+        return SECURITY_PROMPT.format(
+            context_block=context_block,
+            revision_block=revision_block,
+            rules=rules,
+        )
+    if category == "releases":
+        return RELEASE_PROMPT.format(
+            context_block=context_block,
+            revision_block=revision_block,
+            rules=rules,
+        )
+    if category == "tool-radar":
+        return TOOL_PROMPT.format(
+            context_block=context_block,
+            revision_block=revision_block,
+            rules=rules,
+        )
+    return ECOSYSTEM_PROMPT.format(
+        context_block=context_block,
+        revision_block=revision_block,
+        rules=rules,
+    )
 
 
 def write_article(item):
     category = item.get("category_hint", "ecosystem")
-    payload = {
-        "title": item.get("title", ""),
-        "published": (item.get("published", "") or "")[:10],
-        "url": item.get("url", ""),
-        "summary": item.get("summary", ""),
-        "rules": COMMON_RULES,
-    }
+    payload = {"rules": COMMON_RULES}
+    payload["context_block"] = _roundup_context(item) if category == "ecosystem" else _item_context(item)
 
-    if category == "security":
-        prompt = SECURITY_PROMPT.format(**payload)
-    elif category == "releases":
-        prompt = RELEASE_PROMPT.format(**payload)
-    elif category == "tool-radar":
-        prompt = TOOL_PROMPT.format(**payload)
-    else:
-        prompt = ECOSYSTEM_PROMPT.format(sources=_sources_text(item), rules=COMMON_RULES)
-
+    last_issues = []
     log.info(f"LLM writing {category}: {item.get('title', '')[:80]}")
-    try:
-        return _call(prompt)
-    except Exception as exc:
-        log.error(f"LLM failed: {exc}")
-        return None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        prompt = _build_prompt(category, payload, last_issues)
+        try:
+            draft = _call(prompt)
+        except Exception as exc:
+            log.error(f"LLM failed (attempt {attempt}/{MAX_ATTEMPTS}): {exc}")
+            continue
+
+        issues = assess_markdown_quality(category, draft)
+        if not issues:
+            return draft
+
+        last_issues = issues
+        issue_preview = "; ".join(issues[:3])
+        log.warning(
+            f"LLM draft quality issues for {category} attempt {attempt}/{MAX_ATTEMPTS}: {issue_preview}"
+        )
+
+    log.error(f"LLM quality gate failed for {category}: {'; '.join(last_issues[:5])}")
+    return None
 
 
 def write_newsletter(articles):
@@ -204,7 +309,7 @@ def write_newsletter(articles):
     for article in articles:
         category = article.get("category_hint", "")
         generated_file = (article.get("generated_file") or "").replace(".md", "")
-        site_url = f"https://k8s.guide/updates/{category}/{generated_file}/"
+        site_url = f"https://k8s.guide/news/{category}/{generated_file}/"
         summaries.append(
             f"- [{article.get('title', '')}]({site_url}) (Category: {category}, Published: {(article.get('published') or '')[:10]})"
         )

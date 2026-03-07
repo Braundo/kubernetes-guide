@@ -8,23 +8,23 @@ DOCS = os.path.join(REPO, "docs")
 
 CATEGORY_CONFIG = {
     "security": {
-        "output_dir": os.path.join(DOCS, "updates", "security"),
-        "index_file": os.path.join(DOCS, "updates", "security", "index.md"),
+        "output_dir": os.path.join(DOCS, "news", "security"),
+        "index_file": os.path.join(DOCS, "news", "security", "index.md"),
         "parent_index_rel": "index.md",
     },
     "releases": {
-        "output_dir": os.path.join(DOCS, "updates", "releases"),
-        "index_file": os.path.join(DOCS, "updates", "releases", "index.md"),
+        "output_dir": os.path.join(DOCS, "news", "releases"),
+        "index_file": os.path.join(DOCS, "news", "releases", "index.md"),
         "parent_index_rel": "index.md",
     },
     "ecosystem": {
-        "output_dir": os.path.join(DOCS, "updates", "ecosystem"),
-        "index_file": os.path.join(DOCS, "updates", "ecosystem", "index.md"),
+        "output_dir": os.path.join(DOCS, "news", "ecosystem"),
+        "index_file": os.path.join(DOCS, "news", "ecosystem", "index.md"),
         "parent_index_rel": "index.md",
     },
     "tool-radar": {
-        "output_dir": os.path.join(DOCS, "updates", "tool-radar"),
-        "index_file": os.path.join(DOCS, "updates", "tool-radar", "index.md"),
+        "output_dir": os.path.join(DOCS, "news", "tool-radar"),
+        "index_file": os.path.join(DOCS, "news", "tool-radar", "index.md"),
         "parent_index_rel": "index.md",
     },
 }
@@ -64,6 +64,14 @@ QUALITY_THRESHOLDS = {
     "tool-radar": 62,
 }
 
+# Maximum source staleness for publish eligibility.
+MAX_SOURCE_AGE_DAYS = {
+    "security": 30,
+    "releases": 45,
+    "ecosystem": 14,
+    "tool-radar": 60,
+}
+
 MAX_ITEMS_PER_RUN = 5
 MAX_SLUG_LENGTH = 60
 
@@ -76,6 +84,7 @@ APPROVED_DOMAINS = {
     "blog.aquasec.com",
     "sysdig.com",
     "www.armosec.io",
+    "blog.trailofbits.com",
 }
 
 DOMAIN_SCORE_BOOSTS = {
@@ -87,6 +96,7 @@ DOMAIN_SCORE_BOOSTS = {
     "blog.aquasec.com": 5,
     "sysdig.com": 4,
     "www.armosec.io": 3,
+    "blog.trailofbits.com": 5,
 }
 
 SLUG_STOP_WORDS = {
@@ -97,6 +107,20 @@ SLUG_STOP_WORDS = {
 
 def normalize_space(text):
     return re.sub(r"\s+", " ", (text or "").strip())
+
+
+def now_local():
+    # Use system local timezone to avoid UTC rollover generating "tomorrow" titles/dates.
+    return datetime.now().astimezone()
+
+
+def parse_datetime(value):
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except Exception:
+        return None
 
 
 def get_domain(url):

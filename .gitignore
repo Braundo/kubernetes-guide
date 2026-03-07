@@ -7,7 +7,11 @@ site/
 # Content Pipeline
 .env.local
 data/k8s_factory/k8s_factory.db
+data/k8s_factory/k8s_factory.db-*
+data/k8s_factory/plan.json
 data/k8s_factory/run.log
 data/k8s_factory/.last_run
+data/k8s_factory/review_state.json
+data/k8s_factory/review_topics.md
 data/k8s_factory/launchd-*.log
 .venv/

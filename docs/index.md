@@ -1,14 +1,14 @@
 ---
 icon: lucide/home
 title: k8s.guide | Kubernetes Learning, News, and Insights
-description: Clear Kubernetes learning paths, practical certification prep, and curated release, security, ecosystem, and tool updates.
+description: Clear Kubernetes learning paths, practical certification prep, and curated release, security, ecosystem, and tool news.
 hide:
   - footer
 ---
 
 <meta name="google-adsense-account" content="ca-pub-4744916432619667">
 
-# Kubernetes Learning, News, and Insights
+# 
 
 <div style="text-align: center;">
 
@@ -38,12 +38,12 @@ hide:
 
     [Open Certificate Prep](certifications/certification-preparation.md)
 
--   :lucide-bell-ring: **Updates**
+-   :lucide-bell-ring: **News**
 
     ---
-    Track release, security, ecosystem, and tooling updates in one section.
+    Track release, security, ecosystem, and tooling news in one section.
 
-    [Open Release Updates](updates/releases/index.md)
+    [Open Release News](news/releases/index.md)
 
 -   :lucide-briefcase-business: **Kubernetes Jobs**
 
@@ -60,9 +60,6 @@ hide:
 
 <br>
 
-## Weekly Newsletter {#weekly-newsletter}
-
-Get one practical email each week with the highest-signal Kubernetes release, security, ecosystem, and tool updates.
 
 <style>
 .newsletter-container {
@@ -79,12 +76,14 @@ Get one practical email each week with the highest-signal Kubernetes release, se
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
+  text-align: center;
 }
 
 .newsletter-subtitle {
   font-size: 0.9rem;
   color: var(--md-default-fg-color--light);
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .newsletter-form {

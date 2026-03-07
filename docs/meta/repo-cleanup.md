@@ -20,11 +20,11 @@ Align file layout with the live site information architecture and remove legacy 
   - `docs/storage/`
 - Certification content:
   - `docs/certifications/`
-- Updates content (canonical generated namespace):
-  - `docs/updates/releases/`
-  - `docs/updates/security/`
-  - `docs/updates/ecosystem/`
-  - `docs/updates/tool-radar/`
+- News content (canonical generated namespace):
+  - `docs/news/releases/`
+  - `docs/news/security/`
+  - `docs/news/ecosystem/`
+  - `docs/news/tool-radar/`
 - Business and conversion pages:
   - `docs/jobs/`
   - `docs/sponsor/`
@@ -33,7 +33,7 @@ Align file layout with the live site information architecture and remove legacy 
 
 ## Removed Legacy Sections and Files
 
-- Removed legacy News tree: `docs/news/`
+- Removed legacy Updates tree: `docs/updates/`
 - Removed legacy tool/reference entry stubs:
   - `docs/tools/index.md`
   - `docs/reference/index.md`
@@ -49,10 +49,10 @@ Align file layout with the live site information architecture and remove legacy 
 
 ## Path and Naming Alignment
 
-- Replaced `intelligence/*` paths with `updates/*`.
-- Replaced `tools/radar/*` generated stream path with `updates/tool-radar/*`.
+- Replaced `intelligence/*` paths with `news/*`.
+- Replaced `tools/radar/*` generated stream path with `news/tool-radar/*`.
 - Updated navigation and internal links to match the new canonical layout.
-- Maintained `Updates` as a nav container (expand/collapse), not a standalone page.
+- Maintained `News` as a nav container (expand/collapse), not a standalone page.
 
 ## Validation
 

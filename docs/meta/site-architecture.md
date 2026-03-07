@@ -9,7 +9,7 @@ This document records the current structure and publishing model for k8s.guide.
 ## Goals
 
 - keep learning content in one coherent section
-- publish clear, actionable Kubernetes updates
+- publish clear, actionable Kubernetes news
 - reduce navigation clutter and improve wayfinding
 - support newsletter, sponsorship, jobs, and affiliate-ready resources
 
@@ -18,11 +18,11 @@ This document records the current structure and publishing model for k8s.guide.
 - Home
 - Learn Kubernetes
 - Certificates
-- Updates
+- News
 - Jobs
 - About
 
-`Updates` is a navigation container with subpages only (no standalone landing page).
+`News` is a navigation container with subpages only (no standalone landing page).
 
 `Jobs` is organized as two subpages:
 
@@ -40,14 +40,14 @@ Learning/reference material is grouped in `Learn Kubernetes` under:
 - Security Fundamentals
 - Operations
 
-## Updates Structure
+## News Structure
 
-Curated updates live in:
+Curated news lives in:
 
-- `docs/updates/releases/`
-- `docs/updates/security/`
-- `docs/updates/ecosystem/`
-- `docs/updates/tool-radar/`
+- `docs/news/releases/`
+- `docs/news/security/`
+- `docs/news/ecosystem/`
+- `docs/news/tool-radar/`
 
 ## URL and Slug Policy
 
@@ -55,43 +55,43 @@ Curated updates live in:
 - concise and human-readable
 - stop words removed where possible
 - target max length about 60 chars
-- date prefixes for chronology-sensitive updates
+- date prefixes for chronology-sensitive news
 
 ## Template Standards
 
-### Security update pages
+### Security news pages
 
 - Advisory Summary
 - Affected Components and Versions
 - Why It Matters
-- What to Do
+- Recommended Actions
 - Source Links
 - Related Pages
 
-### Release update pages
+### Release news pages
 
 - Release Summary
 - Key Changes
 - Breaking Changes and Deprecations
 - Why It Matters for Operators
-- Suggested Actions
+- Upgrade Actions
 - Source Links
 - Related Pages
 
 ### Tool radar pages
 
 - What the Tool Does
-- Why It Is Worth Watching
-- Maturity and Adoption Notes
+- Why It Matters
+- Adoption and Maturity Signals
+- Recommended Use Cases
 - Popularity and Momentum Signals
-- Category
 - Source Links
 - Related Tools and Comparisons
 
-### Ecosystem update pages
+### Ecosystem news pages
 
-- Curated Intro
-- 3 to 7 top signals with "why it matters"
+- Overview
+- Top Stories and Operator Takeaways (3 to 6 story subsections)
 - Source Links
 - Related Pages
 
@@ -108,15 +108,15 @@ Each generated page links to:
 
 Target mix by output volume:
 
-- 30% security updates
-- 25% release/upgrade updates
-- 25% tools/reference updates
-- 20% ecosystem updates
+- 30% security news
+- 25% release/upgrade news
+- 25% tools/reference news
+- 20% ecosystem news
 
 Cadence guardrails:
 
 - Security: event-driven, publish quickly when high-confidence advisories appear
-- Releases: publish on major/minor release events and notable operator-impact updates
+- Releases: publish on major/minor release events and notable operator-impact news
 - Tool radar: weekly or twice-weekly, not daily
 - Ecosystem: maximum one curated roundup per day, usually fewer
 - Newsletter: one weekly synthesis from highest-scoring items

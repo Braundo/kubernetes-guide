@@ -17,7 +17,7 @@ site_name = "k8s.guide"
 # meaningful description of the site content for use by search engines.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "Kubernetes updates and reference hub for operators, platform teams, and security engineers."
+site_description = "Kubernetes news and reference hub for operators, platform teams, and security engineers."
 
 # The site_author attribute. This is used in the HTML head element.
 #
@@ -92,17 +92,17 @@ nav = [
       { "Kubectl Cheat Sheet" = "resources/kubectl-cheatsheet.md" },
     ]},
   ]},
-  { "Certificates" = [
+  { "Certifications" = [
     { "Cert Prep Guide" = "certifications/certification-preparation.md" },
     { "CKA (Admin)" = "certifications/cka.md" },
     { "CKAD (Developer)" = "certifications/ckad.md" },
     { "CKS (Security)" = "certifications/cks.md" },
   ]},
-  { "Updates" = [
-    { "Release Updates" = "updates/releases/index.md" },
-    { "Security Updates" = "updates/security/index.md" },
-    { "Ecosystem Updates" = "updates/ecosystem/index.md" },
-    { "Tool Radar" = "updates/tool-radar/index.md" },
+  { "News" = [
+    { "Release News" = "news/releases/index.md" },
+    { "Security News" = "news/security/index.md" },
+    { "Ecosystem News" = "news/ecosystem/index.md" },
+    { "Tool Radar" = "news/tool-radar/index.md" },
   ]},
   { "Jobs" = [
     { "Listings" = "jobs/listings.md" },

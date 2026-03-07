@@ -18,7 +18,7 @@ logging.basicConfig(
 )
 log = logging.getLogger("crawler")
 
-UA = "k8s-guide-updates-bot/2.0 (+https://k8s.guide)"
+UA = "k8s-guide-news-bot/2.0 (+https://k8s.guide)"
 TIMEOUT = 30
 DELAY = 2
 RETRIES = 2
@@ -40,16 +40,33 @@ RSS_SOURCES = [
         "name": "Aqua Security Blog",
     },
     {
-        "url": "https://sysdig.com/blog/feed/",
+        "url": "https://sysdig.com/feed/",
         "default_category": "security",
         "name": "Sysdig Security Blog",
     },
     {
-        "url": "https://www.armosec.io/blog/feed/",
+        "url": "https://blog.trailofbits.com/index.xml",
         "default_category": "security",
-        "name": "ARMO Security Blog",
+        "name": "Trail of Bits Blog",
     },
 ]
+
+BYLINE_KEYWORDS = ("editor", "editors", "author", "authors", "written by", "byline")
+
+
+def strip_byline_sentences(text):
+    content = normalize_space(text)
+    if not content:
+        return ""
+
+    sentences = re.split(r"(?<=[.!?])\s+", content)
+    kept = []
+    for sentence in sentences:
+        lower = sentence.lower()
+        if any(k in lower for k in BYLINE_KEYWORDS):
+            continue
+        kept.append(sentence)
+    return normalize_space(" ".join(kept))
 
 
 def fetch_rss(source):
@@ -88,6 +105,7 @@ def fetch_rss(source):
 
         raw_summary = entry.get("summary", entry.get("description", ""))
         summary = re.sub(r"<[^>]+>", "", raw_summary).strip()
+        summary = strip_byline_sentences(summary)
         summary = normalize_space(summary)[:1200]
 
         category = infer_category(
@@ -153,14 +171,15 @@ def fetch_github():
         if not link or not is_approved_url(link):
             continue
 
-        title = f"{repo.get('full_name', '')}: {repo.get('description', '')}".strip(": ")
-        summary = normalize_space(repo.get("description", ""))[:600]
+        repo_name = normalize_space(repo.get("name", "") or repo.get("full_name", ""))
+        title = f"{repo_name} tool radar".strip()
+        summary = strip_byline_sentences(normalize_space(repo.get("description", "")))[:600]
         items.append(
             {
                 "url": link,
                 "title": title,
                 "summary": summary,
-                "published": repo.get("created_at", ""),
+                "published": repo.get("pushed_at", "") or repo.get("created_at", ""),
                 "source_name": "GitHub Trending",
                 "category_hint": "tool-radar",
                 "content_hash": hashlib.sha256(link.encode()).hexdigest()[:16],

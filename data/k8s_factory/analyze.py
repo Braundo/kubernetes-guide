@@ -13,9 +13,12 @@ from content_policy import (
     WEEKLY_CAPS,
     QUALITY_THRESHOLDS,
     MAX_ITEMS_PER_RUN,
+    MAX_SOURCE_AGE_DAYS,
     DOMAIN_SCORE_BOOSTS,
     get_domain,
     count_recent_files,
+    now_local,
+    parse_datetime,
 )
 
 logging.basicConfig(
@@ -34,6 +37,33 @@ BASE_SCORES = {
 }
 
 CATEGORY_ORDER = ["security", "releases", "tool-radar", "ecosystem"]
+
+
+def source_age_days(item):
+    now = now_local()
+    category = item.get("category_hint", "ecosystem")
+    if category == "tool-radar":
+        raw = item.get("last_pushed") or item.get("published")
+    else:
+        raw = item.get("published")
+
+    dt = parse_datetime(raw)
+    if not dt:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    dt_local = dt.astimezone(now.tzinfo)
+    return (now.date() - dt_local.date()).days
+
+
+def is_item_fresh(item):
+    age = source_age_days(item)
+    if age is None:
+        return False
+    if age < 0:
+        return False
+    max_age = MAX_SOURCE_AGE_DAYS.get(item.get("category_hint", "ecosystem"), 30)
+    return age <= max_age
 
 
 def canonical_title(title):
@@ -80,20 +110,26 @@ def score_item(item):
     elif len(summary) < 80:
         score -= 8
 
-    published = item.get("published", "")
-    if published:
-        try:
-            days = (datetime.now(timezone.utc) - datetime.fromisoformat(published.replace("Z", "+00:00"))).days
-            if days <= 2:
-                score += 10
-            elif days <= 7:
-                score += 6
-            elif days <= 21:
-                score += 2
-            elif days > 90:
-                score -= 10
-        except Exception:
-            pass
+    age = source_age_days(item)
+    if age is None:
+        score -= 20
+    elif age < 0:
+        score = 0
+    else:
+        if age <= 2:
+            score += 10
+        elif age <= 7:
+            score += 6
+        elif age <= 14:
+            score += 3
+        elif age <= 30:
+            score += 1
+        else:
+            score -= 15
+
+        max_age = MAX_SOURCE_AGE_DAYS.get(cat, 30)
+        if age > max_age:
+            score = 0
 
     return max(0, min(score, 100))
 
@@ -115,6 +151,8 @@ def select_by_category(items):
 
     by_cat = {k: [] for k in CATEGORY_CONFIG.keys()}
     for item in items:
+        if not is_item_fresh(item):
+            continue
         by_cat.setdefault(item.get("category_hint", "ecosystem"), []).append(item)
 
     # Curate ecosystem into one roundup candidate with 3-7 sources.
@@ -131,11 +169,14 @@ def select_by_category(items):
             if len(top) == 7:
                 break
         if len(top) >= 3:
-            now = datetime.now(timezone.utc)
+            now = now_local()
             curated_eco = {
                 "id": None,
-                "title": f"Kubernetes ecosystem roundup - {now.strftime('%Y-%m-%d')}",
-                "summary": "Curated ecosystem signals for operators, generated from approved sources.",
+                "title": "Kubernetes Ecosystem Briefing",
+                "summary": (
+                    "High-signal ecosystem developments and why they matter for "
+                    "platform engineering teams."
+                ),
                 "published": now.isoformat(),
                 "source_name": "Curated Ecosystem Feed",
                 "category_hint": "ecosystem",

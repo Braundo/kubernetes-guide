@@ -24,7 +24,7 @@ ISSUES_INDEX = os.path.join(ISSUES_DIR, "index.md")
 
 
 def issue_filename(now):
-    return f"{now.strftime('%Y-%m-%d')}-weekly-kubernetes-updates.md"
+    return f"{now.strftime('%Y-%m-%d')}-weekly-kubernetes-news.md"
 
 
 def write_issue_file(subject, body):

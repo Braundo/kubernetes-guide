@@ -10,7 +10,9 @@ from content_policy import (
     CATEGORY_CONFIG,
     MAX_SLUG_LENGTH,
     SLUG_STOP_WORDS,
+    now_local,
 )
+from editorial_quality import assess_markdown_quality
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,12 +22,22 @@ log = logging.getLogger("generate")
 
 PLAN = os.path.join(os.path.dirname(os.path.abspath(__file__)), "plan.json")
 
+BYLINE_LINE_RE = re.compile(r"(?i)^\s*(editors?|author|authors?)\s*:\s*")
+BYLINE_PREFIX_RE = re.compile(r"(?i)^\s*by\s+[A-Z]")
+BYLINE_SENTENCE_RE = re.compile(r"(?i)\b(editors?|author|authors?|written by|byline)\b")
+INDEX_MAX_AGE_DAYS = {
+    "security": 45,
+    "releases": 45,
+    "ecosystem": 30,
+    "tool-radar": 60,
+}
+
 
 def slugify(title):
     cleaned = re.sub(r"[^a-z0-9\s-]", " ", (title or "").lower())
     tokens = [tok for tok in re.split(r"[\s_-]+", cleaned) if tok and tok not in SLUG_STOP_WORDS]
     if not tokens:
-        return "update"
+        return "news"
 
     slug = ""
     for tok in tokens:
@@ -34,17 +46,41 @@ def slugify(title):
             break
         slug = candidate
 
-    return slug.strip("-") or "update"
+    return slug.strip("-") or "news"
+
+
+def normalized_item_title(item):
+    category = item.get("category_hint", "ecosystem")
+    raw = strip_byline_sentences(item.get("title", "Untitled")) or "Untitled"
+
+    if category == "tool-radar":
+        base = raw.split(":", 1)[0].strip()
+        if "/" in base:
+            base = base.split("/")[-1].strip()
+        base = re.sub(r"(?i)\btool\s*radar\b", "", base).strip(" -:")
+        base = re.sub(r"\s+\([^)]*\)\s*$", "", base).strip()
+        if not base:
+            base = "Kubernetes Tool"
+        return base
+
+    if category == "ecosystem" and raw.lower().startswith("kubernetes ecosystem roundup"):
+        return "Kubernetes ecosystem roundup"
+
+    return raw
+
+
+def display_entry_title(category, title):
+    text = (title or "").strip()
+    if category != "tool-radar":
+        return text
+    text = re.sub(r"(?i)\s+tool\s*radar\b", "", text).strip()
+    text = re.sub(r"\s+\([^)]*\)\s*$", "", text).strip()
+    return text or "Tool"
 
 
 def filename_for_item(item):
-    published = item.get("published", "")
-    try:
-        day = datetime.fromisoformat(published.replace("Z", "+00:00")).strftime("%Y-%m-%d")
-    except Exception:
-        day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-
-    base = slugify(item.get("title", "untitled"))
+    day = now_local().strftime("%Y-%m-%d")
+    base = slugify(normalized_item_title(item))
     return f"{day}-{base}.md"
 
 
@@ -61,12 +97,147 @@ def ensure_unique_filename(folder, desired_name):
         suffix += 1
 
 
-def first_sentence(text):
+def strip_byline_sentences(text):
     content = (text or "").strip()
     if not content:
-        return "Operator-focused Kubernetes update generated from curated sources."
+        return ""
+    pieces = re.split(r"(?<=[.!?])\s+", content)
+    kept = []
+    for piece in pieces:
+        if BYLINE_SENTENCE_RE.search(piece):
+            continue
+        kept.append(piece)
+    return " ".join(kept).strip()
+
+
+def is_byline_line(line):
+    content = (line or "").strip()
+    if not content:
+        return False
+    if BYLINE_LINE_RE.match(content):
+        return True
+    if BYLINE_PREFIX_RE.match(content):
+        return True
+    return False
+
+
+def _strip_md_emphasis(text):
+    return re.sub(r"[*_`]+", "", (text or "")).strip()
+
+
+def normalize_ordered_list_numbers(text):
+    lines = (text or "").splitlines()
+    out = []
+    in_list = False
+    counter = 1
+    for line in lines:
+        marker = re.match(r"^(\s*)\d+\.\s+(.*)$", line)
+        if marker:
+            if not in_list:
+                in_list = True
+                counter = 1
+            out.append(f"{marker.group(1)}{counter}. {marker.group(2)}")
+            counter += 1
+            continue
+
+        out.append(line)
+        if in_list and re.match(r"^\s*##+\s+", line):
+            in_list = False
+    return "\n".join(out)
+
+
+def normalize_ecosystem_top_stories(text):
+    match = re.search(r"^## Top Stories and Operator Takeaways\s*$", text, flags=re.MULTILINE)
+    if not match:
+        return text
+
+    start = match.end()
+    next_section = re.search(r"^##\s+", text[start:], flags=re.MULTILINE)
+    section_end = start + next_section.start() if next_section else len(text)
+    section = text[start:section_end]
+
+    items = []
+    current = None
+    for raw in section.splitlines():
+        line = raw.strip()
+        marker = re.match(r"^(?:\d+\.|[-*])\s+(.*)$", line)
+        if marker:
+            if current:
+                items.append(current)
+            current = {"title": _strip_md_emphasis(marker.group(1)), "body": []}
+            continue
+
+        if current is None:
+            continue
+        if not line:
+            if current["body"] and current["body"][-1] != "":
+                current["body"].append("")
+            continue
+        current["body"].append(line)
+
+    if current:
+        items.append(current)
+
+    if len(items) < 2:
+        return text
+
+    rebuilt = ["## Top Stories and Operator Takeaways", ""]
+    for idx, item in enumerate(items, 1):
+        title = item["title"] or f"Signal {idx}"
+        rebuilt.append(f"### {title}")
+        rebuilt.append("")
+        paragraph = re.sub(r"\s+", " ", " ".join([ln for ln in item["body"] if ln])).strip()
+        if paragraph:
+            rebuilt.append(paragraph)
+        else:
+            rebuilt.append(
+                "Operator takeaway: Validate whether this development changes platform "
+                "roadmap, cluster policy, or day-2 operations."
+            )
+        rebuilt.append("")
+
+    new_section = "\n".join(rebuilt).rstrip() + "\n"
+    return text[: match.start()] + new_section + text[section_end:]
+
+
+def sanitize_generated_body(text, category):
+    content = (text or "").replace("\r\n", "\n").strip()
+    if not content:
+        return ""
+
+    lines = []
+    for line in content.splitlines():
+        if is_byline_line(line):
+            continue
+        lines.append(line)
+    content = "\n".join(lines)
+    content = normalize_ordered_list_numbers(content)
+    if category == "ecosystem":
+        content = normalize_ecosystem_top_stories(content)
+    return content.strip()
+
+
+def first_sentence(text):
+    content = strip_byline_sentences(text)
+    if not content:
+        return "Operator-focused Kubernetes news generated from curated sources."
     parts = re.split(r"(?<=[.!?])\s+", content)
     return parts[0][:220]
+
+
+def deck_from_body(body, fallback):
+    lines = [ln.strip() for ln in (body or "").splitlines() if ln.strip()]
+    for ln in lines:
+        if ln.startswith("#"):
+            continue
+        if re.match(r"^[-*]\s+", ln):
+            continue
+        if re.match(r"^\d+\.\s+", ln):
+            continue
+        candidate = re.sub(r"\s+", " ", ln).strip()
+        if len(candidate) >= 50:
+            return candidate[:220]
+    return fallback
 
 
 def source_links(item):
@@ -74,7 +245,7 @@ def source_links(item):
     if sources:
         lines = []
         for src in sources[:7]:
-            title = src.get("title", "Source")
+            title = strip_byline_sentences(src.get("title", "Source")) or "Source"
             url = src.get("url", "")
             lines.append(f"- [{title}]({url})")
         return "\n".join(lines)
@@ -128,6 +299,8 @@ def extract_excerpt(path):
             continue
         if ln.startswith("-"):
             continue
+        if is_byline_line(ln) or BYLINE_SENTENCE_RE.search(ln):
+            continue
         return ln[:220]
     return ""
 
@@ -135,6 +308,19 @@ def extract_excerpt(path):
 def clean_table_cell(value):
     text = (value or "").replace("\n", " ").strip()
     return text.replace("|", "\\|")
+
+
+def yaml_quote(value):
+    return (value or "").replace("\\", "\\\\").replace('"', '\\"')
+
+
+def parse_date_value(value):
+    if not value:
+        return None
+    try:
+        return datetime.strptime((value or "")[:10], "%Y-%m-%d").date()
+    except Exception:
+        return None
 
 
 def related_links(category, filename):
@@ -156,25 +342,26 @@ def related_links(category, filename):
             break
 
     for title, name in siblings:
-        links.append(f"- Related: [{title}]({name})")
+        label = display_entry_title(category, title)
+        links.append(f"- Related: [{label}]({name})")
 
     if len(siblings) < 2:
         fallback = {
             "security": [
-                "- Related: [Release updates](../releases/index.md)",
+                "- Related: [Release news](../releases/index.md)",
                 "- Related: [Kubernetes security primer](../../security/security.md)",
             ],
             "releases": [
-                "- Related: [Security updates](../security/index.md)",
+                "- Related: [Security news](../security/index.md)",
                 "- Related: [Maintenance and upgrades](../../operations/maintenance.md)",
             ],
             "ecosystem": [
-                "- Related: [Release updates](../releases/index.md)",
+                "- Related: [Release news](../releases/index.md)",
                 "- Related: [Tool radar](../tool-radar/index.md)",
             ],
             "tool-radar": [
-                "- Related: [Security updates](../security/index.md)",
-                "- Related: [Release updates](../releases/index.md)",
+                "- Related: [Security news](../security/index.md)",
+                "- Related: [Release news](../releases/index.md)",
             ],
         }
         for entry in fallback.get(category, []):
@@ -215,7 +402,10 @@ def tool_momentum_label(stars, pushed_at):
     pushed = _parse_iso_date(pushed_at)
     if not pushed:
         return "Watch"
-    days = (datetime.now(timezone.utc) - pushed).days
+    now = now_local()
+    if pushed.tzinfo is None:
+        pushed = pushed.replace(tzinfo=timezone.utc)
+    days = (now - pushed.astimezone(now.tzinfo)).days
     if stars >= 5000 and days <= 45:
         return "Hot"
     if stars >= 1500 and days <= 90:
@@ -246,20 +436,22 @@ def tool_signals_section(item):
 
 
 def build_page(item, body, filename):
-    now = datetime.now(timezone.utc).isoformat()
-    title = item.get("title", "Untitled")
+    now_dt = now_local()
+    now = now_dt.isoformat()
+    title = normalized_item_title(item)
     category = item.get("category_hint", "ecosystem")
-    published = (item.get("published", "") or "")[:10] or now[:10]
-    deck = first_sentence(item.get("summary", ""))
+    published = now_dt.strftime("%Y-%m-%d")
+    deck = deck_from_body(body, first_sentence(item.get("summary", "")))
     extra = ""
     if category == "tool-radar":
         extra = f"\n\n{tool_signals_section(item)}"
 
     return (
         "---\n"
-        f"title: \"{title}\"\n"
+        f"title: \"{yaml_quote(title)}\"\n"
         f"date: {published}\n"
         f"category: {category}\n"
+        f"description: \"{yaml_quote(deck)}\"\n"
         f"generated: \"{now}\"\n"
         "---\n\n"
         f"# {title}\n\n"
@@ -275,6 +467,8 @@ def build_page(item, body, filename):
 def render_index_entries(category):
     cfg = CATEGORY_CONFIG[category]
     root = cfg["output_dir"]
+    today = now_local().date()
+    max_age_days = INDEX_MAX_AGE_DAYS.get(category, 45)
 
     entries = []
     for name in sorted(os.listdir(root), reverse=True):
@@ -286,17 +480,25 @@ def render_index_entries(category):
         date = meta.get("date", "")
         if not date and re.match(r"^\d{4}-\d{2}-\d{2}", name):
             date = name[:10]
+        date_obj = parse_date_value(date)
+        if date_obj:
+            age = (today - date_obj).days
+            if age < 0 or age > max_age_days:
+                continue
         excerpt = meta.get("description") or extract_excerpt(path)
+        if BYLINE_SENTENCE_RE.search(excerpt):
+            excerpt = "Operator-focused news."
         entries.append((date, title, name, excerpt))
 
     rows = []
     for date, title, name, excerpt in entries[:12]:
+        display_title = display_entry_title(category, title)
         rows.append(
-            f"| {clean_table_cell(date or '-')} | [{clean_table_cell(title)}]({name}) | "
-            f"{clean_table_cell(excerpt or 'Operator-focused update.')} |"
+            f"| {clean_table_cell(date or '-')} | [{clean_table_cell(display_title)}]({name}) | "
+            f"{clean_table_cell(excerpt or 'Operator-focused news.')} |"
         )
 
-    link_col = "Entry" if category == "tool-radar" else "Update"
+    link_col = "Tool" if category == "tool-radar" else "News"
     table = [
         f"| Date | {link_col} | Summary |",
         "| --- | --- | --- |",
@@ -304,7 +506,7 @@ def render_index_entries(category):
     if rows:
         table.extend(rows)
     else:
-        table.append("| - | No updates yet | New entries will appear here after curation. |")
+        table.append("| - | No news yet | New entries will appear here after curation. |")
     return "\n".join(table)
 
 
@@ -339,15 +541,17 @@ def mark_all_processed(db, item, filename):
         mark_processed(db, source_id, filename)
 
 
-def run_generate():
-    if not os.path.exists(PLAN):
-        log.error("No plan.json")
-        return 0
+def run_generate(plan_items=None):
+    if plan_items is None:
+        if not os.path.exists(PLAN):
+            log.error("No plan.json")
+            return 0
+        with open(PLAN) as handle:
+            plan = json.load(handle)
+        items = plan.get("items", [])
+    else:
+        items = plan_items
 
-    with open(PLAN) as handle:
-        plan = json.load(handle)
-
-    items = plan.get("items", [])
     if not items:
         log.info("Empty plan.")
         return 0
@@ -371,6 +575,17 @@ def run_generate():
         body = write_article(item)
         if not body:
             log.error(f"LLM failed for {filename}")
+            continue
+        body = sanitize_generated_body(body, category)
+        if not body:
+            log.error(f"Generated body empty after sanitization for {filename}")
+            continue
+        quality_issues = assess_markdown_quality(category, body)
+        if quality_issues:
+            log.error(
+                f"Generated body failed quality gate for {filename}: "
+                + "; ".join(quality_issues[:5])
+            )
             continue
 
         page = build_page(item, body, filename)
