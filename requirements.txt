@@ -3,3 +3,5 @@ mkdocs-mermaid2-plugin==1.1.1
 mkdocs-plugin-inline-svg==0.1.0
 mkdocs-simple-hooks==0.1.5
 mkdocs_quiz==0.0.41
+requests>=2.31.0
+feedparser>=6.0.11

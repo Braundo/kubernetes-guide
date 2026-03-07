@@ -11,7 +11,7 @@ Tool Radar tracks Kubernetes-adjacent projects with practical evaluation context
 
 ## Radar Snapshot
 
-| Tool | Stars | Last Push | Momentum | Category |
+| Tool | Stars | Last Push | Trend | Area |
 | --- | ---: | --- | --- | --- |
 | [Cilium](2026-03-cilium-networking-radar.md) | 23,916 | 2026-03-06 | Hot | Networking + Security |
 | [Argo CD](2026-03-argo-cd-gitops-radar.md) | 22,237 | 2026-03-06 | Hot | GitOps |

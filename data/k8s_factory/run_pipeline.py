@@ -25,6 +25,41 @@ logging.basicConfig(
 log = logging.getLogger("pipeline")
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
+CATEGORY_REQUIRED_SECTIONS = {
+    "security": [
+        "## Advisory Summary",
+        "## Affected Components and Versions",
+        "## Why It Matters",
+        "## What to Do",
+    ],
+    "releases": [
+        "## Release Summary",
+        "## Key Changes",
+        "## Breaking Changes and Deprecations",
+        "## Why It Matters for Operators",
+        "## Suggested Actions",
+    ],
+    "ecosystem": [
+        "## Curated Intro",
+        "## Top Signals This Cycle",
+    ],
+    "tool-radar": [
+        "## What the Tool Does",
+        "## Why It Is Worth Watching",
+        "## Maturity and Adoption Notes",
+        "## Category",
+    ],
+}
+
+
+def category_from_path(path):
+    normalized = path.replace("\\", "/")
+    for category in CATEGORY_CONFIG.keys():
+        marker = f"/updates/{category}/"
+        if marker in normalized:
+            return category
+    return None
+
 
 def verify_generated_markdown():
     errors = []
@@ -40,7 +75,12 @@ def verify_generated_markdown():
                 content = handle.read()
             if "---" not in content:
                 errors.append(f"{path}: missing front matter")
+
             required = ["## Source Links", "## Related Pages"]
+            category = category_from_path(path)
+            if category:
+                required.extend(CATEGORY_REQUIRED_SECTIONS.get(category, []))
+
             for marker in required:
                 if marker not in content:
                     errors.append(f"{path}: missing section {marker}")

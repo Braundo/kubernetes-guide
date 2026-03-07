@@ -60,6 +60,10 @@ hide:
 
 <br>
 
+## Weekly Newsletter {#weekly-newsletter}
+
+Get one practical email each week with the highest-signal Kubernetes release, security, ecosystem, and tool updates.
+
 <style>
 .newsletter-container {
   max-width: 700px;
