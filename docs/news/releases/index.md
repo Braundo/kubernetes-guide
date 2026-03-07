@@ -14,7 +14,7 @@ Only recent publications are listed here to keep this feed timely.
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| - | No news yet | New entries will appear here after curation. |
+| 2026-03-06 | [Cluster API v1.12: Introducing In-place Updates and Chained Upgrades](2026-03-06-cluster-api-v1-12-introducing-place-updates-chained-upgrades.md) | Cluster API v1.12.0 shipped on January 27, 2026, introducing two significant lifecycle management capabilities: in-place updates and chained upgrades. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
