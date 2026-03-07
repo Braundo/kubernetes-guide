@@ -14,7 +14,7 @@ Only recent publications are listed here to keep this feed timely.
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| - | No news yet | New entries will appear here after curation. |
+| 2026-03-06 | [Before You Migrate: Five Surprising Ingress-NGINX Behaviors You Need to Know](2026-03-06-before-migrate-five-surprising-ingress-nginx-behaviors-need.md) | Kubernetes will retire Ingress-NGINX in March 2026, following the November 2025 announcement. This retirement forces immediate migration planning for one of the most widely deployed ingress controllers in the ecosystem. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
