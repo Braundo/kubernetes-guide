@@ -160,10 +160,11 @@ Short, practical Kubernetes insights for engineers and platform teams.
     required
     class="newsletter-input"
   />
-
+<center>
   <button type="submit" class="newsletter-button">
     Subscribe
   </button>
+</center>
 </form>
 
 <div class="newsletter-footer">
