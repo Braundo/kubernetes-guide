@@ -94,24 +94,28 @@ div[style*="text-align: center"] {
   height: auto;       /* Keeps aspect ratio */
 }
 
-/* Mobile tables: wrap text instead of forcing horizontal scrolling */
+/* Job board table */
+.jobs-table-wrap table:not([class]) {
+  width: 100%;
+}
+
+/* Mobile tables: hybrid behavior for readability */
 @media screen and (max-width: 48rem) {
   .md-typeset__scrollwrap,
   .md-typeset__table {
-    overflow-x: visible !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   .md-typeset table:not([class]) {
-    display: table;
-    table-layout: fixed;
     width: 100%;
   }
 
   .md-typeset table:not([class]) th,
   .md-typeset table:not([class]) td {
     white-space: normal !important;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: break-word;
+    word-break: normal;
     vertical-align: top;
   }
 
@@ -119,9 +123,70 @@ div[style*="text-align: center"] {
   .md-typeset table:not([class]) th a,
   .md-typeset table:not([class]) td code {
     white-space: normal !important;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
+
+  /* 5+ column tables get a minimum readable width and horizontal scroll */
+  .md-typeset table:not([class]):has(th:nth-child(5)) {
+    min-width: 44rem;
+  }
+
+  /* Jobs table: convert rows into mobile cards */
+  .jobs-table-wrap .md-typeset__scrollwrap,
+  .jobs-table-wrap .md-typeset__table {
+    overflow: visible !important;
+  }
+
+  .jobs-table-wrap table:not([class]) {
+    min-width: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .jobs-table-wrap table:not([class]) thead {
+    display: none;
+  }
+
+  .jobs-table-wrap table:not([class]) tbody,
+  .jobs-table-wrap table:not([class]) tr,
+  .jobs-table-wrap table:not([class]) td {
+    display: block;
+    width: 100%;
+  }
+
+  .jobs-table-wrap table:not([class]) tr {
+    margin: 0 0 0.9rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    background: var(--md-default-bg-color);
+  }
+
+  .jobs-table-wrap table:not([class]) td {
+    border: 0;
+    padding: 0.25rem 0;
+    white-space: normal !important;
+    overflow-wrap: break-word;
+  }
+
+  .jobs-table-wrap table:not([class]) td::before {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--md-default-fg-color--light);
+    margin-bottom: 0.18rem;
+  }
+
+  .jobs-table-wrap table:not([class]) td:nth-child(1)::before { content: "Role"; }
+  .jobs-table-wrap table:not([class]) td:nth-child(2)::before { content: "Company"; }
+  .jobs-table-wrap table:not([class]) td:nth-child(3)::before { content: "Location"; }
+  .jobs-table-wrap table:not([class]) td:nth-child(4)::before { content: "Type"; }
+  .jobs-table-wrap table:not([class]) td:nth-child(5)::before { content: "Compensation"; }
+  .jobs-table-wrap table:not([class]) td:nth-child(6)::before { content: "Posted"; }
+  .jobs-table-wrap table:not([class]) td:nth-child(7)::before { content: "Apply"; }
 }
 /* Light/Dark mode image switching */
 [data-md-color-scheme="slate"] img[src"#only-light"],

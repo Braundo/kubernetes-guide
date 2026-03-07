@@ -10,9 +10,13 @@ hide:
 
 This board is for Kubernetes-focused roles in platform engineering, SRE, cloud-native security, and infrastructure.
 
+<div class="jobs-table-wrap" markdown>
+
 | Role | Company | Location | Type | Compensation | Posted | Apply |
 | --- | --- | --- | --- | --- | --- | --- |
 | No active listings right now | - | - | - | - | - | [Submit a role](contact.md) |
+
+</div>
 
 ## Listing Standards
 
