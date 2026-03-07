@@ -24,28 +24,28 @@ hide:
 
 <div class="grid cards" markdown>
 
--   **Learn Kubernetes**
+-   :lucide-graduation-cap: **Learn Kubernetes**
 
     ---
     Follow structured paths from fundamentals through production operations.
 
     [Open Learning Paths](learn/index.md)
 
--   **Certificates**
+-   :lucide-scroll-text: **Certificates**
 
     ---
     Prepare for CKA, CKAD, and CKS with focused exam guides.
 
     [Open Certificate Prep](certifications/certification-preparation.md)
 
--   **Updates**
+-   :lucide-bell-ring: **Updates**
 
     ---
     Track release, security, ecosystem, and tooling updates in one section.
 
     [Open Release Updates](updates/releases/index.md)
 
--   **Kubernetes Jobs**
+-   :lucide-briefcase-business: **Kubernetes Jobs**
 
     ---
     Browse and submit platform engineering and SRE roles.
