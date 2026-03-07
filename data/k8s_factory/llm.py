@@ -16,18 +16,19 @@ log = logging.getLogger("llm")
 TIMEOUT = 120
 MAX_ATTEMPTS = int(os.environ.get("LLM_MAX_DRAFT_ATTEMPTS", "3"))
 MAX_TOKENS = int(os.environ.get("LLM_MAX_TOKENS", "1700"))
-MIN_CALL_INTERVAL_SECONDS = float(os.environ.get("LLM_MIN_CALL_INTERVAL_SECONDS", "15"))
+MIN_CALL_INTERVAL_SECONDS = float(os.environ.get("LLM_MIN_CALL_INTERVAL_SECONDS", "20"))
 RATE_LIMIT_RETRIES = int(os.environ.get("LLM_RATE_LIMIT_RETRIES", "6"))
 BASE_BACKOFF_SECONDS = float(os.environ.get("LLM_BASE_BACKOFF_SECONDS", "6"))
 _LAST_CALL_MONOTONIC = 0.0
-INPUT_TOKENS_PER_MIN_BUDGET = int(os.environ.get("LLM_INPUT_TOKENS_PER_MIN_BUDGET", "24000"))
-OUTPUT_TOKENS_PER_MIN_BUDGET = int(os.environ.get("LLM_OUTPUT_TOKENS_PER_MIN_BUDGET", "7000"))
+INPUT_TOKENS_PER_MIN_BUDGET = int(os.environ.get("LLM_INPUT_TOKENS_PER_MIN_BUDGET", "18000"))
+OUTPUT_TOKENS_PER_MIN_BUDGET = int(os.environ.get("LLM_OUTPUT_TOKENS_PER_MIN_BUDGET", "5500"))
 TOKEN_WINDOW_SECONDS = 60.0
 _TOKEN_RESERVATIONS = deque()
 MAX_PRIMARY_EXCERPT_CHARS = int(os.environ.get("LLM_MAX_PRIMARY_EXCERPT_CHARS", "1800"))
 MAX_ROUNDUP_SOURCE_EXCERPT_CHARS = int(os.environ.get("LLM_MAX_ROUNDUP_SOURCE_EXCERPT_CHARS", "500"))
 MAX_ROUNDUP_SOURCES = int(os.environ.get("LLM_MAX_ROUNDUP_SOURCES", "6"))
 MAX_CONTEXT_CHARS = int(os.environ.get("LLM_MAX_CONTEXT_CHARS", "7000"))
+_CONFIG_LOGGED = False
 
 COMMON_RULES = """
 Editorial rules:
@@ -414,6 +415,23 @@ def _call(prompt):
     raise ValueError(f"Unknown provider: {provider}")
 
 
+def _log_runtime_config_once():
+    global _CONFIG_LOGGED
+    if _CONFIG_LOGGED:
+        return
+    _CONFIG_LOGGED = True
+    log.info(
+        "LLM runtime config: provider=%s model=%s max_tokens=%s max_attempts=%s min_interval=%ss in_budget=%s out_budget=%s",
+        (os.environ.get("LLM_PROVIDER", "anthropic") or "anthropic"),
+        os.environ.get("LLM_MODEL", "claude-sonnet-4-5-20250929"),
+        MAX_TOKENS,
+        MAX_ATTEMPTS,
+        MIN_CALL_INTERVAL_SECONDS,
+        INPUT_TOKENS_PER_MIN_BUDGET,
+        OUTPUT_TOKENS_PER_MIN_BUDGET,
+    )
+
+
 def _limit(text, max_chars):
     content = (text or "").strip()
     if len(content) <= max_chars:
@@ -512,6 +530,7 @@ def _build_prompt(category, payload, issues):
 
 
 def write_article(item):
+    _log_runtime_config_once()
     category = item.get("category_hint", "ecosystem")
     payload = {"rules": COMMON_RULES}
     payload["context_block"] = _roundup_context(item) if category == "ecosystem" else _item_context(item)
@@ -541,6 +560,7 @@ def write_article(item):
 
 
 def write_newsletter(articles):
+    _log_runtime_config_once()
     summaries = []
     for article in articles:
         category = article.get("category_hint", "")

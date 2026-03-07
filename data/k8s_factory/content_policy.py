@@ -72,7 +72,7 @@ MAX_SOURCE_AGE_DAYS = {
     "tool-radar": 60,
 }
 
-MAX_ITEMS_PER_RUN = 5
+MAX_ITEMS_PER_RUN = int(os.environ.get("PIPELINE_MAX_ITEMS_PER_RUN", "1"))
 MAX_SLUG_LENGTH = 60
 
 APPROVED_DOMAINS = {

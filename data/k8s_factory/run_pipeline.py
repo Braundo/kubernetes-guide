@@ -33,6 +33,7 @@ REVIEW_STATE_PATH = os.path.join(PIPELINE_DIR, "review_state.json")
 REVIEW_MD_PATH = os.path.join(PIPELINE_DIR, "review_topics.md")
 RUN_LOCK_PATH = os.path.join(PIPELINE_DIR, ".run_pipeline.lock")
 RUN_LOCK_STALE_SECONDS = int(os.environ.get("PIPELINE_LOCK_STALE_SECONDS", str(6 * 3600)))
+MAX_GENERATE_PER_RUN = int(os.environ.get("PIPELINE_MAX_GENERATE_PER_RUN", "1"))
 
 
 def parse_option_value(argv, flag):
@@ -225,6 +226,8 @@ def write_review_markdown(state):
         "",
         f"Generated: `{state.get('created_at', '')}`",
         "",
+        f"Quality-first publish cap per run: `{MAX_GENERATE_PER_RUN}`",
+        "",
         "Select topics to publish by review ID:",
         "",
         "- Publish all: `.venv/bin/python data/k8s_factory/run_pipeline.py --approve all`",
@@ -333,6 +336,35 @@ def split_selected_and_skipped(state, approved_ids):
     return selected, sorted(skipped_item_ids)
 
 
+def collect_item_ids(items):
+    ids = set()
+    for item in items or []:
+        item_id = item.get("id")
+        if item_id:
+            ids.add(int(item_id))
+        for sid in item.get("source_item_ids") or []:
+            if sid:
+                ids.add(int(sid))
+    return sorted(ids)
+
+
+def cap_items_for_quality(items, label):
+    if MAX_GENERATE_PER_RUN <= 0 or len(items) <= MAX_GENERATE_PER_RUN:
+        return items, []
+
+    ranked = sorted(items, key=lambda it: it.get("score", 0), reverse=True)
+    kept = ranked[:MAX_GENERATE_PER_RUN]
+    dropped = ranked[MAX_GENERATE_PER_RUN:]
+    log.info(
+        "Quality-first cap active for %s: %s selected, %s deferred/skipped (max=%s).",
+        label,
+        len(kept),
+        len(dropped),
+        MAX_GENERATE_PER_RUN,
+    )
+    return kept, dropped
+
+
 def mark_skipped_items(item_ids):
     if not item_ids:
         return
@@ -387,7 +419,10 @@ def main():
 
             approved_ids = parse_approved_ids(approve_value, len(state.get("items", [])))
             selected_items, skipped_ids = split_selected_and_skipped(state, approved_ids)
-            mark_skipped_items(skipped_ids)
+            selected_items, dropped_items = cap_items_for_quality(selected_items, "approved topics")
+            overflow_ids = collect_item_ids(dropped_items)
+            all_skipped_ids = sorted(set(skipped_ids + overflow_ids))
+            mark_skipped_items(all_skipped_ids)
 
             if not selected_items:
                 clear_review_files()
@@ -457,8 +492,9 @@ def main():
             log.info("Awaiting human topic approval. No pages generated yet.")
             return 0
 
-        log.info(f"--- Generate ({selected} item(s)) ---")
-        generated = run_generate()
+        auto_items, _ = cap_items_for_quality(plan.get("items", []), "auto-publish plan")
+        log.info(f"--- Generate ({len(auto_items)} item(s)) ---")
+        generated = run_generate(plan_items=auto_items)
 
         log.info("--- Verify ---")
         if not verify_generated_markdown():
