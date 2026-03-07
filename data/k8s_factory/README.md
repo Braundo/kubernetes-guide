@@ -70,13 +70,46 @@ Then pushes to `origin main`, which triggers site publish.
 ## Editorial quality controls
 
 - Drafts are generated with source-page context excerpts, not RSS summaries alone.
-- The writer retries up to 3 times when quality checks fail.
+- The writer retries a limited number of times when quality checks fail (default: 2 attempts, configurable).
 - Hard quality gates reject drafts that are:
   - too short by category
   - missing required section depth
   - using banned filler phrases (for example "details were not provided")
   - using bot-like placeholders such as `Curated Intro`.
 - `run_pipeline.py` performs a final markdown quality verification before commit/push.
+
+## Anthropic rate-limit safeguards
+
+The writer includes built-in throttling and retry/backoff to stay under account-level token/request limits.
+
+Optional environment variables:
+
+- `LLM_MAX_TOKENS` (default `1700`): per-call output cap.
+- `LLM_MIN_CALL_INTERVAL_SECONDS` (default `15`): minimum spacing between API calls.
+- `LLM_RATE_LIMIT_RETRIES` (default `6`): retry attempts for 429/5xx responses.
+- `LLM_BASE_BACKOFF_SECONDS` (default `6`): exponential backoff base.
+- `LLM_MAX_DRAFT_ATTEMPTS` (default `3`): quality-revision attempts per article.
+- `LLM_INPUT_TOKENS_PER_MIN_BUDGET` (default `24000`): client-side input token budget per rolling minute.
+- `LLM_OUTPUT_TOKENS_PER_MIN_BUDGET` (default `7000`): client-side output token budget per rolling minute.
+- `LLM_MAX_PRIMARY_EXCERPT_CHARS` (default `1800`): source excerpt cap for single-source pages.
+- `LLM_MAX_ROUNDUP_SOURCE_EXCERPT_CHARS` (default `500`): per-source excerpt cap for ecosystem roundups.
+- `LLM_MAX_ROUNDUP_SOURCES` (default `6`): max source count passed to one ecosystem generation call.
+- `LLM_MAX_CONTEXT_CHARS` (default `7000`): hard cap for prompt context block.
+- `PIPELINE_LOCK_STALE_SECONDS` (default `21600`): stale lock cleanup window.
+
+### Recommended profile: maximum quality within Tier-1 limits
+
+```bash
+LLM_PROVIDER=anthropic \
+LLM_MODEL=claude-sonnet-4-6 \
+LLM_MAX_TOKENS=1700 \
+LLM_MAX_DRAFT_ATTEMPTS=3 \
+LLM_MIN_CALL_INTERVAL_SECONDS=15 \
+LLM_INPUT_TOKENS_PER_MIN_BUDGET=24000 \
+LLM_OUTPUT_TOKENS_PER_MIN_BUDGET=7000 \
+LLM_BASE_BACKOFF_SECONDS=6 \
+.venv/bin/python data/k8s_factory/run_pipeline.py --github
+```
 
 ## URL pattern after publish
 

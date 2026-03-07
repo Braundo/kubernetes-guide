@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import atexit
 import os
 import sys
 import logging
@@ -30,6 +31,8 @@ PIPELINE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(PIPELINE_DIR, "..", ".."))
 REVIEW_STATE_PATH = os.path.join(PIPELINE_DIR, "review_state.json")
 REVIEW_MD_PATH = os.path.join(PIPELINE_DIR, "review_topics.md")
+RUN_LOCK_PATH = os.path.join(PIPELINE_DIR, ".run_pipeline.lock")
+RUN_LOCK_STALE_SECONDS = int(os.environ.get("PIPELINE_LOCK_STALE_SECONDS", str(6 * 3600)))
 
 
 def parse_option_value(argv, flag):
@@ -41,6 +44,39 @@ def parse_option_value(argv, flag):
         if arg.startswith(f"{flag}="):
             return arg.split("=", 1)[1]
     return None
+
+
+def _is_stale_lock(path):
+    try:
+        age = int(datetime.now(timezone.utc).timestamp() - os.path.getmtime(path))
+        return age > RUN_LOCK_STALE_SECONDS
+    except OSError:
+        return False
+
+
+def acquire_run_lock():
+    if os.path.exists(RUN_LOCK_PATH) and _is_stale_lock(RUN_LOCK_PATH):
+        try:
+            os.remove(RUN_LOCK_PATH)
+            log.warning("Removed stale pipeline lock file.")
+        except OSError:
+            pass
+
+    try:
+        fd = os.open(RUN_LOCK_PATH, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        with os.fdopen(fd, "w") as handle:
+            handle.write(f"pid={os.getpid()} started={datetime.now(timezone.utc).isoformat()}\n")
+        return True
+    except FileExistsError:
+        return False
+
+
+def release_run_lock():
+    try:
+        if os.path.exists(RUN_LOCK_PATH):
+            os.remove(RUN_LOCK_PATH)
+    except OSError:
+        pass
 
 
 def category_from_path(path):
@@ -314,6 +350,14 @@ def touch_last_run():
 
 
 def main():
+    if not acquire_run_lock():
+        log.error(
+            "Another pipeline run appears active. Exiting to avoid overlapping LLM calls. "
+            f"Lock: {RUN_LOCK_PATH}"
+        )
+        return 1
+    atexit.register(release_run_lock)
+
     argv = sys.argv[1:]
     include_github = "--github" in argv
     auto_publish = "--auto-publish" in argv
