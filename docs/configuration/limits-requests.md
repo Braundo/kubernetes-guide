@@ -3,7 +3,7 @@ icon: lucide/circle-gauge
 title: Kubernetes Resource Requests and Limits Explained (CPU and Memory)
 description: Learn how CPU and memory requests and limits work in Kubernetes and how they affect scheduling and performance.
 hide:
-  - footer
+ - footer
 ---
 
 # Resource Limits

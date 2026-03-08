@@ -3,7 +3,7 @@ icon: lucide/key-round
 title: ConfigMaps and Secrets in Kubernetes (Configuration Management Explained)
 description: Learn how ConfigMaps and Secrets store and inject configuration data into Pods, and best practices for managing sensitive values.
 hide:
-  - footer
+ - footer
 ---
 
 <h1>ConfigMaps & Secrets</h1>
@@ -78,9 +78,9 @@ Inject all key-value pairs from a ConfigMap or Secret:
 
 ```yaml
 envFrom:
-  - configMapRef:
+ - configMapRef:
       name: app-config
-  - secretRef:
+ - secretRef:
       name: db-secret
 ```
 
@@ -88,7 +88,7 @@ Or reference individual keys:
 
 ```yaml
 env:
-  - name: DB_PASSWORD
+ - name: DB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: db-secret
@@ -103,13 +103,13 @@ Map each key to a file inside the container:
 
 ```yaml
 volumes:
-  - name: config-vol
+ - name: config-vol
     configMap:
       name: app-config
 containers:
-  - name: app
+ - name: app
     volumeMounts:
-      - name: config-vol
+ - name: config-vol
         mountPath: /etc/config
 ```
 
@@ -124,7 +124,7 @@ You can do the same for Secrets:
 
 ```yaml
 volumes:
-  - name: creds
+ - name: creds
     secret:
       secretName: db-secret
 ```
@@ -137,12 +137,12 @@ volumes:
 
 ```yaml
 containers:
-  - name: app
+ - name: app
     image: myapp
     args:
-      - "--log-level=$(LOG_LEVEL)"
+ - "--log-level=$(LOG_LEVEL)"
     env:
-      - name: LOG_LEVEL
+ - name: LOG_LEVEL
         valueFrom:
           configMapKeyRef:
             name: app-config
@@ -164,7 +164,7 @@ You can pass key-value pairs into containers using environment variables. These 
 
 ```yaml
 env:
-  - name: LOG_LEVEL
+ - name: LOG_LEVEL
     value: "debug"
 ```
 
@@ -172,7 +172,7 @@ env:
 
 ```yaml
 envFrom:
-  - configMapRef:
+ - configMapRef:
       name: app-config
 ```
 
@@ -180,7 +180,7 @@ Or individual keys:
 
 ```yaml
 env:
-  - name: APP_PORT
+ - name: APP_PORT
     valueFrom:
       configMapKeyRef:
         name: app-config
@@ -191,7 +191,7 @@ env:
 
 ```yaml
 env:
-  - name: DB_PASSWORD
+ - name: DB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: db-secret
@@ -202,7 +202,7 @@ env:
 
 ```yaml
 env:
-  - name: POD_NAME
+ - name: POD_NAME
     valueFrom:
       fieldRef:
         fieldPath: metadata.name

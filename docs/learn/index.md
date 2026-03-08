@@ -1,7 +1,7 @@
 ---
 title: Kubernetes Learning Paths
 hide:
-    - footer
+ - footer
 ---
 
 # Kubernetes Learning Paths

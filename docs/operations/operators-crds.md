@@ -3,7 +3,7 @@ icon: lucide/puzzle
 title: Kubernetes Operators and CRDs Explained (Extending Kubernetes)
 description: Learn how Custom Resource Definitions and Operators extend Kubernetes with domain-specific automation.
 hide:
-  - footer
+ - footer
 ---
 
 # Operators & CRDs

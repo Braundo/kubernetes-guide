@@ -3,7 +3,7 @@ icon: lucide/logs
 title: Kubernetes Audit Logging Explained (Tracking and Investigating Activity)
 description: Learn how Kubernetes audit logs work and how they help detect, investigate, and respond to security events.
 hide:
-  - footer
+ - footer
 ---
 
 # Audit Logging
@@ -52,18 +52,18 @@ apiVersion: audit.k8s.io/v1
 kind: Policy
 rules:
   # 1. Don't log noisy system calls
-  - level: None
+ - level: None
     users: ["system:kube-proxy"]
     verbs: ["watch"]
 
   # 2. Log full request body for critical changes (Pod modifications)
-  - level: Request
+ - level: Request
     resources:
-    - group: ""
+ - group: ""
       resources: ["pods"]
 
   # 3. Default: Log metadata only for everything else
-  - level: Metadata
+ - level: Metadata
 ```
 
 -----

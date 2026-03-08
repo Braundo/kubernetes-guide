@@ -3,7 +3,7 @@ icon: lucide/cog
 title: Kubernetes Troubleshooting Guide (Debugging Common Issues)
 description: Learn how to troubleshoot common Kubernetes issues using kubectl, logs, events, and diagnostic techniques.
 hide:
-  - footer
+ - footer
 ---
 
 When a Pod breaks, don't guess. Follow the evidence.

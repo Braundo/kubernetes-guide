@@ -1,9 +1,9 @@
 ---
 icon: lucide/box
 title: Pods vs Deployments in Kubernetes (What They Are and How They Work)
-description: Understand Kubernetes Pods and Deployments, how they relate, and when to use each—plus common patterns, pitfalls, and practical examples.
+description: Understand Kubernetes Pods and Deployments, how they relate, and when to use each - plus common patterns, pitfalls, and practical examples.
 hide:
-  - footer
+ - footer
 ---
 
 # Pods & Deployments

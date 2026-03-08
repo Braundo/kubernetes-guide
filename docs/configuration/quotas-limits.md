@@ -3,7 +3,7 @@ icon: lucide/scale
 title: Kubernetes Resource Quotas Explained (Controlling Resource Usage)
 description: Learn how Kubernetes ResourceQuotas limit resource consumption at the namespace level and prevent noisy-neighbor issues.
 hide:
-  - footer
+ - footer
 ---
 
 # Quotas
@@ -99,7 +99,7 @@ metadata:
   namespace: team-a
 spec:
   limits:
-  - default:            # <--- If user sets nothing, give them this LIMIT
+ - default:            # <--- If user sets nothing, give them this LIMIT
       memory: 512Mi
       cpu: 500m
     defaultRequest:     # <--- If user sets nothing, give them this REQUEST

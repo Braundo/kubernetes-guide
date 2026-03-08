@@ -3,7 +3,7 @@ icon: lucide/home
 title: k8s.guide | Kubernetes Learning, News, and Insights
 description: Clear Kubernetes learning paths, practical certification prep, and curated release, security, ecosystem, and tool news.
 hide:
-  - footer
+ - footer
 ---
 
 <meta name="google-adsense-account" content="ca-pub-4744916432619667">

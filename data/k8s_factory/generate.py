@@ -34,6 +34,8 @@ INDEX_MAX_AGE_DAYS = {
     "ecosystem": 30,
     "tool-radar": 60,
 }
+EM_DASH = "\u2014"
+EN_DASH = "\u2013"
 
 
 def slugify(title):
@@ -128,6 +130,16 @@ def _strip_md_emphasis(text):
     return re.sub(r"[*_`]+", "", (text or "")).strip()
 
 
+def normalize_dash_punctuation(text):
+    content = (text or "")
+    if not content:
+        return ""
+    content = content.replace(EM_DASH, " - ")
+    content = content.replace(EN_DASH, "-")
+    content = re.sub(r"[ \t]+-[ \t]+", " - ", content)
+    return content
+
+
 def normalize_ordered_list_numbers(text):
     lines = (text or "").splitlines()
     out = []
@@ -204,7 +216,7 @@ def normalize_ecosystem_top_stories(text):
 
 
 def sanitize_generated_body(text, category):
-    content = (text or "").replace("\r\n", "\n").strip()
+    content = normalize_dash_punctuation((text or "").replace("\r\n", "\n")).strip()
     if not content:
         return ""
 
@@ -222,15 +234,35 @@ def sanitize_generated_body(text, category):
 
 def _cmp_text(text):
     normalized = re.sub(r"\s+", " ", (text or "")).strip().lower()
+    normalized = normalized.replace("…", "...")
     normalized = normalized.strip("\"'` ")
     normalized = re.sub(r"[.?!:;]+$", "", normalized)
     return normalized
 
 
+def _is_duplicate_deck_sentence(first_sentence, deck):
+    first_cmp = _cmp_text(first_sentence)
+    deck_cmp = _cmp_text(deck)
+    if not first_cmp or not deck_cmp:
+        return False
+    if first_cmp == deck_cmp:
+        return True
+
+    # Decks are often intentionally truncated with an ellipsis.
+    first_head = re.sub(r"(?:\.\.\.)+$", "", first_cmp).strip()
+    deck_head = re.sub(r"(?:\.\.\.)+$", "", deck_cmp).strip()
+    if not first_head or not deck_head:
+        return False
+    if first_head.startswith(deck_head):
+        return True
+    if deck_head.startswith(first_head) and len(first_head) >= 40:
+        return True
+    return False
+
+
 def strip_duplicate_deck_from_body(body, deck):
     content = (body or "").strip()
-    deck_cmp = _cmp_text(deck)
-    if not content or not deck_cmp:
+    if not content or not _cmp_text(deck):
         return content
 
     lines = content.splitlines()
@@ -262,7 +294,7 @@ def strip_duplicate_deck_from_body(body, deck):
             return content
 
         first_sentence = sentences[0]
-        if _cmp_text(first_sentence) != deck_cmp:
+        if not _is_duplicate_deck_sentence(first_sentence, deck):
             return content
 
         remainder = " ".join(sentences[1:]).strip()
@@ -308,11 +340,12 @@ def source_links(item):
         lines = []
         for src in sources[:7]:
             title = strip_byline_sentences(src.get("title", "Source")) or "Source"
+            title = normalize_dash_punctuation(title)
             url = src.get("url", "")
             lines.append(f"- [{title}]({url})")
         return "\n".join(lines)
 
-    title = item.get("source_name", "Source")
+    title = normalize_dash_punctuation(item.get("source_name", "Source"))
     url = item.get("url", "")
     if url:
         return f"- [{title}]({url})"
@@ -368,7 +401,7 @@ def extract_excerpt(path):
 
 
 def clean_table_cell(value):
-    text = (value or "").replace("\n", " ").strip()
+    text = normalize_dash_punctuation((value or "").replace("\n", " ").strip())
     return text.replace("|", "\\|")
 
 
@@ -500,10 +533,10 @@ def tool_signals_section(item):
 def build_page(item, body, filename):
     now_dt = now_local()
     now = now_dt.isoformat()
-    title = normalized_item_title(item)
+    title = normalize_dash_punctuation(normalized_item_title(item))
     category = item.get("category_hint", "ecosystem")
     published = now_dt.strftime("%Y-%m-%d")
-    deck = deck_from_body(body, first_sentence(item.get("summary", "")))
+    deck = normalize_dash_punctuation(deck_from_body(body, first_sentence(item.get("summary", ""))))
     body = strip_duplicate_deck_from_body(body, deck)
     extra = ""
     if category == "tool-radar":

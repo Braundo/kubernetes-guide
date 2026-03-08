@@ -3,7 +3,7 @@ icon: lucide/share-2
 title: Kubernetes Networking Explained (Pod-to-Pod, Service, and Cluster Networking)
 description: Understand Kubernetes networking fundamentals, including pod communication, service networking, and cluster-level traffic flow.
 hide:
-  - footer
+ - footer
 ---
 
 # Networking Concepts
@@ -15,14 +15,14 @@ Networking in Kubernetes is simple on the surface, but powerful under the hood. 
 <h2>Core Principles of Kubernetes Networking</h2>
 
 1. <strong>Each Pod gets a unique IP</strong>
-   - No NAT between Pods
-   - All containers within a Pod share the same network namespace
+ - No NAT between Pods
+ - All containers within a Pod share the same network namespace
 
 2. <strong>All Pods can reach each other</strong>
-   - Flat network model (no IP masquerading between Pods)
+ - Flat network model (no IP masquerading between Pods)
 
 3. <strong>Services provide stable access to Pods</strong>
-   - Pods are ephemeral - Services give them a consistent IP + DNS name
+ - Pods are ephemeral - Services give them a consistent IP + DNS name
 
 ---
 
@@ -62,10 +62,10 @@ nslookup my-service.default.svc.cluster.local
 
 ## Service Types (Covered in next section)
 
-- `ClusterIP` – default; internal-only
-- `NodePort` – exposes on every node
-- `LoadBalancer` – cloud provider external IP
-- `ExternalName` – DNS alias
+- `ClusterIP` - default; internal-only
+- `NodePort` - exposes on every node
+- `LoadBalancer` - cloud provider external IP
+- `ExternalName` - DNS alias
 
 ---
 

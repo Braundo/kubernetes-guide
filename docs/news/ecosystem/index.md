@@ -3,7 +3,7 @@ icon: lucide/layers-plus
 title: Ecosystem News
 description: Recent curated Kubernetes ecosystem signals with practical implications for platform teams.
 hide:
-  - footer
+ - footer
 ---
 
 # Ecosystem News

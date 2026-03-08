@@ -40,6 +40,7 @@ Editorial rules:
 - Never include source bylines, editor names, or author credits.
 - Never use placeholder phrases like "details were not provided".
 - Do not use mechanical label phrases inside paragraphs (for example: "Operator takeaway:", "Why it matters:").
+- Do not use em dash or en dash punctuation. Use commas or simple hyphens instead.
 """
 
 SECURITY_PROMPT = """You are writing publication-grade security news for k8s.guide.

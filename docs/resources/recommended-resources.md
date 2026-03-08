@@ -2,7 +2,7 @@
 title: Recommended Kubernetes Resources
 description: Curated Kubernetes books and certification resources with operator-focused picks and affiliate links.
 hide:
-  - footer
+ - footer
 ---
 
 # Recommended Kubernetes Resources

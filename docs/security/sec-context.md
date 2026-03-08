@@ -3,7 +3,7 @@ icon: lucide/brick-wall-shield
 title: Kubernetes Security Context Explained (Privileges, Users, and Capabilities)
 description: Learn how Kubernetes security contexts control container privileges, user IDs, and Linux capabilities.
 hide:
-  - footer
+ - footer
 ---
 
 # Security Context
@@ -114,7 +114,7 @@ spec:
     runAsUser: 1000
     runAsGroup: 3000
   containers:
-  - name: my-app
+ - name: my-app
     image: my-app:v1
     securityContext:
       # Container Level: Runtime Hardening
@@ -124,10 +124,10 @@ spec:
       capabilities:
         drop: ["ALL"]
     volumeMounts:
-    - name: tmp
+ - name: tmp
       mountPath: /tmp # Allow writing to /tmp even on read-only FS
   volumes:
-  - name: tmp
+ - name: tmp
     emptyDir: {}
 ```
 

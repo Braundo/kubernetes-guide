@@ -2,7 +2,7 @@
 title: Sponsor k8s.guide
 description: Sponsorship options for newsletter placements, tool radar features, and Kubernetes job packages.
 hide:
-  - footer
+ - footer
 ---
 
 # Sponsor k8s.guide

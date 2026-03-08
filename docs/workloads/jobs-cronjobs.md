@@ -3,7 +3,7 @@ icon: lucide/timer
 title: Kubernetes Jobs and CronJobs Explained (Batch and Scheduled Workloads)
 description: Learn how Kubernetes Jobs and CronJobs work, how retries and scheduling behave, and common batch-processing patterns.
 hide:
-  - footer
+ - footer
 ---
 
 # Jobs & CronJobs
@@ -64,7 +64,7 @@ spec:
   template:
     spec:
       containers:
-      - name: processor
+ - name: processor
         image: my-image-processor:v1
         command: ["python", "process_images.py"]
       # "Always" is invalid for Jobs. Must be OnFailure or Never.
@@ -144,7 +144,7 @@ spec:
       template:
         spec:
           containers:
-          - name: backup
+ - name: backup
             image: backup-tool:v1
             args: ["/bin/sh", "-c", "backup.sh"]
           restartPolicy: OnFailure

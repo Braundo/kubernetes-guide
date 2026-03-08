@@ -3,7 +3,7 @@ icon: lucide/maximize-2
 title: Kubernetes Horizontal Pod Autoscaling Explained (HPA and Metrics)
 description: Learn how Kubernetes HPA works, how metrics drive scaling decisions, and common autoscaling patterns and pitfalls.
 hide:
-  - footer
+ - footer
 ---
 
 # Scaling & HPA
@@ -69,7 +69,7 @@ spec:
   minReplicas: 2
   maxReplicas: 10
   metrics:
-  - type: Resource
+ - type: Resource
     resource:
       name: cpu
       target:

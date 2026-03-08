@@ -3,7 +3,7 @@ icon: lucide/shield-ellipsis
 title: Kubernetes Security Overview (Core Concepts and Threat Areas)
 description: An overview of Kubernetes security concepts, threat surfaces, and the controls used to protect clusters and workloads.
 hide:
-  - footer
+ - footer
 ---
 
 # Security Primer

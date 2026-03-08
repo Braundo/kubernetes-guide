@@ -3,7 +3,7 @@ icon: lucide/radar
 title: Tool Radar
 description: Recent Kubernetes tool radar news highlighting adoption, momentum, and where each tool fits.
 hide:
-  - footer
+ - footer
 ---
 
 # Tool Radar

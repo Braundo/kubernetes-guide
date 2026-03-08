@@ -3,7 +3,7 @@ icon: lucide/archive
 title: Kubernetes Storage Explained (Persistent Volumes and Claims)
 description: Learn how Kubernetes storage works, including PersistentVolumes, PersistentVolumeClaims, and storage classes.
 hide:
-  - footer
+ - footer
 ---
 
 # Storage Overview
@@ -29,7 +29,7 @@ This creates a temporary directory on the Node's disk that is mounted into your 
 
 ```yaml
 volumes:
-  - name: cache-volume
+ - name: cache-volume
     emptyDir: {} # Creates a temp directory on the host
 ```
 
@@ -81,7 +81,7 @@ metadata:
   name: db-data
 spec:
   accessModes:
-    - ReadWriteOnce
+ - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
@@ -141,14 +141,14 @@ metadata:
   name: my-app
 spec:
   volumes:
-    - name: my-storage
+ - name: my-storage
       persistentVolumeClaim:
         claimName: db-data # Matches the PVC Name
   containers:
-    - name: app
+ - name: app
       image: nginx
       volumeMounts:
-        - mountPath: "/var/www/html"
+ - mountPath: "/var/www/html"
           name: my-storage
 ```
 

@@ -3,7 +3,7 @@ icon: lucide/badge-info
 title: Certified Kubernetes Application Developer (CKAD) Exam Guide
 description: Learn what to expect on the CKAD exam and how to prepare for Kubernetes application development topics.
 hide:
-  - footer
+ - footer
 ---
 
 # Certified Kubernetes Application Developer (CKAD)
@@ -69,9 +69,9 @@ The **CKAD** certification tests your ability to design, build, and run applicat
 
 - Sharing volumes, network namespace
 - Common patterns:
-  - Sidecar (logging, proxy)
-  - Adapter (log converter, translator)
-  - Ambassador (external traffic entrypoint)
+ - Sidecar (logging, proxy)
+ - Adapter (log converter, translator)
+ - Ambassador (external traffic entrypoint)
 
 ---
 
@@ -131,9 +131,9 @@ Practice common configs:
 - Open docs in one tab, terminal in another
 - Bookmark these:
 
-    - [Tasks](https://kubernetes.io/docs/tasks/)
-    - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-    - [Workloads Overview](https://kubernetes.io/docs/concepts/workloads/)
+ - [Tasks](https://kubernetes.io/docs/tasks/)
+ - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+ - [Workloads Overview](https://kubernetes.io/docs/concepts/workloads/)
     
 - Use `kubectl explain` to recall spec fields quickly
 - Copy/paste manifest scaffolds from the docs to save time
@@ -146,7 +146,7 @@ Practice common configs:
 - [Killer.sh Simulator](https://killer.sh)
 - [KodeKloud CKAD Course](https://kodekloud.com/courses/certified-kubernetes-application-developer-ckad/)
 - [Linux Foundation CKAD Training](https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/)
-- [YouTube: TechWorld with Nana – CKAD Series](https://www.youtube.com/watch?v=d6WC5n9G_sM)
+- [YouTube: TechWorld with Nana - CKAD Series](https://www.youtube.com/watch?v=d6WC5n9G_sM)
 
 ---
 

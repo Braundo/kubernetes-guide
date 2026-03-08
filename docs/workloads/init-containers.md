@@ -3,7 +3,7 @@ icon: lucide/hourglass
 title: Kubernetes Init Containers Explained (Startup Logic and Dependencies)
 description: Learn how init containers work, how they differ from sidecars, and common patterns for startup checks and initialization.
 hide:
-  - footer
+ - footer
 ---
 
 # Init Containers
@@ -58,25 +58,25 @@ metadata:
   name: git-sync-demo
 spec:
   volumes:
-  - name: content
+ - name: content
     emptyDir: {}
   initContainers:
-  - name: git-cloner
+ - name: git-cloner
     image: alpine/git
     args:
-    - clone
-    - --single-branch
-    - --
-    - https://github.com/kubernetes/kubernetes
-    - /data
+ - clone
+ - --single-branch
+ - --
+ - https://github.com/kubernetes/kubernetes
+ - /data
     volumeMounts:
-    - name: content
+ - name: content
       mountPath: /data
   containers:
-  - name: web-server
+ - name: web-server
     image: nginx
     volumeMounts:
-    - name: content
+ - name: content
       mountPath: /usr/share/nginx/html
 ```
 
@@ -98,7 +98,7 @@ If you set `restartPolicy: Always` on an init container, Kubernetes treats it as
 
 ```yaml
 initContainers:
-  - name: my-sidecar
+ - name: my-sidecar
     image: my-log-agent
     restartPolicy: Always # <--- The Magic Switch
 ```

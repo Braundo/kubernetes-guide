@@ -3,7 +3,7 @@ icon: lucide/badge-info
 title: Certified Kubernetes Administrator (CKA) Exam Guide
 description: Learn what to expect on the CKA exam and how to prepare for Kubernetes administration topics.
 hide:
-  - footer
+ - footer
 ---
 
 # Certified Kubernetes Administrator (CKA)
@@ -109,9 +109,9 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 - Open multiple terminal tabs (one for docs, one for kubectl)
 - Bookmark key doc pages:
 
-    - [Install tools](https://kubernetes.io/docs/tasks/tools/)
-    - [Tasks → Configure Pods](https://kubernetes.io/docs/tasks/)
-    - [Reference](https://kubernetes.io/docs/reference/)
+ - [Install tools](https://kubernetes.io/docs/tasks/tools/)
+ - [Tasks → Configure Pods](https://kubernetes.io/docs/tasks/)
+ - [Reference](https://kubernetes.io/docs/reference/)
     
 - Use `/etc/kubernetes/manifests/` for static Pod edits
 - Save `etcd` backup and restore syntax
@@ -124,7 +124,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 - [Killer.sh Simulator (free with CKA)](https://killer.sh)
 - [KodeKloud CKA Course](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/)
 - [Linux Foundation CKA Training](https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/)
-- [YouTube: TechWorld with Nana – CKA Series](https://www.youtube.com/watch?v=X48VuDVv0do)
+- [YouTube: TechWorld with Nana - CKA Series](https://www.youtube.com/watch?v=X48VuDVv0do)
 
 ---
 

@@ -3,7 +3,7 @@ icon: lucide/rocket
 title: Release News
 description: Recent Kubernetes release intelligence focused on operator impact, upgrade risk, and action plans.
 hide:
-  - footer
+ - footer
 ---
 
 # Release News

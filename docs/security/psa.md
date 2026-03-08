@@ -3,7 +3,7 @@ icon: lucide/file-lock
 title: Kubernetes Pod Security Standards Explained (Restricted, Baseline, Privileged)
 description: Learn how Kubernetes Pod Security Standards work and how to enforce secure workload configurations.
 hide:
-  - footer
+ - footer
 ---
 
 # Pod Security
@@ -144,7 +144,7 @@ spec:
     seccompProfile:
       type: RuntimeDefault
   containers:
-  - name: nginx
+ - name: nginx
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:

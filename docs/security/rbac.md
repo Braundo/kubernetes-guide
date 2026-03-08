@@ -3,7 +3,7 @@ icon: lucide/shield-user
 title: Kubernetes RBAC Explained (Roles, RoleBindings, and Best Practices)
 description: Learn Kubernetes RBAC concepts, how Roles and RoleBindings work, and best practices for least-privilege access with examples.
 hide:
-  - footer
+ - footer
 ---
 
 In Kubernetes, **Authentication** asks "Who are you?" (Alice, Bob, or a Robot).

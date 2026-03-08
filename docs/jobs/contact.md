@@ -3,7 +3,7 @@ icon: lucide/contact-round
 title: Post a Kubernetes Job
 description: Contact details and required fields for paid Kubernetes job listings.
 hide:
-  - footer
+ - footer
 ---
 
 # Post a Kubernetes Job

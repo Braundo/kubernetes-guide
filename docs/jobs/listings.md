@@ -3,7 +3,7 @@ icon: lucide/briefcase-business
 title: Kubernetes Job Listings
 description: Open Kubernetes, platform engineering, and SRE roles.
 hide:
-  - footer
+ - footer
 ---
 
 # Kubernetes Job Listings

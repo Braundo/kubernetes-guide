@@ -3,7 +3,7 @@ icon: lucide/scan-eye
 title: Kubernetes Image Scanning and Signing Explained (Supply Chain Security)
 description: Learn how container image scanning and signing improve Kubernetes supply chain security and reduce risk.
 hide:
-  - footer
+ - footer
 ---
 
 # Image Scanning
@@ -125,17 +125,17 @@ metadata:
 spec:
   validationFailureAction: Enforce
   rules:
-    - name: verify-signature
+ - name: verify-signature
       match:
         resources:
           kinds:
-            - Pod
+ - Pod
       verifyImages:
-      - imageReferences:
-        - "ghcr.io/my-company/*"
+ - imageReferences:
+ - "ghcr.io/my-company/*"
         attestors:
-        - entries:
-          - keys:
+ - entries:
+ - keys:
               publicKeys: |-
                 -----BEGIN PUBLIC KEY-----
                 ... (Your Cosign Public Key) ...

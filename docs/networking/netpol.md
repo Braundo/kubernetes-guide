@@ -3,7 +3,7 @@ icon: lucide/shield-check
 title: Kubernetes Network Policies Explained (Traffic Control and Security)
 description: Learn how Kubernetes Network Policies control traffic between Pods and namespaces to improve security and isolation.
 hide:
-  - footer
+ - footer
 ---
 
 # Network Policies
@@ -61,8 +61,8 @@ metadata:
 spec:
   podSelector: {} # Selects ALL pods in this namespace
   policyTypes:
-    - Ingress
-    - Egress
+ - Ingress
+ - Egress
 ```
 
 *Once you apply this, your application will stop working.* Now you must explicitly allow traffic.
@@ -83,12 +83,12 @@ spec:
     matchLabels:
       app: backend # The target (Who gets protected?)
   ingress:
-    - from:
-        - podSelector:
+ - from:
+ - podSelector:
             matchLabels:
               app: frontend # The source (Who can knock?)
       ports:
-        - port: 8080
+ - port: 8080
           protocol: TCP
 ```
 
@@ -102,8 +102,8 @@ To allow traffic from *any* Pod in the `monitoring` namespace:
 
 ```yaml
 ingress:
-  - from:
-    - namespaceSelector:
+ - from:
+ - namespaceSelector:
         matchLabels:
           name: monitoring # Requires the namespace to have this label!
 ```
@@ -129,16 +129,16 @@ metadata:
 spec:
   podSelector: {} # Apply to all pods
   policyTypes:
-    - Egress
+ - Egress
   egress:
-    - to:
-      - namespaceSelector:
+ - to:
+ - namespaceSelector:
           matchLabels:
             name: kube-system # Where CoreDNS lives
       ports:
-        - port: 53
+ - port: 53
           protocol: UDP
-        - port: 53
+ - port: 53
           protocol: TCP
 ```
 
@@ -153,9 +153,9 @@ Traffic allowed from `frontend` **OR** from `monitoring`.
 
 ```yaml
 ingress:
-  - from:
-    - podSelector: { matchLabels: { app: frontend } }
-    - namespaceSelector: { matchLabels: { name: monitoring } }
+ - from:
+ - podSelector: { matchLabels: { app: frontend } }
+ - namespaceSelector: { matchLabels: { name: monitoring } }
 ```
 
 **Logic: AND (Must match BOTH)**
@@ -163,8 +163,8 @@ Traffic allowed only from a pod labeled `frontend` **running inside** the `monit
 
 ```yaml
 ingress:
-  - from:
-    - podSelector: { matchLabels: { app: frontend } }
+ - from:
+ - podSelector: { matchLabels: { app: frontend } }
       namespaceSelector: { matchLabels: { name: monitoring } }
 ```
 

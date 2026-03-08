@@ -3,7 +3,7 @@ icon: lucide/split
 title: Kubernetes Gateway API Explained
 description: A deep, practical guide to the Kubernetes Gateway API, covering GatewayClass, Gateways, Routes, TLS models, policy attachment, and how Gateway API improves on Ingress for modern multi-team clusters.
 hide:
-  - footer
+ - footer
 ---
 
 # Kubernetes Gateway API Explained
@@ -114,14 +114,14 @@ metadata:
 spec:
   gatewayClassName: example-gateway-class
   listeners:
-    - name: https
+ - name: https
       protocol: HTTPS
       port: 443
       hostname: "*.k8s.guide"
       tls:
         mode: Terminate
         certificateRefs:
-          - name: wildcard-cert
+ - name: wildcard-cert
 ```
 
 ### Key Concepts
@@ -142,17 +142,17 @@ metadata:
   namespace: app
 spec:
   parentRefs:
-    - name: prod-gateway
+ - name: prod-gateway
       namespace: networking
   hostnames:
-    - "app.k8s.guide"
+ - "app.k8s.guide"
   rules:
-    - matches:
-        - path:
+ - matches:
+ - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: app-service
+ - name: app-service
           port: 80
 ```
 
@@ -183,7 +183,7 @@ Gateway API allows explicit delegation, instead of implicit trust.
 **Example: allow app namespaces to attach routes**
 ``` yaml
 listeners:
-  - name: https
+ - name: https
     protocol: HTTPS
     port: 443
     allowedRoutes:

@@ -3,7 +3,7 @@ icon: lucide/graduation-cap
 title: Kubernetes Certification Preparation Guide (CKA, CKAD, CKS)
 description: A guide to preparing for Kubernetes certifications, including exam focus areas and recommended study strategies.
 hide:
-  - footer
+ - footer
 ---
 
 # Kubernetes Certification Preparation
@@ -34,8 +34,8 @@ Each guide includes:
 
 ## General Advice
 
-- Practice in a real cluster  -  don’t rely only on theory
-- Learn to navigate `kubectl` quickly  -  alias everything
+- Practice in a real cluster - don’t rely only on theory
+- Learn to navigate `kubectl` quickly - alias everything
 - Master `vim`, `tmux`, and `kubectl explain`
 - Use tab-complete and `kubectl -h` constantly
 - Use `--dry-run=client -o yaml` for rapid manifest generation
@@ -85,6 +85,6 @@ Each guide includes:
 
 Choose your path:
 
-- [CKA – Admin-focused](cka.md)
-- [CKAD – Developer-focused](ckad.md)
-- [CKS – Security-focused](cks.md)
+- [CKA - Admin-focused](cka.md)
+- [CKAD - Developer-focused](ckad.md)
+- [CKS - Security-focused](cks.md)

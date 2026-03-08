@@ -3,7 +3,7 @@ icon: lucide/shield-alert
 title: Security News
 description: Recent Kubernetes security advisories with affected scope, operational risk, and remediation guidance.
 hide:
-  - footer
+ - footer
 ---
 
 # Security News

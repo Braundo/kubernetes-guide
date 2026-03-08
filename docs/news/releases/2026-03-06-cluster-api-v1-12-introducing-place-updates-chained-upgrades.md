@@ -16,11 +16,11 @@ This release focuses on lowering upgrade and lifecycle friction in real-world Cl
 
 ## Key Changes
 
-**In-place updates** change how CAPI handles certain Machine spec modifications. Previously, any change to a Machine spec triggered a rollout — a new Machine is created and the old one deleted, mirroring how Kubernetes handles Pod replacement in Deployments. With v1.12.0, CAPI can now apply eligible changes directly to existing Machines without replacement, when doing so is safe and appropriate. The controller determines which path to take; operators continue editing the Cluster or Machine spec exactly as before.
+**In-place updates** change how CAPI handles certain Machine spec modifications. Previously, any change to a Machine spec triggered a rollout - a new Machine is created and the old one deleted, mirroring how Kubernetes handles Pod replacement in Deployments. With v1.12.0, CAPI can now apply eligible changes directly to existing Machines without replacement, when doing so is safe and appropriate. The controller determines which path to take; operators continue editing the Cluster or Machine spec exactly as before.
 
 **Chained upgrades** address sequencing complexity when multiple upgrade steps are required across a cluster. Rather than operators manually orchestrating the order of control plane and worker upgrades, CAPI now chains dependent upgrade operations automatically. This is particularly relevant when upgrading Kubernetes versions across a KubeadmControlPlane and associated MachineDeployments, where ordering constraints must be respected.
 
-Both features are surfaced through the existing declarative API. No new spec fields or feature gate toggles are required to opt in to the default behavior — the controller evaluates conditions at reconciliation time and selects the appropriate strategy.
+Both features are surfaced through the existing declarative API. No new spec fields or feature gate toggles are required to opt in to the default behavior - the controller evaluates conditions at reconciliation time and selects the appropriate strategy.
 
 ## Breaking Changes and Deprecations
 
@@ -34,7 +34,7 @@ The v1.12.0 announcement does not enumerate specific API deprecations or removal
 
 ## Why It Matters for Operators
 
-Rolling replacement has been the only available strategy in CAPI for most Machine spec changes. For large clusters or environments where node replacement is expensive — due to licensing, hardware provisioning time, or stateful workloads — this created pressure to batch changes or avoid them altogether. In-place updates lower that cost for eligible mutations.
+Rolling replacement has been the only available strategy in CAPI for most Machine spec changes. For large clusters or environments where node replacement is expensive - due to licensing, hardware provisioning time, or stateful workloads - this created pressure to batch changes or avoid them altogether. In-place updates lower that cost for eligible mutations.
 
 Chained upgrades remove a class of manual intervention that platform teams have historically scripted around. Kubernetes version upgrades across control plane and worker tiers require strict ordering, and CAPI previously left that sequencing to the operator. Automating it reduces the window for human error during version bumps and tightens upgrade execution time.
 

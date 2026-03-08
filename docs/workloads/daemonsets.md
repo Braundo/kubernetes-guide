@@ -3,7 +3,7 @@ icon: lucide/copy
 title: Kubernetes DaemonSets Explained (Node-Level Workloads and Use Cases)
 description: Learn how DaemonSets work in Kubernetes and when to use them for node-level agents like logging, monitoring, and security.
 hide:
-  - footer
+ - footer
 ---
 
 # DaemonSets
@@ -95,12 +95,12 @@ spec:
     spec:
       tolerations:
       # Allow this pod to run on the Control Plane / Master nodes
-      - key: node-role.kubernetes.io/control-plane
+ - key: node-role.kubernetes.io/control-plane
         operator: Exists
         effect: NoSchedule
       # Allow this pod to run on nodes that are technically "not ready" yet
       # (Useful for networking plugins that fix the network!)
-      - key: node.kubernetes.io/not-ready
+ - key: node.kubernetes.io/not-ready
         operator: Exists
         effect: NoSchedule
 ```
@@ -159,11 +159,11 @@ spec:
     spec:
       # Tolerations allow this to run on Master/Control Plane nodes
       tolerations:
-      - key: node-role.kubernetes.io/control-plane
+ - key: node-role.kubernetes.io/control-plane
         operator: Exists
         effect: NoSchedule
       containers:
-      - name: fluentd
+ - name: fluentd
         image: fluent/fluentd:v1.14
         resources:
           limits:
@@ -171,10 +171,10 @@ spec:
             cpu: 100m
         # Mount the host's log directory so we can read it
         volumeMounts:
-        - name: varlog
+ - name: varlog
           mountPath: /var/log
       volumes:
-      - name: varlog
+ - name: varlog
         hostPath:
           path: /var/log
 ```

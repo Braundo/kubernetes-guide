@@ -3,7 +3,7 @@ icon: lucide/shuffle
 title: Kubernetes Ingress Explained (Routing, TLS, Controllers, and Gateway API)
 description: Learn how Kubernetes Ingress works, request routing basics, TLS termination, and how it compares to the Kubernetes Gateway API.
 hide:
-  - footer
+ - footer
 ---
 
 Up until now, we’ve looked at how to network Pods *inside* the cluster (ClusterIP) and crude ways to get traffic *in* (NodePort, LoadBalancer).
@@ -103,17 +103,17 @@ metadata:
 spec:
   ingressClassName: nginx # Telling the Nginx controller to handle this
   rules:
-  - host: example.com
+ - host: example.com
     http:
       paths:
-      - path: /web
+ - path: /web
         pathType: Prefix
         backend:
           service:
             name: frontend-service
             port:
               number: 80
-      - path: /api
+ - path: /api
         pathType: Prefix
         backend:
           service:
@@ -134,11 +134,11 @@ This is used when you want different domains to route to different services with
 ```yaml
 spec:
   rules:
-  - host: foo.example.com
+ - host: foo.example.com
     http:
       paths:
       # ... points to Service A ...
-  - host: bar.example.com
+ - host: bar.example.com
     http:
       paths:
       # ... points to Service B ...
@@ -157,8 +157,8 @@ The Ingress Controller handles the encrypted HTTPS connection from the user, dec
 ```yaml
 spec:
   tls:
-  - hosts:
-      - example.com
+ - hosts:
+ - example.com
     secretName: my-site-cert-secret # A secret containing tls.crt and tls.key
   rules:
     # ... routing rules ...

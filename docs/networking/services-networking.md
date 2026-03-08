@@ -3,7 +3,7 @@ icon: lucide/network
 title: Kubernetes Services Explained (ClusterIP, NodePort, LoadBalancer)
 description: Learn how Kubernetes Services work, how traffic flows to Pods, and when to use ClusterIP, NodePort, and LoadBalancer with real examples.
 hide:
-  - footer
+ - footer
 ---
 
 <h1>Services & Networking</h1>
@@ -28,7 +28,7 @@ spec:
   selector:
     app: web
   ports:
-    - port: 80
+ - port: 80
       targetPort: 8080
 ```
 
@@ -58,14 +58,14 @@ A <strong>ClusterIP</strong> Service is for internal communication only. Think o
 
 A <strong>NodePort</strong> Service lets people outside your cluster reach your app using a static port on every node. It’s like giving every employee in the company a direct phone number that rings their internal extension.
 
-- Uses each node’s IP + port (range: <code>30000–32767</code>)
+- Uses each node’s IP + port (range: <code>30000-32767</code>)
 - Forwards traffic from node to the right Pods
 
 ```yaml
 spec:
   type: NodePort
   ports:
-    - port: 80
+ - port: 80
       targetPort: 8080
       nodePort: 30080
 ```
@@ -97,7 +97,7 @@ A **LoadBalancer** Service provisions an **external cloud load balancer** (if su
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
+ - port: 80
       targetPort: 8080
 ```
 
@@ -145,7 +145,7 @@ spec:
 - **ExternalName** is a DNS-level alias.
 
 <br>
-Understanding how each Service type works  -  and when to use it  -  is essential for building reliable, scalable apps in Kubernetes.
+Understanding how each Service type works - and when to use it - is essential for building reliable, scalable apps in Kubernetes.
 <br>
 
 ---

@@ -3,7 +3,7 @@ icon: lucide/heart-pulse
 title: Kubernetes Health Probes Explained (Liveness, Readiness, Startup)
 description: Learn how Kubernetes health probes work and how to design liveness, readiness, and startup probes correctly.
 hide:
-  - footer
+ - footer
 ---
 
 # Health Probes
@@ -112,8 +112,8 @@ You can check health in three ways. Choose the one that matches your app's archi
 livenessProbe:
   exec:
     command:
-    - cat
-    - /tmp/healthy
+ - cat
+ - /tmp/healthy
   initialDelaySeconds: 5
   periodSeconds: 5
 ```

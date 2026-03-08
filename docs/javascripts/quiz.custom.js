@@ -1,4 +1,4 @@
-// quiz.custom.js — MkDocs Quiz enhancements
+// quiz.custom.js - MkDocs Quiz enhancements
 // - Submit-all + reset, score top & bottom (pass >= 70%)
 // - Shuffle questions & answers
 // - One attempt per question (locks after submit)
@@ -68,7 +68,7 @@
     });
   }
 
-  // Fisher–Yates shuffle
+  // Fisher-Yates shuffle
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

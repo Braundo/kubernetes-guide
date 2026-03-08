@@ -3,7 +3,7 @@ icon: lucide/notebook-pen
 title: Kubectl Cheat Sheet (Common Kubernetes Commands)
 description: A practical kubectl cheat sheet with commonly used commands for inspecting, debugging, and managing Kubernetes resources.
 hide:
-  - footer
+ - footer
 ---
 
 # Kubectl Cheatsheat

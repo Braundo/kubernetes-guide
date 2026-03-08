@@ -78,6 +78,8 @@ BANNED_PHRASES = [
 WORD_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9'/-]*")
 H2_RE = re.compile(r"(?m)^##\s+(.+?)\s*$")
 H3_RE = re.compile(r"(?m)^###\s+(.+?)\s*$")
+EM_DASH = "\u2014"
+EN_DASH = "\u2013"
 
 
 def required_sections_for(category):
@@ -116,6 +118,11 @@ def assess_markdown_quality(category, markdown_text):
     issues = []
     text = (markdown_text or "").strip()
     lower = text.lower()
+
+    if EM_DASH in text:
+        issues.append("contains em dash character; use commas or hyphens")
+    if EN_DASH in text:
+        issues.append("contains en dash character; use hyphen")
 
     for phrase in BANNED_PHRASES:
         if phrase in lower:

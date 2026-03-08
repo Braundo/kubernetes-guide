@@ -3,7 +3,7 @@ icon: lucide/database-zap
 title: Kubernetes StatefulSets Explained (Stateful Applications and Identity)
 description: Learn how StatefulSets manage stateful workloads, stable identities, and persistent storage in Kubernetes.
 hide:
-  - footer
+ - footer
 ---
 
 <h1>StatefulSets</h1>
@@ -66,17 +66,17 @@ spec:
         app: web
     spec:
       containers:
-        - name: nginx
+ - name: nginx
           image: nginx
           volumeMounts:
-            - name: data
+ - name: data
               mountPath: /usr/share/nginx/html
       tolerations:
-      - key: "node-role.kubernetes.io/master"
+ - key: "node-role.kubernetes.io/master"
         operator: "Exists"
         effect: "NoSchedule"
   volumeClaimTemplates:
-    - metadata:
+ - metadata:
         name: data
       spec:
         accessModes: ["ReadWriteOnce"]
@@ -108,7 +108,7 @@ spec:
   selector:
     app: web
   ports:
-    - port: 80
+ - port: 80
 ```
 
 ---

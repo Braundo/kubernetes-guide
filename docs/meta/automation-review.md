@@ -18,10 +18,10 @@ This document records the post-cleanup review of the news-generation pipeline an
 ## Structural Alignment Changes
 
 - Generated content root moved from mixed paths to one canonical namespace:
-  - `docs/news/releases/`
-  - `docs/news/security/`
-  - `docs/news/ecosystem/`
-  - `docs/news/tool-radar/`
+ - `docs/news/releases/`
+ - `docs/news/security/`
+ - `docs/news/ecosystem/`
+ - `docs/news/tool-radar/`
 - Pipeline commit tracking updated to `docs/news/` only.
 - Commit message namespace updated from `feat(intelligence)` to `feat(news)`.
 - Newsletter canonical links now point to `/news/<category>/<slug>/`.
@@ -31,20 +31,20 @@ This document records the post-cleanup review of the news-generation pipeline an
 `content_policy.py` was tuned to reduce daily noise while preserving event-driven coverage:
 
 - Run caps:
-  - Security: 2
-  - Releases: 1
-  - Ecosystem: 1
-  - Tool Radar: 1
+ - Security: 2
+ - Releases: 1
+ - Ecosystem: 1
+ - Tool Radar: 1
 - Daily caps:
-  - Security: 4
-  - Releases: 2
-  - Ecosystem: 1
-  - Tool Radar: 1
+ - Security: 4
+ - Releases: 2
+ - Ecosystem: 1
+ - Tool Radar: 1
 - Weekly caps:
-  - Security: 12
-  - Releases: 5
-  - Ecosystem: 4
-  - Tool Radar: 2
+ - Security: 12
+ - Releases: 5
+ - Ecosystem: 4
+ - Tool Radar: 2
 
 This keeps security and release responsiveness while preventing tool/ecosystem spam.
 

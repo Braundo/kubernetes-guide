@@ -3,7 +3,7 @@ icon: lucide/ship-wheel
 title: Helm and Package Management in Kubernetes Explained
 description: Learn how Helm works, how charts are structured, and how Helm simplifies application deployment in Kubernetes.
 hide:
-  - footer
+ - footer
 ---
 
 # Helm: The Package Manager
@@ -83,7 +83,7 @@ kind: Deployment
 spec:
   replicas: {{ .Values.replicaCount }}
   containers:
-    - name: my-app
+ - name: my-app
       image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
 ```
 
@@ -106,7 +106,7 @@ kind: Deployment
 spec:
   replicas: 3
   containers:
-    - name: my-app
+ - name: my-app
       image: "nginx:1.21"
 ```
 
@@ -166,7 +166,7 @@ In Helm v3, you declare dependencies in `Chart.yaml` (not `requirements.yaml`).
 ```yaml
 # Chart.yaml
 dependencies:
-  - name: postgresql
+ - name: postgresql
     version: 10.x.x
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
