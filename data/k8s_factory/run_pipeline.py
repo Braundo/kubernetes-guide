@@ -189,8 +189,9 @@ def clean_cell(value):
 
 
 def write_review_state(plan, include_github):
+    review_source = plan.get("review_items") or plan.get("items", [])
     items = []
-    for idx, item in enumerate(plan.get("items", []), 1):
+    for idx, item in enumerate(review_source, 1):
         items.append(
             {
                 "review_id": idx,
@@ -202,6 +203,7 @@ def write_review_state(plan, include_github):
                 "summary": (item.get("summary", "") or "")[:220],
                 "id": item.get("id"),
                 "source_item_ids": item.get("source_item_ids") or [],
+                "recommended": bool(item.get("recommended", False)),
                 "item": item,
             }
         )
@@ -210,7 +212,9 @@ def write_review_state(plan, include_github):
         "created_at": datetime.now().astimezone().isoformat(),
         "include_github": bool(include_github),
         "total_candidates": plan.get("total_candidates", 0),
-        "total_selected": len(items),
+        "total_selected": plan.get("total_selected", 0),
+        "total_review_items": len(items),
+        "recommended_in_review": sum(1 for entry in items if entry.get("recommended")),
         "items": items,
     }
 
@@ -226,6 +230,12 @@ def write_review_markdown(state):
         "",
         f"Generated: `{state.get('created_at', '')}`",
         "",
+        f"Candidates found: `{state.get('total_candidates', 0)}`",
+        "",
+        f"Review shortlist size: `{state.get('total_review_items', 0)}`",
+        "",
+        f"Recommended by planner: `{state.get('recommended_in_review', 0)}`",
+        "",
         f"Quality-first publish cap per run: `{MAX_GENERATE_PER_RUN}`",
         "",
         "Select topics to publish by review ID:",
@@ -234,13 +244,14 @@ def write_review_markdown(state):
         "- Publish specific: `.venv/bin/python data/k8s_factory/run_pipeline.py --approve 1,3`",
         "- Publish none: `.venv/bin/python data/k8s_factory/run_pipeline.py --approve none`",
         "",
-        "| ID | Category | Score | Source Date | Topic |",
-        "| --- | --- | ---: | --- | --- |",
+        "| ID | Recommended | Category | Score | Source Date | Topic |",
+        "| --- | --- | --- | ---: | --- | --- |",
     ]
 
     for entry in state.get("items", []):
+        rec = "yes" if entry.get("recommended") else ""
         lines.append(
-            f"| {entry['review_id']} | {clean_cell(entry.get('category', ''))} | "
+            f"| {entry['review_id']} | {rec} | {clean_cell(entry.get('category', ''))} | "
             f"{entry.get('score', 0)} | {clean_cell(entry.get('published', '')) or '-'} | "
             f"[{clean_cell(entry.get('title', 'Untitled'))}]({clean_cell(entry.get('url', ''))}) |"
         )
@@ -250,7 +261,8 @@ def write_review_markdown(state):
     lines.append("")
     for entry in state.get("items", []):
         summary = clean_cell(entry.get("summary", "")) or "No summary available."
-        lines.append(f"- `{entry['review_id']}` {summary}")
+        prefix = "[recommended] " if entry.get("recommended") else ""
+        lines.append(f"- `{entry['review_id']}` {prefix}{summary}")
 
     with open(REVIEW_MD_PATH, "w") as handle:
         handle.write("\n".join(lines).strip() + "\n")
@@ -260,7 +272,8 @@ def topic_preview(state, limit=5):
     entries = state.get("items", [])[:limit]
     parts = []
     for entry in entries:
-        parts.append(f"{entry.get('review_id')}. {entry.get('title', 'Untitled')}")
+        marker = "*" if entry.get("recommended") else ""
+        parts.append(f"{entry.get('review_id')}. {entry.get('title', 'Untitled')}{marker}")
     return " | ".join(parts)
 
 
@@ -485,7 +498,10 @@ def main():
 
             notify_openclaw(
                 "k8s.guide news review ready: "
-                f"{selected} topic(s) selected. Review data/k8s_factory/review_topics.md and approve with "
+                f"{state.get('total_candidates', selected)} candidate(s) found, "
+                f"{state.get('total_review_items', selected)} topic(s) in review shortlist, "
+                f"{state.get('recommended_in_review', selected)} recommended. "
+                "Review data/k8s_factory/review_topics.md and approve with "
                 "`.venv/bin/python data/k8s_factory/run_pipeline.py --approve 1,2` (or all/none). "
                 f"Preview: {topic_preview(state)}"
             )

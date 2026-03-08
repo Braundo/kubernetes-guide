@@ -31,6 +31,8 @@ logging.basicConfig(
 log = logging.getLogger("analyze")
 
 PLAN = os.path.join(os.path.dirname(os.path.abspath(__file__)), "plan.json")
+REVIEW_SHORTLIST_LIMIT = int(os.environ.get("PIPELINE_REVIEW_SHORTLIST_LIMIT", "20"))
+REVIEW_MAX_PER_CATEGORY = int(os.environ.get("PIPELINE_REVIEW_MAX_PER_CATEGORY", "8"))
 
 BASE_SCORES = {
     "security": 72,
@@ -239,6 +241,60 @@ def select_by_category(items):
     return selected
 
 
+def _item_key(item):
+    item_id = item.get("id")
+    if item_id:
+        return f"id:{item_id}"
+    content_hash = item.get("content_hash")
+    if content_hash:
+        return f"hash:{content_hash}"
+    return f"title:{canonical_title(item.get('title', ''))}"
+
+
+def build_review_shortlist(items, recommended):
+    recommended_keys = {_item_key(item) for item in recommended}
+    shortlisted = []
+    seen = set()
+
+    category_order = ["security", "releases", "ecosystem", "tool-radar"]
+    per_category = {cat: [] for cat in category_order}
+    category_counts = {cat: 0 for cat in category_order}
+
+    for item in sorted(items, key=lambda x: x.get("score", 0), reverse=True):
+        if not is_item_fresh(item):
+            continue
+
+        key = _item_key(item)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        copy = dict(item)
+        copy["recommended"] = key in recommended_keys
+        cat = copy.get("category_hint", "ecosystem")
+        if cat not in per_category:
+            cat = "ecosystem"
+        per_category[cat].append(copy)
+
+    limit = max(1, REVIEW_SHORTLIST_LIMIT)
+    while len(shortlisted) < limit:
+        progressed = False
+        for cat in category_order:
+            if len(shortlisted) >= limit:
+                break
+            if category_counts[cat] >= max(1, REVIEW_MAX_PER_CATEGORY):
+                continue
+            if not per_category[cat]:
+                continue
+            shortlisted.append(per_category[cat].pop(0))
+            category_counts[cat] += 1
+            progressed = True
+        if not progressed:
+            break
+
+    return shortlisted
+
+
 def generate_plan():
     db = get_db()
     items = get_unprocessed_items(db)
@@ -272,13 +328,19 @@ def generate_plan():
 
     items.sort(key=lambda x: x["score"], reverse=True)
     selected = select_by_category(items)
+    review_items = build_review_shortlist(items, selected)
+    recommended_ids = {_item_key(item) for item in selected}
+    recommended_in_review = sum(1 for item in review_items if _item_key(item) in recommended_ids)
 
     plan = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "target_mix": CATEGORY_TARGET_SHARE,
         "total_candidates": len(items),
         "total_selected": len(selected),
+        "total_review_items": len(review_items),
+        "recommended_in_review": recommended_in_review,
         "items": selected,
+        "review_items": review_items,
     }
 
     with open(PLAN, "w") as handle:
