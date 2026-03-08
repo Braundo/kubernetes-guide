@@ -220,6 +220,64 @@ def sanitize_generated_body(text, category):
     return content.strip()
 
 
+def _cmp_text(text):
+    normalized = re.sub(r"\s+", " ", (text or "")).strip().lower()
+    normalized = normalized.strip("\"'` ")
+    normalized = re.sub(r"[.?!:;]+$", "", normalized)
+    return normalized
+
+
+def strip_duplicate_deck_from_body(body, deck):
+    content = (body or "").strip()
+    deck_cmp = _cmp_text(deck)
+    if not content or not deck_cmp:
+        return content
+
+    lines = content.splitlines()
+    for idx, line in enumerate(lines):
+        current = line.strip()
+        if not current:
+            continue
+        if current.startswith("#"):
+            continue
+        if re.match(r"^[-*]\s+", current):
+            continue
+        if re.match(r"^\d+\.\s+", current):
+            continue
+
+        paragraph_end = idx
+        paragraph_lines = []
+        while paragraph_end < len(lines):
+            part = lines[paragraph_end].strip()
+            if not part:
+                break
+            if paragraph_end > idx and part.startswith("#"):
+                break
+            paragraph_lines.append(part)
+            paragraph_end += 1
+
+        paragraph = re.sub(r"\s+", " ", " ".join(paragraph_lines)).strip()
+        sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", paragraph) if s.strip()]
+        if not sentences:
+            return content
+
+        first_sentence = sentences[0]
+        if _cmp_text(first_sentence) != deck_cmp:
+            return content
+
+        remainder = " ".join(sentences[1:]).strip()
+        if remainder:
+            lines[idx] = remainder
+            for i in range(idx + 1, paragraph_end):
+                lines[i] = ""
+        else:
+            for i in range(idx, paragraph_end):
+                lines[i] = ""
+        return "\n".join(lines).strip()
+
+    return content
+
+
 def first_sentence(text):
     content = strip_byline_sentences(text)
     if not content:
@@ -446,6 +504,7 @@ def build_page(item, body, filename):
     category = item.get("category_hint", "ecosystem")
     published = now_dt.strftime("%Y-%m-%d")
     deck = deck_from_body(body, first_sentence(item.get("summary", "")))
+    body = strip_duplicate_deck_from_body(body, deck)
     extra = ""
     if category == "tool-radar":
         extra = f"\n\n{tool_signals_section(item)}"

@@ -72,6 +72,8 @@ Then pushes to `origin main`, which triggers site publish.
 
 - Drafts are generated with source-page context excerpts, not RSS summaries alone.
 - Category inference is re-evaluated during planning and generation, so non-release posts are routed to ecosystem instead of release templates.
+- Source coverage includes Kubernetes/CNCF plus cloud-vendor Kubernetes feeds (AWS, GCP, Azure) and select industry sources.
+- Broad feeds are filtered by Kubernetes relevance heuristics before planning.
 - The writer retries a limited number of times when quality checks fail (default: 2 attempts, configurable).
 - Hard quality gates reject drafts that are:
   - too short by category
@@ -100,8 +102,12 @@ Optional environment variables:
 - `LLM_MAX_ROUNDUP_SOURCES` (default `6`): max source count passed to one ecosystem generation call.
 - `LLM_MAX_CONTEXT_CHARS` (default `7000`): hard cap for prompt context block.
 - `PIPELINE_LOCK_STALE_SECONDS` (default `21600`): stale lock cleanup window.
-- `PIPELINE_MAX_ITEMS_PER_RUN` (default `1`): analyze-time cap on total candidates selected into a plan.
+- `PIPELINE_MAX_ITEMS_PER_RUN` (default `6`): analyze-time cap on total candidates selected into a plan.
 - `PIPELINE_MAX_GENERATE_PER_RUN` (default `1`): final publish cap per run (applies to approved and auto-publish modes).
+- `PIPELINE_ENFORCE_DISCOVERY_FREQUENCY_CAPS` (default `0`): when `1`, apply daily/weekly category caps during topic discovery (normally disabled so review queue is richer).
+- `GITHUB_PUSHED_DAYS` (default `180`): recency window for GitHub repository discovery.
+- `GITHUB_MIN_STARS` (default `80`): minimum stars for GitHub discovery query.
+- `GITHUB_PER_PAGE` (default `30`): target number of repos fetched per GitHub query.
 
 ### Recommended profile: maximum quality within Tier-1 limits
 

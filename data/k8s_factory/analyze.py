@@ -14,6 +14,7 @@ from content_policy import (
     QUALITY_THRESHOLDS,
     MAX_ITEMS_PER_RUN,
     MAX_SOURCE_AGE_DAYS,
+    ENFORCE_DISCOVERY_FREQUENCY_CAPS,
     DOMAIN_SCORE_BOOSTS,
     get_domain,
     count_recent_files,
@@ -137,6 +138,9 @@ def score_item(item):
 
 
 def passes_frequency_guardrails(category):
+    if not ENFORCE_DISCOVERY_FREQUENCY_CAPS:
+        return True
+
     daily_cap = DAILY_CAPS.get(category, 1)
     weekly_cap = WEEKLY_CAPS.get(category, 5)
 

@@ -37,10 +37,10 @@ CATEGORY_TARGET_SHARE = {
 }
 
 RUN_CAPS = {
-    "security": 2,
-    "releases": 1,
-    "ecosystem": 1,
-    "tool-radar": 1,
+    "security": 3,
+    "releases": 2,
+    "ecosystem": 2,
+    "tool-radar": 2,
 }
 
 DAILY_CAPS = {
@@ -72,7 +72,8 @@ MAX_SOURCE_AGE_DAYS = {
     "tool-radar": 60,
 }
 
-MAX_ITEMS_PER_RUN = int(os.environ.get("PIPELINE_MAX_ITEMS_PER_RUN", "1"))
+MAX_ITEMS_PER_RUN = int(os.environ.get("PIPELINE_MAX_ITEMS_PER_RUN", "6"))
+ENFORCE_DISCOVERY_FREQUENCY_CAPS = os.environ.get("PIPELINE_ENFORCE_DISCOVERY_FREQUENCY_CAPS", "0") == "1"
 MAX_SLUG_LENGTH = 60
 
 APPROVED_DOMAINS = {
@@ -85,6 +86,18 @@ APPROVED_DOMAINS = {
     "sysdig.com",
     "www.armosec.io",
     "blog.trailofbits.com",
+    "aws.amazon.com",
+    "cloud.google.com",
+    "azure.microsoft.com",
+    "techcommunity.microsoft.com",
+    "cilium.io",
+    "www.cilium.io",
+    "isovalent.com",
+    "www.isovalent.com",
+    "grafana.com",
+    "www.grafana.com",
+    "www.redhat.com",
+    "redhat.com",
 }
 
 DOMAIN_SCORE_BOOSTS = {
@@ -107,6 +120,13 @@ SLUG_STOP_WORDS = {
 SOURCE_DEFAULT_CATEGORY = {
     "Kubernetes Blog": "ecosystem",
     "CNCF Blog": "ecosystem",
+    "AWS Containers Blog": "ecosystem",
+    "Google Cloud Kubernetes Blog": "ecosystem",
+    "Azure AKS Blog": "ecosystem",
+    "Cilium Blog": "ecosystem",
+    "Isovalent Blog": "ecosystem",
+    "Grafana Blog": "ecosystem",
+    "Red Hat Kubernetes Blog": "ecosystem",
     "Aqua Security Blog": "security",
     "Sysdig Security Blog": "security",
     "Trail of Bits Blog": "security",
@@ -183,6 +203,48 @@ TOOL_HINTS = (
     "sdk",
 )
 
+KUBERNETES_RELEVANCE_HINTS = (
+    "kubernetes",
+    "k8s",
+    "helm",
+    "kubectl",
+    "kubelet",
+    "api server",
+    "cluster api",
+    "gateway api",
+    "ingress",
+    "service mesh",
+    "cni",
+    "containerd",
+    "etcd",
+    "cncf",
+    "platform engineering",
+    "cloud native",
+    "observability",
+    "prometheus",
+    "opentelemetry",
+    "argo",
+    "flux",
+    "kyverno",
+    "opa",
+    "falco",
+    "cilium",
+    "istio",
+    "gke",
+    "eks",
+    "aks",
+)
+
+ALWAYS_RELEVANT_SOURCES = {
+    "Kubernetes Blog",
+    "CNCF Blog",
+    "Google Cloud Kubernetes Blog",
+    "Azure AKS Blog",
+    "Aqua Security Blog",
+    "Sysdig Security Blog",
+    "Trail of Bits Blog",
+}
+
 
 def normalize_space(text):
     return re.sub(r"\s+", " ", (text or "").strip())
@@ -239,6 +301,15 @@ def is_approved_url(url):
 def source_default_category(source_name, fallback="ecosystem"):
     fallback_value = fallback if fallback in CATEGORY_CONFIG else "ecosystem"
     return SOURCE_DEFAULT_CATEGORY.get((source_name or "").strip(), fallback_value)
+
+
+def is_kubernetes_relevant(title, summary, url="", source_name=""):
+    source = (source_name or "").strip()
+    if source in ALWAYS_RELEVANT_SOURCES:
+        return True
+
+    text = normalize_space(f"{title or ''} {summary or ''} {url or ''}").lower()
+    return any(hint in text for hint in KUBERNETES_RELEVANCE_HINTS)
 
 
 def _looks_like_release_update(text, url):

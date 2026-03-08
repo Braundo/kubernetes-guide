@@ -12,7 +12,7 @@ Cluster API v1.12.0 shipped on January 27, 2026, introducing two significant lif
 
 ## Release Summary
 
-Cluster API v1.12.0 shipped on January 27, 2026, introducing two significant lifecycle management capabilities: in-place updates and chained upgrades. These features reduce the operational overhead of routine cluster mutations by allowing CAPI controllers to choose the least disruptive reconciliation path automatically, without requiring operators to change how they express desired state.
+This release focuses on lowering upgrade and lifecycle friction in real-world Cluster API operations. In-place updates and chained upgrades reduce the amount of manual orchestration required during routine cluster changes while preserving the declarative workflow platform teams already use. For operators managing many clusters, that translates into safer upgrade sequencing and fewer brittle runbook steps.
 
 ## Key Changes
 
