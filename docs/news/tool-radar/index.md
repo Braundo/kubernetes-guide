@@ -16,7 +16,7 @@ Only recent publications are listed below to keep the radar current.
 <!-- AUTO-LATEST:START -->
 | Date | Tool | Summary |
 | --- | --- | --- |
-| - | No news yet | New entries will appear here after curation. |
+| 2026-03-08 | [nacos](2026-03-08-nacos.md) | Nacos is an open-source platform from Alibaba that combines dynamic service discovery, centralized configuration management, and service metadata management into a single operational surface. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
