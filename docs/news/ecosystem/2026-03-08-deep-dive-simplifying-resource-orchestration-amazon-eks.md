@@ -12,7 +12,7 @@ Amazon EKS Capabilities represent a meaningful shift in how AWS positions platfo
 
 ## Overview
 
-Three capabilities launched together - Argo CD for continuous deployment, AWS Controllers for Kubernetes (ACK) for AWS resource management, and Kube Resource Orchestrator (kro) for dynamic resource composition. This briefing focuses on ACK and kro, which together address a persistent platform-engineering friction point: the gap between defining infrastructure intent and reliably reconciling that intent across AWS services and composite resource abstractions. For teams running EKS Standard or EKS Auto Mode, managed ACK and kro materially change the build-versus-operate decision for core platform components.
+Three capabilities launched together as managed EKS add-ons - Argo CD for continuous deployment, AWS Controllers for Kubernetes (ACK) for AWS resource management, and Kube Resource Orchestrator (kro) for dynamic resource composition. This briefing focuses on ACK and kro, which together address a persistent platform-engineering friction point: the gap between defining infrastructure intent and reliably reconciling that intent across AWS services and composite resource abstractions. Both components were previously available as self-managed deployments, but their promotion to managed EKS Capabilities shifts operational responsibility to AWS and lowers the barrier to adoption for teams that lacked the bandwidth to maintain controller infrastructure. For teams running EKS Standard or EKS Auto Mode, managed ACK and kro materially change the build-versus-operate decision for core platform components.
 
 ## Top Stories and Operator Takeaways
 
