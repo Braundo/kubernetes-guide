@@ -4,6 +4,7 @@ __pycache__/
 .env/
 .cache/
 site/
+data/
 # Content Pipeline
 .env.local
 data/k8s_factory/k8s_factory.db
@@ -15,6 +16,8 @@ data/k8s_factory/.run_pipeline.lock
 data/k8s_factory/review_state.json
 data/k8s_factory/review_topics.md
 data/k8s_factory/launchd-*.log
+data/k8s_factory/topic_requests.json
+data/k8s_factory/newsletter_issues/
 .venv/
 
 # Local assistant/session files (do not publish)
