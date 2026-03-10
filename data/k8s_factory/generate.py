@@ -519,7 +519,15 @@ def related_links(category, filename):
     root = cfg["output_dir"]
 
     # Parent index is always first.
-    links = [f"- Parent index: [Section index]({cfg['parent_index_rel']})"]
+    parent_labels = {
+        "security": "Security news",
+        "releases": "Release news",
+        "ecosystem": "Ecosystem news",
+        "tool-radar": "Tool radar",
+        "playbooks": "Playbooks",
+    }
+    parent_label = parent_labels.get(category, "News")
+    links = [f"- Parent index: [{parent_label}]({cfg['parent_index_rel']})"]
 
     # Pull up to two recent sibling pages.
     siblings = []

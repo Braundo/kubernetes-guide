@@ -16,3 +16,14 @@ data/k8s_factory/review_state.json
 data/k8s_factory/review_topics.md
 data/k8s_factory/launchd-*.log
 .venv/
+
+# Local assistant/session files (do not publish)
+.openclaw/
+memory/
+AGENTS.md
+SOUL.md
+USER.md
+HEARTBEAT.md
+MEMORY.md
+TOOLS.md
+IDENTITY.md
