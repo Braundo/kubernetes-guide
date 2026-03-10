@@ -15,7 +15,7 @@ from content_policy import (
     source_default_category,
     truncate_text,
 )
-from editorial_quality import assess_markdown_quality
+from editorial_quality import assess_markdown_quality, required_sections_for
 
 logging.basicConfig(
     level=logging.INFO,
@@ -36,6 +36,17 @@ INDEX_MAX_AGE_DAYS = {
 }
 EM_DASH = "\u2014"
 EN_DASH = "\u2013"
+GENERIC_TOPIC_TOKENS = {
+    "tool",
+    "radar",
+    "news",
+    "update",
+    "updates",
+    "briefing",
+    "deep",
+    "dive",
+    "kubernetes",
+}
 
 
 def slugify(title):
@@ -102,6 +113,36 @@ def ensure_unique_filename(folder, desired_name):
         suffix += 1
 
 
+def canonical_topic_title(text):
+    cleaned = re.sub(r"[^a-z0-9\s]", " ", (text or "").lower())
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    tokens = [
+        token
+        for token in cleaned.split()
+        if len(token) > 1 and token not in GENERIC_TOPIC_TOKENS
+    ]
+    return " ".join(tokens)
+
+
+def find_existing_same_day_duplicate(folder, item_title):
+    target = canonical_topic_title(item_title)
+    if not target:
+        return None
+
+    day_prefix = f"{now_local().strftime('%Y-%m-%d')}-"
+    for name in sorted(os.listdir(folder)):
+        if not name.endswith(".md") or name == "index.md":
+            continue
+        if not name.startswith(day_prefix):
+            continue
+        path = os.path.join(folder, name)
+        meta = parse_frontmatter(path)
+        existing_title = meta.get("title", name[:-3])
+        if canonical_topic_title(existing_title) == target:
+            return name
+    return None
+
+
 def strip_byline_sentences(text):
     content = (text or "").strip()
     if not content:
@@ -161,6 +202,59 @@ def normalize_ordered_list_numbers(text):
     return "\n".join(out)
 
 
+def _is_equivalent_heading(a, b):
+    aa = canonical_topic_title(a)
+    bb = canonical_topic_title(b)
+    if not aa or not bb:
+        return False
+    return aa == bb
+
+
+def strip_redundant_headings(text, category, item_title):
+    lines = (text or "").splitlines()
+    if not lines:
+        return text
+
+    # Generated body should never carry top-level H1 headings.
+    lines = [line for line in lines if not re.match(r"^\s*#\s+", line)]
+
+    required_h2 = {
+        heading.replace("## ", "", 1).strip().lower()
+        for heading in required_sections_for(category)
+    }
+
+    out = []
+    prefix = True
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            if not prefix:
+                out.append(line)
+            continue
+
+        if prefix:
+            heading_match = re.match(r"^\s*(#{2,3})\s+(.+?)\s*$", stripped)
+            if heading_match:
+                heading_text = heading_match.group(2).strip()
+                if heading_match.group(1) == "##" and heading_text.lower() in required_h2:
+                    prefix = False
+                    out.append(line)
+                    continue
+
+                # Drop duplicate/prelude headings before the required section structure.
+                if _is_equivalent_heading(heading_text, item_title):
+                    continue
+                continue
+
+            prefix = False
+            out.append(line)
+            continue
+
+        out.append(line)
+
+    return "\n".join(out).strip()
+
+
 def normalize_ecosystem_top_stories(text):
     match = re.search(r"^## Top Stories and Operator Takeaways\s*$", text, flags=re.MULTILINE)
     if not match:
@@ -215,7 +309,7 @@ def normalize_ecosystem_top_stories(text):
     return text[: match.start()] + new_section + text[section_end:]
 
 
-def sanitize_generated_body(text, category):
+def sanitize_generated_body(text, category, item_title):
     content = normalize_dash_punctuation((text or "").replace("\r\n", "\n")).strip()
     if not content:
         return ""
@@ -226,6 +320,7 @@ def sanitize_generated_body(text, category):
             continue
         lines.append(line)
     content = "\n".join(lines)
+    content = strip_redundant_headings(content, category, item_title)
     content = normalize_ordered_list_numbers(content)
     if category == "ecosystem":
         content = normalize_ecosystem_top_stories(content)
@@ -655,7 +750,6 @@ def run_generate(plan_items=None):
 
     db = get_db()
     generated = 0
-    touched_categories = set()
 
     for item in items:
         original = item.get("category_hint", "ecosystem")
@@ -680,15 +774,37 @@ def run_generate(plan_items=None):
             continue
 
         os.makedirs(cfg["output_dir"], exist_ok=True)
+        item_title = normalized_item_title(item)
+        duplicate_name = find_existing_same_day_duplicate(cfg["output_dir"], item_title)
+        if duplicate_name:
+            mark_all_processed(db, item, duplicate_name)
+            log.info(
+                "Skipped duplicate topic for same day: %s -> %s",
+                item.get("title", "")[:100],
+                duplicate_name,
+            )
+            continue
+
         desired = filename_for_item(item)
-        filename = ensure_unique_filename(cfg["output_dir"], desired)
-        path = os.path.join(cfg["output_dir"], filename)
+        path = os.path.join(cfg["output_dir"], desired)
+        if os.path.exists(path):
+            filename = ensure_unique_filename(cfg["output_dir"], desired)
+            path = os.path.join(cfg["output_dir"], filename)
+        else:
+            filename = desired
+
+        if item.get("manual_topic") and not (item.get("sources") or item.get("url")):
+            log.error(
+                "Manual topic request lacks supporting sources, skipping: %s",
+                item.get("title", "")[:120],
+            )
+            continue
 
         body = write_article(item)
         if not body:
             log.error(f"LLM failed for {filename}")
             continue
-        body = sanitize_generated_body(body, category)
+        body = sanitize_generated_body(body, category, item_title)
         if not body:
             log.error(f"Generated body empty after sanitization for {filename}")
             continue
@@ -705,11 +821,10 @@ def run_generate(plan_items=None):
             handle.write(page)
 
         mark_all_processed(db, item, filename)
-        touched_categories.add(category)
         generated += 1
         log.info(f"Generated: {path}")
 
-    for category in touched_categories:
+    for category in CATEGORY_CONFIG.keys():
         update_index(category)
 
     db.close()

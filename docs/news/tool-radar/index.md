@@ -17,7 +17,6 @@ Only recent publications are listed below to keep the radar current.
 | Date | Tool | Summary |
 | --- | --- | --- |
 | 2026-03-09 | [k9s](2026-03-09-k9s.md) | K9s provides a terminal-based UI for interacting with Kubernetes clusters through a continuously updating interface. |
-| 2026-03-09 | [k9s](2026-03-09-k9s-2.md) | K9s provides a terminal-based UI for interacting with Kubernetes clusters through a constantly updating interface that watches for cluster state changes. |
 | 2026-03-08 | [trivy](2026-03-08-trivy.md) | Trivy is a security scanner built by Aqua Security that covers vulnerabilities, misconfigurations, secrets, and software bill of materials (SBOM) generation across a wide range of targets. |
 | 2026-03-08 | [nacos](2026-03-08-nacos.md) | Nacos is an open-source platform from Alibaba that combines dynamic service discovery, centralized configuration management, and service metadata management into a single operational surface. |
 <!-- AUTO-LATEST:END -->

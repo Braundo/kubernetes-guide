@@ -54,6 +54,29 @@ Step 2: approve what to publish
 .venv/bin/python data/k8s_factory/run_pipeline.py --approve none
 ```
 
+## Add your own custom topic
+
+Queue a custom topic request that will appear in the next review shortlist:
+
+```bash
+.venv/bin/python data/k8s_factory/topic_requests.py add \
+  --topic "Kubernetes multi-cluster failover patterns in 2026" \
+  --category ecosystem \
+  --notes "Focus on operator tradeoffs and realistic failure testing paths" \
+  --source https://kubernetes.io/blog/ \
+  --source https://aws.amazon.com/blogs/containers/
+```
+
+Or queue it inline while running pipeline:
+
+```bash
+.venv/bin/python data/k8s_factory/run_pipeline.py --github \
+  --topic "Kubernetes API deprecation migration playbook" \
+  --topic-category releases \
+  --topic-notes "Practical migration sequencing and rollback gates" \
+  --topic-source https://kubernetes.io/releases/
+```
+
 Optional bypass (fully automatic):
 
 ```bash
@@ -78,10 +101,15 @@ Then pushes to `origin main`, which triggers site publish.
 - Hard quality gates reject drafts that are:
   - too short by category
   - missing required section depth
+  - lacking minimum sentence-level depth in required sections
   - using banned filler phrases (for example "details were not provided")
   - using mechanical inline labels (for example `Operator takeaway:`)
-  - using bot-like placeholders such as `Curated Intro`.
+  - using bot-like placeholders such as `Curated Intro`
+  - using em dash or en dash punctuation.
 - Deck/summary text is sentence-safe truncated to avoid cutoff words in page intros and index tables.
+- Pipeline strips duplicate title headings from draft bodies before publish.
+- Same-day same-topic duplicate generation is blocked at analyze, approval, and generate stages.
+- Final verify step checks for broken internal markdown links before commit/push.
 - `run_pipeline.py` performs a final markdown quality verification before commit/push.
 
 ## Anthropic rate-limit safeguards
@@ -104,6 +132,7 @@ Optional environment variables:
 - `PIPELINE_LOCK_STALE_SECONDS` (default `21600`): stale lock cleanup window.
 - `PIPELINE_MAX_ITEMS_PER_RUN` (default `6`): analyze-time cap on total candidates selected into a plan.
 - `PIPELINE_MAX_GENERATE_PER_RUN` (default `1`): final publish cap per run (applies to approved and auto-publish modes).
+- `PIPELINE_VERIFY_QUALITY_WINDOW_DAYS` (default `0`): apply strict quality-depth verification only to files from the last N days (0 means only today’s generated files).
 - `PIPELINE_ENFORCE_DISCOVERY_FREQUENCY_CAPS` (default `0`): when `1`, apply daily/weekly category caps during topic discovery (normally disabled so review queue is richer).
 - `GITHUB_PUSHED_DAYS` (default `180`): recency window for GitHub repository discovery.
 - `GITHUB_MIN_STARS` (default `80`): minimum stars for GitHub discovery query.

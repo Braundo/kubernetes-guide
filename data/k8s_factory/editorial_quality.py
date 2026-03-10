@@ -27,35 +27,61 @@ REQUIRED_SECTIONS = {
 }
 
 MIN_TOTAL_WORDS = {
-    "security": 260,
-    "releases": 340,
-    "ecosystem": 560,
-    "tool-radar": 240,
+    "security": 300,
+    "releases": 430,
+    "ecosystem": 700,
+    "tool-radar": 320,
 }
 
 MIN_SECTION_WORDS = {
     "security": {
-        "Advisory Summary": 45,
-        "Affected Components and Versions": 35,
-        "Why It Matters": 55,
-        "Recommended Actions": 55,
+        "Advisory Summary": 60,
+        "Affected Components and Versions": 45,
+        "Why It Matters": 80,
+        "Recommended Actions": 80,
     },
     "releases": {
-        "Release Summary": 50,
-        "Key Changes": 70,
-        "Breaking Changes and Deprecations": 60,
-        "Why It Matters for Operators": 60,
-        "Upgrade Actions": 55,
+        "Release Summary": 75,
+        "Key Changes": 100,
+        "Breaking Changes and Deprecations": 90,
+        "Why It Matters for Operators": 90,
+        "Upgrade Actions": 85,
     },
     "ecosystem": {
-        "Overview": 120,
-        "Top Stories and Operator Takeaways": 320,
+        "Overview": 150,
+        "Top Stories and Operator Takeaways": 430,
     },
     "tool-radar": {
-        "What the Tool Does": 45,
-        "Why It Matters": 55,
-        "Adoption and Maturity Signals": 45,
-        "Recommended Use Cases": 45,
+        "What the Tool Does": 65,
+        "Why It Matters": 95,
+        "Adoption and Maturity Signals": 65,
+        "Recommended Use Cases": 85,
+    },
+}
+
+MIN_SECTION_SENTENCES = {
+    "security": {
+        "Advisory Summary": 2,
+        "Affected Components and Versions": 2,
+        "Why It Matters": 3,
+        "Recommended Actions": 3,
+    },
+    "releases": {
+        "Release Summary": 3,
+        "Key Changes": 4,
+        "Breaking Changes and Deprecations": 4,
+        "Why It Matters for Operators": 4,
+        "Upgrade Actions": 4,
+    },
+    "ecosystem": {
+        "Overview": 4,
+        "Top Stories and Operator Takeaways": 10,
+    },
+    "tool-radar": {
+        "What the Tool Does": 3,
+        "Why It Matters": 4,
+        "Adoption and Maturity Signals": 3,
+        "Recommended Use Cases": 4,
     },
 }
 
@@ -88,6 +114,11 @@ def required_sections_for(category):
 
 def word_count(text):
     return len(WORD_RE.findall(text or ""))
+
+
+def sentence_count(text):
+    pieces = re.split(r"(?<=[.!?])\s+", (text or "").strip())
+    return len([piece for piece in pieces if WORD_RE.search(piece or "")])
 
 
 def _sections(text):
@@ -150,6 +181,16 @@ def assess_markdown_quality(category, markdown_text):
                 f"section '{name}' is too thin: {section_words} words (minimum {min_words})"
             )
 
+    sentence_limits = MIN_SECTION_SENTENCES.get(category, {})
+    for name, min_sentences in sentence_limits.items():
+        if name not in sections:
+            continue
+        count = sentence_count(sections.get(name, ""))
+        if count < min_sentences:
+            issues.append(
+                f"section '{name}' is too shallow: {count} sentences (minimum {min_sentences})"
+            )
+
     if category == "ecosystem" and "Top Stories and Operator Takeaways" in sections:
         stories = _h3_sections(sections["Top Stories and Operator Takeaways"])
         if len(stories) < 3:
@@ -158,8 +199,13 @@ def assess_markdown_quality(category, markdown_text):
             issues.append("ecosystem section should not exceed 7 story subheadings (###)")
         for title, body in stories:
             wc = word_count(body)
-            if wc < 80:
-                issues.append(f"story '{title}' is too short: {wc} words (minimum 80)")
+            if wc < 120:
+                issues.append(f"story '{title}' is too short: {wc} words (minimum 120)")
+            if sentence_count(body) < 4:
+                issues.append(f"story '{title}' lacks depth: fewer than 4 sentences")
+            paragraphs = [p for p in re.split(r"\n\s*\n", body) if p.strip()]
+            if len(paragraphs) < 2:
+                issues.append(f"story '{title}' must contain at least 2 paragraphs")
 
     if category == "releases" and "Breaking Changes and Deprecations" in sections:
         body = sections["Breaking Changes and Deprecations"].lower()

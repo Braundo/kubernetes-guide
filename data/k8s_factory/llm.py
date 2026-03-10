@@ -41,6 +41,8 @@ Editorial rules:
 - Never use placeholder phrases like "details were not provided".
 - Do not use mechanical label phrases inside paragraphs (for example: "Operator takeaway:", "Why it matters:").
 - Do not use em dash or en dash punctuation. Use commas or simple hyphens instead.
+- Do not output H1 headings in the draft body.
+- Each section must explain consequences, tradeoffs, and what an operator should do next.
 """
 
 SECURITY_PROMPT = """You are writing publication-grade security news for k8s.guide.
@@ -53,9 +55,10 @@ Write Markdown with exactly these H2 sections in this order:
 ## Recommended Actions
 
 Depth requirements:
-- Target 300-650 words.
+- Target 380-760 words.
 - Every section must include meaningful details.
 - "Recommended Actions" must include a numbered plan with concrete validation steps.
+- Include concrete verification commands or checks where possible.
 
 {context_block}
 
@@ -75,10 +78,11 @@ Write Markdown with exactly these H2 sections in this order:
 ## Upgrade Actions
 
 Depth requirements:
-- Target 380-750 words.
+- Target 520-950 words.
 - Use concrete release details from source context.
 - "Breaking Changes and Deprecations" must include specific risk checks.
 - If an official source does not enumerate deprecations, provide a concrete audit checklist instead of vague disclaimers.
+- Explain the operational consequence of each major change, not just the change itself.
 
 {context_block}
 
@@ -97,9 +101,10 @@ Write Markdown with exactly these H2 sections in this order:
 ## Recommended Use Cases
 
 Depth requirements:
-- Target 280-520 words.
+- Target 420-760 words.
 - Connect capabilities to real Kubernetes platform workflows.
 - "Recommended Use Cases" should include where this tool fits and where it may not fit.
+- Include at least one concrete "use this when / avoid this when" decision frame.
 
 {context_block}
 
@@ -117,16 +122,18 @@ Write Markdown with exactly these H2 sections in this order:
 
 Formatting requirements for "Top Stories and Operator Takeaways":
 - Include 3 to 6 H3 story subheadings in this format: `### <story title>`.
-- Under each story subheading, write 2 short paragraphs:
-  1) first paragraph: what changed, with context and implications
-  2) second paragraph: practical near-term response for platform teams
+- Under each story subheading, write 2 to 3 substantial paragraphs:
+  1) what changed, with specific context
+  2) why it matters operationally in the next 30-90 days
+  3) practical near-term response for platform teams
 - Integrate implications naturally; do not use explicit labels like "Operator takeaway:".
 
 Depth requirements:
-- Target 620-1000 words.
+- Target 760-1200 words.
 - The article must read like an editorial briefing, not scraped notes.
 - Do not use headings like "Curated Intro" or "Top Signals This Cycle".
 - Avoid one-liner story blurbs; each story should contain substantive analysis.
+- Avoid repeating the deck sentence at the start of the Overview section.
 
 {context_block}
 
@@ -465,6 +472,31 @@ def _item_context(item):
     source_excerpt = fetch_source_excerpt(item.get("url", ""), max_chars=MAX_PRIMARY_EXCERPT_CHARS)
     if source_excerpt:
         lines.append("\nSource page excerpt:\n" + _limit(source_excerpt, MAX_PRIMARY_EXCERPT_CHARS))
+
+    if item.get("manual_topic"):
+        lines.extend(
+            [
+                "",
+                "Custom topic request:",
+                f"- Requested topic: {item.get('title', '')}",
+                f"- Requested notes: {_limit(item.get('summary', '') or '', 800)}",
+            ]
+        )
+
+        supporting = item.get("supporting_sources") or item.get("sources") or []
+        if supporting:
+            lines.append("")
+            lines.append("Supporting references for this requested topic:")
+            for idx, src in enumerate(supporting[:6], 1):
+                src_title = src.get("title", "") or f"Source {idx}"
+                src_url = src.get("url", "")
+                src_published = (src.get("published", "") or "")[:10] or "unknown"
+                lines.append(f"{idx}. {src_title}")
+                lines.append(f"   - URL: {src_url}")
+                lines.append(f"   - Published: {src_published}")
+                excerpt = fetch_source_excerpt(src_url, max_chars=MAX_ROUNDUP_SOURCE_EXCERPT_CHARS)
+                if excerpt:
+                    lines.append(f"   - Source excerpt: {_limit(excerpt, MAX_ROUNDUP_SOURCE_EXCERPT_CHARS)}")
 
     if item.get("category_hint") == "tool-radar":
         lines.extend(

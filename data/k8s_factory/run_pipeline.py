@@ -8,6 +8,7 @@ import traceback
 import subprocess
 import re
 from datetime import datetime, timezone
+from urllib.parse import urlparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -17,6 +18,7 @@ from analyze import generate_plan
 from generate import run_generate
 from content_policy import CATEGORY_CONFIG
 from editorial_quality import required_sections_for, assess_markdown_quality
+from topic_requests import add_request as add_topic_request, pending_requests, resolve_requests
 
 logging.basicConfig(
     level=logging.INFO,
@@ -34,6 +36,27 @@ REVIEW_MD_PATH = os.path.join(PIPELINE_DIR, "review_topics.md")
 RUN_LOCK_PATH = os.path.join(PIPELINE_DIR, ".run_pipeline.lock")
 RUN_LOCK_STALE_SECONDS = int(os.environ.get("PIPELINE_LOCK_STALE_SECONDS", str(6 * 3600)))
 MAX_GENERATE_PER_RUN = int(os.environ.get("PIPELINE_MAX_GENERATE_PER_RUN", "1"))
+QUALITY_VERIFY_WINDOW_DAYS = int(os.environ.get("PIPELINE_VERIFY_QUALITY_WINDOW_DAYS", "0"))
+TOPIC_TOKEN_STOP_WORDS = {
+    "the",
+    "and",
+    "for",
+    "with",
+    "from",
+    "into",
+    "about",
+    "this",
+    "that",
+    "tool",
+    "radar",
+    "news",
+    "update",
+    "updates",
+    "briefing",
+    "deep",
+    "dive",
+    "kubernetes",
+}
 
 
 def parse_option_value(argv, flag):
@@ -45,6 +68,23 @@ def parse_option_value(argv, flag):
         if arg.startswith(f"{flag}="):
             return arg.split("=", 1)[1]
     return None
+
+
+def parse_option_values(argv, flag):
+    values = []
+    idx = 0
+    while idx < len(argv):
+        arg = argv[idx]
+        if arg == flag:
+            if idx + 1 >= len(argv):
+                raise ValueError(f"{flag} requires a value")
+            values.append(argv[idx + 1])
+            idx += 2
+            continue
+        if arg.startswith(f"{flag}="):
+            values.append(arg.split("=", 1)[1])
+        idx += 1
+    return values
 
 
 def _is_stale_lock(path):
@@ -89,11 +129,195 @@ def category_from_path(path):
     return None
 
 
+def _canonical_topic_tokens(text):
+    cleaned = re.sub(r"[^a-z0-9\s]", " ", (text or "").lower())
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    return [
+        token
+        for token in cleaned.split()
+        if len(token) > 1 and token not in TOPIC_TOKEN_STOP_WORDS
+    ]
+
+
+def _github_repo_slug(url):
+    try:
+        parsed = urlparse(url or "")
+    except Exception:
+        return ""
+    if parsed.netloc.lower() != "github.com":
+        return ""
+    parts = [segment for segment in (parsed.path or "").split("/") if segment]
+    if len(parts) < 2:
+        return ""
+    return f"{parts[0].lower()}/{parts[1].lower()}"
+
+
+def topic_key(item):
+    category = item.get("category_hint", "ecosystem")
+    repo = _github_repo_slug(item.get("url", ""))
+    if repo:
+        return f"{category}:repo:{repo}"
+
+    cve_match = re.search(r"(?i)\b(cve-\d{4}-\d+)\b", item.get("title", "") or "")
+    if cve_match:
+        return f"{category}:{cve_match.group(1).lower()}"
+
+    title_tokens = _canonical_topic_tokens(item.get("title", ""))
+    if title_tokens:
+        return f"{category}:title:{' '.join(title_tokens[:10])}"
+    return f"{category}:url:{(item.get('url', '') or '').lower()}"
+
+
+def dedupe_items_by_topic(items):
+    kept = []
+    dropped = []
+    seen = set()
+    ranked = sorted(items or [], key=lambda it: it.get("score", 0), reverse=True)
+    for item in ranked:
+        key = topic_key(item)
+        if key in seen:
+            dropped.append(item)
+            continue
+        seen.add(key)
+        kept.append(item)
+    return kept, dropped
+
+
+def _topic_tokens_for_match(text):
+    tokens = _canonical_topic_tokens(text)
+    return [token for token in tokens if len(token) >= 3][:10]
+
+
+def _match_score(topic_tokens, item):
+    hay = " ".join(
+        [
+            item.get("title", ""),
+            item.get("summary", ""),
+            item.get("url", ""),
+            item.get("source_name", ""),
+        ]
+    ).lower()
+    if not topic_tokens:
+        return 0
+    return sum(1 for token in topic_tokens if token in hay)
+
+
+def _collect_topic_supporting_sources(topic_entry, review_items, max_sources=6):
+    direct = []
+    for url in topic_entry.get("sources") or []:
+        direct.append(
+            {
+                "title": url,
+                "url": url,
+                "source_name": "User Provided Source",
+                "published": "",
+            }
+        )
+
+    tokens = _topic_tokens_for_match(topic_entry.get("topic", ""))
+    candidates = []
+    for item in review_items or []:
+        score = _match_score(tokens, item)
+        if score <= 0:
+            continue
+        candidates.append((score, item.get("score", 0), item))
+    candidates.sort(reverse=True, key=lambda row: (row[0], row[1]))
+
+    seen_urls = {src.get("url", "") for src in direct}
+    sources = list(direct)
+    for _, _, item in candidates:
+        url = item.get("url", "")
+        if not url or url in seen_urls:
+            continue
+        seen_urls.add(url)
+        sources.append(
+            {
+                "title": item.get("title", "") or item.get("source_name", "Source"),
+                "url": url,
+                "source_name": item.get("source_name", ""),
+                "published": item.get("published", ""),
+            }
+        )
+        if len(sources) >= max_sources:
+            break
+    return sources
+
+
+def build_manual_topic_items(topic_entries, plan):
+    review_items = plan.get("review_items") or plan.get("items") or []
+    now_iso = datetime.now(timezone.utc).isoformat()
+    built = []
+
+    for entry in topic_entries or []:
+        topic_text = (entry.get("topic") or "").strip()
+        if not topic_text:
+            continue
+        sources = _collect_topic_supporting_sources(entry, review_items)
+        recommended = len(sources) > 0
+        summary = (entry.get("notes") or "").strip()
+        if not summary:
+            summary = (
+                "User-requested deep dive. Include operational implications, tradeoffs, and "
+                "specific actions for platform teams."
+            )
+        built.append(
+            {
+                "id": None,
+                "manual_topic": True,
+                "manual_topic_id": entry.get("id"),
+                "title": topic_text,
+                "summary": summary,
+                "published": now_iso,
+                "source_name": "User Topic Request",
+                "category_hint": entry.get("category_hint", "ecosystem"),
+                "url": sources[0].get("url", "") if sources else "",
+                "content_hash": f"manual-topic-{entry.get('id')}",
+                "sources": sources,
+                "supporting_sources": sources,
+                "source_item_ids": [],
+                "score": 99 if recommended else 72,
+                "recommended": recommended,
+                "origin": "manual-topic",
+            }
+        )
+    return built
+
+
+def merge_manual_topics_into_plan(plan, manual_items):
+    if not manual_items:
+        return plan
+
+    merged = dict(plan)
+    selected = list(plan.get("items") or [])
+    review = list(plan.get("review_items") or plan.get("items") or [])
+
+    for item in manual_items:
+        key = topic_key(item)
+        if any(topic_key(existing) == key for existing in selected):
+            continue
+        selected.append(item)
+        review.insert(0, item)
+
+    review, _ = dedupe_items_by_topic(review)
+    selected, _ = dedupe_items_by_topic(selected)
+
+    merged["items"] = selected
+    merged["review_items"] = review
+    merged["total_selected"] = len(selected)
+    merged["total_review_items"] = len(review)
+    merged["recommended_in_review"] = sum(1 for item in review if item.get("recommended"))
+    merged["manual_topic_count"] = len(manual_items)
+    return merged
+
+
 def verify_generated_markdown():
     errors = []
     byline_re = re.compile(r"(?im)^\s*(editors?|author|authors?)\s*:")
     date_re = re.compile(r"(?im)^date:\s*(\d{4}-\d{2}-\d{2})\s*$")
+    title_re = re.compile(r"(?im)^title:\s*\"?(.+?)\"?\s*$")
+    link_re = re.compile(r"\[[^\]]+\]\(([^)\s]+)\)")
     today = datetime.now().astimezone().date()
+    seen_topic_dates = {}
     for config in CATEGORY_CONFIG.values():
         root = config["output_dir"]
         if not os.path.isdir(root):
@@ -117,18 +341,45 @@ def verify_generated_markdown():
                     errors.append(f"{path}: missing section {marker}")
             if byline_re.search(content):
                 errors.append(f"{path}: contains source byline/editor credits")
-            if category:
-                quality_issues = assess_markdown_quality(category, content)
-                for issue in quality_issues:
-                    errors.append(f"{path}: quality check failed - {issue}")
+
+            title_match = title_re.search(content)
+            title_value = title_match.group(1).strip() if title_match else name[:-3]
+            parsed_date = None
             date_match = date_re.search(content)
             if date_match:
                 try:
-                    parsed = datetime.strptime(date_match.group(1), "%Y-%m-%d").date()
-                    if parsed > today:
-                        errors.append(f"{path}: has future publish date {parsed.isoformat()}")
+                    parsed_date = datetime.strptime(date_match.group(1), "%Y-%m-%d").date()
+                    if parsed_date > today:
+                        errors.append(f"{path}: has future publish date {parsed_date.isoformat()}")
+                    key = f"{category}:{parsed_date.isoformat()}:{' '.join(_canonical_topic_tokens(title_value))}"
+                    if key in seen_topic_dates:
+                        errors.append(
+                            f"{path}: duplicate same-day topic of {seen_topic_dates[key]}"
+                        )
+                    else:
+                        seen_topic_dates[key] = path
                 except ValueError:
                     errors.append(f"{path}: has invalid publish date {date_match.group(1)}")
+
+            enforce_quality = True
+            if parsed_date is not None:
+                age = (today - parsed_date).days
+                enforce_quality = age <= QUALITY_VERIFY_WINDOW_DAYS
+
+            if category and enforce_quality:
+                quality_issues = assess_markdown_quality(category, content)
+                for issue in quality_issues:
+                    errors.append(f"{path}: quality check failed - {issue}")
+
+            for target in link_re.findall(content):
+                if target.startswith(("http://", "https://", "mailto:", "#")):
+                    continue
+                rel = target.split("#", 1)[0].split("?", 1)[0]
+                if not rel or not rel.endswith(".md"):
+                    continue
+                candidate = os.path.normpath(os.path.join(os.path.dirname(path), rel))
+                if not os.path.exists(candidate):
+                    errors.append(f"{path}: broken internal markdown link -> {rel}")
 
     for err in errors:
         log.error(f"VERIFY: {err}")
@@ -204,6 +455,8 @@ def write_review_state(plan, include_github):
                 "id": item.get("id"),
                 "source_item_ids": item.get("source_item_ids") or [],
                 "recommended": bool(item.get("recommended", False)),
+                "origin": item.get("origin", "discovered"),
+                "manual_topic_id": item.get("manual_topic_id"),
                 "item": item,
             }
         )
@@ -215,6 +468,7 @@ def write_review_state(plan, include_github):
         "total_selected": plan.get("total_selected", 0),
         "total_review_items": len(items),
         "recommended_in_review": sum(1 for entry in items if entry.get("recommended")),
+        "manual_topic_count": sum(1 for entry in items if entry.get("origin") == "manual-topic"),
         "items": items,
     }
 
@@ -236,6 +490,8 @@ def write_review_markdown(state):
         "",
         f"Recommended by planner: `{state.get('recommended_in_review', 0)}`",
         "",
+        f"Custom topics queued: `{state.get('manual_topic_count', 0)}`",
+        "",
         f"Quality-first publish cap per run: `{MAX_GENERATE_PER_RUN}`",
         "",
         "Select topics to publish by review ID:",
@@ -243,17 +499,22 @@ def write_review_markdown(state):
         "- Publish all: `.venv/bin/python data/k8s_factory/run_pipeline.py --approve all`",
         "- Publish specific: `.venv/bin/python data/k8s_factory/run_pipeline.py --approve 1,3`",
         "- Publish none: `.venv/bin/python data/k8s_factory/run_pipeline.py --approve none`",
+        "- Add custom topic: `.venv/bin/python data/k8s_factory/topic_requests.py add --topic \"<your topic>\" --notes \"<angle>\" --source <url>`",
         "",
-        "| ID | Recommended | Category | Score | Source Date | Topic |",
-        "| --- | --- | --- | ---: | --- | --- |",
+        "| ID | Recommended | Origin | Category | Score | Source Date | Topic |",
+        "| --- | --- | --- | --- | ---: | --- | --- |",
     ]
 
     for entry in state.get("items", []):
         rec = "yes" if entry.get("recommended") else ""
+        origin = "manual" if entry.get("origin") == "manual-topic" else "discovered"
+        topic_title = clean_cell(entry.get("title", "Untitled"))
+        topic_url = clean_cell(entry.get("url", ""))
+        topic_cell = f"[{topic_title}]({topic_url})" if topic_url else topic_title
         lines.append(
-            f"| {entry['review_id']} | {rec} | {clean_cell(entry.get('category', ''))} | "
+            f"| {entry['review_id']} | {rec} | {origin} | {clean_cell(entry.get('category', ''))} | "
             f"{entry.get('score', 0)} | {clean_cell(entry.get('published', '')) or '-'} | "
-            f"[{clean_cell(entry.get('title', 'Untitled'))}]({clean_cell(entry.get('url', ''))}) |"
+            f"{topic_cell} |"
         )
 
     lines.append("")
@@ -262,6 +523,8 @@ def write_review_markdown(state):
     for entry in state.get("items", []):
         summary = clean_cell(entry.get("summary", "")) or "No summary available."
         prefix = "[recommended] " if entry.get("recommended") else ""
+        if entry.get("origin") == "manual-topic" and not entry.get("recommended"):
+            summary = f"{summary} (Add at least one supporting source URL before approving.)"
         lines.append(f"- `{entry['review_id']}` {prefix}{summary}")
 
     with open(REVIEW_MD_PATH, "w") as handle:
@@ -273,7 +536,8 @@ def topic_preview(state, limit=5):
     parts = []
     for entry in entries:
         marker = "*" if entry.get("recommended") else ""
-        parts.append(f"{entry.get('review_id')}. {entry.get('title', 'Untitled')}{marker}")
+        prefix = "[manual] " if entry.get("origin") == "manual-topic" else ""
+        parts.append(f"{entry.get('review_id')}. {prefix}{entry.get('title', 'Untitled')}{marker}")
     return " | ".join(parts)
 
 
@@ -331,22 +595,33 @@ def parse_approved_ids(value, total):
 def split_selected_and_skipped(state, approved_ids):
     selected = []
     skipped_item_ids = set()
+    selected_topic_ids = set()
+    skipped_topic_ids = set()
 
     for entry in state.get("items", []):
         rid = int(entry.get("review_id", 0) or 0)
         if rid in approved_ids:
             selected.append(entry.get("item", {}))
+            if entry.get("manual_topic_id"):
+                selected_topic_ids.add(str(entry.get("manual_topic_id")))
             continue
 
         item_id = entry.get("id")
         if item_id:
             skipped_item_ids.add(int(item_id))
+        if entry.get("manual_topic_id"):
+            skipped_topic_ids.add(str(entry.get("manual_topic_id")))
 
         for sid in entry.get("source_item_ids") or []:
             if sid:
                 skipped_item_ids.add(int(sid))
 
-    return selected, sorted(skipped_item_ids)
+    return (
+        selected,
+        sorted(skipped_item_ids),
+        sorted(selected_topic_ids),
+        sorted(skipped_topic_ids),
+    )
 
 
 def collect_item_ids(items):
@@ -358,6 +633,15 @@ def collect_item_ids(items):
         for sid in item.get("source_item_ids") or []:
             if sid:
                 ids.add(int(sid))
+    return sorted(ids)
+
+
+def collect_manual_topic_ids(items):
+    ids = set()
+    for item in items or []:
+        req_id = item.get("manual_topic_id")
+        if req_id:
+            ids.add(str(req_id))
     return sorted(ids)
 
 
@@ -394,6 +678,29 @@ def touch_last_run():
         handle.write(datetime.now(timezone.utc).isoformat())
 
 
+def queue_cli_topic_requests(argv):
+    topics = parse_option_values(argv, "--topic")
+    if not topics:
+        return 0
+
+    category = parse_option_value(argv, "--topic-category") or ""
+    notes = parse_option_value(argv, "--topic-notes") or ""
+    sources = parse_option_values(argv, "--topic-source")
+
+    added = 0
+    for topic in topics:
+        entry = add_topic_request(
+            topic=topic,
+            category=category,
+            notes=notes,
+            sources=sources,
+            requested_by="cli",
+        )
+        if entry:
+            added += 1
+    return added
+
+
 def main():
     if not acquire_run_lock():
         log.error(
@@ -409,11 +716,14 @@ def main():
 
     try:
         approve_value = parse_option_value(argv, "--approve")
+        queued_topics = queue_cli_topic_requests(argv)
     except ValueError as exc:
         log.error(str(exc))
         return 1
 
     log.info("=== Pipeline starting ===")
+    if queued_topics:
+        log.info("Queued %s custom topic request(s) from CLI flags.", queued_topics)
 
     db = get_db()
     run_id = log_run_start(db)
@@ -431,14 +741,23 @@ def main():
                 return 1
 
             approved_ids = parse_approved_ids(approve_value, len(state.get("items", [])))
-            selected_items, skipped_ids = split_selected_and_skipped(state, approved_ids)
+            (
+                selected_items,
+                skipped_ids,
+                approved_topic_ids,
+                skipped_topic_ids,
+            ) = split_selected_and_skipped(state, approved_ids)
+            selected_items, duplicate_items = dedupe_items_by_topic(selected_items)
             selected_items, dropped_items = cap_items_for_quality(selected_items, "approved topics")
-            overflow_ids = collect_item_ids(dropped_items)
+            overflow_ids = collect_item_ids(dropped_items + duplicate_items)
+            overflow_topic_ids = collect_manual_topic_ids(dropped_items + duplicate_items)
             all_skipped_ids = sorted(set(skipped_ids + overflow_ids))
+            all_skipped_topic_ids = sorted(set(skipped_topic_ids + overflow_topic_ids))
             mark_skipped_items(all_skipped_ids)
 
             if not selected_items:
                 clear_review_files()
+                resolve_requests(all_skipped_topic_ids, "skipped")
                 db = get_db()
                 log_run_end(db, run_id, 0, 0, "success_review_none")
                 db.close()
@@ -460,6 +779,8 @@ def main():
             log.info("--- Commit & Push ---")
             pushed = git_push()
             clear_review_files()
+            resolve_requests(approved_topic_ids, "published")
+            resolve_requests(all_skipped_topic_ids, "skipped")
 
             db = get_db()
             log_run_end(db, run_id, 0, generated, "success")
@@ -475,6 +796,15 @@ def main():
 
         log.info("--- Analyze ---")
         plan = generate_plan()
+        manual_topic_entries = pending_requests()
+        if manual_topic_entries:
+            manual_items = build_manual_topic_items(manual_topic_entries, plan)
+            plan = merge_manual_topics_into_plan(plan, manual_items)
+            log.info(
+                "Merged %s pending custom topic request(s) into review queue.",
+                len(manual_items),
+            )
+
         selected = len(plan.get("items", []))
         if selected == 0:
             log.info("No high-signal items selected. Done.")
@@ -501,6 +831,7 @@ def main():
                 f"{state.get('total_candidates', selected)} candidate(s) found, "
                 f"{state.get('total_review_items', selected)} topic(s) in review shortlist, "
                 f"{state.get('recommended_in_review', selected)} recommended. "
+                f"Custom topics queued: {state.get('manual_topic_count', 0)}. "
                 "Review data/k8s_factory/review_topics.md and approve with "
                 "`.venv/bin/python data/k8s_factory/run_pipeline.py --approve 1,2` (or all/none). "
                 f"Preview: {topic_preview(state)}"
@@ -508,7 +839,9 @@ def main():
             log.info("Awaiting human topic approval. No pages generated yet.")
             return 0
 
-        auto_items, _ = cap_items_for_quality(plan.get("items", []), "auto-publish plan")
+        auto_candidates, auto_duplicates = dedupe_items_by_topic(plan.get("items", []))
+        auto_items, _ = cap_items_for_quality(auto_candidates, "auto-publish plan")
+        resolve_requests(collect_manual_topic_ids(auto_duplicates), "skipped")
         log.info(f"--- Generate ({len(auto_items)} item(s)) ---")
         generated = run_generate(plan_items=auto_items)
 
@@ -522,6 +855,7 @@ def main():
 
         log.info("--- Commit & Push ---")
         pushed = git_push()
+        resolve_requests(collect_manual_topic_ids(auto_items), "published")
 
         db = get_db()
         log_run_end(db, run_id, crawled, generated, "success")

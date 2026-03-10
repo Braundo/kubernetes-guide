@@ -3,6 +3,7 @@ import os
 import re
 import logging
 from datetime import datetime, timezone
+from urllib.parse import urlparse
 
 from db import get_db, get_unprocessed_items
 from content_policy import (
@@ -42,6 +43,17 @@ BASE_SCORES = {
 }
 
 CATEGORY_ORDER = ["security", "releases", "tool-radar", "ecosystem"]
+GENERIC_TITLE_TOKENS = {
+    "tool",
+    "radar",
+    "news",
+    "update",
+    "updates",
+    "briefing",
+    "deep",
+    "dive",
+    "spotlight",
+}
 
 
 def source_age_days(item):
@@ -71,20 +83,62 @@ def is_item_fresh(item):
     return age <= max_age
 
 
-def canonical_title(title):
+def canonical_tokens(title):
     cleaned = re.sub(r"[^a-z0-9\s]", " ", (title or "").lower())
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
-    tokens = [t for t in cleaned.split() if len(t) > 2]
-    return " ".join(tokens)
+    return [
+        t
+        for t in cleaned.split()
+        if len(t) > 1 and t not in GENERIC_TITLE_TOKENS
+    ]
 
 
-def titles_too_similar(a, b):
-    aa = set(canonical_title(a).split())
-    bb = set(canonical_title(b).split())
+def canonical_title(title):
+    return " ".join(canonical_tokens(title))
+
+
+def github_repo_slug(url):
+    try:
+        parsed = urlparse(url or "")
+    except Exception:
+        return ""
+    if parsed.netloc.lower() != "github.com":
+        return ""
+    parts = [segment for segment in (parsed.path or "").split("/") if segment]
+    if len(parts) < 2:
+        return ""
+    return f"{parts[0].lower()}/{parts[1].lower()}"
+
+
+def titles_too_similar(a, b, url_a="", url_b=""):
+    repo_a = github_repo_slug(url_a)
+    repo_b = github_repo_slug(url_b)
+    if repo_a and repo_b and repo_a == repo_b:
+        return True
+
+    aa = set(canonical_tokens(a))
+    bb = set(canonical_tokens(b))
     if not aa or not bb:
         return False
+    if aa == bb:
+        return True
+
+    smaller = min(len(aa), len(bb))
     overlap = len(aa & bb)
-    return overlap >= max(4, int(0.7 * min(len(aa), len(bb))))
+    if smaller <= 2:
+        return overlap >= smaller
+    if smaller <= 4:
+        return overlap >= (smaller - 1)
+    return overlap >= max(4, int(0.7 * smaller))
+
+
+def shortlist_topic_key(item):
+    category = item.get("category_hint", "ecosystem")
+    repo = github_repo_slug(item.get("url", ""))
+    if repo:
+        return f"{category}:repo:{repo}"
+    title_key = canonical_title(item.get("title", ""))
+    return f"{category}:title:{title_key}"
 
 
 def score_item(item):
@@ -155,7 +209,7 @@ def passes_frequency_guardrails(category):
 
 def select_by_category(items):
     selected = []
-    seen_titles = []
+    seen_topics = []
 
     by_cat = {k: [] for k in CATEGORY_CONFIG.keys()}
     for item in items:
@@ -171,7 +225,15 @@ def select_by_category(items):
         for candidate in eco_candidates:
             if candidate["score"] < QUALITY_THRESHOLDS["ecosystem"]:
                 continue
-            if any(titles_too_similar(candidate.get("title", ""), t) for t in [x.get("title", "") for x in top]):
+            if any(
+                titles_too_similar(
+                    candidate.get("title", ""),
+                    existing.get("title", ""),
+                    candidate.get("url", ""),
+                    existing.get("url", ""),
+                )
+                for existing in top
+            ):
                 continue
             top.append(candidate)
             if len(top) == 7:
@@ -222,10 +284,18 @@ def select_by_category(items):
             if item["score"] < threshold:
                 continue
             title = item.get("title", "")
-            if any(titles_too_similar(title, seen) for seen in seen_titles):
+            if any(
+                titles_too_similar(
+                    title,
+                    seen.get("title", ""),
+                    item.get("url", ""),
+                    seen.get("url", ""),
+                )
+                for seen in seen_topics
+            ):
                 continue
             selected.append(item)
-            seen_titles.append(title)
+            seen_topics.append({"title": title, "url": item.get("url", "")})
             chosen += 1
 
     # Enforce global cap while preserving category order and score.
@@ -255,6 +325,7 @@ def build_review_shortlist(items, recommended):
     recommended_keys = {_item_key(item) for item in recommended}
     shortlisted = []
     seen = set()
+    seen_topics = set()
 
     category_order = ["security", "releases", "ecosystem", "tool-radar"]
     per_category = {cat: [] for cat in category_order}
@@ -271,6 +342,10 @@ def build_review_shortlist(items, recommended):
 
         copy = dict(item)
         copy["recommended"] = key in recommended_keys
+        topic_key = shortlist_topic_key(copy)
+        if topic_key in seen_topics:
+            continue
+        seen_topics.add(topic_key)
         cat = copy.get("category_hint", "ecosystem")
         if cat not in per_category:
             cat = "ecosystem"
