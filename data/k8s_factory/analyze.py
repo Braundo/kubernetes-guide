@@ -40,9 +40,10 @@ BASE_SCORES = {
     "releases": 64,
     "tool-radar": 60,
     "ecosystem": 56,
+    "playbooks": 58,
 }
 
-CATEGORY_ORDER = ["security", "releases", "tool-radar", "ecosystem"]
+CATEGORY_ORDER = ["security", "releases", "tool-radar", "ecosystem", "playbooks"]
 GENERIC_TITLE_TOKENS = {
     "tool",
     "radar",
@@ -327,7 +328,7 @@ def build_review_shortlist(items, recommended):
     seen = set()
     seen_topics = set()
 
-    category_order = ["security", "releases", "ecosystem", "tool-radar"]
+    category_order = ["security", "releases", "ecosystem", "tool-radar", "playbooks"]
     per_category = {cat: [] for cat in category_order}
     category_counts = {cat: 0 for cat in category_order}
 

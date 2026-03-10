@@ -33,6 +33,7 @@ INDEX_MAX_AGE_DAYS = {
     "releases": 45,
     "ecosystem": 30,
     "tool-radar": 60,
+    "playbooks": 180,
 }
 EM_DASH = "\u2014"
 EN_DASH = "\u2013"
@@ -553,6 +554,10 @@ def related_links(category, filename):
                 "- Related: [Security news](../security/index.md)",
                 "- Related: [Release news](../releases/index.md)",
             ],
+            "playbooks": [
+                "- Related: [Release news](../releases/index.md)",
+                "- Related: [Ecosystem news](../ecosystem/index.md)",
+            ],
         }
         for entry in fallback.get(category, []):
             if entry not in links:
@@ -567,6 +572,7 @@ def related_links(category, filename):
         "releases": "- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)",
         "ecosystem": "- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)",
         "tool-radar": "- Evergreen reference: [Kubectl cheat sheet](../../resources/kubectl-cheatsheet.md)",
+        "playbooks": "- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)",
     }
     links.append(evergreen.get(category, "- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)"))
     return "\n".join(links)
@@ -753,13 +759,16 @@ def run_generate(plan_items=None):
 
     for item in items:
         original = item.get("category_hint", "ecosystem")
-        default = source_default_category(item.get("source_name", ""), original)
-        category = infer_category(
-            title=item.get("title", ""),
-            summary=item.get("summary", ""),
-            default=default,
-            url=item.get("url", ""),
-        )
+        if item.get("manual_topic") and original in CATEGORY_CONFIG:
+            category = original
+        else:
+            default = source_default_category(item.get("source_name", ""), original)
+            category = infer_category(
+                title=item.get("title", ""),
+                summary=item.get("summary", ""),
+                default=default,
+                url=item.get("url", ""),
+            )
         if category != original:
             log.info(
                 "Reclassified generate candidate: %s -> %s | %s",

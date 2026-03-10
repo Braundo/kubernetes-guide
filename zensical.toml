@@ -102,6 +102,7 @@ nav = [
     { "Release News" = "news/releases/index.md" },
     { "Security News" = "news/security/index.md" },
     { "Ecosystem News" = "news/ecosystem/index.md" },
+    { "Playbooks" = "news/playbooks/index.md" },
     { "Tool Radar" = "news/tool-radar/index.md" },
   ]},
   { "Jobs" = [

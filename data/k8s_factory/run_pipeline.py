@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from db import get_db, log_run_start, log_run_end, mark_processed
 from crawler import run_crawl
 from analyze import generate_plan
-from generate import run_generate
+from generate import run_generate, update_index
 from content_policy import CATEGORY_CONFIG
 from editorial_quality import required_sections_for, assess_markdown_quality
 from topic_requests import add_request as add_topic_request, pending_requests, resolve_requests
@@ -166,6 +166,14 @@ def topic_key(item):
     if title_tokens:
         return f"{category}:title:{' '.join(title_tokens[:10])}"
     return f"{category}:url:{(item.get('url', '') or '').lower()}"
+
+
+def sync_news_indexes():
+    for category in CATEGORY_CONFIG.keys():
+        try:
+            update_index(category)
+        except Exception as exc:
+            log.warning("Index sync skipped for category %s: %s", category, exc)
 
 
 def dedupe_items_by_topic(items):
@@ -767,6 +775,7 @@ def main():
 
             log.info(f"--- Generate ({len(selected_items)} approved item(s)) ---")
             generated = run_generate(plan_items=selected_items)
+            sync_news_indexes()
 
             log.info("--- Verify ---")
             if not verify_generated_markdown():
@@ -844,6 +853,7 @@ def main():
         resolve_requests(collect_manual_topic_ids(auto_duplicates), "skipped")
         log.info(f"--- Generate ({len(auto_items)} item(s)) ---")
         generated = run_generate(plan_items=auto_items)
+        sync_news_indexes()
 
         log.info("--- Verify ---")
         if not verify_generated_markdown():

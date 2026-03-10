@@ -27,6 +27,11 @@ CATEGORY_CONFIG = {
         "index_file": os.path.join(DOCS, "news", "tool-radar", "index.md"),
         "parent_index_rel": "index.md",
     },
+    "playbooks": {
+        "output_dir": os.path.join(DOCS, "news", "playbooks"),
+        "index_file": os.path.join(DOCS, "news", "playbooks", "index.md"),
+        "parent_index_rel": "index.md",
+    },
 }
 
 CATEGORY_TARGET_SHARE = {
@@ -34,6 +39,7 @@ CATEGORY_TARGET_SHARE = {
     "security": 0.30,
     "releases": 0.25,
     "tool-radar": 0.25,
+    "playbooks": 0.00,  # authored/manual thought pieces, not auto discovery.
 }
 
 RUN_CAPS = {
@@ -41,6 +47,7 @@ RUN_CAPS = {
     "releases": 2,
     "ecosystem": 2,
     "tool-radar": 2,
+    "playbooks": 0,
 }
 
 DAILY_CAPS = {
@@ -48,6 +55,7 @@ DAILY_CAPS = {
     "releases": 2,
     "ecosystem": 1,
     "tool-radar": 1,  # intentionally limited to avoid tool spam
+    "playbooks": 1,
 }
 
 WEEKLY_CAPS = {
@@ -55,6 +63,7 @@ WEEKLY_CAPS = {
     "releases": 5,
     "ecosystem": 4,
     "tool-radar": 2,
+    "playbooks": 3,
 }
 
 QUALITY_THRESHOLDS = {
@@ -62,6 +71,7 @@ QUALITY_THRESHOLDS = {
     "releases": 64,
     "ecosystem": 62,
     "tool-radar": 62,
+    "playbooks": 70,
 }
 
 # Maximum source staleness for publish eligibility.
@@ -70,6 +80,7 @@ MAX_SOURCE_AGE_DAYS = {
     "releases": 45,
     "ecosystem": 14,
     "tool-radar": 60,
+    "playbooks": 180,
 }
 
 MAX_ITEMS_PER_RUN = int(os.environ.get("PIPELINE_MAX_ITEMS_PER_RUN", "6"))

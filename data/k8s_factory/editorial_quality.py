@@ -24,6 +24,12 @@ REQUIRED_SECTIONS = {
         "## Adoption and Maturity Signals",
         "## Recommended Use Cases",
     ],
+    "playbooks": [
+        "## Situation",
+        "## Architecture and Tradeoffs",
+        "## Failure Modes to Plan For",
+        "## Practical Implementation Path",
+    ],
 }
 
 MIN_TOTAL_WORDS = {
@@ -31,6 +37,7 @@ MIN_TOTAL_WORDS = {
     "releases": 430,
     "ecosystem": 700,
     "tool-radar": 320,
+    "playbooks": 700,
 }
 
 MIN_SECTION_WORDS = {
@@ -57,6 +64,12 @@ MIN_SECTION_WORDS = {
         "Adoption and Maturity Signals": 65,
         "Recommended Use Cases": 85,
     },
+    "playbooks": {
+        "Situation": 120,
+        "Architecture and Tradeoffs": 180,
+        "Failure Modes to Plan For": 150,
+        "Practical Implementation Path": 170,
+    },
 }
 
 MIN_SECTION_SENTENCES = {
@@ -82,6 +95,12 @@ MIN_SECTION_SENTENCES = {
         "Why It Matters": 4,
         "Adoption and Maturity Signals": 3,
         "Recommended Use Cases": 4,
+    },
+    "playbooks": {
+        "Situation": 4,
+        "Architecture and Tradeoffs": 5,
+        "Failure Modes to Plan For": 4,
+        "Practical Implementation Path": 5,
     },
 }
 

@@ -1,7 +1,7 @@
 ---
 icon: lucide/home
 title: k8s.guide | Kubernetes Learning, News, and Insights
-description: Clear Kubernetes learning paths, practical certification prep, and curated release, security, ecosystem, and tool news.
+description: Clear Kubernetes learning paths, practical certification prep, and curated release, security, ecosystem, playbook, and tool coverage.
 hide:
  - footer
 ---
@@ -41,7 +41,7 @@ hide:
 -   :lucide-bell-ring: **News**
 
     ---
-    Track release, security, ecosystem, and tooling news in one section.
+    Track release, security, ecosystem, playbook, and tooling coverage in one section.
 
     [Open Release News](news/releases/index.md)
 

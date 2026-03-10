@@ -9,6 +9,7 @@ It is configured for quality-first output (low volume, higher editorial depth).
 - `docs/news/releases/`
 - `docs/news/ecosystem/`
 - `docs/news/tool-radar/`
+- `docs/news/playbooks/`
 
 Each category also refreshes its own landing table:
 
@@ -61,7 +62,7 @@ Queue a custom topic request that will appear in the next review shortlist:
 ```bash
 .venv/bin/python data/k8s_factory/topic_requests.py add \
   --topic "Kubernetes multi-cluster failover patterns in 2026" \
-  --category ecosystem \
+  --category playbooks \
   --notes "Focus on operator tradeoffs and realistic failure testing paths" \
   --source https://kubernetes.io/blog/ \
   --source https://aws.amazon.com/blogs/containers/

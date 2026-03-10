@@ -113,6 +113,29 @@ Depth requirements:
 {rules}
 """
 
+PLAYBOOK_PROMPT = """You are writing a publication-grade Kubernetes operator playbook for k8s.guide.
+
+Write Markdown with exactly these H2 sections in this order:
+
+## Situation
+## Architecture and Tradeoffs
+## Failure Modes to Plan For
+## Practical Implementation Path
+
+Depth requirements:
+- Target 780-1300 words.
+- This is not breaking news. Write it like an expert operator memo.
+- In "Architecture and Tradeoffs", compare at least two viable approaches and explain why you would choose one.
+- In "Failure Modes to Plan For", include concrete failure patterns and what early warning signals to watch.
+- In "Practical Implementation Path", provide an action-oriented sequence with validation checkpoints.
+
+{context_block}
+
+{revision_block}
+
+{rules}
+"""
+
 ECOSYSTEM_PROMPT = """You are writing a high-signal Kubernetes ecosystem briefing for k8s.guide.
 
 Write Markdown with exactly these H2 sections in this order:
@@ -554,6 +577,12 @@ def _build_prompt(category, payload, issues):
         )
     if category == "tool-radar":
         return TOOL_PROMPT.format(
+            context_block=context_block,
+            revision_block=revision_block,
+            rules=rules,
+        )
+    if category == "playbooks":
+        return PLAYBOOK_PROMPT.format(
             context_block=context_block,
             revision_block=revision_block,
             rules=rules,
