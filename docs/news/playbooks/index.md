@@ -14,7 +14,7 @@ Use this section for topics like HA architecture, multi-cluster failover design,
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| - | No news yet | New entries will appear here after curation. |
+| 2026-03-10 | [True HA in Kubernetes: Why Multi-Zone Alone Isn't Enough](2026-03-10-true-ha-resiliency-beyond-multi-zone.md) | Multi-zone clusters remove the zone-failure risk but create a false sense of security. Real high availability requires coordinating PDBs, topology spread constraints, affinity rules, probes, graceful shutdown, and… |
 <!-- AUTO-LATEST:END -->
 
 ## Related
