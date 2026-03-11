@@ -14,8 +14,8 @@ Use this section for topics like HA architecture, multi-cluster failover design,
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| 2026-03-10 | [Why Kubernetes Scheduling Uses Requests, Not Limits](2026-03-10-kubernetes-scheduling-requests-not-limits.md) | Kubernetes schedules Pods based on resource requests, not limits. Understanding this distinction explains noisy neighbor problems, unexpected autoscaling behavior, and wasted cluster capacity. |
 | 2026-03-10 | [True HA in Kubernetes: Why Multi-Zone Alone Isn't Enough](2026-03-10-true-ha-resiliency-beyond-multi-zone.md) | Multi-zone clusters remove the zone-failure risk but create a false sense of security. Real high availability requires coordinating PDBs, topology spread constraints, affinity rules, probes, graceful shutdown, and… |
+| 2026-03-10 | [Why Kubernetes Scheduling Uses Requests, Not Limits](2026-03-10-kubernetes-scheduling-requests-not-limits.md) | Kubernetes schedules Pods based on resource requests, not limits. Understanding this distinction explains noisy neighbor problems, unexpected autoscaling behavior, and wasted cluster capacity, and how to fix them. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
