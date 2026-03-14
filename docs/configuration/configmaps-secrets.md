@@ -6,26 +6,18 @@ hide:
  - footer
 ---
 
-<h1>ConfigMaps & Secrets</h1>
+# ConfigMaps and Secrets
 
-Kubernetes lets you separate your app’s configuration from your container images using two special resources:
+Config and code should be separated.
 
-- <strong>ConfigMaps</strong> for non-sensitive data (like settings, URLs, etc.)
-- <strong>Secrets</strong> for sensitive data (like passwords, tokens, certificates)
+In Kubernetes, ConfigMaps and Secrets are the standard resources for injecting runtime configuration into workloads.
 
-This makes your apps more secure, portable, and easier to manage.
+- ConfigMap: non-sensitive configuration.
+- Secret: sensitive data such as credentials and keys.
 
----
+## ConfigMap Basics
 
-<h2>ConfigMaps (Non-Sensitive Configuration)</h2>
-
-A <strong>ConfigMap</strong> is a key-value store for plain-text configuration. Use it for:
-
-- Environment settings (like <code>LOG_LEVEL</code>, <code>API_BASE_URL</code>)
-- Hostnames, ports, feature flags
-- Complete config files or CLI arguments
-
-<h3>Example</h3>
+Use ConfigMaps for values such as feature flags, endpoints, and app settings.
 
 ```yaml
 apiVersion: v1
@@ -33,23 +25,15 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  LOG_LEVEL: debug
-  DB_HOST: db.default.svc.cluster.local
+  LOG_LEVEL: info
+  API_BASE_URL: https://api.internal.example
 ```
 
----
+## Secret Basics
 
-<h2>Secrets (Sensitive Data)</h2>
+Use Secrets for credentials, tokens, and certificate material.
 
-<strong>Secrets</strong> are also key-value stores - but for private data:
-
-- Passwords, tokens, API keys
-- SSH keys or TLS certs
-- Docker registry credentials
-
-Kubernetes encodes all Secret values in <strong>base64</strong> (for transport, not real security).
-
-<h3>Example</h3>
+Prefer `stringData` for authoring convenience; Kubernetes will encode into `data`.
 
 ```yaml
 apiVersion: v1
@@ -57,188 +41,87 @@ kind: Secret
 metadata:
   name: db-secret
 type: Opaque
-data:
-  DB_PASSWORD: c3VwZXJzZWNyZXQ=
+stringData:
+  DB_USERNAME: app
+  DB_PASSWORD: supersecret
 ```
 
-!!! tip
-    Decode with `echo c3VwZXJzZWNyZXQ= | base64 -d`. Use `stringData:` if you want Kubernetes to handle encoding for you.
+Base64 encoding is not encryption. Use encryption at rest for etcd and strict RBAC.
 
----
+## Injection Patterns
 
-## Ways to Use ConfigMaps and Secrets
-
-There are three main ways to expose values inside your Pods:
-
----
-
-### 1. Environment Variables
-
-Inject all key-value pairs from a ConfigMap or Secret:
+### 1) Environment variables
 
 ```yaml
 envFrom:
- - configMapRef:
+  - configMapRef:
       name: app-config
- - secretRef:
+  - secretRef:
       name: db-secret
-```
-
-Or reference individual keys:
-
-```yaml
-env:
- - name: DB_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: db-secret
-        key: DB_PASSWORD
-```
-
----
-
-### 2. Mounted Volumes
-
-Map each key to a file inside the container:
-
-```yaml
-volumes:
- - name: config-vol
-    configMap:
-      name: app-config
-containers:
- - name: app
-    volumeMounts:
- - name: config-vol
-        mountPath: /etc/config
-```
-
-In the container, this results in:
-
-```
-/etc/config/LOG_LEVEL
-/etc/config/DB_HOST
-```
-
-You can do the same for Secrets:
-
-```yaml
-volumes:
- - name: creds
-    secret:
-      secretName: db-secret
-```
-
-> ⚠️ Secrets mounted as files on disk are **only base64-decoded**. They are **not encrypted** unless you've enabled encryption at rest.
-
----
-
-### 3. CLI Arguments or Command Overrides
-
-```yaml
-containers:
- - name: app
-    image: myapp
-    args:
- - "--log-level=$(LOG_LEVEL)"
-    env:
- - name: LOG_LEVEL
-        valueFrom:
-          configMapKeyRef:
-            name: app-config
-            key: LOG_LEVEL
-```
-
----
-
-Kubernetes allows you to configure runtime behavior of containers using **environment variables**, and to monitor their health using **liveness** and **readiness probes**. These features are essential for building reliable, configurable, and observable applications in the cluster.
-
----
-
-<h2>Environment Variables</h2>
-
-You can pass key-value pairs into containers using environment variables. These can be hardcoded, referenced from ConfigMaps, Secrets, or even dynamically derived from field references.
-
-
-### Static Environment Variables
-
-```yaml
-env:
- - name: LOG_LEVEL
-    value: "debug"
-```
-
-### From ConfigMap
-
-```yaml
-envFrom:
- - configMapRef:
-      name: app-config
 ```
 
 Or individual keys:
 
 ```yaml
 env:
- - name: APP_PORT
-    valueFrom:
-      configMapKeyRef:
-        name: app-config
-        key: port
-```
-
-### From Secret
-
-```yaml
-env:
- - name: DB_PASSWORD
+  - name: DB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: db-secret
-        key: password
+        key: DB_PASSWORD
 ```
 
-### From Pod Metadata
+### 2) Mounted files
 
 ```yaml
-env:
- - name: POD_NAME
-    valueFrom:
-      fieldRef:
-        fieldPath: metadata.name
+volumes:
+  - name: config-vol
+    configMap:
+      name: app-config
+containers:
+  - name: app
+    image: ghcr.io/example/app:1.0.0
+    volumeMounts:
+      - name: config-vol
+        mountPath: /etc/app-config
+        readOnly: true
 ```
 
----
+Secret mount variant:
 
+```yaml
+volumes:
+  - name: secret-vol
+    secret:
+      secretName: db-secret
+```
 
+## Update Behavior
 
-<h2>Using ConfigMaps & Secrets</h2>
+- Environment variable injection is evaluated at container start.
+- Mounted ConfigMap and Secret volumes can refresh over time.
+- Applications may still need explicit reload behavior to pick up new values.
 
-You can mount ConfigMaps and Secrets as environment variables or files inside your Pods. This keeps your app configuration flexible and secure.
+## Security Practices
 
----
+- Do not store secrets in Git.
+- Restrict Secret access with namespace-scoped RBAC.
+- Enable etcd encryption at rest.
+- Consider external secret managers and sync controllers for high-security environments.
+- Use immutable ConfigMaps and Secrets where frequent mutation is not required.
 
-<h2>Best Practices</h2>
-<ul>
-<li><strong>Never store sensitive data in ConfigMaps.</strong> Use Secrets for anything private.</li>
-<li><strong>Restrict access</strong> to Secrets using RBAC.</li>
-<li><strong>Avoid hardcoding values</strong> in your manifests. Reference ConfigMaps and Secrets instead.</li>
-<li><strong>Use external secret managers</strong> (like AWS Secrets Manager, HashiCorp Vault) for extra-sensitive data.</li>
-</ul>
+## Operational Tips
 
----
+```bash
+kubectl get configmap app-config -o yaml
+kubectl get secret db-secret -o yaml
+kubectl describe pod <pod-name>
+```
 
-<h2>Summary</h2>
-<ul>
-<li><strong>ConfigMaps</strong>: For non-sensitive, environment-specific configuration.</li>
-<li><strong>Secrets</strong>: For sensitive data, encoded for transport.</li>
-<li>Both improve security, portability, and flexibility in your Kubernetes apps.</li>
-</ul>
-
----
+Use `kubectl describe pod` to verify projected env vars and mounted volumes.
 
 ## Related Concepts
 
-- [Init Containers](../workloads/init-containers/)
-- [Kubernetes Security Contexts](../security/sec-context/)
-- [Pods and Deployments](../workloads/pods-deployments/)
+- [Init Containers](../workloads/init-containers.md)
+- [Security Contexts](../security/sec-context.md)
+- [Resource Limits and Requests](limits-requests.md)

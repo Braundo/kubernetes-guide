@@ -6,137 +6,96 @@ hide:
  - footer
 ---
 
-# Resource Limits
+# Resource Requests and Limits
 
-Kubernetes creates a "shared universe" where many applications run on the same physical server (Node).
+Resource settings are one of the most important workload controls in Kubernetes.
 
-Without rules, one greedy application (like a memory-leaking Java app or a crypto-miner) could consume 100% of the CPU and RAM, causing every other application on that node to crash.
+They determine scheduling quality, runtime stability, and autoscaling behavior.
 
-To prevent this "Noisy Neighbor" problem, Kubernetes uses **Resource Requests** and **Limits**.
+## Core model
 
------
+- `requests`: minimum resources reserved for scheduling
+- `limits`: maximum runtime resources a container may use
 
-## 1\. The Units (What do the numbers mean?)
+If requests are too low, pods get packed too tightly and become unstable under load. If they are too high, cluster capacity is wasted.
 
-Before setting rules, you need to speak the language.
+## CPU and memory behavior
 
-### CPU: Millicores
+CPU and memory limits fail differently:
 
-CPU is measured in "cores." But since a container rarely needs a full core, we use **millicores (m)**.
+- CPU over limit: throttling, usually latency increase
+- Memory over limit: OOM kill, container restart
 
-  * **`1` or `1000m`** = 100% of one CPU core (vCPU).
-  * **`500m`** = 50% of one core.
-  * **`100m`** = 10% of one core.
+That is why memory sizing errors are typically more disruptive.
 
-!!! tip "Pro Tip"
-    You can just say `0.5` instead of `500m`. They mean the exact same thing.
+## Example
 
-### Memory: Bytes
-
-Memory is measured in bytes. You can use standard suffixes (E, P, T, G, M, K) or their power-of-two equivalents (Ei, Pi, Ti, Gi, Mi, Ki).
-
-  * **`128Mi`** = 128 Mebibytes (approx 134 MB).
-  * **`1Gi`** = 1 Gibibyte.
-
-!!! warning
-    **Mi vs M:** Be careful\! `1000M` (Megabytes) is actually *smaller* than `1000Mi` (Mebibytes). In Kubernetes, we almost always use **Mi** and **Gi**.
-
------
-
-## 2\. Requests vs. Limits
-
-This is the most important concept to master.
-
-| Setting | The Analogy | Technical Behavior |
-| :--- | :--- | :--- |
-| **Request** | **The Reservation** | Kubernetes guarantees this amount. It uses this number to decide *which node* to place the Pod on. |
-| **Limit** | **The Speed Governor** | The absolute hard maximum the container can ever use. If it tries to go over, Kubernetes stops it. |
-
-### Visualizing the difference
-
-Imagine a Node with 10GB of RAM.
-
-  * You have a Pod asking for `requests: 2GB` / `limits: 8GB`.
-  * **Scheduling:** Kubernetes sees "2GB Request" and puts it on the node.
-  * **Runtime:** The Pod sits idle using 1GB.
-  * **Traffic Spike:** The Pod jumps to 4GB usage. This is allowed (it's under the Limit).
-  * **Memory Leak:** The Pod hits 8GB. **BAM\!** Kubernetes kills it.
-
-<!-- end list -->
-
-```mermaid
-graph TD
-    subgraph Node Capacity [Total Node CPU: 4 Cores]
-        P1[Pod A Request: 1 Core]
-        P2[Pod B Request: 2 Cores]
-        Free[Free Space: 1 Core]
-    end
-
-    subgraph "Runtime Behavior"
-        P1 -- "Can burst up to limit" --> P1Limit[Pod A Limit: 3 Cores]
-        P2 -- "Capped strictly" --> P2Limit[Pod B Limit: 2 Cores]
-    end
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/example/api:v5.2.1
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
 ```
 
------
+## QoS classes
 
-## 3\. What happens when you hit the Limit?
+Pod QoS class is derived from resource configuration.
 
-The consequence depends heavily on *which* resource you run out of.
+- Guaranteed: requests equal limits for all containers
+- Burstable: at least one request set, but not all equal to limits
+- BestEffort: no requests or limits
 
-### Memory: The "OOMKill"
+In node pressure events, BestEffort is usually evicted first.
 
-Memory is a **non-compressible** resource. You can't just "slow down" memory usage; you either have the bytes or you don't.
+## Sizing guidance
 
-  * **If a container exceeds Memory Limit:** The Linux Kernel invokes the **OOM Killer** (Out Of Memory Killer). It immediately sends a `SIGKILL` (Exit Code 137) to your container.
-  * **Result:** The Pod crashes and restarts.
+- Start from observed p50 and p95 usage, not guesses
+- Keep requests close to realistic baseline load
+- Set memory limits with enough headroom for peak behavior
+- Avoid setting very low CPU limits on latency-sensitive services
 
-### CPU: Throttling
+## Relationship to autoscaling
 
-CPU is a **compressible** resource.
+HPA resource targets depend on requests. Bad request values produce bad scaling decisions.
 
-  * **If a container exceeds CPU Limit:** Kubernetes starts **Throttling**. It artificially denies CPU time to the container for short periods (microseconds).
-  * **Result:** Your app gets **slow** and laggy, but it does **not** crash.
+Always tune requests before tuning autoscaler thresholds.
 
------
+## Operational checks
 
-## 4\. QoS Classes (Who dies first?)
+```bash
+kubectl top pods -A
+kubectl describe pod <pod-name>
+kubectl get pod <pod-name> -o jsonpath='{.status.containerStatuses[*].lastState}'
+```
 
-Kubernetes assigns every Pod a "Quality of Service" (QoS) class based on how you configured your resources. When a Node runs out of resources, this class determines who gets evicted first.
-
-| QoS Class | Configuration | Priority |
-| :--- | :--- | :--- |
-| **Guaranteed** | Requests == Limits (for both CPU & Mem) | **Highest** (Last to be killed) |
-| **Burstable** | Requests \< Limits | **Medium** |
-| **BestEffort** | No Requests or Limits set | **Lowest** (First to be killed) |
-
-!!! danger "Avoid BestEffort in Production"
-    If you don't set requests/limits, your Pod is "BestEffort." If the node gets busy, Kubernetes will delete your Pod first to save the others.
-
------
-
-## 5\. Best Practices
-
-1.  **Always set Requests:** Without them, the Scheduler is flying blind and will overbook nodes, causing stability issues.
-2.  **Requests = Limits for Databases:** For critical components (Postgres, Redis), set `requests` equal to `limits` (Guaranteed QoS). You don't want your database getting throttled or killed when the node is busy.
-3.  **Use LimitRanges:** As an admin, you can create a `LimitRange` object in a namespace to force every new Pod to have default limits. This stops developers from deploying "naked" pods that consume infinite resources.
-4.  **Don't starve the Sidecars:** If you use service meshes (like Istio or Linkerd), remember their sidecar proxies need CPU/Memory too\!
-
------
+Look for `OOMKilled` events and sustained CPU throttling signals in metrics.
 
 ## Summary
 
-  * **Requests** = The minimum guarantee (used for Scheduling).
-  * **Limits** = The hard maximum (used for Throttling/Killing).
-  * **CPU Limit Hit** = Slowness (Throttling).
-  * **Memory Limit Hit** = Death (OOMKill).
-  * **Millicores (m)** = 1/1000th of a core. `1000m` = 1 vCPU.
-  * **QoS Classes** determine eviction order. Aim for **Burstable** or **Guaranteed** in production.
-
----
+Requests drive placement. Limits enforce runtime caps. Correct values improve stability, cost efficiency, and autoscaling quality.
 
 ## Related Concepts
 
-- [Horizontal Pod Autoscaling](../workloads/scaling-hpa/)
-- [Kubernetes Scheduling](../workloads/pods-deployments/)
-- [Resource Quotas](quotas-limits/)
+- [Scaling and HPA](../workloads/scaling-hpa.md)
+- [Resource Quotas](quotas-limits.md)
+- [Troubleshooting](../operations/troubleshooting.md)

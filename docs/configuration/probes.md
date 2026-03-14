@@ -8,164 +8,96 @@ hide:
 
 # Health Probes
 
-Distributed systems are messy. Apps hang, freeze, or take 3 minutes to warm up. Kubernetes needs to know the difference between "I'm busy starting up" and "I am dead, please restart me."
+Probes tell Kubernetes when a container is ready for traffic and when it should be restarted.
 
-That is where **Probes** come in. They are the health checks that let Kubernetes automate the repair and routing of your applications.
+Well-designed probes reduce outages during deploys, restarts, and dependency failures.
 
------
+## Probe types
 
-## The "Traffic Light" Analogy
+- Startup probe: gate for slow-starting applications
+- Readiness probe: controls service endpoint inclusion
+- Liveness probe: restarts containers that are stuck or unhealthy
 
-Think of your Pod like a car trying to enter a highway.
+## Recommended usage model
 
-1.  **Startup Probe (The Ignition):** "Has the engine started?"
-      * *If No:* Keep turning the key. Don't check anything else yet.
-      * *If Yes:* Okay, move on to the other checks.
-2.  **Readiness Probe (The Green Light):** "Is it safe to merge into traffic?"
-      * *If No:* Stop sending cars (requests) to this vehicle. Let it idle on the shoulder until it's ready. **Do not kill it.**
-      * *If Yes:* Add its IP to the Service load balancer.
-3.  **Liveness Probe (The Heartbeat):** "Is the driver still conscious?"
-      * *If No:* The driver has had a heart attack. Call the ambulance (Restart the Pod).
-      * *If Yes:* Keep driving.
+1. use startup probes for apps with non-trivial boot time
+2. use readiness probes for dependency-aware traffic gating
+3. use liveness probes for deadlock or permanent failure detection
 
------
-
-## 1\. Startup Probe (The "Slow Starter")
-
-**Purpose:** Protect slow-starting apps from being killed by the Liveness Probe.
-
-Legacy Java or Windows apps might take 2-3 minutes to boot. If you set a Liveness Probe to check every 10 seconds, it will kill the app before it ever finishes booting.
-
-The Startup Probe pauses all other probes until it passes once.
+## Example configuration
 
 ```yaml
-startupProbe:
-  httpGet:
-    path: /healthz
-    port: 8080
-  # Allow up to 5 minutes (30 * 10s) for startup
-  failureThreshold: 30
-  periodSeconds: 10
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/example/web:v3.0.0
+          ports:
+            - containerPort: 8080
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 24
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
 ```
 
------
+## Probe mechanism options
 
-## 2\. Readiness Probe (The "Traffic Controller")
+- HTTP GET: best default for web APIs
+- TCP socket: useful for non-HTTP services
+- Exec: last resort for process-level checks
+- gRPC health check: preferred for gRPC services that implement the protocol
 
-**Purpose:** Control whether the Pod receives traffic from the Service.
+## Common probe mistakes
 
-Use this to handle temporary load spikes or "warm-up" periods. If a dependency (like a database) is momentarily unreachable, you might want your app to fail readiness so traffic stops flowing to it, but you **don't** want to restart the whole Pod.
+- liveness checks that depend on external services
+- aggressive timeouts that fail under normal load spikes
+- missing startup probes for applications with long initialization
+- readiness endpoints that report healthy before dependencies are actually ready
 
-  * **Failure Action:** Remove Pod IP from the Service endpoints. (No restart).
+## Troubleshooting
 
-<!-- end list -->
-
-```yaml
-readinessProbe:
-  httpGet:
-    path: /ready
-    port: 8080
-  initialDelaySeconds: 5
-  periodSeconds: 10
+```bash
+kubectl describe pod <pod-name>
+kubectl get events -A --sort-by=.metadata.creationTimestamp
+kubectl logs <pod-name> --previous
 ```
 
------
-
-## 3\. Liveness Probe (The "Defibrillator")
-
-**Purpose:** Catch deadlocks or frozen processes.
-
-If your app has a bug where it enters an infinite loop and stops responding, a Liveness Probe detects this and restarts the container to reset the state.
-
-  * **Failure Action:** **RESTART** the container.
-
-<!-- end list -->
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /healthz
-    port: 8080
-  initialDelaySeconds: 15
-  periodSeconds: 20
-```
-
-!!! warning "The Liveness Loop of Death"
-    Be very careful with Liveness Probes. If your `initialDelaySeconds` is too short, Kubernetes will kill your app before it finishes booting. It will then restart, fail again, and restart again forever. **Always use a Startup Probe for slow apps.**
-
------
-
-## Probe Mechanisms: How to Check?
-
-You can check health in three ways. Choose the one that matches your app's architecture.
-
-| Type | How it works | Best For |
-| :--- | :--- | :--- |
-| **HTTP Get** | K8s sends a GET request. Codes 200-399 are "Success". | Web Servers, APIs |
-| **TCP Socket** | K8s tries to open a TCP connection to the port. | Databases, Redis, Non-HTTP apps |
-| **Exec Command** | K8s runs a command inside the container. Exit code 0 is "Success". | Apps that write status files, CLI tools |
-| **gRPC** | K8s sends a standard gRPC Health Check request. | gRPC Microservices |
-
-### Example: Exec Probe (Checking a File)
-
-```yaml
-livenessProbe:
-  exec:
-    command:
- - cat
- - /tmp/healthy
-  initialDelaySeconds: 5
-  periodSeconds: 5
-```
-
------
-
-## Tuning Your Probes
-
-Don't stick with the defaults. Tune these fields to match your application's reality.
-
-  * **`initialDelaySeconds`**: How long to wait before the *first* check.
-  * **`periodSeconds`**: How often to check. (Default: 10s).
-  * **`timeoutSeconds`**: How long to wait for a response before calling it a "failure". (Default: 1s).
-  * **`failureThreshold`**: How many times it must fail before taking action. (Default: 3). "Flapping" protection.
-
------
-
-## Visualizing the Decision Logic
-
-```mermaid
-graph TD
-    Start[Pod Starts] --> Startup{Startup Probe<br/>Passed?}
-    
-    Startup -- No --> Wait[Wait / Check Again]
-    Startup -- Fails limit --> Kill[Kill & Restart]
-    
-    Startup -- Yes --> Phase2[Start Main Loops]
-    
-    subgraph "Main Loop"
-    Phase2 --> LiveCheck{Liveness<br/>Probe Passed?}
-    Phase2 --> ReadyCheck{Readiness<br/>Probe Passed?}
-    
-    LiveCheck -- No --> Kill
-    
-    ReadyCheck -- Yes --> Service[Add to Service/Traffic]
-    ReadyCheck -- No --> Block[Remove from Service]
-    end
-```
-
------
+Probe failures appear clearly in pod events. Start there before changing YAML.
 
 ## Summary
 
-  * **Startup Probes** are for slow-booting legacy apps.
-  * **Readiness Probes** determine if the Pod should get traffic.
-  * **Liveness Probes** determine if the Pod should be restarted.
-  * Use **HTTP** checks for web apps and **TCP** checks for databases.
-  * **Never** make your Readiness probe depend on an external service (like "Is https://www.google.com/ up?"). If the internet blips, you will take down your entire cluster.
-
----
+Startup, readiness, and liveness probes serve different goals. When tuned correctly, they protect reliability during rollouts and failures.
 
 ## Related Concepts
 
-- [Pods and Deployments](../workloads/pods-deployments/)
-- [Kubernetes Troubleshooting](../operations/troubleshooting/)
+- [Pods and Deployments](../workloads/pods-deployments.md)
+- [Troubleshooting](../operations/troubleshooting.md)
+- [Resource Requests and Limits](limits-requests.md)

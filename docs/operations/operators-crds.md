@@ -6,141 +6,74 @@ hide:
  - footer
 ---
 
-# Operators & CRDs
+# Operators and CRDs
 
-Kubernetes is great at managing *stateless* things. If a web server dies, Kubernetes replaces it. Easy.
+CRDs extend the Kubernetes API. Operators add automation logic for those custom resources.
 
-But what about complex, *stateful* applications like a Database?
+Together, they let teams model and automate complex domain workflows directly in Kubernetes.
 
-  * You can't just kill a database pod randomly; you might corrupt data.
-  * You can't just scale up a database by adding replicas; you need to configure leader election and data replication.
-  * You need to take backups before upgrades.
+## CRD basics
 
-Standard Kubernetes (Deployments/StatefulSets) doesn't know how to do any of that specific logic.
+A CustomResourceDefinition introduces a new API type.
 
-**Operators** solve this. An Operator is essentially a **Robot Sysadmin** packaged as software. It runs inside your cluster and knows exactly how to manage a specific application (like Postgres, Kafka, or Prometheus) day-to-day.
+After a CRD is installed, users can create custom objects with normal Kubernetes workflows (`kubectl`, GitOps, admission policies, RBAC).
 
------
+## Operator basics
 
-## 1\. Custom Resource Definitions (CRDs)
+An Operator is a controller that watches custom resources and reconciles desired state into concrete Kubernetes objects and operational actions.
 
-Before we can have a robot, we need a language to talk to it.
+Examples of operator-managed actions:
 
-Kubernetes comes with standard resources: `Pod`, `Service`, `Deployment`.
-But what if you want to create a `PostgresCluster` or a `KafkaTopic`?
+- bootstrapping clustered databases
+- performing version-aware upgrades
+- backup and restore orchestration
+- failover and lifecycle management
 
-**CRDs (Custom Resource Definitions)** allow you to extend the Kubernetes API. They let you invent your own YAML objects.
+## Why Operators are useful
 
-### The CRD (The "Noun")
+For complex stateful systems, raw Deployments and StatefulSets are not enough to encode day-2 operations safely.
 
-The CRD is just the *definition* of the new object. It tells Kubernetes: *"Hey, `Prometheus` is now a valid word in this cluster, and it looks like this schema."*
+Operators capture domain runbook logic in code so it is repeatable and observable.
 
-Once a CRD is installed, you can apply YAMLs like this:
+## High-level flow
 
-```yaml
-apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
-metadata:
-  name: my-monitoring
-spec:
-  version: v2.26.0
-  replicas: 2
-  retention: 30d
+```mermaid
+flowchart LR
+  A[Custom Resource] --> B[Operator Controller]
+  B --> C[StatefulSet, Service, Secret, PVC]
+  C --> D[Observed State]
+  D --> B
 ```
 
-Without the CRD, Kubernetes would reject this file saying `error: unknown resource type "Prometheus"`.
+## When to choose Helm vs Operator
 
------
+- choose Helm for packaging and straightforward lifecycle
+- choose Operator when continuous domain-specific reconciliation is required
 
-## 2\. The Operator (The "Verb")
+Many platforms use both: Helm to install the operator, operator to manage the application lifecycle.
 
-A CRD is just a piece of paper. If you create a `Prometheus` object, nothing happens... unless there is a Controller watching it.
-
-**The Operator** is a Pod running custom code (usually written in Go).
-
-1.  It **watches** for changes to its specific Custom Resources (e.g., someone created a `Prometheus` object).
-2.  It **reads** the spec (e.g., "User wants 2 replicas and 30d retention").
-3.  It **translates** that into standard Kubernetes objects (creating StatefulSets, ConfigMaps, Services, and PersistentVolumes).
-4.  It **maintains** the state. If a backup fails, the Operator tries again.
-
------
-
-## The Operator Pattern
-
-The "Operator Pattern" combines these two things:
-
-1.  **CRDs:** To define the Desired State.
-2.  **Custom Controller:** To implement the logic to reach that state.
-
-### Example: The Prometheus Operator
-
-Instead of manually managing thousands of lines of config files for Prometheus, you simply install the **Prometheus Operator**.
-
-1.  **You:** `kubectl apply -f my-monitor.yaml` (asking for a monitoring stack).
-2.  **Operator:** Sees the file.
-3.  **Operator:** Automatically generates the complex `StatefulSet` configurations, creates the `Service`, mounts the correct `Secrets`, and reloads the configuration if it changes.
-
------
-
-## Operator Capability Levels
-
-Not all Operators are created equal. The **Operator Capability Model** defines how smart the robot is.
-
-| Level | Name | Description |
-| :--- | :--- | :--- |
-| **I** | **Basic Install** | Can deploy the app and minimal config. |
-| **II** | **Seamless Upgrades** | Can handle version upgrades (e.g., v1.0 -\> v1.1) automatically. |
-| **III** | **Full Lifecycle** | Can manage storage, backups, and failure recovery. |
-| **IV** | **Deep Insights** | Provides metrics, alerts, and log processing. |
-| **V** | **Auto Pilot** | Automatically scales, tunes performance, and heals without humans. |
-
-*Aim for Level III+ operators for critical databases.*
-
------
-
-## How to Find & Install Operators
-
-You don't usually write Operators; you buy or download them.
-
-**OperatorHub.io** is the public registry for Kubernetes Operators.
-It includes verified operators for:
-
-  * Databases (Postgres, MongoDB, Redis)
-  * Messaging (Kafka, RabbitMQ)
-  * Monitoring (Prometheus, Grafana)
-
-### Installation Methods
-
-1.  **Plain YAML / Helm:** Many operators can be installed just by `kubectl apply` or `helm install`.
-2.  **OLM (Operator Lifecycle Manager):** A system that runs on your cluster to manage the installation and *automatic upgrades* of Operators (similar to "Windows Update" for K8s apps).
-
------
-
-## Developing Your Own (Briefly)
-
-If you are a software vendor, you might need to build an operator for your product. You typically use:
-
-  * **Operator SDK:** A toolkit to bootstrap the code.
-  * **Kubebuilder:** A framework for building Kubernetes APIs in Go.
-
-<!-- end list -->
+## Operational checks
 
 ```bash
-# Concept: Scaffolding a new Operator
-operator-sdk init --domain=my-company.com
-operator-sdk create api --group database --version v1 --kind PostgreSQL
+kubectl get crd
+kubectl get <custom-resource-plural> -A
+kubectl describe <custom-resource-kind> <name> -n <namespace>
+kubectl logs deploy/<operator-deployment> -n <operator-namespace>
 ```
 
-This generates the boilerplate Go code so you can focus on the business logic: *"When user creates X, do Y."*
+## Governance considerations
 
------
+- review CRD schema quality before adoption
+- constrain operator RBAC to least privilege
+- monitor operator upgrades like any control-plane dependency
+- validate backup and restore behavior before production reliance
 
 ## Summary
 
-  * **CRDs** let you extend the Kubernetes API with your own custom objects.
-  * **Operators** are the software brains that manage those custom objects.
-  * Operators replace human operational knowledge (backups, scaling, upgrades) with code.
-  * Use **OperatorHub.io** to find ready-to-use operators for popular software.
+CRDs and Operators make Kubernetes extensible and automatable for advanced platforms. Use them when lifecycle logic is too complex for static manifests alone.
 
-!!! tip "Pro Tip"
-    Be careful with "Level 1" operators. If an operator only helps you install the app but doesn't help you back it up or upgrade it, you might be better off just using a Helm Chart. The real value of an Operator is "Day 2" management.
+## Related Concepts
+
+- [StatefulSets](../workloads/statefulsets.md)
+- [Maintenance](maintenance.md)
+- [Security Primer](../security/security.md)

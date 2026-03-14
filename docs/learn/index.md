@@ -6,34 +6,42 @@ hide:
 
 # Kubernetes Learning Paths
 
-All foundational and operational learning content is grouped here so you can move from basics to production confidence in one place.
+This section is organized as a progressive learning system, from fundamentals to production operations.
 
-## Path A: Fundamentals First
+If you are unsure where to start, follow the role-based tracks below.
 
-Start here if you are new to Kubernetes.
+## Platform Engineer Track
 
 1. [Kubernetes overview](../getting-started/overview.md)
-2. [Kubernetes API essentials](../getting-started/kubernetes-api.md)
-3. [Namespaces](../getting-started/namespaces.md)
+2. [Kubernetes API](../getting-started/kubernetes-api.md)
+3. [Pods and Deployments](../workloads/pods-deployments.md)
+4. [Services](../networking/services-networking.md)
+5. [Ingress](../networking/ingress.md)
+6. [Troubleshooting](../operations/troubleshooting.md)
+7. [Maintenance](../operations/maintenance.md)
 
-## Path B: Build and Ship Workloads
+## Security Engineer Track
 
-Use this path to understand how applications run and scale.
+1. [Security primer](../security/security.md)
+2. [RBAC](../security/rbac.md)
+3. [Pod Security](../security/psa.md)
+4. [Security Context](../security/sec-context.md)
+5. [Image scanning and signing](../security/image-scan-sign.md)
+6. [Audit and logging](../security/audit-logging.md)
 
-1. [Pods and deployments](../workloads/pods-deployments.md)
-2. [Services and networking](../networking/services-networking.md)
-3. [Ingress](../networking/ingress.md)
-4. [Scaling and HPA](../workloads/scaling-hpa.md)
+## Application Team Track
 
-## Path C: Run Reliable Clusters
+1. [Namespaces](../getting-started/namespaces.md)
+2. [ConfigMaps and Secrets](../configuration/configmaps-secrets.md)
+3. [Health probes](../configuration/probes.md)
+4. [Resource requests and limits](../configuration/limits-requests.md)
+5. [Jobs and CronJobs](../workloads/jobs-cronjobs.md)
 
-Use this path for day-2 operations and incident response.
+## Certification Path
 
-1. [Troubleshooting](../operations/troubleshooting.md)
-2. [Security primer](../security/security.md)
-3. [Operators and CRDs](../operations/operators-crds.md)
-4. [Maintenance](../operations/maintenance.md)
+When you are ready for exam-focused practice:
 
-## Certificate Prep
-
-When you are ready for exam prep, continue to [Certificates](../certifications/certification-preparation.md).
+- [Certification preparation](../certifications/certification-preparation.md)
+- [CKA](../certifications/cka.md)
+- [CKAD](../certifications/ckad.md)
+- [CKS](../certifications/cks.md)

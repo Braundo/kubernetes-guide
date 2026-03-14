@@ -6,134 +6,98 @@ hide:
  - footer
 ---
 
-# Kubectl Cheatsheat
+# Kubectl Cheat Sheet
 
-This isn't just a list of commands; it's a collection of the workflows you use every day.
-From switching contexts to debugging crashed pods, this reference cuts through the noise.
+A practical command reference for day-1 and day-2 Kubernetes operations.
 
------
-
-## Setup & Configuration
-
-Before you do anything, make sure you are talking to the right cluster.
-
-| Action | Command |
-| :--- | :--- |
-| **List Contexts** | `kubectl config get-contexts` |
-| **Switch Cluster** | `kubectl config use-context <context_name>` |
-| **Switch Namespace** | `kubectl config set-context --current --namespace=<ns>` |
-| **View Config** | `kubectl config view --minify` |
-| **Who Am I?** | `kubectl auth can-i create pods` (Check your own permissions) |
-
-!!! tip "Pro Tip"
-    Install `kubectx` and `kubens`. Stop typing long commands. Use these standard tools:
-
-    * `kubectx my-cluster` (Switch cluster)
-    * `kubens my-namespace` (Switch namespace)
-
------
-
-## Inspection & Observation
-
-The "Read" operations. Most of your day is spent here.
-
-| Object | Command | Notes |
-| :--- | :--- | :--- |
-| **Pods** | `kubectl get pods -o wide` | Shows Node IP and Pod IP. |
-| **All Namespaces** | `kubectl get pods -A` | The "God View" of the cluster. |
-| **Watch Live** | `kubectl get pods -w` | Live stream of status changes. |
-| **Events** | `kubectl get events --sort-by=.metadata.creationTimestamp` | **Crucial:** Shows errors chronologically. |
-| **Labels** | `kubectl get pods --show-labels` | Debug Selector issues. |
-| **Resource Usage** | `kubectl top pod --containers` | Requires metrics-server. |
-
------
-
-## Debugging (The "Fix It" Phase)
-
-When things go red, run these in order.
-
-| Scenario | Command | Why use it? |
-| :--- | :--- | :--- |
-| **Why did it die?** | `kubectl describe pod <pod>` | Read the "Events" section at the bottom. |
-| **App Logs** | `kubectl logs <pod>` | Standard output of the app. |
-| **Previous Logs** | `kubectl logs <pod> --previous` | **Gold.** See logs of the container *before* it crashed. |
-| **Specific Container**| `kubectl logs <pod> -c <sidecar>` | For multi-container pods (like Service Mesh). |
-| **Shell Access** | `kubectl exec -it <pod> -- /bin/sh` | Jump inside to check files/network. |
-| **Distroless Debug** | `kubectl debug -it <pod> --image=busybox --target=<container>` | Attaches a shell to a locked-down pod. |
-
------
-
-## Creation & Modification
-
-The "Write" operations.
-
-| Action | Command |
-| :--- | :--- |
-| **Apply YAML** | `kubectl apply -f my-app.yaml` |
-| **Restart App** | `kubectl rollout restart deployment/my-app` (Zero downtime\!) |
-| **Scale Up** | `kubectl scale deployment/my-app --replicas=5` |
-| **Edit Live** | `kubectl edit svc/my-service` (Opens in VI/Nano) |
-| **Force Delete** | `kubectl delete pod <pod> --grace-period=0 --force` (Use responsibly\!) |
-| **Quick Job** | `kubectl create job manual-job --image=busybox -- echo "Done"` |
-
------
-
-## Power User Tricks (JSONPath)
-
-Stop using `grep`. Use native filtering to get exactly the data you need.
-
-**1. Get only the Pod IPs:**
+## Context and namespace safety
 
 ```bash
-kubectl get pods -o jsonpath='{.items[*].status.podIP}'
+kubectl config get-contexts
+kubectl config current-context
+kubectl config use-context <context>
+kubectl config set-context --current --namespace=<namespace>
 ```
 
-**2. List all images running in the cluster:**
+Check your active target before write operations.
+
+## Core read commands
 
 ```bash
+kubectl get pods -A -o wide
+kubectl get deploy,sts,ds -A
+kubectl get svc -A
+kubectl get events -A --sort-by=.metadata.creationTimestamp
+kubectl top nodes
+kubectl top pods -A
+```
+
+## Debugging commands
+
+```bash
+kubectl describe pod <pod> -n <ns>
+kubectl logs <pod> -n <ns> --all-containers
+kubectl logs <pod> -n <ns> --all-containers --previous
+kubectl exec -it <pod> -n <ns> -- sh
+kubectl debug -it <pod> -n <ns> --image=busybox:1.36 --target=<container>
+```
+
+## Deployment operations
+
+```bash
+kubectl apply -f app.yaml
+kubectl rollout status deploy/<name> -n <ns>
+kubectl rollout history deploy/<name> -n <ns>
+kubectl rollout undo deploy/<name> -n <ns>
+kubectl scale deploy/<name> --replicas=<count> -n <ns>
+```
+
+## Service and network checks
+
+```bash
+kubectl get svc -n <ns>
+kubectl get endpointslices -n <ns>
+kubectl exec -it <pod> -n <ns> -- nslookup <service>
+kubectl exec -it <pod> -n <ns> -- wget -qO- http://<service>:<port>
+```
+
+## RBAC and access checks
+
+```bash
+kubectl auth can-i get pods -n <ns>
+kubectl auth can-i create deployments --as=<identity> -n <ns>
+kubectl get role,rolebinding -n <ns>
+kubectl get clusterrole,clusterrolebinding
+```
+
+## JSONPath quick lookups
+
+```bash
+kubectl get pods -A -o jsonpath='{.items[*].spec.nodeName}'
+kubectl get pod <pod> -n <ns> -o jsonpath='{.status.podIP}'
 kubectl get pods -A -o jsonpath='{.items[*].spec.containers[*].image}'
 ```
 
-**3. Find which node a specific pod is on:**
+## Cleanup and maintenance
 
 ```bash
-kubectl get pod my-pod -o jsonpath='{.spec.nodeName}'
+kubectl delete pod --field-selector=status.phase=Failed -A
+kubectl api-resources
+kubectl explain deployment.spec.strategy
 ```
 
-**4. Decode a Secret instantly:**
+## Suggested local aliases
 
 ```bash
-kubectl get secret my-secret -o jsonpath='{.data.password}' | base64 -d
+alias k='kubectl'
+alias kg='kubectl get'
+alias kga='kubectl get all -A'
+alias kd='kubectl describe'
+alias kl='kubectl logs'
 ```
 
------
+## Related Concepts
 
-## Housekeeping
-
-Keep your cluster clean.
-
-| Command | Description |
-| :--- | :--- |
-| `kubectl delete pod --field-selector=status.phase=Failed -A` | Delete all "Evicted" or "Failed" pods. |
-| `kubectl api-resources` | List every object type your cluster supports. |
-| `kubectl explain pod.spec.containers.livenessProbe` | **Documentation:** Read the manual for any field without leaving the terminal. |
-
------
-
-## Shell Aliases (Save Your Fingers)
-
-Add these to your `.bashrc` or `.zshrc`. You will thank yourself later.
-
-```bash
-alias k="kubectl"
-alias kg="kubectl get"
-alias kgp="kubectl get pods"
-alias kga="kubectl get pods -A"
-alias kd="kubectl describe"
-alias kdel="kubectl delete"
-alias klogs="kubectl logs"
-alias kex="kubectl exec -it"
-```
-
-Now you can just type:
-`kex my-pod -- bash`
+- [Troubleshooting](../operations/troubleshooting.md)
+- [Maintenance](../operations/maintenance.md)
+- [RBAC](../security/rbac.md)

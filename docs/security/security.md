@@ -8,90 +8,60 @@ hide:
 
 # Security Primer
 
-Security in Kubernetes is not a single feature you turn on. It is a **process**.
+Kubernetes security is a layered discipline, not a single feature.
 
-Because Kubernetes abstracts so much (networks, storage, compute), it also abstracts the attack surface. A hacker doesn't need physical access to your server if they can trick your API server into launching a privileged pod that mounts the host's filesystem.
+A practical model is to protect each layer of the stack and assume controls can fail independently.
 
-To secure a cluster, we use a "Defense in Depth" strategy known as the **4Cs of Cloud Native Security**.
+## Major risk areas
 
------
+- excessive RBAC permissions
+- privileged or poorly constrained containers
+- weak image supply-chain controls
+- unrestricted lateral network traffic
+- missing audit visibility and incident response readiness
 
-## 1\. The 4Cs Model
+## 4-layer security model
 
-Think of security like an onion. If an attacker peels back one layer, they shouldn't immediately reach the core.
-
-| Layer | Responsibility | Key Defenses |
+| Layer | Focus | Example controls |
 | :--- | :--- | :--- |
-| **Cloud** | The Datacenter / Hardware | Firewall rules, IAM User access, Encrypted Disks. |
-| **Cluster** | The Control Plane | **RBAC**, API Audit Logging, Etcd Encryption. |
-| **Container** | The Image & Runtime | **Image Scanning**, Signing, limiting root users. |
-| **Code** | Your Application | Static Analysis, Dependency Checks, HTTPS. |
+| Cloud | account and infrastructure boundary | IAM, network segmentation, KMS, managed audit logs |
+| Cluster | control plane and policy | RBAC, admission controls, etcd encryption, API audit logs |
+| Workload | pod and container runtime | pod security standards, security context, network policy |
+| Application | code and dependencies | dependency scanning, secrets hygiene, secure SDLC |
 
-!!! tip "The Weakest Link Rule"
-    You can have the best Firewall (Cloud) and the strictest RBAC (Cluster), but if your developer hardcodes an AWS Secret Key into their Python script (Code), you are hacked.
+## Security operating baseline
 
------
+1. enforce least privilege access
+2. harden workload defaults
+3. restrict unnecessary east-west traffic
+4. verify artifact integrity before deploy
+5. collect and retain actionable audit and runtime telemetry
 
-## 2\. The Attack Chain (How Hackers Break In)
+## Security in the delivery pipeline
 
-Understanding *how* you get hacked helps you understand *why* we need these controls.
+Security should run before deploy, not only after incidents.
 
-1.  **The Exploit:** An attacker finds a vulnerability in your web app (e.g., Log4j).
-2.  **The Foothold:** They get a shell inside your Container.
-3.  **The Escalation:** They notice the container is running as `root` and has a ServiceAccount mounted.
-4.  **The Lateral Move:** They use the ServiceAccount to talk to the Kubernetes API and list all Secrets in the cluster.
-5.  **The Goal:** They find a database password in a Secret and steal your data.
+Recommended controls in CI and CD:
 
-**Your Goal:** Break this chain at every single step.
+- manifest linting and policy checks
+- image scanning and signing
+- admission policy verification
 
------
+## Continuous improvement loop
 
-## 3\. The Defense Toolkit
-
-Here is how they fit together.
-
-### 1. Cluster Access (The Front Door)
-
-  * **Authentication:** Who are you? (OIDC, Certificates).
-  * **Authorization (RBAC):** What can you do? (Roles, Bindings).
-
-### 2. Workload Hardening (The Cells)
-
-  * **Pod Security Admission (PSA):** Prevent "super-user" containers. Disallow privileged mode and host mounts.
-  * **Security Context:** Force containers to run as non-root users.
-
-### 3. Network Segmentation (The Walls)
-
-  * **Network Policies:** By default, every Pod can talk to every other Pod. Use Policies to block traffic between "Frontend" and "Database" unless explicitly allowed.
-
-### 4. Supply Chain (The Ingredients)
-
-  * **Image Scanning:** Check your Docker images for known CVEs before they ever reach the cluster.
-  * **Signing:** Ensure only *your* trusted images are allowed to run.
-
------
-
-## 4\. Shift Left: DevSecOps
-
-In the old days, security was a "gate" at the end. In Kubernetes, security must be defined in the YAML.
-
-  * **Linting:** Use tools like `kube-linter` or `checkov` to scan your YAML files for mistakes (like `privileged: true`) *before* you commit them to Git.
-  * **Admission Controllers:** Use tools like **OPA Gatekeeper** or **Kyverno** to reject insecure YAMLs at the API level.
-
------
+- review new cluster and namespace permissions regularly
+- test incident response playbooks
+- patch and rotate credentials on a schedule
+- run periodic architecture threat reviews
 
 ## Summary
 
-  * **Security is layered.** Don't rely on just one tool.
-  * **Misconfiguration is the \#1 threat.** Most breaches happen because someone left a door open (permissive RBAC, no NetworkPolicy), not because of a sophisticated zero-day.
-  * **Least Privilege:** Give every user, pod, and service account the *minimum* permission they need to work. Nothing more.
-
----
+Secure Kubernetes operations come from consistent controls across identity, runtime, network, and supply chain. Treat security as an operational system, not a one-time project.
 
 ## Core Kubernetes Security Topics
 
-- [RBAC and Access Control](rbac/)
-- [Pod Security Standards](psa/)
-- [Security Contexts](sec-context/)
-- [Image Scanning and Signing](image-scan-sign/)
-- [Audit Logging](audit-logging/)
+- [RBAC](rbac.md)
+- [Pod Security](psa.md)
+- [Security Context](sec-context.md)
+- [Image Scanning and Signing](image-scan-sign.md)
+- [Audit and Logging](audit-logging.md)

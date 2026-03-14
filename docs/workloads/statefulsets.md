@@ -6,48 +6,57 @@ hide:
  - footer
 ---
 
-<h1>StatefulSets</h1>
+# StatefulSets
 
-A <strong>StatefulSet</strong> is a Kubernetes controller for running <strong>stateful apps</strong> - apps that need each Pod to keep its identity and storage, even if rescheduled. Think databases, message queues, or anything that can't just be replaced with a blank copy.
+StatefulSets are for workloads that need stable identity and persistent storage per replica.
 
----
+Typical examples include databases, queue brokers, and clustered stateful systems.
 
-<h2>Why Use a StatefulSet?</h2>
+## What StatefulSets Guarantee
 
-Use a StatefulSet when your app needs:
+- Stable pod ordinal names: `app-0`, `app-1`, `app-2`
+- Stable DNS names through a headless service
+- One PersistentVolumeClaim per pod from `volumeClaimTemplates`
+- Ordered rollout and scale behavior by default
 
-- <strong>Stable network identity</strong> (like <code>pod-0</code>, <code>pod-1</code>)
-- <strong>Persistent storage per Pod</strong> that sticks around if the Pod is rescheduled
-- <strong>Ordered startup, scaling, and deletion</strong>
+Important: StatefulSets do not guarantee a fixed pod IP across restarts. They guarantee stable identity (name/DNS) and stable volume association.
 
-<strong>Examples:</strong> Databases (PostgreSQL, Cassandra), Zookeeper, Kafka, etc.
+## StatefulSet vs Deployment
 
----
-
-<h2>How It Differs from Deployments</h2>
-
-StatefulSets guarantee identity and storage for each Pod, while Deployments just care about keeping the right number of Pods running (not which is which).
+| Concern | Deployment | StatefulSet |
+| :--- | :--- | :--- |
+| Pod identity | interchangeable | stable ordinal identity |
+| Storage | often shared/ephemeral patterns | dedicated PVC per pod |
+| Ordering | parallel by default | ordered semantics |
+| Typical use | stateless services | stateful clustered systems |
 
 ![StatefulSets Diagram](../images/sts-light.png#only-light)
 ![StatefulSets Diagram](../images/sts-dark.png#only-dark)
 
-<strong>Top Half (Deployment):</strong> Pod reschedule = new IP, broken volume mount  
-<strong>Bottom Half (StatefulSet):</strong> Pod is recreated with the <strong>same IP</strong>, <strong>same volume</strong>
+## Required Companion: Headless Service
 
----
+StatefulSets rely on a headless Service for stable DNS records.
 
-<h2>Key Features</h2>
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  clusterIP: None
+  selector:
+    app: web
+  ports:
+    - port: 80
+      name: http
+```
 
-| Feature                 | Deployment         | StatefulSet         |
-|-------------------------|--------------------|----------------------|
-| Pod name                | Random (e.g., <code>pod-abc123</code>) | Stable (e.g., <code>web-0</code>, <code>web-1</code>) |
-| Pod start/delete order  | Any                | Ordered             |
-| Persistent VolumeClaim  | Shared/ephemeral   | One per Pod         |
-| DNS hostname            | Random             | Stable via headless service |
+Pods then resolve as:
 
----
+- `web-0.web.<namespace>.svc.cluster.local`
+- `web-1.web.<namespace>.svc.cluster.local`
 
-<h2>Sample YAML</h2>
+## StatefulSet Example
 
 ```yaml
 apiVersion: apps/v1
@@ -55,7 +64,7 @@ kind: StatefulSet
 metadata:
   name: web
 spec:
-  serviceName: "web"  # Headless service
+  serviceName: web
   replicas: 2
   selector:
     matchLabels:
@@ -66,78 +75,44 @@ spec:
         app: web
     spec:
       containers:
- - name: nginx
-          image: nginx
+        - name: nginx
+          image: nginx:1.27
           volumeMounts:
- - name: data
+            - name: data
               mountPath: /usr/share/nginx/html
-      tolerations:
- - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
-        effect: "NoSchedule"
   volumeClaimTemplates:
- - metadata:
+    - metadata:
         name: data
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 1Gi
+            storage: 10Gi
 ```
 
----
+## Rolling Updates and Partitions
 
-## Networking & DNS
+StatefulSets support rolling updates with identity-aware ordering.
 
-Pods in a StatefulSet get predictable hostnames:
+For cautious rollouts, use partitioned updates so higher ordinals update first while lower ordinals stay pinned until you advance.
 
-```
-web-0.web.default.svc.cluster.local
-web-1.web.default.svc.cluster.local
-```
+## Storage Lifecycle
 
-This is enabled by the **headless Service**:
+Each replica receives its own PVC, for example:
 
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: web
-spec:
-  clusterIP: None  # Headless
-  selector:
-    app: web
-  ports:
- - port: 80
-```
+- `data-web-0`
+- `data-web-1`
 
----
+PVC and PV retention behavior depends on storage class reclaim policy and StatefulSet PVC retention configuration.
 
-## Volume Behavior
+## When Not to Use StatefulSet
 
-Each Pod gets its own PVC:
+Do not use StatefulSet just because an app writes logs or temp files.
 
-- `web-0` → `data-web-0`
-- `web-1` → `data-web-1`
-
-These volumes are **retained** even if the Pod is deleted.
-
----
-
-<h2>Summary</h2>
-<ul>
-<li><strong>StatefulSets</strong> are for apps that need stable identity and storage.</li>
-<li>Use them for databases, queues, and apps that can't just be replaced with a blank Pod.</li>
-<li>Deployments are for stateless, replaceable workloads.</li>
-</ul>
-
-!!! tip
-    Only use StatefulSets when you really need sticky identity or storage. For most apps, Deployments are simpler and easier to manage.
-
----
+If the workload is horizontally replaceable and does not require replica identity, use Deployment for simpler operations.
 
 ## Related Concepts
 
-- [Pods vs Deployments](pods-deployments/) for stateless workloads
-- [Kubernetes Storage](../storage/storage/) and persistent volumes
-- [Headless Services](../networking/services-networking/) for stable network identity
+- [Pods and Deployments](pods-deployments.md)
+- [Storage](../storage/storage.md)
+- [Services](../networking/services-networking.md)

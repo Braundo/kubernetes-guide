@@ -8,81 +8,66 @@ hide:
 
 # Networking Concepts
 
-Networking in Kubernetes is simple on the surface, but powerful under the hood. Every Pod gets an IP address, Services provide stable endpoints, and the network model enables communication across the entire cluster - often without needing to understand the low-level implementation details.
+Kubernetes networking is built on a simple model with strict expectations for connectivity and service discovery.
 
----
+## Core Model
 
-<h2>Core Principles of Kubernetes Networking</h2>
+1. Every pod gets its own IP address.
+2. Pods can communicate with other pods without user-managed NAT between pods.
+3. Services provide stable virtual endpoints in front of changing pod backends.
 
-1. <strong>Each Pod gets a unique IP</strong>
- - No NAT between Pods
- - All containers within a Pod share the same network namespace
+Containers in the same pod share one network namespace and communicate over `localhost`.
 
-2. <strong>All Pods can reach each other</strong>
- - Flat network model (no IP masquerading between Pods)
+## Data Plane Components
 
-3. <strong>Services provide stable access to Pods</strong>
- - Pods are ephemeral - Services give them a consistent IP + DNS name
+Networking behavior depends on your implementation stack:
 
----
+- CNI plugin: pod network and IP routing.
+- kube-proxy or eBPF service implementation: service VIP translation and load balancing.
+- CoreDNS: in-cluster DNS.
 
-<h2>Network Abstraction Layers</h2>
+## Traffic Types
 
-| Layer        | Purpose                                   |
-|--------------|--------------------------------------------|
-| <strong>Pod Network</strong> | Every Pod gets an IP, routable in-cluster |
-| <strong>Service</strong>      | Provides a stable endpoint for Pod groups |
-| <strong>Ingress</strong>      | Exposes HTTP/S services externally       |
-| <strong>NetworkPolicy</strong>| Controls traffic between Pods (optional) |
+- East-west: traffic between workloads inside the cluster.
+- North-south: traffic entering or leaving the cluster.
 
----
+East-west usually uses Services and DNS.
+North-south usually uses Ingress or Gateway API on top of Service backends.
 
-<h2>DNS in Kubernetes</h2>
+## Service Discovery
 
-Kubernetes includes built-in **DNS resolution** for:
+Service DNS format:
 
-- Services: `my-service.my-namespace.svc.cluster.local`
-- Pods (not recommended for direct use)
-
-DNS is powered by CoreDNS by default, running in the `kube-system` namespace.
-
-```shell
-nslookup my-service.default.svc.cluster.local
+```text
+<service>.<namespace>.svc.cluster.local
 ```
 
----
+Example:
 
-## Pod-to-Pod Communication
+```bash
+nslookup api.backend.svc.cluster.local
+```
 
-- All Pods are routable via their internal IP addresses
-- No need for manual port forwarding
-- Backed by a **Container Network Interface (CNI)** plugin (e.g., Calico, Flannel)
+## Security and Segmentation
 
----
+By default, many CNIs allow broad pod-to-pod communication.
 
-## Service Types (Covered in next section)
+Use NetworkPolicies to explicitly control allowed ingress and egress paths between workloads.
 
-- `ClusterIP` - default; internal-only
-- `NodePort` - exposes on every node
-- `LoadBalancer` - cloud provider external IP
-- `ExternalName` - DNS alias
+## Practical Troubleshooting Checks
 
----
+```bash
+kubectl get pods -A -o wide
+kubectl get svc -A
+kubectl get endpointslices -A
+kubectl get netpol -A
+```
 
-<h2>Summary</h2>
+If DNS fails, check CoreDNS pods in `kube-system`.
 
-- Kubernetes networking gives every Pod a unique IP and makes service discovery simple.
-- All Pods can talk to each other by default-use NetworkPolicies to restrict if needed.
-- Understanding the network model is key for debugging, scaling, and securing your apps.
+## Related Networking Topics
 
-!!! tip
-    Use DNS names for service discovery, and always test network policies and connectivity in staging before rolling out to production.
-
----
-
-## Core Kubernetes Networking Topics
-
-- [Kubernetes Services](services-networking/)
-- [Ingress and HTTP Routing](ingress/)
-- [Network Policies](netpol/) for traffic security
-- [Kubernetes Gateway API](gateway-api.md) for advanced, role-oriented traffic management
+- [Kubernetes Services](services-networking.md)
+- [Ingress and HTTP Routing](ingress.md)
+- [Network Policies](netpol.md)
+- [Gateway API](gateway-api.md)

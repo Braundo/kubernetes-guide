@@ -6,107 +6,76 @@ hide:
  - footer
 ---
 
-## Historical Background
+# Kubernetes Overview
 
-Kubernetes was born from Google's internal systems like Borg and Omega, which managed containerized applications like Search and Gmail at a massive scale. In 2014, Google open-sourced Kubernetes, and it quickly became *the* standard for container orchestration.
+Kubernetes is a platform for running containerized applications reliably at scale.
 
-<h2>Introduction to Kubernetes</h2>
+It handles deployment, scheduling, health recovery, service discovery, and rollouts so teams can operate applications consistently across environments.
 
-Kubernetes (K8s) is like the air traffic controller for your applications - making sure everything is running, scaling, and healing automatically. Originally created by Google and now maintained by the CNCF, Kubernetes helps you run containers (small, portable application units) across clusters of computers.
+## Why Kubernetes Exists
 
-<h2>What is Kubernetes?</h2>
+Containers made application packaging easier, but running containers in production introduced hard operational problems:
 
-Kubernetes is a platform that automates the deployment, scaling, and management of containerized applications. Think of it as an operating system for your data center, making sure your apps are always running the way you want.
+- How do you place workloads on available machines?
+- How do you recover from container or node failures?
+- How do you scale up and down safely?
+- How do you roll out new versions without downtime?
 
-**Key things Kubernetes does for you:**
+Kubernetes solves these problems with declarative APIs and controllers.
 
-- <strong>Deployment</strong>: Launches and manages containers for your apps.
-- <strong>Scaling</strong>: Adds or removes copies of your app as needed.
-- <strong>Self-healing</strong>: Restarts or replaces containers if they fail.
-- <strong>Rolling Updates/Rollbacks</strong>: Updates your app with zero downtime and can revert if something goes wrong.
+## Core Mental Model
 
+Kubernetes works by continuously reconciling actual state to desired state.
 
-<h2>Key Concepts of Kubernetes</h2>
+1. You declare desired state (usually in YAML).
+2. The API server stores that state in etcd.
+3. Controllers compare desired vs actual state.
+4. Controllers take actions until they match.
 
-<h3>Declarative Model</h3>
-Kubernetes uses a "declarative" approach: you describe how you want your system to look, and Kubernetes works to make it so - automatically.
+This loop is why Kubernetes can self-heal and keep systems stable over time.
 
-**Three key ideas:**
+## Cluster Architecture
 
-1. <strong>Observed State</strong>: What’s actually running right now.
-2. <strong>Desired State</strong>: What you want running (defined in YAML or JSON).
-3. <strong>Reconciliation</strong>: Kubernetes constantly checks and adjusts to make observed = desired.
+A Kubernetes cluster has two major parts:
 
+- Control plane: API server, scheduler, controller manager, etcd.
+- Worker nodes: kubelet, runtime, and your application pods.
 
-**How it works:**
+The API server is the central entry point for cluster changes.
 
-- You tell Kubernetes (with `kubectl` or a YAML file) what you want.
-- Kubernetes saves this in its database (etcd).
-- Controllers keep checking: does reality match what you asked for?
-- If not, Kubernetes takes action to fix it.
+## Key Building Blocks
 
-<h3>Declarative Approach in Kubernetes</h3>
+- Pod: The smallest deployable unit. Usually one app container per pod.
+- Deployment: Manages stateless pods and rolling updates.
+- StatefulSet: Manages stateful workloads with stable identity and storage.
+- Service: Stable virtual endpoint in front of pod backends.
+- Ingress or Gateway API: North-south HTTP/TLS routing into cluster services.
+- ConfigMap and Secret: Runtime configuration and sensitive values.
 
-You define what you want, Kubernetes keeps it that way. Here’s a visual summary:
+## What Kubernetes Is Not
 
-<div style="width: 100%; margin: 0 auto;">
-```mermaid
-sequenceDiagram
-    participant User
-    participant APIServer as API Server
-    participant etcd
-    participant Controller as Controller Manager
-    participant Scheduler
+Kubernetes is not a replacement for:
 
-    User->>APIServer: Declare desired state
-    APIServer->>etcd: Persist desired state
+- Good application architecture
+- Observability and incident response practices
+- Security design and policy
+- Platform standards and release discipline
 
-    Controller->>APIServer: Check actual vs. desired
-    APIServer-->>Controller: current != desired
-    Controller->>APIServer: Reconcile differences
+It provides powerful primitives. You still need sound operational patterns.
 
-    APIServer->>Scheduler: Trigger scheduling if needed
-```
-</div>
+## How to Learn Efficiently
 
-> <strong>Tip:</strong> Most real-world Kubernetes work is about describing the desired state in YAML files.
+Use this sequence:
 
-This diagram illustrates how Kubernetes manages resources declaratively, ensuring the system's state aligns with the user's specifications.
+1. Understand pods, deployments, and services.
+2. Learn configuration and probes.
+3. Learn networking and traffic entry.
+4. Learn security fundamentals.
+5. Learn maintenance and troubleshooting workflows.
 
-<h3>Kubernetes Architecture</h3>
+## Next Steps
 
-Kubernetes architecture consists of several key components:
-
-- **API Server:** The front-end for the Kubernetes control plane, handling all REST operations.
-- **etcd:** A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
-- **Scheduler:** Assigns workloads to nodes based on resource availability.
-- **Controller Manager:** Runs controllers to regulate the state of the cluster.
-- **Kubelet:** Ensures containers are running in a Pod on each node.
-
-<h3>Services</h3>
-
-Services provide stable networking endpoints for Pods, enabling reliable communication between different parts of an application. They abstract away the ephemeral nature of Pods, which can be created and destroyed dynamically, and give you a stable, long-lived connection point to the underlying Pods.
-
-## Common Features Primer
-
-<h3>Pods and Deployments</h3>
-
-- **Pods:** The smallest deployable units in Kubernetes, which can contain one or more containers. Containers within Pods share resources like network and storage.
-- **Deployments:** Higher-level controllers that manage Pods, providing features like scaling, rolling updates, and rollbacks.
-
-<h3>Self-Healing and Scaling</h3>
-
-If you use a Deployment or StatefulSet, Kubernetes will:
-
-- Replace failed Pods automatically
-- Scale your app up or down based on demand
-- Keep your app highly available and efficient
-
-<h3>Rolling Updates and Rollbacks</h3>
-
-With <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a>, Kubernetes can update your app with zero downtime - gradually swapping out old Pods for new ones. If a problem is detected, it can roll back to the previous version automatically.
-
----
-
-<h2>Summary</h2>
-Kubernetes is all about automation, reliability, and making sure your apps run the way you want. By describing your desired state, Kubernetes does the heavy lifting to keep everything running smoothly - so you can focus on building, not babysitting, your infrastructure.
+- [Kubernetes API](kubernetes-api.md)
+- [Namespaces](namespaces.md)
+- [Pods and Deployments](../workloads/pods-deployments.md)
+- [Services and Networking](../networking/services-networking.md)

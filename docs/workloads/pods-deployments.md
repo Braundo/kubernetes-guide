@@ -6,166 +6,126 @@ hide:
  - footer
 ---
 
-# Pods & Deployments
+# Pods and Deployments
 
-Kubernetes is often described as an "Operating System for the Cloud." If that is true, then **Pods** are the processes, and **Deployments** are the init system (like systemd) that keeps them running.
+Pods are the runtime unit. Deployments are the lifecycle controller.
 
-This is the most foundational concept in Kubernetes. If you understand this, everything else (Services, Ingress, ConfigMaps) will make sense.
+If you remember one rule, remember this: in production, you almost never run standalone pods. You run pods through a controller, usually a Deployment.
 
------
+## Pod fundamentals
 
-## What is a Pod?
+A pod is one or more containers that share:
 
-A **Pod** is the smallest execution unit in Kubernetes.
+- one network namespace (same IP, localhost communication)
+- declared storage volumes
+- one scheduling decision
 
-Newcomers often ask: *"Why doesn't Kubernetes just run containers directly? Why do we need this 'Pod' wrapper?"*
+Most pods should contain one main application container. Add sidecars only when they provide clear value, such as logging, proxying, or telemetry.
 
-The answer is **Shared Context**.
-Sometimes, you need multiple containers to work together tightly - like they are running on the same physical server.
+## Why pods alone are not enough
 
-A Pod allows multiple containers to run inside a shared environment where they:
+Pods are disposable. They can disappear during node failure, eviction, rescheduling, or rollout. A naked pod does not self-heal.
 
-  * **Share the same IP Address:** They can talk to each other using `localhost`.
-  * **Share Storage:** They can mount the same Volumes to read/write shared files.
-  * **Share Lifecycle:** They are scheduled, started, and killed together.
+That is why controllers exist.
 
-### Visualizing the Pod
+## What Deployments do
 
-The diagram below illustrates how multiple containers coexist in a single Pod.
+A Deployment manages a ReplicaSet, and the ReplicaSet manages pods.
 
-![Multi-container Diagram](../images/multicontainer-light.png#only-light)
-![Multi-container Diagram](../images/multicontainer-dark.png#only-dark)
+Deployment responsibilities:
 
-Notice three critical things in this diagram:
-
-1.  **One IP Address:** The entire Pod has the IP `10.0.0.5`.
-2.  **Localhost Communication:** "Container 1" can talk to "Container 2" just by calling `localhost:1717`. They don't need fancy networking.
-3.  **Shared Files:** Both containers can read/write to the same shared "filesystem" volume.
-
-!!! tip "The "One Process Per Container" Rule"
-    Even though you *can* put multiple containers in a Pod, you usually shouldn't. 95% of Pods contain just **one** container. Only add a second container (a "Sidecar") if it is a helper process (like a log shipper or proxy) that strictly supports the main app.
-
------
-
-## What is a Deployment?
-
-If a Pod is a worker, the **Deployment** is the Manager.
-
-Pods are mortal. They are designed to die.
-
-  * If a Node runs out of memory, it kills a Pod.
-  * If a Node crashes, the Pod is lost forever.
-  * If you want to update your app, you must kill the old Pod and start a new one.
-
-You never want to manage this manual lifecycle yourself. Instead, you create a **Deployment**.
-
-A Deployment ensures that a specified number of Pods (Replicas) are running at all times, matching the **Desired State** you defined.
-
-### The "Self-Healing" Loop
+- keep the desired replica count running
+- perform rolling updates
+- support rollback to prior revisions
+- expose rollout status and history
 
 ```mermaid
 graph TD
-    User[You] -->|Apply YAML| API[API Server]
-    API -->|Desired: 3 Replicas| Controller[Deployment Controller]
-    Controller -->|Check Current State| Cluster
-    
-    subgraph Cluster
-    Pod1[Pod 1]
-    Pod2[Pod 2]
-    end
-    
-    Controller -- "Only 2 found! Start 1 more!" --> Pod3[create Pod 3]
+  A[Apply Deployment] --> B[Deployment controller]
+  B --> C[ReplicaSet]
+  C --> D[Pods]
+  D --> E[Node failure or pod crash]
+  E --> C
 ```
 
-1.  **You:** "I want 3 copies of nginx."
-2.  **Deployment:** "I see 0 copies. I will create 3."
-3.  **Disaster:** One node crashes, taking a Pod with it.
-4.  **Deployment:** "I see 2 copies. I need 3. Creating a replacement immediately."
+## Example Deployment
 
------
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/example/web:v1.2.0
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            periodSeconds: 5
+```
 
-## Rolling Updates (Zero Downtime)
+## Rolling update behavior
 
-The other superpower of Deployments is updates.
+During an update, Kubernetes incrementally creates new pods and removes old pods according to strategy settings.
 
-When you change the image version in a Deployment (e.g., `v1` to `v2`), it doesn't kill everything at once. It performs a **Rolling Update**:
+Key controls:
 
-1.  It spins up **one** new Pod (v2).
-2.  It waits for it to become "Ready."
-3.  It kills **one** old Pod (v1).
-4.  It repeats this until all Pods are on v2.
+- `maxUnavailable`: how many old pods can be unavailable during rollout
+- `maxSurge`: how many extra new pods can be created temporarily
 
-If the new version crashes on startup, the Deployment **stops** the rollout automatically, ensuring you don't take down your production site with a bad update.
+Use conservative values for critical services, and always pair rollouts with readiness probes.
 
------
+## Standalone pod use cases
 
-## Creating Them (The Modern Way)
-
-Don't write YAML from scratch. Use the CLI to generate it for you.
-
-### 1\. Create a Deployment
-
-This is the standard command to launch an app.
+Standalone pods are still useful for short-lived debugging:
 
 ```bash
-# syntax: kubectl create deployment <name> --image=<image>
-kubectl create deployment my-web --image=nginx --replicas=3
+kubectl run debug-shell --image=busybox:1.36 --restart=Never -it -- sh
 ```
 
-### 2\. Create a "naked" Pod (Rare)
+Do not use this pattern for long-running applications.
 
-Use this only for debugging.
+## Common mistakes
+
+- Deploying applications with `kubectl run` and no controller
+- Missing `resources.requests`, which hurts scheduling quality
+- Missing readiness probes, which can route traffic to not-ready pods
+- Using mutable image tags like `latest` in production
+
+## Quick operations checklist
 
 ```bash
-# syntax: kubectl run <name> --image=<image>
-kubectl run my-debug-pod --image=busybox
+kubectl get deploy,rs,pods -l app=web
+kubectl rollout status deploy/web
+kubectl rollout history deploy/web
+kubectl rollout undo deploy/web
 ```
-
-!!! warning "Don't use `kubectl run` for applications!"
-    `kubectl run` creates a Pod without a Deployment. If that Pod crashes, it stays dead. It will not self-heal.
-
------
-
-## The "Hidden" Layer: ReplicaSets
-
-Technically, Deployments don't manage Pods directly. They manage a middleman called a **ReplicaSet**.
-
-  * **Deployment:** Manages updates and rollouts.
-  * **ReplicaSet:** Ensures X number of pods are running.
-  * **Pod:** Runs the container.
-
-You rarely touch ReplicaSets directly, but you will see them when you run `kubectl get all`.
-
-```text
-NAME                          READY   STATUS    AGE
-pod/my-web-6d4b-xyz           1/1     Running   5m  <-- The Pod
-
-NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/my-web        1/1     1            1           5m  <-- The Manager
-
-NAME                          DESIRED   CURRENT   READY   AGE
-replicaset.apps/my-web-6d4b   1         1         1       5m  <-- The Counter
-```
-
------
 
 ## Summary
 
-| Feature | Pod | Deployment |
-| :--- | :--- | :--- |
-| **Purpose** | Run a container | Manage a fleet of Pods |
-| **Lifespan** | Ephemeral (Dies easily) | Long-lived (Self-healing) |
-| **Scalability**| None (1 instance) | Horizontal (Change `replicas`) |
-| **Updates** | Impossible (Must delete & recreate) | Rolling Updates (Zero downtime) |
-| **Production?** | No (Debug only) | **Yes** (Always use this) |
-
-**Key Takeaway:** Pods are the "atoms" of Kubernetes, but Deployments are the "molecules" you actually work with. Always use a Deployment to keep your Pods healthy, scalable, and up-to-date.
-
----
+Pods execute containers. Deployments enforce application availability and safe change management. For production services, Deployment should be the default starting point.
 
 ## Related Kubernetes Workload Concepts
 
-- [Init Containers](init-containers/) for startup dependencies
-- [Jobs and CronJobs](jobs-cronjobs/) for batch and scheduled workloads
-- [StatefulSets](statefulsets/) for stateful applications
-- [Horizontal Pod Autoscaling](scaling-hpa/) for dynamic scaling
+- [Init Containers](init-containers.md) for startup dependencies
+- [Jobs and CronJobs](jobs-cronjobs.md) for batch and scheduled workloads
+- [StatefulSets](statefulsets.md) for stateful applications
+- [Horizontal Pod Autoscaling](scaling-hpa.md) for dynamic scaling

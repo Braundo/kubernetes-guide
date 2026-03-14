@@ -8,127 +8,107 @@ hide:
 
 # Namespaces
 
-If a Kubernetes cluster is a physical building, **Namespaces** are the separate offices (or apartments) inside it.
+Namespaces provide logical partitioning inside a single cluster.
 
-Everyone shares the same electricity (CPU) and plumbing (Memory), but they have their own keys, their own furniture, and they can't see what's happening in the office next door unless they are explicitly invited.
+They are useful for separating teams, environments, and policy boundaries without creating separate clusters for everything.
 
-Namespaces provide **Logical Isolation**. They allow you to host "Dev", "Staging", and "Prod" on the same cluster without them accidentally overwriting each other's configurations.
-
------
-
-## The "Default" Namespaces
-
-When you start a fresh cluster, Kubernetes isn't empty. It comes with four built-in namespaces:
+## Built-in Namespaces
 
 | Namespace | Purpose |
 | :--- | :--- |
-| **`default`** | Where your work goes if you don't specify a namespace. |
-| **`kube-system`** | The "Engine Room." Contains the API Server, Scheduler, and DNS. **Do not touch this unless you know what you are doing.** |
-| **`kube-public`** | Readable by everyone (even unauthenticated users). Rarely used, mostly for cluster bootstrapping. |
-| **`kube-node-lease`** | A technical namespace used by Kubelets to send "heartbeats" to the master. |
+| `default` | Fallback namespace if none is specified |
+| `kube-system` | Control-plane and system workloads |
+| `kube-public` | Publicly readable metadata use cases |
+| `kube-node-lease` | Node heartbeat lease objects |
 
------
+## Namespaced vs Cluster-Scoped Resources
 
-## Scoping: Who lives where?
+Namespaced resources:
 
-Not everything fits in a namespace. This is a crucial concept for administrators.
+- Pods
+- Deployments
+- Services
+- ConfigMaps
+- Secrets
 
-  * **Namespaced Resources:** These live *inside* a room. (e.g., Pods, Deployments, Services, ConfigMaps). Two different namespaces can both have a Deployment named "my-app".
-  * **Cluster-Scoped Resources:** These are the *building itself*. They exist globally. (e.g., Nodes, PersistentVolumes, StorageClasses). You cannot have two Nodes with the same name, ever.
+Cluster-scoped resources:
 
-**How to check?**
-Run this command to see which resources are namespaced:
+- Nodes
+- StorageClasses
+- PersistentVolumes
+- ClusterRoles and ClusterRoleBindings
+
+Check scope quickly:
 
 ```bash
 kubectl api-resources --namespaced=true
+kubectl api-resources --namespaced=false
 ```
 
------
+## Isolation Boundaries
 
-## Cross-Namespace Communication (DNS)
+Namespaces isolate object names and many policies, but they are not a complete security boundary by themselves.
 
-Beginners often ask: *"Can a Pod in Dev talk to a Service in Prod?"*
-**Yes.** (Unless blocked by a NetworkPolicy).
+For real multi-tenant separation, combine:
 
-By default, namespaces are **not** network firewalls. They are just organizational folders. However, the **DNS name** changes.
+- Namespaces
+- RBAC
+- NetworkPolicies
+- ResourceQuota and LimitRange
+- Pod Security Admission labels
 
-  * **Same Namespace:** You can just call the service name.
-      * `curl http://my-database`
-  * **Different Namespace:** You must use the Fully Qualified Domain Name (FQDN).
-      * `curl http://my-database.production.svc.cluster.local`
+## DNS and Cross-Namespace Access
 
------
+Service discovery format:
 
-## Best Practices for Organization
+- same namespace: `http://my-service`
+- cross namespace: `http://my-service.other-namespace.svc.cluster.local`
 
-### 1\. Environments vs. Teams
+Cross-namespace traffic is allowed by default unless restricted by policy.
 
-How should you slice your cluster?
+## Resource Governance
 
-  * **Small Company:** `dev`, `staging`, `prod`.
-  * **Large Enterprise:** `team-a-dev`, `team-a-prod`, `team-b-dev`.
-
-### 2\. Resource Quotas (The Budget)
-
-You can assign a "Budget" to a namespace to prevent one team from using all the cluster's RAM.
+### ResourceQuota example
 
 ```yaml
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: dev-quota
-  namespace: dev
+  name: team-a-quota
+  namespace: team-a
 spec:
   hard:
-    pods: "10"             # Max 10 pods allowed
-    requests.cpu: "4"      # Max 4 CPU cores total
-    requests.memory: 2Gi   # Max 2GB RAM total
+    pods: "50"
+    requests.cpu: "20"
+    requests.memory: 40Gi
 ```
 
-### 3\. LimitRanges (The Rules)
-
-You can force every Pod in a namespace to have a default size, so users don't have to guess.
+### LimitRange example
 
 ```yaml
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: default-mem-limit
-  namespace: dev
+  name: default-container-limits
+  namespace: team-a
 spec:
   limits:
- - default:
-      memory: 512Mi
-    type: Container
+    - type: Container
+      default:
+        cpu: "500m"
+        memory: "512Mi"
+      defaultRequest:
+        cpu: "100m"
+        memory: "128Mi"
 ```
 
------
+## Operational Practices
 
-## Managing Context (The `kubens` Tool)
-
-Typing `-n my-long-namespace-name` on every command is painful.
-
-**The Hard Way:**
-
-```bash
-kubectl config set-context --current --namespace=my-team-dev
-```
-
-**The Pro Way:**
-Install a tool called `kubens` (part of the `kubectx` package).
-
-```bash
-kubens my-team-dev
-```
-
-Now all your future `kubectl` commands automatically run in that namespace until you switch back.
-
------
+- Use explicit namespaces in CI/CD (`-n` or fully-qualified manifests).
+- Use naming conventions (`team-a-dev`, `team-a-prod`).
+- Avoid placing application workloads in `kube-system`.
+- Audit namespace ownership and RBAC regularly.
 
 ## Summary
 
-  * **Namespaces** allow you to partition a single cluster into virtual sub-clusters.
-  * They are ideal for **multi-tenancy** (separating teams or environments).
-  * Resources like **Nodes** and **PVs** are global; Pods and Services are namespaced.
-  * Services in different namespaces **can** talk to each other using their full DNS name (FQDN).
-  * Use **ResourceQuotas** to prevent a single namespace from hogging all the cluster resources.
+Namespaces are foundational for cluster organization, but policy controls are what make isolation enforceable in production.

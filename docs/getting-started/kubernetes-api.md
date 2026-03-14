@@ -8,148 +8,115 @@ hide:
 
 # Kubernetes API
 
-The Kubernetes API is the **brain** of your cluster.
+The Kubernetes API is the control surface of the cluster.
 
-It is the single point of truth. Whether you are a human using `kubectl`, a robot (Controller), or a Node (Kubelet), you **never** talk to each other directly. You only talk to the API Server.
+Whether changes come from `kubectl`, CI/CD, operators, or controllers, they flow through the API server.
 
------
+## API Server and etcd
 
-## The "Hub and Spoke" Architecture
+A core design rule is that etcd is accessed through the API server, not directly by normal components.
 
-The most important architectural rule in Kubernetes is: **Only the API Server talks to etcd.**
-
-`etcd` is the database where all cluster state is stored. It is highly sensitive. To protect it, Kubernetes forces every single component to go through the API Server to read or write data.
+- etcd stores cluster state.
+- API server validates and persists state transitions.
+- Controllers and kubelets watch API resources and react.
 
 ```mermaid
 graph TD
-    User[User / kubectl] -->|HTTP REST| API[API Server]
-    Controller[Controllers] <-->|Watch Changes| API
-    Kubelet[Worker Node / Kubelet] <-->|Fetch Work| API
-    
-    API <-->|Read/Write State| Etcd[(etcd Database)]
+    User[User or CI] -->|kubectl / API client| API[API Server]
+    Controllers[Controllers] <-->|watch / patch| API
+    Kubelet[Kubelet] <-->|status / pod updates| API
+    API <-->|read and write| Etcd[(etcd)]
 ```
 
------
+## Object Anatomy: `spec` and `status`
 
-## Anatomy of an Object: Spec vs. Status
-
-Every API object represents a "record of intent." To understand Kubernetes, you must understand the war between `spec` and `status`.
+Most Kubernetes resources separate intent from observation.
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
-spec:        # THE DESIRED STATE (You write this)
+  name: web
+spec:
   replicas: 3
-status:      # THE OBSERVED STATE (K8s writes this)
-  replicas: 1
+status:
+  replicas: 2
 ```
 
-1.  **`spec` (Specification):** This is your wish list. You tell the API: *"I desire 3 replicas."*
-2.  **`status`:** This is reality. The system tells you: *"I currently see 1 replica."*
-3.  **Reconciliation:** The Controller Manager sees the difference (3 vs 1) and wakes up to fix it (create 2 more pods).
+- `spec`: desired state declared by users or automation.
+- `status`: current state reported by controllers.
+- reconciliation: controllers close the gap.
 
-**You typically only write to `spec`. The system writes to `status`.**
+## Request Pipeline
 
------
+A create or update request passes through these stages:
 
-## The Request Lifecycle
+1. Authentication: who is calling.
+2. Authorization: what they are allowed to do.
+3. Admission: mutation and validation policy.
+4. Persistence: accepted object is stored.
 
-What actually happens when you type `kubectl apply -f pod.yaml`? It's not just "saving to the database." It goes through a rigorous security pipeline.
+## API Groups and Versions
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant AuthN as Authentication
-    participant AuthZ as Authorization (RBAC)
-    participant Admission as Admission Controllers
-    participant Etcd
+Kubernetes APIs are grouped and versioned for compatibility.
 
-    User->>AuthN: "I am Alice. Here is my cert."
-    AuthN->>AuthZ: "Is Alice allowed to create Pods?"
-    AuthZ->>Admission: "Yes. Now, check the content."
-    Admission->>Admission: "Is the image secure? Are limits set?"
-    Admission->>Etcd: "Looks good. Persist to DB."
-    Etcd-->>User: "201 Created"
-```
+- Alpha (`v1alpha1`): experimental and can change or be removed.
+- Beta (`v1beta1`): maturing, but still not guaranteed long-term stable.
+- Stable (`v1`): production-ready API contract.
 
-1.  **Authentication (AuthN):** "Who are you?" (Certificates, Tokens, OIDC).
-2.  **Authorization (AuthZ):** "Are you allowed to do this?" (RBAC checks).
-3.  **Admission Control:** "Is this request smart?"
-      * *Mutating:* "You forgot to set a default CPU limit, so I'll add one for you."
-      * *Validating:* "You are trying to run as `root` user? **Denied.**"
-4.  **Persistence:** The object is written to `etcd`.
+Version behavior is governed by the Kubernetes deprecation policy. Do not assume beta APIs are always enabled in every environment.
 
------
+Common paths:
 
-## API Groups & Versioning
-
-Kubernetes APIs change. To keep things stable, they are grouped and versioned.
-
-  * **Alpha (`v1alpha1`):** Experimental. Might be deleted in the next release. **Do not use in production.**
-  * **Beta (`v1beta1`):** Useful and well-tested, but details might change. Enabled by default.
-  * **Stable (`v1`):** Rock solid. Will be supported for years.
-
-### Common API Paths
-
-| Path URL | Group Name | Resources |
+| Path | Group | Example resources |
 | :--- | :--- | :--- |
-| `/api/v1` | **Core** | Pods, Services, Nodes, ConfigMaps, Secrets |
-| `/apis/apps/v1` | **Apps** | Deployments, DaemonSets, StatefulSets |
-| `/apis/batch/v1` | **Batch** | Jobs, CronJobs |
-| `/apis/networking.k8s.io/v1` | **Networking** | Ingress, NetworkPolicies |
+| `/api/v1` | core | Pods, Services, ConfigMaps, Secrets |
+| `/apis/apps/v1` | apps | Deployments, StatefulSets, DaemonSets |
+| `/apis/batch/v1` | batch | Jobs, CronJobs |
+| `/apis/networking.k8s.io/v1` | networking | Ingress, NetworkPolicy |
 
-!!! tip "Pro Tip"
-    Run `kubectl api-resources` to see a full list of every object your cluster supports, including its shortname (e.g., `po` for Pods) and API Group.
+Useful discovery commands:
 
------
+```bash
+kubectl api-resources
+kubectl api-versions
+kubectl explain deployment.spec
+```
 
-## Declarative vs. Imperative
+## Declarative vs Imperative
 
-The API supports two ways of working.
+Imperative commands are useful for quick actions:
 
-**1. Imperative (The "Do It" Command)**
-You tell the API exactly what action to take.
+```bash
+kubectl scale deployment web --replicas=5
+```
 
-  * `kubectl run nginx --image=nginx`
-  * `kubectl scale deployment web --replicas=5`
-  * *Downside:* If you run it twice, it might fail. It's hard to reproduce.
+Declarative workflows are preferred for production:
 
-**2. Declarative (The "Make It So" Command)**
-You give the API a file representing your *final desired state*.
+```bash
+kubectl apply -f deployment.yaml
+```
 
-  * `kubectl apply -f my-app.yaml`
-  * *Upside:* You can run this 100 times. If the state is already correct, nothing happens. If it's different, K8s fixes it. **Always use this for production.**
+Declarative config is repeatable, reviewable, and CI-friendly.
 
------
+## Troubleshooting API Interactions
 
-## Debugging the API
-
-Want to see the API in action? You don't need a proxy. You can ask `kubectl` to show you the raw HTTP requests it is making.
-
-**Try this command:**
+To inspect client-level API calls:
 
 ```bash
 kubectl get pods -v=6
 ```
 
-**Output:**
+For server-side behavior, use audit logs and events:
 
-```text
-I1215... loader.go:372] Config loaded from file: /root/.kube/config
-I1215... round_trippers.go:420] GET https://10.96.0.1:443/api/v1/namespaces/default/pods?limit=500
-I1215... round_trippers.go:427] Response Status: 200 OK in 12 milliseconds
+```bash
+kubectl get events -A --sort-by=.metadata.creationTimestamp
 ```
-
-You can see the exact **GET** request `kubectl` sent to the API server\! This is incredibly useful for debugging authentication or permission issues.
-
------
 
 ## Summary
 
-  * The **API Server** is the only component that talks to `etcd`.
-  * **Objects** consist of `spec` (what you want) and `status` (what you have).
-  * **Controllers** watch the API to make `status` match `spec`.
-  * Every request goes through **AuthN**, **AuthZ**, and **Admission Control**.
-  * Use `kubectl -v=6` to peek under the hood.
+- The API server is the authoritative control interface.
+- Kubernetes objects model desired and observed state.
+- Controllers continuously reconcile state.
+- API version choice and deprecation awareness are operationally important.
+- Declarative API usage should be the default for production systems.
