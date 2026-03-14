@@ -1,7 +1,7 @@
 ---
 title: "True HA in Kubernetes: Why Multi-Zone Alone Isn't Enough"
 date: 2026-03-10
-category: playbooks
+category: insights
 description: "Multi-zone clusters remove the zone-failure risk but create a false sense of security. Real high availability requires coordinating PDBs, topology spread constraints, affinity rules, probes, graceful shutdown, and admission webhook resilience into a coherent strategy."
 ---
 
@@ -443,8 +443,8 @@ The teams that handle incidents well aren't the ones with the fanciest infrastru
 
 ## Related Pages
 
-- Parent index: [Playbooks](index.md)
+- Parent index: [Opinion & Overview](index.md)
 - Related: [Pods and Deployments](../../workloads/pods-deployments.md)
 - Related: [Operations and Maintenance](../../operations/maintenance.md)
-- Related: [Security news](../security/index.md)
+- Related: [Security news](../../news/security/index.md)
 - Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)

@@ -102,8 +102,10 @@ nav = [
     { "Release News" = "news/releases/index.md" },
     { "Security News" = "news/security/index.md" },
     { "Ecosystem News" = "news/ecosystem/index.md" },
-    { "Playbooks" = "news/playbooks/index.md" },
-    { "Tool Radar" = "news/tool-radar/index.md" },
+  ]},
+  { "Insights" = [
+    { "Opinion & Overview" = "insights/opinion/index.md" },
+    { "Tool Radar" = "insights/tool-radar/index.md" },
   ]},
   { "Jobs" = [
     { "Listings" = "jobs/listings.md" },
@@ -155,7 +157,7 @@ font.code = "JetBrains Mono"
 # Read more:
 # - https://zensical.org/docs/customization/#extending-the-theme
 #
-#custom_dir = "overrides"
+custom_dir = "overrides"
 
 # With the "favicon" option you can set your own image to use as the icon
 # browsers will use in the browser title bar or tab bar. The path provided

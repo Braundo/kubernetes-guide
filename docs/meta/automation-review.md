@@ -21,8 +21,9 @@ This document records the post-cleanup review of the news-generation pipeline an
  - `docs/news/releases/`
  - `docs/news/security/`
  - `docs/news/ecosystem/`
- - `docs/news/tool-radar/`
-- Pipeline commit tracking updated to `docs/news/` only.
+ - `docs/insights/tool-radar/`
+ - `docs/insights/opinion/`
+- Pipeline commit tracking updated to `docs/news/` and `docs/insights/`.
 - Commit message namespace updated from `feat(intelligence)` to `feat(news)`.
 - Newsletter canonical links now point to `/news/<category>/<slug>/`.
 
@@ -52,7 +53,7 @@ This keeps security and release responsiveness while preventing tool/ecosystem s
 
 - GitHub tool query no longer uses a hardcoded stale date. It now uses a rolling 90-day push window.
 - Tool radar watcher metric now uses `watchers_count` from GitHub search results instead of `subscribers_count`.
-- Related-link generation now resolves to `news/*` paths and no longer references removed `intelligence/*` paths.
+- Related-link generation now resolves to `news/*` and `insights/*` paths and no longer references removed `intelligence/*` paths.
 
 ## Editorial Quality Upgrades
 

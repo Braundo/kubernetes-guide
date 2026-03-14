@@ -19,11 +19,11 @@ Only recent publications are listed below to keep the radar current.
 | 2026-03-09 | [k9s](2026-03-09-k9s.md) | K9s provides a terminal-based UI for interacting with Kubernetes clusters through a continuously updating interface. |
 | 2026-03-09 | [Headlamp](2026-03-09-headlamp.md) | Headlamp is an extensible, vendor-agnostic Kubernetes web UI that runs both in-cluster and as a desktop application, with a plugin system that lets teams add custom functionality without forking the project. |
 | 2026-03-08 | [trivy](2026-03-08-trivy.md) | Trivy is a security scanner built by Aqua Security that covers vulnerabilities, misconfigurations, secrets, and software bill of materials (SBOM) generation across a wide range of targets. |
-| 2026-03-08 | [nacos](2026-03-08-nacos.md) | Nacos is an open-source platform from Alibaba that combines dynamic service discovery, centralized configuration management, and service metadata management into a single operational surface. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
 
-- [Release news](../releases/index.md)
-- [Security news](../security/index.md)
+- [Opinion & Overview](../opinion/index.md)
+- [Release news](../../news/releases/index.md)
+- [Security news](../../news/security/index.md)
 - [Weekly newsletter](../../index.md#weekly-newsletter)

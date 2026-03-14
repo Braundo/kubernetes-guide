@@ -19,6 +19,7 @@ This document records the current structure and publishing model for k8s.guide.
 - Learn Kubernetes
 - Certificates
 - News
+- Insights
 - Jobs
 - About
 
@@ -47,7 +48,13 @@ Curated news lives in:
 - `docs/news/releases/`
 - `docs/news/security/`
 - `docs/news/ecosystem/`
-- `docs/news/tool-radar/`
+
+## Insights Structure
+
+Operator analysis and tooling intelligence live in:
+
+- `docs/insights/opinion/`
+- `docs/insights/tool-radar/`
 
 ## URL and Slug Policy
 

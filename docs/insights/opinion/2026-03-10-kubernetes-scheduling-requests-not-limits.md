@@ -1,7 +1,7 @@
 ---
 title: "Why Kubernetes Scheduling Uses Requests, Not Limits"
 date: 2026-03-10
-category: playbooks
+category: insights
 description: "Kubernetes schedules Pods based on resource requests, not limits. Understanding this distinction explains noisy neighbor problems, unexpected autoscaling behavior, and wasted cluster capacity, and how to fix them."
 ---
 
@@ -349,7 +349,7 @@ Limits protect neighbors and prevent runaway processes. Requests protect schedul
 
 ## Related Pages
 
-- Parent index: [Playbooks](index.md)
+- Parent index: [Opinion & Overview](index.md)
 - Related: [Pods and Deployments](../../workloads/pods-deployments.md)
 - Related: [Scaling with HPA](../../workloads/scaling-hpa.md)
 - Related: [Operations and Maintenance](../../operations/maintenance.md)

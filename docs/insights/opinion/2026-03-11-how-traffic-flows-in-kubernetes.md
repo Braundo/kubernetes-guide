@@ -1,7 +1,7 @@
 ---
 title: "How Traffic Actually Flows in Kubernetes: Services, kube-proxy, and Cloud Load Balancers"
 date: 2026-03-11
-category: playbooks
+category: insights
 description: "A Kubernetes Service is not a load balancer - it is a routing abstraction. Understanding the three layers that actually move traffic (node dataplane, cloud load balancer, application connections) explains most real-world networking behavior in EKS and AKS."
 ---
 
@@ -313,7 +313,7 @@ This is not urgent for most clusters but becomes relevant above a few hundred Se
 
 ## Related Pages
 
-- Parent index: [Playbooks](index.md)
+- Parent index: [Opinion & Overview](index.md)
 - Related: [Networking Overview](../../networking/networking.md)
 - Related: [Services and Networking](../../networking/services-networking.md)
 - Related: [Ingress](../../networking/ingress.md)

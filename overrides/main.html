@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+{{ super() }}
+
+{% set canonical = page.canonical_url if page and page.canonical_url else config.site_url %}
+{% set site_name = config.site_name %}
+{% set page_title = page.meta.title if page and page.meta and page.meta.title else page.title %}
+{% set page_description = page.meta.description if page and page.meta and page.meta.description else config.site_description %}
+{% set default_image = config.site_url ~ "images/logo-v2.png" %}
+{% set image_path = page.meta.image if page and page.meta and page.meta.image else default_image %}
+{% set og_image = image_path if "://" in image_path else config.site_url ~ image_path.lstrip("/") %}
+{% set is_article = page and page.url and (page.url[:5] == "news/" or page.url[:9] == "insights/") %}
+
+<meta name="google-site-verification" content="sxb77DzQNoD2ZzuyORuAZLrSvrHyphKFCMOHkkMbIzg">
+
+{% if page and page.url and page.url[:5] == "meta/" %}
+<meta name="robots" content="noindex,follow">
+{% else %}
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+{% endif %}
+
+<meta property="og:site_name" content="{{ site_name }}">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_description }}">
+<meta property="og:type" content="{{ 'article' if is_article else 'website' }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ og_image }}">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title }}">
+<meta name="twitter:description" content="{{ page_description }}">
+<meta name="twitter:image" content="{{ og_image }}">
+
+{% if is_article and page.meta and page.meta.date %}
+<meta property="article:published_time" content="{{ page.meta.date }}">
+{% endif %}
+{% if is_article and page.meta and page.meta.generated %}
+<meta property="article:modified_time" content="{{ page.meta.generated }}">
+{% endif %}
+
+{% if is_article %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page_title | tojson }},
+  "description": {{ page_description | tojson }},
+  "mainEntityOfPage": {{ canonical | tojson }},
+  "url": {{ canonical | tojson }},
+  "datePublished": {{ (page.meta.date if page.meta and page.meta.date else "") | tojson }},
+  "dateModified": {{ (page.meta.generated if page.meta and page.meta.generated else (page.meta.date if page.meta and page.meta.date else "")) | tojson }},
+  "author": {
+    "@type": "Person",
+    "name": {{ config.site_author | tojson }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site_name | tojson }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ (config.site_url ~ "images/logo-v2.png") | tojson }}
+    }
+  },
+  "image": {{ og_image | tojson }}
+}
+</script>
+{% elif page and page.url == "" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ site_name | tojson }},
+  "url": {{ config.site_url | tojson }},
+  "description": {{ config.site_description | tojson }},
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site_name | tojson }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ (config.site_url ~ "images/logo-v2.png") | tojson }}
+    }
+  }
+}
+</script>
+{% endif %}
+{% endblock %}

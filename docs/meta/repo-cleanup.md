@@ -24,7 +24,8 @@ Align file layout with the live site information architecture and remove legacy 
  - `docs/news/releases/`
  - `docs/news/security/`
  - `docs/news/ecosystem/`
- - `docs/news/tool-radar/`
+ - `docs/insights/tool-radar/`
+ - `docs/insights/opinion/`
 - Business and conversion pages:
  - `docs/jobs/`
  - `docs/sponsor/`
@@ -50,7 +51,7 @@ Align file layout with the live site information architecture and remove legacy 
 ## Path and Naming Alignment
 
 - Replaced `intelligence/*` paths with `news/*`.
-- Replaced `tools/radar/*` generated stream path with `news/tool-radar/*`.
+- Replaced `tools/radar/*` generated stream path with `insights/tool-radar/*`.
 - Updated navigation and internal links to match the new canonical layout.
 - Maintained `News` as a nav container (expand/collapse), not a standalone page.
 

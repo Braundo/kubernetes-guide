@@ -1,7 +1,7 @@
 ---
 title: "Why Every Pod Gets a Real IP: The Kubernetes Flat Network Model, CNIs, and Ingress Controllers"
 date: 2026-03-12
-category: playbooks
+category: insights
 description: "Kubernetes enforces a simple rule: every Pod can reach every other Pod directly, without NAT. This single constraint drives the entire networking architecture - from CNI plugin selection to ingress controller design. Understanding why this model exists and how it is implemented on EKS and AKS is essential for diagnosing and operating production clusters."
 ---
 
@@ -481,7 +481,7 @@ The operational investment is higher than simpler CNIs, but the observability re
 
 ## Related Pages
 
-- Parent index: [Playbooks](index.md)
+- Parent index: [Opinion & Overview](index.md)
 - Related: [How Traffic Flows in Kubernetes](2026-03-11-how-traffic-flows-in-kubernetes.md)
 - Related: [Networking Overview](../../networking/networking.md)
 - Related: [Services and Networking](../../networking/services-networking.md)

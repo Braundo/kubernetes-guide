@@ -23,5 +23,5 @@ Only recent publications are listed here to keep ecosystem coverage actionable.
 ## Related
 
 - [Release news](../releases/index.md)
-- [Tool radar](../tool-radar/index.md)
+- [Tool radar](../../insights/tool-radar/index.md)
 - [Newsletter signup](../../index.md#weekly-newsletter)
