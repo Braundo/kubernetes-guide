@@ -13,6 +13,16 @@ This guide covers how the scheduler actually works - the internal data structure
 
 ---
 
+## Situation
+
+The Kubernetes scheduler is one of the most consequential components in a cluster and one of the least understood by the engineers who depend on it. Pods get stuck in Pending and teams reach for node selectors, affinities, and taints without understanding what the scheduler evaluated or why a node was rejected. Preemption gets enabled without understanding that `NominatedNodeName` is a hint, not a reservation. Resource requests get set without knowing that `percentageOfNodesToScore` might prevent the scheduler from ever evaluating most of the cluster.
+
+The core mental model: the scheduler is a continuous reconciler, not a router. Its sole job is to watch for Pods with no `.spec.nodeName` and write one in. Everything else -- actually starting the Pod, pulling images, managing containers -- belongs to kubelet. The scheduler makes a prediction based on a point-in-time cache snapshot and hands off. Understanding this boundary is what separates teams that can diagnose placement problems from teams that blindly adjust parameters and hope.
+
+The scheduler's world is built around two data structures: a scheduling queue (a heap of unscheduled Pods ordered by priority) and a cluster snapshot (a point-in-time cache of node state, Pod assignments, and resource usage). The scheduler never talks to nodes directly. It runs a Pod through a pipeline of plugins, picks a node, and writes a Binding to the API server. That is the complete output of a scheduling cycle.
+
+---
+
 ## Mental Model
 
 Think of the scheduler not as a router that forwards work, but as a continuous reconciler with a filtering and ranking pipeline. Its sole job is to watch for Pods with no `.spec.nodeName` and write one in. Everything else - actually starting the Pod, pulling images, managing containers - belongs to kubelet.
@@ -138,7 +148,7 @@ You can run the scheduler with multiple profiles, each with different plugin con
 
 ---
 
-## Architectural Implications and Tradeoffs
+## Architecture and Tradeoffs
 
 **The scheduler is optimistic, not transactional.** It makes a decision based on a snapshot, writes a Binding, and moves on. It does not confirm that kubelet successfully started the Pod before considering the slot filled. If kubelet fails to start the Pod (image pull failure, OOM at runtime, admission webhook rejection at the node level), the Pod re-enters Pending and the scheduler runs again. The slot the scheduler thought it filled is eventually released.
 
@@ -150,7 +160,7 @@ You can run the scheduler with multiple profiles, each with different plugin con
 
 ---
 
-## Failure Modes and Operational Realities
+## Failure Modes to Plan For
 
 ### Pod stuck in Pending
 
@@ -195,6 +205,30 @@ If a high-priority Pod is preempting victims on a node, and another Pod with equ
 The second Pod does compete. `NominatedNodeName` is written to the Pod's status as a hint to the scheduler, not a hard reservation. It tells the scheduler to consider that node during the next scheduling cycle, but it does not prevent another Pod from being placed there first. If a different scheduling cycle runs between the nomination and the re-queue, that cycle can bind any Pod to the node regardless of the nomination.
 
 Operationally, this means burst workloads with preemption enabled can exhibit non-deterministic placement ordering. Multiple high-priority Pods may nominate the same set of victim nodes simultaneously, trigger parallel victim eviction, and then race to claim nodes as they become available. In a nearly-full cluster with many equal-priority bursting jobs, the outcome depends on which scheduling cycles happen to run first. The system is eventually consistent - all Pods will eventually be placed or blocked - but the order is not guaranteed and cannot be made deterministic without external coordination such as a gang-scheduling plugin or a batch scheduling layer like Volcano.
+
+---
+
+## Practical Implementation Path
+
+Set resource requests accurately before tuning anything else. The scheduler allocates based on requests, not limits. Pods with no requests set are treated as having zero resource requirements and can be placed anywhere, leading to noisy neighbor problems that manifest as kubelet evictions rather than scheduler rejections. Audit requests across all workloads with `kubectl top pods` and the `kube-scheduler` metrics before making any other scheduling changes.
+
+Understand `percentageOfNodesToScore` for your cluster size before enabling complex affinity or topology spread constraints. In a 500+ node cluster, the scheduler may evaluate fewer than 50 nodes per cycle by default. If your constraints are tight, the scheduler may exhaust its feasible node sample without finding a valid candidate even when one exists. Raise the parameter selectively for workloads that require global placement visibility, and accept the increased scheduling latency that comes with it.
+
+Use PriorityClasses deliberately. Preemption is on by default for any Pod with a priority higher than its victims. In clusters with mixed workloads, failing to assign PriorityClasses means all Pods have equal priority and preemption never fires -- or worse, all Pods have default priority and any new Pod can preempt any existing Pod. Define at least three tiers: system-critical (for DaemonSets and node-level infrastructure), workload (for production services), and batch (for jobs that can be safely preempted).
+
+For custom controllers and admission webhooks that affect scheduling, test behavior with `--dry-run=client` and against a staging cluster before production rollout. Admission webhooks that reject Pods at the node level create a class of failure where the scheduler says yes but kubelet says no -- the Pod re-enters Pending with an `FailedScheduling` or `FailedMount` event that looks like a scheduling failure but is actually a node-level enforcement failure. Distinguishing these requires reading both scheduler events and kubelet events on the Pod.
+
+Migrate from webhook-based scheduler extenders to the scheduling framework plugin model. Extenders add an HTTP round-trip inside each scheduling cycle and create a single point of failure for all placement decisions. The plugin model is in-process, testable, and the direction the upstream project has moved for all new scheduling extension.
+
+---
+
+## Source Links
+
+- [Kubernetes scheduler framework documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/)
+- [Kubernetes scheduling policies and profiles](https://kubernetes.io/docs/reference/scheduling/config/)
+- [Pod Priority and Preemption](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/)
+- [Resource management for Pods and containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+- [scheduler source: scheduling cycle and binding cycle](https://github.com/kubernetes/kubernetes/tree/master/pkg/scheduler)
 
 ---
 
