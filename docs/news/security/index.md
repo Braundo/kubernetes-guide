@@ -14,7 +14,7 @@ Only recent publications are listed here to avoid stale security noise.
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
-| - | No news yet | New entries will appear here after curation. |
+| 2026-03-18 | [CVE-2026-3864: NFS CSI Driver Path Traversal Can Delete Unintended Directories](2026-03-18-cve-2026-3864-csi-nfs-path-traversal.md) | A path traversal vulnerability in the Kubernetes CSI Driver for NFS allows privileged users to craft volume identifiers that cause the driver to delete or modify directories outside its managed path on the NFS server. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
