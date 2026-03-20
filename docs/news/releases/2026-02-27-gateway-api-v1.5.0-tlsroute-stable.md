@@ -69,4 +69,19 @@ Also worth noting: TLSRoute's CEL validation requires **Kubernetes 1.31 or highe
 
 TLSRoute graduating to stable is a meaningful signal: the Kubernetes ecosystem is closing the gap between "works in a demo" and "safe to run your encrypted production traffic through." For platform engineers, this is the green light to move TLSRoute from the experimental shelf to the standard toolkit.
 
-Full release notes: https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.5.0
+## Source Links
+
+- [Gateway API v1.5.0 Release Notes](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.5.0)
+- [GEP-2643: TLSRoute v1](https://gateway-api.sigs.k8s.io/geps/gep-2643/)
+- [GEP-1713: ListenerSet](https://gateway-api.sigs.k8s.io/geps/gep-1713/)
+- [GEP-1767: HTTPRoute CORS Filter](https://gateway-api.sigs.k8s.io/geps/gep-1767/)
+- [Gateway API Conformance Documentation](https://gateway-api.sigs.k8s.io/concepts/conformance/)
+
+## Related Pages
+
+- Parent index: [Release news](index.md)
+- Related: [Gateway API](../../networking/gateway-api.md)
+- Related: [Ingress](../../networking/ingress.md)
+- Related: [Services and Networking](../../networking/services-networking.md)
+- Related: [Security news](../security/index.md)
+- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
