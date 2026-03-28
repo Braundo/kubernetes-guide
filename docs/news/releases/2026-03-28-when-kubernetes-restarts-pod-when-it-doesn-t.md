@@ -1,18 +1,18 @@
 ---
-title: "When Kubernetes restarts your pod - And when it doesn’t"
+title: "Kubernetes 1.35 GA: In-Place Pod Resizing Stable and Restart Semantics Formalized"
 date: 2026-03-28
 category: releases
 description: "Kubernetes 1.35 has reached general availability with in-place pod resource resizing now stable. This release resolves a critical terminology gap that has caused operational confusion across production environments."
 generated: "2026-03-28T15:00:12.917430-05:00"
 ---
 
-# When Kubernetes restarts your pod - And when it doesn’t
+# Kubernetes 1.35 GA: In-Place Pod Resizing Stable and Restart Semantics Formalized
 
 Kubernetes 1.35 has reached general availability with in-place pod resource resizing now stable. This release resolves a critical terminology gap that has caused operational confusion across production environments.
 
 ## Release Summary
 
-This release resolves a critical terminology gap that has caused operational confusion across production environments. The distinction between container restarts, pod recreation, and in-place resizing directly affects how operators interpret metrics, write runbooks, and respond to incidents. Understanding when the pod UID changes versus when restart counts increment is no longer academic theory but required knowledge for accurate troubleshooting. The release clarifies kubelet behavior around spec watching and configuration updates, addressing the root cause of numerous "why didn't my config apply?" investigations that waste on-call time.
+The distinction between container restarts, pod recreation, and in-place resizing directly affects how operators interpret metrics, write runbooks, and respond to incidents. The distinction between container restarts, pod recreation, and in-place resizing directly affects how operators interpret metrics, write runbooks, and respond to incidents. Understanding when the pod UID changes versus when restart counts increment is no longer academic theory but required knowledge for accurate troubleshooting. The release clarifies kubelet behavior around spec watching and configuration updates, addressing the root cause of numerous "why didn't my config apply?" investigations that waste on-call time.
 
 ## Key Changes
 
