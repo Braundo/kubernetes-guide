@@ -7,7 +7,7 @@ description: "KubeCon Europe 2026 in Amsterdam confirmed what many platform team
 
 # KubeCon Europe 2026: What Came Out of Amsterdam
 
-KubeCon + CloudNativeCon Europe 2026 wrapped up in Amsterdam last week, and the through-line was impossible to miss. Every major announcement touched AI in some way -- not speculatively, but in concrete, operational terms. Kyverno graduated. Dapr Agents shipped v1.0. Istio added ambient multicluster and Gateway API Inference Extension in beta. CNCF published data showing 66% of organizations are now running generative AI workloads on Kubernetes. And yet only 7% of those organizations achieve daily deployments for AI workloads.
+KubeCon + CloudNativeCon Europe 2026 wrapped up in Amsterdam last week, and the through-line was impossible to miss. Every major announcement touched AI in some way - not speculatively, but in concrete, operational terms. Kyverno graduated. Dapr Agents shipped v1.0. Istio added ambient multicluster and Gateway API Inference Extension in beta. CNCF published data showing 66% of organizations are now running generative AI workloads on Kubernetes. And yet only 7% of those organizations achieve daily deployments for AI workloads.
 
 That gap between "we run AI on Kubernetes" and "we operate AI on Kubernetes the way we operate everything else" is where the community is focused right now. Amsterdam made that gap visible and showed the early work being done to close it.
 
@@ -15,7 +15,7 @@ That gap between "we run AI on Kubernetes" and "we operate AI on Kubernetes the 
 
 The conference was held March 23-26 at the RAI Amsterdam Convention Centre. It came immediately after Ingress-NGINX's end-of-life milestone in March 2026, so a lot of the networking conversation centered on what comes next for teams still mid-migration. Simultaneously, the AI infrastructure story matured enough that you could no longer attend a single keynote without hearing about inference workloads, model weight distribution, or agent orchestration.
 
-The CNCF and SlashData released updated numbers at the event: the global cloud native developer population has reached 19.9 million, up from 15.6 million just six months ago. That is a 28% jump in half a year, and it reflects how cloud native practices are spreading beyond traditional backend platform teams into AI engineering, gaming, and industrial IoT. Platform engineering specifically is reshaping how developers interact with infrastructure -- 88% of backend developers now work within some form of infrastructure standardization, up from 80% six months prior.
+The CNCF and SlashData released updated numbers at the event: the global cloud native developer population has reached 19.9 million, up from 15.6 million just six months ago. That is a 28% jump in half a year, and it reflects how cloud native practices are spreading beyond traditional backend platform teams into AI engineering, gaming, and industrial IoT. Platform engineering specifically is reshaping how developers interact with infrastructure - 88% of backend developers now work within some form of infrastructure standardization, up from 80% six months prior.
 
 ## Top Stories and Operator Takeaways
 
@@ -23,7 +23,7 @@ The CNCF and SlashData released updated numbers at the event: the global cloud n
 
 CNCF announced Kyverno's graduation on March 24, and the list of organizations publicly depending on it tells you everything about where the ecosystem is. Bloomberg, Coinbase, Deutsche Telekom, LinkedIn, Spotify, Vodafone, and Wayfair all use Kyverno to enforce governance across their Kubernetes environments.
 
-What makes this graduation significant is what Kyverno has become since its early days as an admission controller. It now operates as a broader policy engine across the cloud native stack -- running as an admission controller, CLI, container image, or SDK -- and integrates tightly with Argo CD, Flux, and Backstage for policy-driven GitOps workflows. The graduation represents the community formally recognizing that declarative, Kubernetes-native policy enforcement has crossed from nice-to-have to foundational infrastructure.
+What makes this graduation significant is what Kyverno has become since its early days as an admission controller. It now operates as a broader policy engine across the cloud native stack - running as an admission controller, CLI, container image, or SDK - and integrates tightly with Argo CD, Flux, and Backstage for policy-driven GitOps workflows. The graduation represents the community formally recognizing that declarative, Kubernetes-native policy enforcement has crossed from nice-to-have to foundational infrastructure.
 
 **The so-what:** If you are not running a policy engine in your Kubernetes environments today, you are behind the field. Kyverno's graduation is the signal that this category of tooling is stable and trusted at scale. For teams already running OPA or other policy tooling, the graduation is worth revisiting from a "what would we do today" perspective, particularly if your current setup relies heavily on Rego.
 
@@ -31,9 +31,9 @@ What makes this graduation significant is what Kyverno has become since its earl
 
 Dapr Agents v1.0 shipped at KubeCon EU 2026 as a production-stable framework for running AI agents on Kubernetes. The core pitch is straightforward: most agent frameworks focus on the reasoning and logic layer, leaving teams to figure out failure recovery, state persistence, and secure communication themselves. Dapr Agents provides those missing infrastructure pieces baked in.
 
-The v1.0 feature set includes durable, long-running agent workflows with automatic retries and recovery, persistent state backed by more than 30 database integrations, SPIFFE-based secure identity and communication, multi-agent coordination, and built-in observability. A session at the conference featured ZEISS Vision Care, which is using Dapr Agents to extract optical parameters from highly variable, unstructured documents -- a production AI workload where failure recovery and state management are non-negotiable.
+The v1.0 feature set includes durable, long-running agent workflows with automatic retries and recovery, persistent state backed by more than 30 database integrations, SPIFFE-based secure identity and communication, multi-agent coordination, and built-in observability. A session at the conference featured ZEISS Vision Care, which is using Dapr Agents to extract optical parameters from highly variable, unstructured documents - a production AI workload where failure recovery and state management are non-negotiable.
 
-What matters here is not the feature list. It is that Dapr Agents is built on the same Dapr runtime that already runs in production across thousands of organizations. Teams adopting Dapr Agents are not betting on a greenfield project -- they are extending infrastructure that already has production credibility.
+What matters here is not the feature list. It is that Dapr Agents is built on the same Dapr runtime that already runs in production across thousands of organizations. Teams adopting Dapr Agents are not betting on a greenfield project - they are extending infrastructure that already has production credibility.
 
 **The so-what:** If your organization is deploying AI agents into production and you are currently duct-taping together retries, state management, and secure communication yourself, Dapr Agents v1.0 is worth a serious evaluation. The SPIFFE integration in particular is meaningful: agents that handle sensitive data need verifiable identity, and getting that right from scratch is genuinely hard.
 
@@ -43,7 +43,7 @@ Istio announced a wave of updates at the conference that collectively represent 
 
 First, ambient multicluster reached beta. Ambient mode eliminates the sidecar container per-pod overhead by moving traffic management to node-level proxies, and extending that to multicluster topologies has been the remaining rough edge. Beta status here means the feature has enough operational testing behind it to deploy carefully in production. For organizations running applications across multiple regions or cloud providers, this is the path to simplified cross-cluster service mesh without the per-pod overhead.
 
-Second, Gateway API Inference Extension integration reached beta in Istio. This is the standardized approach for routing traffic to LLM inference backends in a model-aware way -- accounting for things like KV cache state, backend load, and request priority rather than treating all inference requests as equivalent HTTP traffic. With Istio backing this, teams that are already running Istio as their service mesh have a clear, standards-backed path to inference-aware routing without introducing another ingress layer.
+Second, Gateway API Inference Extension integration reached beta in Istio. This is the standardized approach for routing traffic to LLM inference backends in a model-aware way - accounting for things like KV cache state, backend load, and request priority rather than treating all inference requests as equivalent HTTP traffic. With Istio backing this, teams that are already running Istio as their service mesh have a clear, standards-backed path to inference-aware routing without introducing another ingress layer.
 
 Third, experimental support for agentgateway landed as part of the Istio data plane. Originally created by Solo.io and now a Linux Foundation project, agentgateway is designed for dynamic, AI-driven traffic patterns where connections are often long-lived and traffic shapes differ significantly from typical request-response services.
 
@@ -55,17 +55,17 @@ CNCF announced that the Kubernetes AI Conformance Program has nearly doubled to 
 
 The new KARs include requirements for high-performance pod-to-pod communication (KAR-10), advanced inference ingress (KAR-11), and disaggregated inference support (KAR-41). Two v1.35 Kubernetes features are now explicitly required for AI platform certification: stable in-place pod resizing (so inference models can adjust resources without restarting) and workload-aware scheduling (to avoid resource deadlocks during distributed training). The program is also expanding certification to cover agentic workloads, using the same sandboxing model Kubernetes applies to containers.
 
-**The so-what:** The AI Conformance Program is a purchasing signal as much as a technical one. If you are evaluating Kubernetes distributions for AI workloads, certified platforms give you a baseline guarantee around the primitives that actually matter -- resource flexibility, inference ingress, and scheduling behavior. If you are running AI workloads on an uncertified platform, the KARs are worth reviewing as a self-assessment checklist regardless.
+**The so-what:** The AI Conformance Program is a purchasing signal as much as a technical one. If you are evaluating Kubernetes distributions for AI workloads, certified platforms give you a baseline guarantee around the primitives that actually matter - resource flexibility, inference ingress, and scheduling behavior. If you are running AI workloads on an uncertified platform, the KARs are worth reviewing as a self-assessment checklist regardless.
 
 ### SNCF Wins Top End User Award Running 200+ Clusters Across Two Clouds
 
 France's national railway company, SNCF, won the Top End User Award for 2026. Their case is interesting because it sits at the intersection of cloud migration and data sovereignty, two concerns that do not always resolve cleanly.
 
-SNCF migrated 70% of 2,000 applications to the cloud and standardized on Kubernetes as a unified abstraction across 200+ AWS and Azure clusters. For workloads that require on-premise control -- regulatory requirements, data sovereignty, operational continuity -- they built a private cloud using OpenStack, providing public cloud parity and full automation without handing control to a hyperscaler.
+SNCF migrated 70% of 2,000 applications to the cloud and standardized on Kubernetes as a unified abstraction across 200+ AWS and Azure clusters. For workloads that require on-premise control - regulatory requirements, data sovereignty, operational continuity - they built a private cloud using OpenStack, providing public cloud parity and full automation without handing control to a hyperscaler.
 
 The architecture pattern is worth noting. Kubernetes as a consistent control plane across public and private environments reduces operational complexity significantly. The same tooling, the same deployment patterns, and the same observability pipelines work regardless of whether the underlying compute is AWS, Azure, or bare metal OpenStack. SNCF's platform team manages that heterogeneity through abstraction rather than specialization.
 
-**The so-what:** For organizations in regulated industries or with genuine data sovereignty requirements, SNCF's approach is a reference architecture worth studying. The key insight is that Kubernetes-as-abstraction-layer works across environments, but only if you invest in making that abstraction real -- consistent control planes, consistent GitOps pipelines, consistent observability. Shortcuts in any of those layers make the heterogeneity visible to application teams again.
+**The so-what:** For organizations in regulated industries or with genuine data sovereignty requirements, SNCF's approach is a reference architecture worth studying. The key insight is that Kubernetes-as-abstraction-layer works across environments, but only if you invest in making that abstraction real - consistent control planes, consistent GitOps pipelines, consistent observability. Shortcuts in any of those layers make the heterogeneity visible to application teams again.
 
 ### Model Weights Are Infrastructure, and Nobody Is Treating Them That Way
 
@@ -83,7 +83,7 @@ The SlashData report released at the conference showed 88% of backend developers
 
 The Backstage documentary released at the conference captures how this happened. Backstage went from a Spotify internal tool to a CNCF project to a global standard for internal developer portals in about five years. The number is remarkable: 41% of organizations are now using multi-team collaboration models to manage platform capabilities, and 35% are using hybrid platforms that integrate AI workloads into existing developer platforms rather than building separate AI infrastructure stacks.
 
-That last data point is the operationally significant one. Organizations that are integrating AI into existing platform infrastructure -- the same IDPs, the same golden paths, the same deployment pipelines -- are positioned better than those building parallel AI stacks that their platform teams have to maintain separately.
+That last data point is the operationally significant one. Organizations that are integrating AI into existing platform infrastructure - the same IDPs, the same golden paths, the same deployment pipelines - are positioned better than those building parallel AI stacks that their platform teams have to maintain separately.
 
 **The so-what:** If your organization does not have an internal developer platform story, you are increasingly the exception, not the rule. For organizations that do have platform infrastructure, the 35% integration number is the signal: AI workloads should flow through your existing platform golden paths, not around them. Backstage's plugin model makes this achievable without rewriting your IDP from scratch.
 
