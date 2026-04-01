@@ -14,6 +14,7 @@ Use this section for architecture tradeoffs, reliability and resilience patterns
 <!-- AUTO-LATEST:START -->
 | Date | Article | Summary |
 | --- | --- | --- |
+| 2026-04-01 | [Node Pressure and Eviction: What Kubelet Actually Does When Things Get Tight](2026-04-01-node-pressure-eviction-kubelet.md) | Kubelet's eviction manager is the last line of defense before a node becomes unstable. Understanding how eviction thresholds work, why QoS class determines who dies first, and where the gap between scheduler requests and… |
 | 2026-03-17 | [Horizontal Pod Autoscaler: From Metrics to Scheduling Pressure](2026-03-17-hpa-metrics-to-scheduling-pressure.md) | HPA is a proportional feedback controller, not a provisioning system. Understanding its formula, metrics pipeline lag, and stabilization layer is what separates operators who tune it reliably from those who chase… |
 | 2026-03-16 | [How etcd Consistency Guarantees Shape Kubernetes Control Plane Behavior](2026-03-16-etcd-consistency-kubernetes-control-plane.md) | etcd is not just a database. It is the linearizable coordination primitive that every Kubernetes controller is built on top of. |
 | 2026-03-14 | [The Kubernetes Scheduler: Decision Loop, Plugin Architecture, and Operational Reality](2026-03-14-kubernetes-scheduler-decision-loop.md) | The Kubernetes scheduler is not a router. It is a continuous reconciler that applies a filtering and ranking pipeline to a cluster snapshot. |
