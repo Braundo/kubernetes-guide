@@ -42,7 +42,7 @@ The formula:
 memory.available = node total memory - working set memory
 ```
 
-`working set` is RSS plus cache that cannot be reclaimed without causing a page fault. This is stricter than RSS alone. A process that has read a lot of files might show low RSS but high working set because its file-backed pages are in use.
+`working set` is RSS (Resident Set Size - the portion of a process's memory held in RAM) plus cache that cannot be reclaimed without causing a page fault. This is stricter than RSS alone. A process that has read a lot of files might show low RSS but high working set because its file-backed pages are in use.
 
 This is the first place operators get confused: the scheduler's `allocatable` memory and kubelet's `memory.available` are computed differently and can diverge significantly. Allocatable memory is:
 ```
