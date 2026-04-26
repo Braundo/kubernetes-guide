@@ -13,9 +13,8 @@ Release news focuses on operator impact: behavior changes, potential breakage, a
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
 | --- | --- | --- |
+| 2026-04-26 | [Kubernetes v1.36: ハル (Haru)](2026-04-26-kubernetes-v1-36-haru.md) | Kubernetes v1.36, themed \"ハル (Haru)\" after the Japanese word for spring, arrives with 70 enhancements spanning 18 stable graduations, 25 beta promotions, and 25 new alpha features. |
 | 2026-03-28 | [Kubernetes 1.35 GA: In-Place Pod Resizing Stable and Restart Semantics Formalized](2026-03-28-when-kubernetes-restarts-pod-when-it-doesn-t.md) | Kubernetes 1.35 has reached general availability with in-place pod resource resizing now stable. This release resolves a critical terminology gap that has caused operational confusion across production environments. |
-| 2026-03-06 | [Cluster API v1.12: Introducing In-place Updates and Chained Upgrades](2026-03-06-cluster-api-v1-12-introducing-place-updates-chained-upgrades.md) | Cluster API v1.12.0 shipped on January 27, 2026, introducing two significant lifecycle management capabilities: in-place updates and chained upgrades. |
-| 2026-02-27 | [Kubernetes Gateway API v1.5.0: TLSRoute Reaches Stable](2026-02-27-gateway-api-v1.5.0-tlsroute-stable.md) | TLSRoute graduates to the Standard channel as v1 in Gateway API v1.5.0, along with CORS filters, ListenerSet, and client certificate validation reaching GA. |
 <!-- AUTO-LATEST:END -->
 
 ## Related
