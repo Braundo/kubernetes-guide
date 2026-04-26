@@ -22,7 +22,9 @@ data/k8s_factory/newsletter_issues/
 
 # Local assistant/session files (do not publish)
 .openclaw/
+.claude/
 memory/
+CLAUDE.md
 AGENTS.md
 SOUL.md
 USER.md
