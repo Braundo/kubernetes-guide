@@ -1,14 +1,14 @@
 ---
 icon: lucide/badge-info
 title: Certified Kubernetes Application Developer (CKAD) Exam Guide
-description: Deep preparation guide for the CKAD exam — fast manifest generation, multi-container patterns, probes, config management, and exam strategies that actually help you pass.
+description: Deep preparation guide for the CKAD exam - fast manifest generation, multi-container patterns, probes, config management, and exam strategies that actually help you pass.
 hide:
  - footer
 ---
 
 # Certified Kubernetes Application Developer (CKAD)
 
-The CKAD is a **two-hour, hands-on lab exam** focused entirely on running applications in Kubernetes — not managing the cluster. You'll be creating and modifying workloads, wiring up config and secrets, writing probes, exposing services, and debugging broken apps. Speed is the biggest constraint: you need to produce correct YAML fast and know the right `kubectl` flags without looking them up.
+The CKAD is a **two-hour, hands-on lab exam** focused entirely on running applications in Kubernetes - not managing the cluster. You'll be creating and modifying workloads, wiring up config and secrets, writing probes, exposing services, and debugging broken apps. Speed is the biggest constraint: you need to produce correct YAML fast and know the right `kubectl` flags without looking them up.
 
 ---
 
@@ -108,7 +108,7 @@ kubectl expose deployment myapp --port=80 --target-port=8080 --dry-run=client -o
 
 These appear regularly. Know the YAML for each.
 
-**Sidecar** — enhances the main container (log shipper, proxy):
+**Sidecar** - enhances the main container (log shipper, proxy):
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -132,7 +132,7 @@ spec:
       mountPath: /logs
 ```
 
-**Init Container** — runs to completion before main containers start:
+**Init Container** - runs to completion before main containers start:
 ```yaml
 spec:
   initContainers:
@@ -154,7 +154,7 @@ kubectl debug -it <pod> --image=busybox --target=<container>
 ### Jobs and CronJobs
 
 ```yaml
-# Job — runs once
+# Job - runs once
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -165,7 +165,7 @@ spec:
   backoffLimit: 4      # retry up to 4 times before marking failed
   template:
     spec:
-      restartPolicy: Never   # Never or OnFailure — not Always
+      restartPolicy: Never   # Never or OnFailure - not Always
       containers:
       - name: pi
         image: perl
@@ -207,7 +207,7 @@ Cron schedule cheat sheet:
 
 ## Domain 2: Application Configuration
 
-### ConfigMaps — Four Ways to Use Them
+### ConfigMaps - Four Ways to Use Them
 
 **1. Environment variable (single key):**
 ```yaml
@@ -250,7 +250,7 @@ volumes:
       path: app.properties   # mounted as /etc/config/app.properties
 ```
 
-### Secrets — Same Patterns, Different Object
+### Secrets - Same Patterns, Different Object
 
 ```yaml
 # Single key env var
@@ -368,7 +368,7 @@ kubectl rollout undo deployment/myapp --to-revision=2
 kubectl set image deployment/myapp nginx=nginx:1.25
 ```
 
-**Canary deployment** (manual approach — two deployments, adjust replicas):
+**Canary deployment** (manual approach - two deployments, adjust replicas):
 ```bash
 # stable: 9 replicas with label version=stable
 # canary: 1 replica with label version=canary
@@ -409,11 +409,11 @@ spec:
 
 ## Domain 4: Application Observability and Maintenance
 
-### Probes — Get These Right
+### Probes - Get These Right
 
 Probes are a major exam topic. There are three types, and you need to know when to use each.
 
-**Liveness probe** — restarts the container if it fails:
+**Liveness probe** - restarts the container if it fails:
 ```yaml
 livenessProbe:
   httpGet:
@@ -424,7 +424,7 @@ livenessProbe:
   failureThreshold: 3        # restart after 3 consecutive failures
 ```
 
-**Readiness probe** — removes pod from service endpoints if it fails (doesn't restart):
+**Readiness probe** - removes pod from service endpoints if it fails (doesn't restart):
 ```yaml
 readinessProbe:
   tcpSocket:
@@ -433,7 +433,7 @@ readinessProbe:
   periodSeconds: 5
 ```
 
-**Startup probe** — for slow-starting apps; disables liveness/readiness until it passes:
+**Startup probe** - for slow-starting apps; disables liveness/readiness until it passes:
 ```yaml
 startupProbe:
   exec:
@@ -443,9 +443,9 @@ startupProbe:
 ```
 
 **Probe types:**
-- `httpGet` — HTTP GET, success if 200–399
-- `tcpSocket` — TCP connection succeeds
-- `exec` — command exits with 0
+- `httpGet` - HTTP GET, success if 200–399
+- `tcpSocket` - TCP connection succeeds
+- `exec` - command exits with 0
 
 **Common mistake:** setting `initialDelaySeconds` too low for a slow app. The liveness probe fires before the app is up, triggers a restart, and you get a CrashLoopBackOff even though the app itself is fine.
 
@@ -457,7 +457,7 @@ kubectl describe pod <name>   # look at Events section
 kubectl logs <name>
 kubectl logs <name> --previous   # logs from crashed container
 
-# Running pod — inspect without exec
+# Running pod - inspect without exec
 kubectl describe pod <name>
 kubectl top pod <name>   # resource usage (needs metrics-server)
 
@@ -479,7 +479,7 @@ kubectl cp <pod>:/var/log/app.log ./app.log
 ### Service Types
 
 ```yaml
-# ClusterIP (default) — internal only
+# ClusterIP (default) - internal only
 apiVersion: v1
 kind: Service
 metadata:
@@ -492,7 +492,7 @@ spec:
     targetPort: 8080   # port on the pod
   type: ClusterIP
 
-# NodePort — exposed on every node
+# NodePort - exposed on every node
 spec:
   type: NodePort
   ports:
@@ -501,7 +501,7 @@ spec:
     nodePort: 30080    # optional; 30000-32767 if not set
 ```
 
-**Headless Service** — no cluster IP; returns pod IPs directly via DNS:
+**Headless Service** - no cluster IP; returns pod IPs directly via DNS:
 ```yaml
 spec:
   clusterIP: None
@@ -571,7 +571,7 @@ spec:
 
 This catches exam-takers who know the concepts but fumble the syntax. Quick reference:
 
-**Projected volume** — merge multiple sources into one volume:
+**Projected volume** - merge multiple sources into one volume:
 ```yaml
 volumes:
 - name: projected
@@ -583,7 +583,7 @@ volumes:
         secretName: app-secret
 ```
 
-**Downward API** — expose pod metadata to the container:
+**Downward API** - expose pod metadata to the container:
 ```yaml
 env:
 - name: POD_NAME
@@ -628,7 +628,7 @@ kubectl get pod <name> -o yaml
 kubectl get deployment <name> -o yaml
 ```
 
-**`kubectl explain` — use instead of searching docs for field names:**
+**`kubectl explain` - use instead of searching docs for field names:**
 ```bash
 kubectl explain pod.spec.containers.livenessProbe
 kubectl explain deployment.spec.strategy
@@ -653,29 +653,29 @@ Understanding the format helps you read questions efficiently:
 
 ## Common CKAD Mistakes
 
-1. **Wrong namespace** — most questions specify one. Always use `-n <ns>` or `--namespace`.
-2. **`restartPolicy: Always` on a Job** — Jobs need `Never` or `OnFailure`. This is the most common Job mistake.
-3. **Forgetting `selector` in a Service** — the selector must match the pod labels.
-4. **Missing `containerPort`** — doesn't break functionality (it's informational only) but some exam graders check for it.
-5. **ConfigMap/Secret key case mismatch** — `DB_HOST` vs `db_host` — exact match required.
-6. **Liveness probe too aggressive** — `failureThreshold: 1` with `initialDelaySeconds: 0` will restart a healthy pod before it finishes starting.
-7. **Not verifying** — spend 15 seconds confirming the resource exists and has the right spec.
+1. **Wrong namespace** - most questions specify one. Always use `-n <ns>` or `--namespace`.
+2. **`restartPolicy: Always` on a Job** - Jobs need `Never` or `OnFailure`. This is the most common Job mistake.
+3. **Forgetting `selector` in a Service** - the selector must match the pod labels.
+4. **Missing `containerPort`** - doesn't break functionality (it's informational only) but some exam graders check for it.
+5. **ConfigMap/Secret key case mismatch** - `DB_HOST` vs `db_host` - exact match required.
+6. **Liveness probe too aggressive** - `failureThreshold: 1` with `initialDelaySeconds: 0` will restart a healthy pod before it finishes starting.
+7. **Not verifying** - spend 15 seconds confirming the resource exists and has the right spec.
 
 ---
 
 ## Practice Approach
 
-1. **Use Killer.sh** — the free simulator included with your exam purchase. It's harder than the real exam and gives you a realistic time constraint.
-2. **Practice generating YAMLs from scratch without the docs** — the exam has the docs available, but looking things up takes time. Know the core manifest patterns cold.
-3. **Time constraint drills** — give yourself 2 minutes per task. If you can't do it in 2 minutes, practice that scenario until you can.
+1. **Use Killer.sh** - the free simulator included with your exam purchase. It's harder than the real exam and gives you a realistic time constraint.
+2. **Practice generating YAMLs from scratch without the docs** - the exam has the docs available, but looking things up takes time. Know the core manifest patterns cold.
+3. **Time constraint drills** - give yourself 2 minutes per task. If you can't do it in 2 minutes, practice that scenario until you can.
 4. **Deliberately practice the annoying parts**: multi-container pods, projection volumes, complex probe configurations, CronJob schedules.
 
 ---
 
 ## Recommended Resources
 
-- [Killer.sh CKAD Simulator](https://killer.sh) — the best prep tool, included with exam purchase
-- [KodeKloud CKAD Course](https://kodekloud.com/courses/certified-kubernetes-application-developer-ckad/) — good hands-on labs
-- [Kubernetes Official Docs](https://kubernetes.io/docs/) — your only reference during the exam
-- [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) — bookmark this
-- [Official CKAD Curriculum](https://github.com/cncf/curriculum) — the authoritative topic list
+- [Killer.sh CKAD Simulator](https://killer.sh) - the best prep tool, included with exam purchase
+- [KodeKloud CKAD Course](https://kodekloud.com/courses/certified-kubernetes-application-developer-ckad/) - good hands-on labs
+- [Kubernetes Official Docs](https://kubernetes.io/docs/) - your only reference during the exam
+- [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) - bookmark this
+- [Official CKAD Curriculum](https://github.com/cncf/curriculum) - the authoritative topic list

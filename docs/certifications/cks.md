@@ -1,16 +1,16 @@
 ---
 icon: lucide/badge-info
 title: Certified Kubernetes Security Specialist (CKS) Exam Guide
-description: Deep preparation guide for the CKS exam — Falco rules, audit policies, encryption config, Pod Security, securityContext, RBAC, NetworkPolicy, and exam strategies that actually help you pass.
+description: Deep preparation guide for the CKS exam - Falco rules, audit policies, encryption config, Pod Security, securityContext, RBAC, NetworkPolicy, and exam strategies that actually help you pass.
 hide:
  - footer
 ---
 
 # Certified Kubernetes Security Specialist (CKS)
 
-The CKS is the hardest Kubernetes certification. It's hands-on, time-pressured, and tests **applied security knowledge** across a live cluster — not familiarity with concepts. You need an active CKA before you can sit it, and you'll need that cluster administration depth to solve the problems.
+The CKS is the hardest Kubernetes certification. It's hands-on, time-pressured, and tests **applied security knowledge** across a live cluster - not familiarity with concepts. You need an active CKA before you can sit it, and you'll need that cluster administration depth to solve the problems.
 
-The exam tests your ability to *harden what's already there*, *detect what's happening*, and *limit blast radius when things go wrong*. The questions aren't "configure a cluster from scratch" — they're "fix this insecure thing" or "write this policy to enforce this constraint."
+The exam tests your ability to *harden what's already there*, *detect what's happening*, and *limit blast radius when things go wrong*. The questions aren't "configure a cluster from scratch" - they're "fix this insecure thing" or "write this policy to enforce this constraint."
 
 ---
 
@@ -35,7 +35,7 @@ complete -F __start_kubectl k
 export KUBE_EDITOR=vim
 ```
 
-The CKS includes more tool-specific work than CKA/CKAD — `falco`, `trivy`, `kubesec`, `apparmor_parser`. Know the basic syntax of each before the exam.
+The CKS includes more tool-specific work than CKA/CKAD - `falco`, `trivy`, `kubesec`, `apparmor_parser`. Know the basic syntax of each before the exam.
 
 ---
 
@@ -82,10 +82,10 @@ Audit policies control what gets logged. They match events by stage and level.
 **Stages:** `RequestReceived`, `ResponseStarted`, `ResponseComplete`, `Panic`
 
 **Levels:**
-- `None` — don't log
-- `Metadata` — log request metadata (who, what resource, when) but not body
-- `Request` — log metadata + request body
-- `RequestResponse` — log metadata + request body + response body
+- `None` - don't log
+- `Metadata` - log request metadata (who, what resource, when) but not body
+- `Request` - log metadata + request body
+- `RequestResponse` - log metadata + request body + response body
 
 ```yaml
 # /etc/kubernetes/audit-policy.yaml
@@ -163,14 +163,14 @@ ETCDCTL_API=3 etcdctl get /registry/secrets/default/my-secret \
 Pod Security Admission (PSA) replaced PodSecurityPolicy. It enforces security standards at the namespace level via labels.
 
 **Three profiles:**
-- `privileged` — no restrictions
-- `baseline` — prevents obvious escalation
-- `restricted` — follows all current best practices
+- `privileged` - no restrictions
+- `baseline` - prevents obvious escalation
+- `restricted` - follows all current best practices
 
 **Three modes:**
-- `enforce` — violating pods are rejected
-- `audit` — violations logged but allowed
-- `warn` — user gets a warning but pod is allowed
+- `enforce` - violating pods are rejected
+- `audit` - violations logged but allowed
+- `warn` - user gets a warning but pod is allowed
 
 ```bash
 # Label a namespace to enforce restricted policy
@@ -198,7 +198,7 @@ spec:
         drop: ["ALL"]
 ```
 
-### securityContext — Know Every Field
+### securityContext - Know Every Field
 
 ```yaml
 # Pod-level context
@@ -407,7 +407,7 @@ kubesec scan pod.yaml -o json
 
 This is the largest domain. Falco is the centerpiece.
 
-### Falco — Core Concepts
+### Falco - Core Concepts
 
 Falco monitors system calls in real time and fires alerts when they match rules. For the CKS:
 - Know how to **modify an existing rule** to change its behavior
@@ -439,15 +439,15 @@ Falco monitors system calls in real time and fires alerts when they match rules.
 
 **Key Falco fields to know:**
 ```
-proc.name         — process name
-proc.cmdline      — full command line
-user.name         — user running the process
-container.name    — container name
-container.image.repository — image name
-fd.name           — file descriptor / filename
-evt.type          — syscall type (e.g., open, execve, connect)
-k8s.pod.name      — Kubernetes pod name
-k8s.ns.name       — Kubernetes namespace
+proc.name         - process name
+proc.cmdline      - full command line
+user.name         - user running the process
+container.name    - container name
+container.image.repository - image name
+fd.name           - file descriptor / filename
+evt.type          - syscall type (e.g., open, execve, connect)
+k8s.pod.name      - Kubernetes pod name
+k8s.ns.name       - Kubernetes namespace
 ```
 
 **Common exam patterns:**
@@ -456,7 +456,7 @@ Override a rule to change its output or priority:
 ```yaml
 # In /etc/falco/falco_rules.local.yaml
 - rule: Terminal shell in container
-  desc: Override — add namespace to output
+  desc: Override - add namespace to output
   condition: >
     spawned_process and container and
     (proc.name = bash or proc.name = sh)
@@ -491,7 +491,7 @@ kubectl logs -n falco <falco-pod> -f
 tail -f /var/log/falco.log
 ```
 
-### Audit Logging — What to Check
+### Audit Logging - What to Check
 
 When an exam question says "review audit logs":
 ```bash
@@ -512,7 +512,7 @@ grep '"resource":"secrets"' /var/log/kubernetes/audit.log
 
 ## Domain 6: RBAC and Least Privilege
 
-### Principle of Least Privilege — The Exam Pattern
+### Principle of Least Privilege - The Exam Pattern
 
 The exam won't give you overly complex RBAC questions, but it will ask you to:
 1. Find an overly permissive role and restrict it
@@ -530,7 +530,7 @@ kubectl auth can-i delete pods --as=system:serviceaccount:default:my-sa -n defau
 kubectl auth can-i get secrets --as=jane -n production
 ```
 
-**Minimal role — read pods only:**
+**Minimal role - read pods only:**
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -546,7 +546,7 @@ rules:
 
 **What NOT to grant:**
 ```yaml
-# Never this in a real cluster — and CKS will ask you to fix this
+# Never this in a real cluster - and CKS will ask you to fix this
 rules:
 - apiGroups: ["*"]
   resources: ["*"]
@@ -561,11 +561,11 @@ kubectl create rolebinding pod-reader-binding \
   -n default
 ```
 
-### NetworkPolicy — CKS-Level Patterns
+### NetworkPolicy - CKS-Level Patterns
 
 The CKS goes deeper on NetworkPolicy than the CKA. Know deny-all plus specific allow patterns.
 
-**Full isolation — deny everything:**
+**Full isolation - deny everything:**
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -704,37 +704,37 @@ spec:
 
 ## CKS Common Mistakes
 
-1. **Breaking the API server** — editing `/etc/kubernetes/manifests/kube-apiserver.yaml` with a syntax error. Always `cp kube-apiserver.yaml kube-apiserver.yaml.bak` before editing. Check the API server came back up after every edit: `crictl ps | grep apiserver`.
+1. **Breaking the API server** - editing `/etc/kubernetes/manifests/kube-apiserver.yaml` with a syntax error. Always `cp kube-apiserver.yaml kube-apiserver.yaml.bak` before editing. Check the API server came back up after every edit: `crictl ps | grep apiserver`.
 
-2. **Encryption doesn't apply to existing secrets** — after enabling `EncryptionConfiguration`, run the replacement command to re-encrypt existing secrets.
+2. **Encryption doesn't apply to existing secrets** - after enabling `EncryptionConfiguration`, run the replacement command to re-encrypt existing secrets.
 
-3. **Audit policy first-match-wins** — if your specific rule comes after the catch-all, it never fires. Always order from most-specific to least-specific.
+3. **Audit policy first-match-wins** - if your specific rule comes after the catch-all, it never fires. Always order from most-specific to least-specific.
 
-4. **Falco rule not taking effect** — Falco must be restarted after editing rules. `systemctl restart falco` or delete the pod.
+4. **Falco rule not taking effect** - Falco must be restarted after editing rules. `systemctl restart falco` or delete the pod.
 
-5. **NetworkPolicy with deny-all egress breaks DNS** — always add a port 53 egress allow alongside your deny-all.
+5. **NetworkPolicy with deny-all egress breaks DNS** - always add a port 53 egress allow alongside your deny-all.
 
-6. **Forgetting Pod Security namespace labels** — `kubectl label namespace` syntax is easy to mistype. Verify with `kubectl get namespace <name> -o yaml`.
+6. **Forgetting Pod Security namespace labels** - `kubectl label namespace` syntax is easy to mistype. Verify with `kubectl get namespace <name> -o yaml`.
 
-7. **Wrong API group in RBAC** — core resources (pods, secrets, services) use `apiGroups: [""]`. Apps resources (deployments) use `apiGroups: ["apps"]`. Extensions use `apiGroups: ["extensions"]`.
+7. **Wrong API group in RBAC** - core resources (pods, secrets, services) use `apiGroups: [""]`. Apps resources (deployments) use `apiGroups: ["apps"]`. Extensions use `apiGroups: ["extensions"]`.
 
 ---
 
 ## Practice Approach
 
-1. **Killer.sh** — mandatory. The CKS simulator is brutal and harder than the real exam. Do it twice and review every missed question.
+1. **Killer.sh** - mandatory. The CKS simulator is brutal and harder than the real exam. Do it twice and review every missed question.
 2. **Practice breaking and fixing**: enable encryption at rest, audit policy with a specific rule, write a Falco rule that fires, apply PSA labels and see what pods get rejected.
-3. **Build fluency with `kubectl auth can-i --list`** — you'll use it to verify every RBAC change you make.
-4. **Time yourself** — the CKS has fewer questions than CKA/CKAD but they're harder. You have less margin to get stuck.
-5. **Know where to find things** — Falco docs, PSA docs, seccomp/AppArmor examples in the official k8s docs. Navigate fast.
+3. **Build fluency with `kubectl auth can-i --list`** - you'll use it to verify every RBAC change you make.
+4. **Time yourself** - the CKS has fewer questions than CKA/CKAD but they're harder. You have less margin to get stuck.
+5. **Know where to find things** - Falco docs, PSA docs, seccomp/AppArmor examples in the official k8s docs. Navigate fast.
 
 ---
 
 ## Recommended Resources
 
-- [Killer.sh CKS Simulator](https://killer.sh) — mandatory; included with exam purchase
-- [KodeKloud CKS Course](https://kodekloud.com/courses/certified-kubernetes-security-specialist-cks/) — comprehensive hands-on labs
-- [Kubernetes Security Docs](https://kubernetes.io/docs/concepts/security/) — the source of truth for PSA, seccompProfile, securityContext
-- [Falco Documentation](https://falco.org/docs/) — open book during the exam; bookmark the rules reference
-- [Official CKS Curriculum](https://github.com/cncf/curriculum) — authoritative topic list
-- [Aqua Security blog — CKS tips](https://www.aquasec.com/cloud-native-academy/kubernetes-101/cks-exam/) — practical walkthroughs of the hardest topics
+- [Killer.sh CKS Simulator](https://killer.sh) - mandatory; included with exam purchase
+- [KodeKloud CKS Course](https://kodekloud.com/courses/certified-kubernetes-security-specialist-cks/) - comprehensive hands-on labs
+- [Kubernetes Security Docs](https://kubernetes.io/docs/concepts/security/) - the source of truth for PSA, seccompProfile, securityContext
+- [Falco Documentation](https://falco.org/docs/) - open book during the exam; bookmark the rules reference
+- [Official CKS Curriculum](https://github.com/cncf/curriculum) - authoritative topic list
+- [Aqua Security blog - CKS tips](https://www.aquasec.com/cloud-native-academy/kubernetes-101/cks-exam/) - practical walkthroughs of the hardest topics

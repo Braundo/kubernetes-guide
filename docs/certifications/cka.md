@@ -1,14 +1,14 @@
 ---
 icon: lucide/badge-info
 title: Certified Kubernetes Administrator (CKA) Exam Guide
-description: Deep preparation guide for the CKA exam — commands, YAML patterns, troubleshooting workflows, and exam strategies that actually help you pass.
+description: Deep preparation guide for the CKA exam - commands, YAML patterns, troubleshooting workflows, and exam strategies that actually help you pass.
 hide:
  - footer
 ---
 
 # Certified Kubernetes Administrator (CKA)
 
-The CKA is a **two-hour, hands-on lab exam** across multiple Kubernetes clusters. You're solving real problems under time pressure — no multiple choice, no theory. This guide focuses on the things that actually matter: the commands you need muscle memory for, the YAML you should be able to produce fast, and the systematic approaches that prevent you from spinning in place during troubleshooting questions.
+The CKA is a **two-hour, hands-on lab exam** across multiple Kubernetes clusters. You're solving real problems under time pressure - no multiple choice, no theory. This guide focuses on the things that actually matter: the commands you need muscle memory for, the YAML you should be able to produce fast, and the systematic approaches that prevent you from spinning in place during troubleshooting questions.
 
 ---
 
@@ -34,7 +34,7 @@ Do this before touching any question. It saves 10+ minutes across the exam.
 source <(kubectl completion bash)
 echo "source <(kubectl completion bash)" >> ~/.bashrc
 
-# Alias — use k everywhere
+# Alias - use k everywhere
 alias k=kubectl
 complete -F __start_kubectl k
 
@@ -49,13 +49,13 @@ set tabstop=2
 set shiftwidth=2
 ```
 
-For nano users, the terminal's default is usually fine — don't waste time on this.
+For nano users, the terminal's default is usually fine - don't waste time on this.
 
 ---
 
 ## Time Management
 
-- Each question shows its **percentage weight** — use that to triage. A 13% question deserves 3x more time than a 4% one.
+- Each question shows its **percentage weight** - use that to triage. A 13% question deserves 3x more time than a 4% one.
 - **Skip and flag** anything taking more than 3–4 minutes. Come back after completing the easier tasks.
 - Always verify your answer: `kubectl get <resource> -n <namespace>` after every task.
 - The exam has **multiple cluster contexts**. **Always run the context-switch command** shown at the top of each question before starting. Forgetting this is one of the most common failure modes.
@@ -68,7 +68,7 @@ kubectl config use-context <cluster-name>
 
 ## Domain 1: Cluster Architecture, Installation & Configuration (25%)
 
-### kubeadm — Know This Cold
+### kubeadm - Know This Cold
 
 **Bootstrap a cluster:**
 ```bash
@@ -94,7 +94,7 @@ If the token expired, generate a new one:
 kubeadm token create --print-join-command
 ```
 
-**Upgrade a cluster** (this is a multi-step process — get it right):
+**Upgrade a cluster** (this is a multi-step process - get it right):
 ```bash
 # On the control plane node:
 apt-get update
@@ -141,7 +141,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /opt/etcd-backup.db \
 # Also update the hostPath volume to match the new data-dir
 ```
 
-**Common mistake:** forgetting to update `hostPath` in the etcd manifest after restore. The manifest has both a `--data-dir` flag *and* a volume mount — both need to match the new path.
+**Common mistake:** forgetting to update `hostPath` in the etcd manifest after restore. The manifest has both a `--data-dir` flag *and* a volume mount - both need to match the new path.
 
 ### Static Pods
 
@@ -179,7 +179,7 @@ kubeadm certs renew apiserver
 
 ## Domain 2: Workloads & Scheduling (15%)
 
-### Generate YAML Fast — Don't Write From Scratch
+### Generate YAML Fast - Don't Write From Scratch
 
 ```bash
 # Pod
@@ -206,14 +206,14 @@ kubectl create secret generic mysecret --from-literal=password=abc123 --dry-run=
 
 ### Scheduling Controls
 
-**NodeSelector** — simple label match:
+**NodeSelector** - simple label match:
 ```yaml
 spec:
   nodeSelector:
     disktype: ssd
 ```
 
-**Node Affinity** — more expressive:
+**Node Affinity** - more expressive:
 ```yaml
 spec:
   affinity:
@@ -300,7 +300,7 @@ kubectl expose deployment myapp --port=80 --type=NodePort --dry-run=client -o ya
 # Then edit svc.yaml to add: nodePort: 30080 under ports
 ```
 
-### DNS — What You Must Know
+### DNS - What You Must Know
 
 Every service gets a DNS name: `<service>.<namespace>.svc.cluster.local`
 
@@ -324,7 +324,7 @@ kubectl get svc -n kube-system kube-dns
 
 ### NetworkPolicy
 
-NetworkPolicy is **additive** — if no policy selects a pod, all traffic is allowed. Once any policy selects a pod, only traffic explicitly allowed passes.
+NetworkPolicy is **additive** - if no policy selects a pod, all traffic is allowed. Once any policy selects a pod, only traffic explicitly allowed passes.
 
 **Deny all ingress:**
 ```yaml
@@ -462,9 +462,9 @@ spec:
 ```
 
 **Access modes to know:**
-- `ReadWriteOnce` (RWO) — one node, read/write
-- `ReadOnlyMany` (ROX) — many nodes, read only
-- `ReadWriteMany` (RWX) — many nodes, read/write
+- `ReadWriteOnce` (RWO) - one node, read/write
+- `ReadOnlyMany` (ROX) - many nodes, read only
+- `ReadWriteMany` (RWX) - many nodes, read/write
 
 ### StorageClass
 
@@ -504,20 +504,20 @@ kubectl exec -it <name> -n <ns> -- /bin/sh
 ```
 
 **Exit codes that matter:**
-- `0` — success
-- `1` — application error
-- `137` — OOM killed (137 = 128 + 9/SIGKILL)
-- `139` — segfault
-- `OOMKilled` in reason — hit memory limit, increase `resources.limits.memory`
+- `0` - success
+- `1` - application error
+- `137` - OOM killed (137 = 128 + 9/SIGKILL)
+- `139` - segfault
+- `OOMKilled` in reason - hit memory limit, increase `resources.limits.memory`
 
 ### Common Pod Failure States
 
 | Status | Likely cause |
 |--------|-------------|
-| `Pending` | No node can schedule it — check taints, resource requests, nodeSelector |
+| `Pending` | No node can schedule it - check taints, resource requests, nodeSelector |
 | `ImagePullBackOff` | Image name/tag wrong, registry auth missing, network issue |
-| `CrashLoopBackOff` | App keeps crashing — check logs, check command/args |
-| `OOMKilled` | Memory limit too low — check `kubectl describe` for reason |
+| `CrashLoopBackOff` | App keeps crashing - check logs, check command/args |
+| `OOMKilled` | Memory limit too low - check `kubectl describe` for reason |
 | `ContainerCreating` | Volume mount issue, init container running, CNI problem |
 | `Terminating` (stuck) | `kubectl delete pod <name> --grace-period=0 --force` |
 
@@ -609,11 +609,11 @@ kubectl drain node01 --ignore-daemonsets --delete-emptydir-data
 kubectl uncordon node01
 ```
 
-**`--ignore-daemonsets`** is almost always required — without it, drain fails if DaemonSet pods are present.
+**`--ignore-daemonsets`** is almost always required - without it, drain fails if DaemonSet pods are present.
 
 ---
 
-## RBAC — Know the Four Objects
+## RBAC - Know the Four Objects
 
 ```bash
 # Create a Role (namespace-scoped)
@@ -721,28 +721,28 @@ kubectl explain pod.spec.containers.resources
 
 ## Common Exam Mistakes
 
-1. **Forgetting to switch context** before starting a question — always run the `kubectl config use-context` line given in the question.
-2. **Wrong namespace** — many tasks specify a namespace. Always use `-n <namespace>` explicitly.
-3. **Not verifying your work** — take 20 seconds after each task to confirm the resource exists and looks right.
-4. **Spending too long on one task** — if you're stuck after 5 minutes on a low-weight task, flag it and move on.
+1. **Forgetting to switch context** before starting a question - always run the `kubectl config use-context` line given in the question.
+2. **Wrong namespace** - many tasks specify a namespace. Always use `-n <namespace>` explicitly.
+3. **Not verifying your work** - take 20 seconds after each task to confirm the resource exists and looks right.
+4. **Spending too long on one task** - if you're stuck after 5 minutes on a low-weight task, flag it and move on.
 5. **etcd restore: forgetting to update hostPath** in the etcd static pod manifest.
-6. **Drain failing** — add `--ignore-daemonsets --delete-emptydir-data` to handle almost all drain failures.
-7. **Editing a running deployment and forgetting to save** — use `:wq` in vim; confirm with `kubectl get`.
+6. **Drain failing** - add `--ignore-daemonsets --delete-emptydir-data` to handle almost all drain failures.
+7. **Editing a running deployment and forgetting to save** - use `:wq` in vim; confirm with `kubectl get`.
 
 ---
 
 ## Practice Approach
 
-1. **Use Killer.sh** — it comes free with your exam registration and is harder than the real exam. Do it twice.
-2. **Build clusters with kubeadm** in VMs or cloud instances — not just managed services. You need to know the plumbing.
-3. **Time yourself** — practice 17 tasks in 2 hours. Build speed with `kubectl` before sitting the exam.
-4. **Break things on purpose** — misconfigure etcd, stop kubelet, corrupt a static pod manifest, then fix it. Troubleshooting fluency comes from breaking things, not reading about them.
+1. **Use Killer.sh** - it comes free with your exam registration and is harder than the real exam. Do it twice.
+2. **Build clusters with kubeadm** in VMs or cloud instances - not just managed services. You need to know the plumbing.
+3. **Time yourself** - practice 17 tasks in 2 hours. Build speed with `kubectl` before sitting the exam.
+4. **Break things on purpose** - misconfigure etcd, stop kubelet, corrupt a static pod manifest, then fix it. Troubleshooting fluency comes from breaking things, not reading about them.
 
 ---
 
 ## Recommended Resources
 
-- [Killer.sh CKA Simulator](https://killer.sh) — comes with exam purchase; the single best prep tool
-- [KodeKloud CKA Course](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/) — solid hands-on labs
-- [Kubernetes Official Docs](https://kubernetes.io/docs/) — your only reference during the exam; know how to navigate it fast
-- [Official CKA Curriculum](https://github.com/cncf/curriculum) — the authoritative list of exam topics
+- [Killer.sh CKA Simulator](https://killer.sh) - comes with exam purchase; the single best prep tool
+- [KodeKloud CKA Course](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/) - solid hands-on labs
+- [Kubernetes Official Docs](https://kubernetes.io/docs/) - your only reference during the exam; know how to navigate it fast
+- [Official CKA Curriculum](https://github.com/cncf/curriculum) - the authoritative list of exam topics

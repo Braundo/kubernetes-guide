@@ -15,7 +15,7 @@ The Kubernetes Gateway API project shipped version 1.5.0, and while the release 
 
 ## Release Summary
 
-Gateway API v1.5.0 is a stability-focused release. The headline change is TLSRoute graduating to `v1` in the Standard channel — moving from an alpha API with breakage caveats to a stable, production-safe primitive. Several other features also reach GA in this release, including HTTPRoute CORS filters, ListenerSet, and Gateway client certificate validation.
+Gateway API v1.5.0 is a stability-focused release. The headline change is TLSRoute graduating to `v1` in the Standard channel - moving from an alpha API with breakage caveats to a stable, production-safe primitive. Several other features also reach GA in this release, including HTTPRoute CORS filters, ListenerSet, and Gateway client certificate validation.
 
 ---
 
@@ -48,7 +48,7 @@ For organizations operating at scale, API stability is a prerequisite for adopti
 
 - **Standardize TLSRoute in infrastructure-as-code** without worrying about breaking changes forcing rewrites.
 - **Build internal platform tooling** on a stable API surface with confidence in long-term support.
-- **Meet compliance and audit requirements** more easily — stable APIs are far easier to document, govern, and sign off on.
+- **Meet compliance and audit requirements** more easily - stable APIs are far easier to document, govern, and sign off on.
 - **Adopt TLSRoute across multi-cluster environments** without treating it as experimental infrastructure.
 
 Gateway API's conformance testing model means implementations (Envoy Gateway, Cilium, Istio, and others) must validate against the stable spec, giving teams more confidence that behavior is consistent and portable across ingress controllers.
@@ -59,8 +59,8 @@ Gateway API's conformance testing model means implementations (Envoy Gateway, Ci
 
 1. **Migrate TLSRoute resources from `v1alpha2` to `v1`** before upgrading to v1.6, which removes the alpha version.
 2. **Verify your cluster runs Kubernetes 1.31+** to benefit from TLSRoute's CEL validation.
-3. **Review the new `ValidatingAdmissionPolicy`** (`safe-upgrades.gateway.networking.k8s.io`) — if your CRD management workflow conflicts with it, remove it intentionally rather than working around it.
-4. **Update conformance tests** if you maintain a Gateway API implementation — required sections changed with the new stable promotions.
+3. **Review the new `ValidatingAdmissionPolicy`** (`safe-upgrades.gateway.networking.k8s.io`) - if your CRD management workflow conflicts with it, remove it intentionally rather than working around it.
+4. **Update conformance tests** if you maintain a Gateway API implementation - required sections changed with the new stable promotions.
 
 ---
 
