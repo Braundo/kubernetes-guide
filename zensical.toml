@@ -48,7 +48,6 @@ Copyright &copy; 2026 k8s.guide
 nav = [
   { "Home" = "index.md" },
   { "Learn Kubernetes" = [
-    { "Learning Paths" = "learn/index.md" },
     { "Foundations" = [
       { "Overview" = "getting-started/overview.md" },
       { "Kubernetes API" = "getting-started/kubernetes-api.md" },

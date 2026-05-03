@@ -237,4 +237,4 @@ Migrate from webhook-based scheduler extenders to the scheduling framework plugi
 - Parent index: [Opinion & Overview](index.md)
 - Related: [Why Kubernetes Scheduling Uses Requests, Not Limits](2026-03-10-kubernetes-scheduling-requests-not-limits.md)
 - Related: [True HA in Kubernetes: Why Multi-Zone Alone Isn't Enough](2026-03-10-true-ha-resiliency-beyond-multi-zone.md)
-- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)
+- Evergreen reference: [Kubernetes overview](../../getting-started/overview.md)

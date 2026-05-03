@@ -13,9 +13,8 @@ The editorial goal is straightforward: explain Kubernetes clearly, reduce noise,
 
 ## What You Will Find Here
 
-- [Learning paths](../learn/index.md) that move from fundamentals to production operations
 - [Certificates prep](../certifications/certification-preparation.md) for CKA, CKAD, and CKS
-- [News](../news/releases/index.md) for release, security, ecosystem, and tool radar coverage
+- [News](../news/index.md) for release, security, ecosystem, and tool radar coverage
 - [Weekly newsletter](../index.md#weekly-newsletter) that summarizes the highest-impact items
 
 ## Editorial Disclaimer

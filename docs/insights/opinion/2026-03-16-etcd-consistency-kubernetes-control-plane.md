@@ -156,4 +156,4 @@ Watch stream propagation is not directly slowed by write latency, but event deli
 - Parent index: [Opinion & Overview](index.md)
 - Related: [The Kubernetes Scheduler: Decision Loop, Plugin Architecture, and Operational Reality](2026-03-14-kubernetes-scheduler-decision-loop.md)
 - Related: [How Traffic Actually Flows in Kubernetes](2026-03-11-how-traffic-flows-in-kubernetes.md)
-- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)
+- Evergreen reference: [Kubernetes overview](../../getting-started/overview.md)

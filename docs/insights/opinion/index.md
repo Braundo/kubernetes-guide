@@ -27,6 +27,4 @@ Use this section for architecture tradeoffs, reliability and resilience patterns
 ## Related
 
 - [Tool Radar](../tool-radar/index.md)
-- [Release news](../../news/releases/index.md)
-- [Security news](../../news/security/index.md)
-- [Kubernetes learning paths](../../learn/index.md)
+- [News](../../news/index.md)

@@ -56,4 +56,4 @@ Teams should revisit their platform engineering roadmaps with this shift in mind
 - Related: [Spotlight on SIG Architecture API Governance](2026-03-06-spotlight-sig-architecture-api-governance.md)
 - Related: [Ingress-NGINX Migration Risk Signals Before March 2026 Retirement](2026-03-06-ingress-nginx-migration-risk-signals.md)
 - Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
-- Evergreen reference: [Kubernetes learning paths](../learn/index.md)
+- Evergreen reference: [Kubernetes overview](../getting-started/overview.md)

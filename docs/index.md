@@ -29,7 +29,7 @@ hide:
     ---
     Follow structured paths from fundamentals through production operations.
 
-    [Open Learning Paths](learn/index.md)
+    [Start Learning](getting-started/overview.md)
 
 -   :lucide-scroll-text: **Certificates**
 

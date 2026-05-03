@@ -199,4 +199,4 @@ The fifth sync, at approximately T+75s, would need to compute `desiredReplicas >
 - Related: [The Kubernetes Scheduler: Decision Loop, Plugin Architecture, and Operational Reality](2026-03-14-kubernetes-scheduler-decision-loop.md)
 - Related: [How etcd Consistency Guarantees Shape Kubernetes Control Plane Behavior](2026-03-16-etcd-consistency-kubernetes-control-plane.md)
 - Related: [Why Kubernetes Scheduling Uses Requests, Not Limits](2026-03-10-kubernetes-scheduling-requests-not-limits.md)
-- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)
+- Evergreen reference: [Kubernetes overview](../../getting-started/overview.md)
