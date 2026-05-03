@@ -50,8 +50,8 @@ Security validation should be part of migration readiness, not a post-cutover au
 
 ## Related Pages
 
-- Parent index: [Ecosystem news](index.md)
+- Parent index: [News](index.md)
 - Related: [Spotlight on SIG Architecture API Governance](2026-03-06-spotlight-sig-architecture-api-governance.md)
-- Related: [Tool radar](../../insights/tool-radar/index.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)
+- Related: [Tool radar](../insights/tool-radar/index.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Maintenance and upgrades](../operations/maintenance.md)

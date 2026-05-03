@@ -98,18 +98,10 @@ nav = [
     { "CKAD (Developer)" = "certifications/ckad.md" },
     { "CKS (Security)" = "certifications/cks.md" },
   ]},
-  { "News" = [
-    { "Release News" = "news/releases/index.md" },
-    { "Security News" = "news/security/index.md" },
-    { "Ecosystem News" = "news/ecosystem/index.md" },
-  ]},
   { "Insights" = [
+    { "News" = "news/index.md" },
     { "Opinion & Overview" = "insights/opinion/index.md" },
     { "Tool Radar" = "insights/tool-radar/index.md" },
-  ]},
-  { "Jobs" = [
-    { "Listings" = "jobs/listings.md" },
-    { "Contact" = "jobs/contact.md" },
   ]},
   { "About" = [
     { "About k8s.guide" = "about/index.md" },

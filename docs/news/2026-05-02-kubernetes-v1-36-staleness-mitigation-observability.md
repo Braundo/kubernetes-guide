@@ -56,8 +56,8 @@ Test the upgrade in non-production environments while monitoring for increased A
 
 ## Related Pages
 
-- Parent index: [Release news](index.md)
+- Parent index: [News](index.md)
 - Related: [Kubernetes v1.36: ハル (Haru)](2026-04-26-kubernetes-v1-36-haru.md)
 - Related: [Kubernetes 1.35 GA: In-Place Pod Resizing Stable and Restart Semantics Formalized](2026-03-28-when-kubernetes-restarts-pod-when-it-doesn-t.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Maintenance and upgrades](../operations/maintenance.md)

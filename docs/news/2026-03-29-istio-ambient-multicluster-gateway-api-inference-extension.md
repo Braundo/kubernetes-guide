@@ -49,8 +49,8 @@ The reason to track this even at experimental status is that the agent traffic p
 
 ## Related Pages
 
-- Parent index: [Ecosystem news](index.md)
+- Parent index: [News](index.md)
 - Related: [KubeCon Europe 2026: What Came Out of Amsterdam](2026-03-28-kubecon-europe-2026-amsterdam-recap.md)
 - Related: [Announcing the AI Gateway Working Group](2026-03-11-announcing-ai-gateway-working-group.md)
-- Related: [Gateway API v1.5.0: TLSRoute Reaches Stable](../releases/2026-02-27-gateway-api-v1.5.0-tlsroute-stable.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
+- Related: [Gateway API v1.5.0: TLSRoute Reaches Stable](2026-02-27-gateway-api-v1.5.0-tlsroute-stable.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)

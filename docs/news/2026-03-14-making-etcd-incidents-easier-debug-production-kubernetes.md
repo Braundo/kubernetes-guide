@@ -48,8 +48,8 @@ Implementation requires defining thresholds that trigger immediate recovery vers
 
 ## Related Pages
 
-- Parent index: [Ecosystem news](index.md)
+- Parent index: [News](index.md)
 - Related: [Announcing the AI Gateway Working Group](2026-03-11-announcing-ai-gateway-working-group.md)
 - Related: [Deep dive: Simplifying resource orchestration with Amazon EKS Capabilities](2026-03-08-deep-dive-simplifying-resource-orchestration-amazon-eks.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Kubernetes learning paths](../learn/index.md)

@@ -50,8 +50,8 @@ Security-sensitive API proposals deserve cross-functional review before adoption
 
 ## Related Pages
 
-- Parent index: [Ecosystem news](index.md)
+- Parent index: [News](index.md)
 - Related: [Ingress-NGINX Migration Risk Signals Before March 2026 Retirement](2026-03-06-ingress-nginx-migration-risk-signals.md)
-- Related: [Release news](../releases/index.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)
+- Related: [News](index.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Maintenance and upgrades](../operations/maintenance.md)

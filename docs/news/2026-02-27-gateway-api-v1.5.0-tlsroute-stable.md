@@ -74,9 +74,9 @@ Gateway API's conformance testing model means implementations (Envoy Gateway, Ci
 
 ## Related Pages
 
-- Parent index: [Release news](index.md)
-- Related: [Gateway API](../../networking/gateway-api.md)
-- Related: [Ingress](../../networking/ingress.md)
-- Related: [Services and Networking](../../networking/services-networking.md)
-- Related: [Security news](../security/index.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
+- Parent index: [News](index.md)
+- Related: [Gateway API](../networking/gateway-api.md)
+- Related: [Ingress](../networking/ingress.md)
+- Related: [Services and Networking](../networking/services-networking.md)
+- Related: [News](index.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)

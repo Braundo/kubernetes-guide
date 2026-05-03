@@ -60,8 +60,8 @@ Inventory uses of mutating admission webhooks that might assume post-creation mo
 
 ## Related Pages
 
-- Parent index: [Release news](index.md)
+- Parent index: [News](index.md)
 - Related: [Cluster API v1.12: Introducing In-place Updates and Chained Upgrades](2026-03-06-cluster-api-v1-12-introducing-place-updates-chained-upgrades.md)
 - Related: [Kubernetes Gateway API v1.5.0: TLSRoute Reaches Stable](2026-02-27-gateway-api-v1.5.0-tlsroute-stable.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Maintenance and upgrades](../operations/maintenance.md)

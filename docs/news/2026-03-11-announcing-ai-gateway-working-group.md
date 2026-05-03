@@ -46,8 +46,8 @@ The concrete near-term step is to map out every place in your current inference 
 
 ## Related Pages
 
-- Parent index: [Ecosystem news](index.md)
+- Parent index: [News](index.md)
 - Related: [Deep dive: Simplifying resource orchestration with Amazon EKS Capabilities](2026-03-08-deep-dive-simplifying-resource-orchestration-amazon-eks.md)
 - Related: [Spotlight on SIG Architecture API Governance](2026-03-06-spotlight-sig-architecture-api-governance.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Kubernetes learning paths](../../learn/index.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Kubernetes learning paths](../learn/index.md)

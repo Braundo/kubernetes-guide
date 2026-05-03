@@ -66,8 +66,8 @@ Execute upgrades during maintenance windows with rollback plans prepared. Upgrad
 
 ## Related Pages
 
-- Parent index: [Release news](index.md)
+- Parent index: [News](index.md)
 - Related: [Kubernetes 1.35 GA: In-Place Pod Resizing Stable and Restart Semantics Formalized](2026-03-28-when-kubernetes-restarts-pod-when-it-doesn-t.md)
 - Related: [Cluster API v1.12: Introducing In-place Updates and Chained Upgrades](2026-03-06-cluster-api-v1-12-introducing-place-updates-chained-upgrades.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Maintenance and upgrades](../operations/maintenance.md)

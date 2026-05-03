@@ -43,7 +43,7 @@ hide:
     ---
     Track release, security, and ecosystem updates in one section.
 
-    [Open Release News](news/releases/index.md)
+    [Open News](news/index.md)
 
 -   :lucide-lightbulb: **Insights**
 
@@ -51,13 +51,6 @@ hide:
     Read opinion and overview articles, plus Tool Radar.
 
     [Open Opinion & Overview](insights/opinion/index.md)
-
--   :lucide-briefcase-business: **Kubernetes Jobs**
-
-    ---
-    Browse and submit platform engineering and SRE roles.
-
-    [Open Job Listings](jobs/listings.md)
 
 </div>
 

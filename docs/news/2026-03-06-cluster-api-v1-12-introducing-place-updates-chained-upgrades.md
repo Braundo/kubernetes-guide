@@ -55,8 +55,8 @@ Together, these changes make CAPI clusters more practical to operate at scale, p
 
 ## Related Pages
 
-- Parent index: [Release news](index.md)
-- Related: [Security news](../security/index.md)
-- Related: [Maintenance and upgrades](../../operations/maintenance.md)
-- Newsletter: [This Week in Kubernetes](../../index.md#weekly-newsletter)
-- Evergreen reference: [Maintenance and upgrades](../../operations/maintenance.md)
+- Parent index: [News](index.md)
+- Related: [News](index.md)
+- Related: [Maintenance and upgrades](../operations/maintenance.md)
+- Newsletter: [This Week in Kubernetes](../index.md#weekly-newsletter)
+- Evergreen reference: [Maintenance and upgrades](../operations/maintenance.md)
