@@ -18,11 +18,34 @@ Well-designed probes reduce outages during deploys, restarts, and dependency fai
 - Readiness probe: controls service endpoint inclusion
 - Liveness probe: restarts containers that are stuck or unhealthy
 
+## How probes interact
+
+```mermaid
+sequenceDiagram
+    participant K as kubelet
+    participant SP as startupProbe
+    participant RP as readinessProbe
+    participant LP as livenessProbe
+    participant SVC as Service endpoint
+
+    K->>SP: poll every periodSeconds
+    SP-->>K: success
+    Note over SP: startup probe stops
+    K->>RP: poll every periodSeconds
+    K->>LP: poll every periodSeconds
+    RP-->>K: success → pod added to Service
+    SVC-->>K: traffic flows
+    LP-->>K: failure × failureThreshold
+    K->>K: restart container
+```
+
+While the startup probe is active, readiness and liveness probes are paused. This prevents premature restarts during slow initialization.
+
 ## Recommended usage model
 
-1. use startup probes for apps with non-trivial boot time
-2. use readiness probes for dependency-aware traffic gating
-3. use liveness probes for deadlock or permanent failure detection
+1. Use startup probes for apps with non-trivial boot time. Give `failureThreshold × periodSeconds` enough runway -- for a 2-minute boot, use `failureThreshold: 24, periodSeconds: 5` (2-minute window).
+2. Use readiness probes for dependency-aware traffic gating. Only report ready when all dependencies (DB connections, cache warmup) are confirmed.
+3. Use liveness probes for deadlock or permanent failure detection. Keep them simple -- a failed HTTP 200 from `/healthz` is enough.
 
 ## Example configuration
 

@@ -21,9 +21,24 @@ They are ideal for setup logic that should not live in your main runtime image.
 
 ## Execution model
 
-- Init containers run sequentially
-- App containers start only after all init containers finish successfully
-- A failing init container blocks pod readiness and retries according to pod restart behavior
+```mermaid
+sequenceDiagram
+    participant K as kubelet
+    participant I1 as init: wait-for-db
+    participant I2 as init: seed-config
+    participant A as app container
+
+    K->>I1: start
+    I1-->>K: exit 0
+    K->>I2: start
+    I2-->>K: exit 0
+    K->>A: start
+    Note over A: running
+```
+
+- Init containers run sequentially in declared order.
+- App containers start only after all init containers finish successfully.
+- A failing init container blocks pod readiness and retries according to pod restart behavior.
 
 ## Example
 
@@ -63,10 +78,23 @@ spec:
 
 ## Init containers vs sidecars
 
-- Init container: runs to completion before app start
-- Sidecar: runs alongside app container during runtime
+- Init container: runs to completion before app start.
+- Sidecar: runs alongside app container during runtime.
 
-Use init containers for deterministic startup preparation. Use sidecars for ongoing runtime functions.
+Use init containers for deterministic startup preparation. Use sidecars for ongoing runtime functions like log shipping or proxying.
+
+### Native sidecar containers (Kubernetes 1.29+)
+
+Kubernetes 1.29 graduated support for native sidecar containers: init containers declared with `restartPolicy: Always`. Unlike regular init containers, they start before app containers and keep running alongside them rather than exiting.
+
+```yaml
+initContainers:
+  - name: log-forwarder
+    image: fluent/fluent-bit:3.0
+    restartPolicy: Always
+```
+
+This ensures the sidecar starts before app containers, restarts if it crashes, and is properly terminated when the pod stops -- solving the classic ordering and shutdown problems with regular sidecar patterns.
 
 ## Design guidelines
 

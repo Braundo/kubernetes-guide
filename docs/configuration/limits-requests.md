@@ -59,13 +59,23 @@ spec:
 
 ## QoS classes
 
-Pod QoS class is derived from resource configuration.
+Pod QoS class is derived from resource configuration and determines eviction priority under node pressure:
 
-- Guaranteed: requests equal limits for all containers
-- Burstable: at least one request set, but not all equal to limits
-- BestEffort: no requests or limits
+```mermaid
+graph TD
+    BE[BestEffort\nno requests or limits\nevicted first]
+    BU[Burstable\nrequests set, not equal to limits\nevicted second]
+    GU[Guaranteed\nrequests == limits for all containers\nevicted last]
 
-In node pressure events, BestEffort is usually evicted first.
+    BE -->|evict before| BU
+    BU -->|evict before| GU
+```
+
+- **Guaranteed**: all containers have requests equal to limits. Maximum scheduling predictability. Recommended for latency-sensitive services.
+- **Burstable**: at least one request set, but requests do not equal limits. Can use slack capacity when available.
+- **BestEffort**: no requests or limits at all. First to be evicted under memory pressure. Avoid for production workloads.
+
+In node memory pressure events, the kubelet evicts BestEffort first, then Burstable pods that exceed their requests, then Guaranteed pods only as a last resort.
 
 ## Sizing guidance
 

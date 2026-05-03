@@ -16,6 +16,29 @@ By default, many clusters allow broad lateral traffic. NetworkPolicy lets you mo
 
 Your CNI must implement NetworkPolicy. If it does not, policy objects may apply successfully but have no effect.
 
+## Trust model
+
+```mermaid
+graph LR
+    subgraph payments namespace
+        API[api pod]
+        DB[db pod]
+    end
+    subgraph monitoring namespace
+        PROM[prometheus pod]
+    end
+    subgraph frontend namespace
+        WEB[web pod]
+    end
+
+    WEB -->|allowed: 8080| API
+    PROM -->|allowed: 9090| API
+    API -->|allowed: 5432| DB
+    WEB -. blocked .-> DB
+```
+
+Define your trust boundaries per namespace first. Then build allow rules to match.
+
 ## Default-deny foundation
 
 Start sensitive namespaces with default-deny, then add explicit allow rules.
@@ -108,6 +131,35 @@ spec:
         - protocol: TCP
           port: 53
 ```
+
+## IP block rules
+
+Use `ipBlock` to control traffic to or from external IP ranges. This is useful for allowing access from a corporate network or blocking cloud metadata endpoints.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-external-api
+  namespace: payments
+spec:
+  podSelector:
+    matchLabels:
+      app: api
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 203.0.113.0/24
+            except:
+              - 203.0.113.10/32
+      ports:
+        - protocol: TCP
+          port: 443
+```
+
+`except` lets you exclude specific IPs within a broader allowed range.
 
 ## Troubleshooting
 

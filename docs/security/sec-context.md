@@ -64,11 +64,35 @@ spec:
 
 ## What each control helps prevent
 
-- `runAsNonRoot`: blocks root process launch by default
-- `allowPrivilegeEscalation: false`: prevents setuid-based escalation paths
-- `capabilities.drop: [ALL]`: removes excess Linux privileges
-- `readOnlyRootFilesystem`: reduces persistence options for attackers
-- `seccompProfile`: constrains system call surface
+- `runAsNonRoot`: blocks root process launch by default.
+- `allowPrivilegeEscalation: false`: prevents setuid-based escalation paths (e.g. `sudo`, `su`).
+- `capabilities.drop: [ALL]`: removes excess Linux privileges -- Linux grants ~40 capabilities to root processes by default; dropping all then adding back only what's needed is the correct approach.
+- `readOnlyRootFilesystem`: reduces persistence options for attackers who gain code execution.
+- `seccompProfile: RuntimeDefault`: constrains the system call surface to a safe default profile; reduces kernel attack surface.
+
+## Privileged mode
+
+`privileged: true` gives the container nearly all Linux capabilities and removes almost all kernel isolation between the container and the host. It should never be used in production workloads.
+
+```yaml
+# DANGEROUS - avoid unless absolutely required by node-level tooling
+securityContext:
+  privileged: true
+```
+
+If a tool claims it needs `privileged: true`, investigate whether it actually requires specific capabilities (`NET_ADMIN`, `SYS_PTRACE`, etc.) that can be added selectively instead.
+
+## AppArmor
+
+AppArmor profiles restrict what system resources a container process can access (files, network, capabilities). Supported on nodes where AppArmor is installed:
+
+```yaml
+securityContext:
+  appArmorProfile:
+    type: RuntimeDefault  # uses the container runtime's default profile
+```
+
+Use `Localhost` to apply a specific named profile installed on the node. AppArmor works in tandem with seccomp to provide layered kernel hardening.
 
 ## Practical adoption tips
 

@@ -36,11 +36,17 @@ Follow Kubernetes version skew policy and vendor guidance.
 
 Typical order:
 
-1. Upgrade control plane components.
+1. Upgrade control plane components (kube-apiserver, controller-manager, scheduler).
 2. Upgrade worker nodes in controlled batches.
 3. Validate workload health between phases.
 
-Golden rule: do not run kubelet newer than API server.
+**Version skew rules (Kubernetes 1.28+):**
+
+- `kubelet` may be up to **3 minor versions** behind the API server (e.g. apiserver at 1.30, kubelet at 1.27 is supported).
+- `kube-proxy` must match the kubelet version on its node.
+- `kubectl` should be within one minor version of the API server.
+
+Never run kubelet **newer** than the API server -- this is unsupported and will cause unpredictable behavior.
 
 ## 3) Node Maintenance Workflow
 
@@ -59,7 +65,21 @@ kubectl drain node-01 --ignore-daemonsets --delete-emptydir-data
 kubectl uncordon node-01
 ```
 
-Use PodDisruptionBudgets and rollout budgets so drains do not cause avoidable outages.
+Use PodDisruptionBudgets (PDBs) to protect workloads during drains. A PDB specifies how many replicas must remain available:
+
+```yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: web-pdb
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: web
+```
+
+Without a PDB, `kubectl drain` may evict all pods of a deployment simultaneously. With one, drain waits until the PDB constraint can be satisfied before proceeding. This is essential for stateful workloads and services where zero downtime matters.
 
 ## 4) kubeadm Node Upgrade Pattern
 

@@ -49,9 +49,9 @@ spec:
 
 ## Access Modes
 
-- `ReadWriteOnce` (RWO): mounted read-write by one node at a time.
-- `ReadWriteOncePod` (RWOP): mounted read-write by one pod.
-- `ReadWriteMany` (RWX): mounted read-write by many nodes, only with compatible backends.
+- `ReadWriteOnce` (RWO): mounted read-write by one **node** at a time. Multiple pods on the same node can all mount it.
+- `ReadWriteOncePod` (RWOP): mounted read-write by exactly one **pod**. Stricter than RWO. Added in Kubernetes 1.22 for single-writer guarantees at the pod level.
+- `ReadWriteMany` (RWX): mounted read-write by many nodes simultaneously. Requires a compatible backend (NFS, CephFS, cloud file shares).
 - `ReadOnlyMany` (ROX): mounted read-only by many nodes.
 
 ## StorageClass Example (CSI)
@@ -73,6 +73,8 @@ volumeBindingMode: WaitForFirstConsumer
 ```
 
 Note: `provisioner` is environment-specific. Use the CSI driver for your platform.
+
+`volumeBindingMode: WaitForFirstConsumer` delays PV provisioning until a pod using the PVC is scheduled. This ensures the volume is created in the same availability zone as the pod. Use this mode for zonal storage backends (most cloud block storage). The default `Immediate` mode provisions the volume when the PVC is created, which can cause zone mismatches.
 
 ## Reclaim Policy
 
@@ -101,15 +103,33 @@ spec:
           mountPath: /data
 ```
 
+## Volume Snapshots
+
+CSI-backed storage supports point-in-time volume snapshots via the `VolumeSnapshot` API (requires the `external-snapshotter` controller):
+
+```yaml
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: db-snapshot-2026-05-03
+spec:
+  volumeSnapshotClassName: csi-snapclass
+  source:
+    persistentVolumeClaimName: db-data
+```
+
+Restore by creating a new PVC with `dataSource` pointing to the snapshot. Snapshots are much faster than full backup/restore for large volumes and are useful for pre-upgrade checkpoints.
+
 ## Operational Checks
 
 ```bash
 kubectl get pvc
 kubectl get pv
 kubectl describe pvc db-data
+kubectl get volumesnapshot
 ```
 
-If PVC remains `Pending`, validate storage class name, CSI driver health, and topology constraints.
+If PVC remains `Pending`, validate storage class name, CSI driver health, and topology constraints (`WaitForFirstConsumer` PVCs stay Pending until a pod is scheduled).
 
 ## Related Concepts
 

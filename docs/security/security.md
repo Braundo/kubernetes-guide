@@ -22,12 +22,17 @@ A practical model is to protect each layer of the stack and assume controls can 
 
 ## 4-layer security model
 
-| Layer | Focus | Example controls |
-| :--- | :--- | :--- |
-| Cloud | account and infrastructure boundary | IAM, network segmentation, KMS, managed audit logs |
-| Cluster | control plane and policy | RBAC, admission controls, etcd encryption, API audit logs |
-| Workload | pod and container runtime | pod security standards, security context, network policy |
-| Application | code and dependencies | dependency scanning, secrets hygiene, secure SDLC |
+```mermaid
+graph TD
+    A[Cloud\nIAM · network segmentation · KMS · managed audit logs]
+    B[Cluster\nRBAC · admission controls · etcd encryption · API audit logs]
+    C[Workload\npod security standards · security context · network policy]
+    D[Application\ndependency scanning · secrets hygiene · secure SDLC]
+
+    A --> B --> C --> D
+```
+
+A breach at any inner layer is harder to contain if the outer layers are weak. Treat each layer as independently enforceable -- do not rely on the application layer to compensate for weak cluster controls.
 
 ## Security operating baseline
 
@@ -37,15 +42,24 @@ A practical model is to protect each layer of the stack and assume controls can 
 4. verify artifact integrity before deploy
 5. collect and retain actionable audit and runtime telemetry
 
+## Admission controllers
+
+Admission webhooks provide a powerful enforcement point between "request accepted by API server" and "object written to etcd." Two common policy engines:
+
+- **Kyverno**: Kubernetes-native policy engine using YAML-based policies. Good fit for teams that want policy-as-code without a new DSL.
+- **OPA/Gatekeeper**: Open Policy Agent with the Gatekeeper admission controller. Uses Rego policy language. More expressive for complex constraints.
+
+Both support `validate` (reject non-compliant objects) and `mutate` (inject defaults or required fields) policies.
+
 ## Security in the delivery pipeline
 
 Security should run before deploy, not only after incidents.
 
 Recommended controls in CI and CD:
 
-- manifest linting and policy checks
+- manifest linting and policy checks (e.g. `kube-score`, `trivy config`)
 - image scanning and signing
-- admission policy verification
+- admission policy verification (dry-run against policy engine before merge)
 
 ## Continuous improvement loop
 

@@ -14,6 +14,14 @@ Deployments are for long-running services. Jobs and CronJobs are for work that s
 
 A Job runs pods until completion criteria are met.
 
+```mermaid
+flowchart LR
+    CJ[CronJob] -->|creates on schedule| J[Job]
+    J -->|creates| P1[Pod attempt 1]
+    P1 -->|failure| P2[Pod attempt 2]
+    P2 -->|success| Done([Job complete])
+```
+
 Key settings:
 
 - `completions`: total successful runs required
@@ -21,6 +29,15 @@ Key settings:
 - `backoffLimit`: retry attempts before failure
 - `activeDeadlineSeconds`: overall execution timeout
 - `ttlSecondsAfterFinished`: cleanup for completed jobs
+
+For parallel work where each pod handles a distinct work item, use `completionMode: Indexed`. Kubernetes assigns each pod a unique index (via the `JOB_COMPLETION_INDEX` environment variable) so workers can partition their input.
+
+```yaml
+spec:
+  completions: 10
+  parallelism: 3
+  completionMode: Indexed
+```
 
 ## Job example
 

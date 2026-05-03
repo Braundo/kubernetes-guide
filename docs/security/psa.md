@@ -50,14 +50,38 @@ kubectl label ns payments \
 
 Use your cluster's current minor version and update deliberately after validation.
 
+## PSA does not affect existing pods
+
+Pod Security Admission is evaluated at pod creation and update time only. If you tighten enforcement on a namespace, existing pods already running are not evicted or killed. New pods and updated pods must comply.
+
+This means you can safely add `enforce` labels to live namespaces and existing workloads continue running while only new deployments face the tighter policy.
+
 ## Typical restricted requirements
 
-Workloads commonly need these settings to pass restricted policy:
+Workloads commonly need these settings to pass `restricted` policy:
 
 - `runAsNonRoot: true`
 - `allowPrivilegeEscalation: false`
-- `seccompProfile.type: RuntimeDefault`
-- capabilities dropped (`ALL` then selective add if needed)
+- `seccompProfile.type: RuntimeDefault` (or `Localhost`)
+- capabilities: drop `ALL`, add back only what the app actually needs
+
+The most common breaking change when migrating from `baseline` to `restricted` is the `seccompProfile` requirement, since many legacy workloads don't set it.
+
+## Exemptions
+
+The PSA admission plugin supports exemptions at the cluster level for specific usernames, namespace-scoped RuntimeClasses, or namespaces. This lets you exclude system workloads (like the CNI) from policy enforcement without labeling every namespace:
+
+```yaml
+# kube-apiserver --admission-control-config-file
+apiVersion: apiserver.config.k8s.io/v1
+kind: AdmissionConfiguration
+plugins:
+  - name: PodSecurity
+    configuration:
+      exemptions:
+        usernames: ["system:serviceaccount:kube-system:calico-node"]
+        namespaces: ["kube-system"]
+```
 
 ## Operational rollout pattern
 

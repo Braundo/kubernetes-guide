@@ -28,6 +28,14 @@ graph TD
     API <-->|read and write| Etcd[(etcd)]
 ```
 
+## Watch and the control loop
+
+Controllers don't poll the API server. They use the **Watch** mechanism: a long-lived HTTP connection that streams change events (ADDED, MODIFIED, DELETED) as objects are updated.
+
+This is how every controller works -- the Deployment controller watches for Deployments, the ReplicaSet controller watches ReplicaSets, the kubelet watches Pod objects assigned to its node. When you `kubectl apply`, the event reaches all relevant watchers almost instantly via this stream.
+
+The watch mechanism keeps Kubernetes responsive and efficient. The API server buffers events from etcd and fans them out to watchers without each component independently polling.
+
 ## Object Anatomy: `spec` and `status`
 
 Most Kubernetes resources separate intent from observation.
@@ -51,10 +59,10 @@ status:
 
 A create or update request passes through these stages:
 
-1. Authentication: who is calling.
-2. Authorization: what they are allowed to do.
-3. Admission: mutation and validation policy.
-4. Persistence: accepted object is stored.
+1. **Authentication**: who is calling (certificate, bearer token, service account JWT, OIDC).
+2. **Authorization**: what they are allowed to do (RBAC, ABAC, Node, Webhook modes).
+3. **Admission**: mutation and validation webhooks run. Mutating webhooks (e.g. inject sidecars, set defaults) run before validating webhooks (e.g. enforce policy). Built-in admission controllers like `LimitRanger`, `ResourceQuota`, and `PodSecurity` also run here.
+4. **Persistence**: accepted object is written to etcd and watch events are broadcast to listeners.
 
 ## API Groups and Versions
 

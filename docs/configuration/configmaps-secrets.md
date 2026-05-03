@@ -48,6 +48,21 @@ stringData:
 
 Base64 encoding is not encryption. Use encryption at rest for etcd and strict RBAC.
 
+### Secret types
+
+The `type` field hints at the intended use:
+
+| Type | Purpose |
+| :--- | :--- |
+| `Opaque` | Arbitrary data (default) |
+| `kubernetes.io/tls` | TLS certificate and key (`tls.crt`, `tls.key`) |
+| `kubernetes.io/dockerconfigjson` | Registry pull credential |
+| `kubernetes.io/service-account-token` | Auto-bound service account token (legacy) |
+| `kubernetes.io/ssh-auth` | SSH private key |
+| `bootstrap.kubernetes.io/token` | Bootstrap token for node join |
+
+Use the correct type so controllers and admission webhooks can handle them appropriately.
+
 ## Injection Patterns
 
 ### 1) Environment variables
@@ -107,8 +122,8 @@ volumes:
 - Do not store secrets in Git.
 - Restrict Secret access with namespace-scoped RBAC.
 - Enable etcd encryption at rest.
-- Consider external secret managers and sync controllers for high-security environments.
-- Use immutable ConfigMaps and Secrets where frequent mutation is not required.
+- Consider external secret managers (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault) with a sync controller like **External Secrets Operator** or **Secrets Store CSI Driver** for high-security environments. These keep the secret value out of Kubernetes entirely and inject it at runtime.
+- Use immutable ConfigMaps and Secrets where frequent mutation is not required. Immutable objects are more efficient (no watch on etcd) and prevent accidental modification.
 
 ## Operational Tips
 

@@ -28,14 +28,22 @@ For live traffic variability, manual scaling does not react quickly enough.
 
 ## How HPA works
 
-HPA watches metrics and adjusts replica count toward a target.
+HPA is a closed control loop driven by metrics:
 
-Typical loop:
+```mermaid
+flowchart LR
+    MS[Metrics Server\nor custom adapter] -->|current usage| HPA[HPA controller]
+    HPA -->|desired replicas| DEP[Deployment / StatefulSet]
+    DEP -->|pod metrics| MS
+```
 
-1. read metrics for current pods
-2. compare current utilization to desired target
-3. compute desired replica count
-4. update target Deployment or StatefulSet
+Loop steps:
+
+1. Read metrics for current pods (via Metrics API).
+2. Compare current utilization to the configured target.
+3. Compute desired replica count: `desiredReplicas = ceil(currentReplicas × currentUtil / targetUtil)`.
+4. Apply stabilization window to avoid oscillation.
+5. Update the target workload replica count.
 
 ## Prerequisites
 
@@ -103,11 +111,19 @@ Common failure patterns:
 
 ## HPA, VPA, and node autoscaling
 
-- HPA scales pod count
-- VPA adjusts pod resource requests
-- node autoscaler or Karpenter adds infrastructure capacity
+- HPA scales pod count horizontally.
+- VPA (Vertical Pod Autoscaler) adjusts pod resource requests over time - do not use HPA and VPA together on the same CPU/memory signal; they will conflict. VPA is safe to combine with HPA when HPA uses custom/external metrics instead.
+- Node autoscaler or Karpenter adds infrastructure capacity when pods cannot be scheduled.
 
-You can combine them, but avoid configuring HPA and VPA to fight on the same signal without a design.
+## Custom and external metrics
+
+The built-in `autoscaling/v2` HPA supports three metric types:
+
+- `Resource`: CPU or memory utilization against pod requests.
+- `Pods`: custom per-pod metric from an adapter (e.g. requests per second).
+- `External`: metric from an external system (e.g. queue depth from SQS or Kafka lag).
+
+For event-driven scaling needs beyond what HPA covers natively, consider **KEDA** (Kubernetes Event-driven Autoscaling). KEDA extends HPA with out-of-the-box scalers for message queues, databases, HTTP traffic, and 70+ other sources - scaling to zero when idle is a key advantage.
 
 ## Practical guidance
 

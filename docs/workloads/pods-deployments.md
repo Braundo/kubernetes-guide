@@ -22,6 +22,25 @@ A pod is one or more containers that share:
 
 Most pods should contain one main application container. Add sidecars only when they provide clear value, such as logging, proxying, or telemetry.
 
+## Pod lifecycle
+
+A pod moves through several phases during its lifetime:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending : created
+    Pending --> Running : scheduled and containers start
+    Running --> Succeeded : all containers exit 0
+    Running --> Failed : container exits non-zero
+    Running --> Unknown : node communication lost
+```
+
+- **Pending**: accepted by the API server but not yet scheduled or images not yet pulled.
+- **Running**: at least one container is running or starting.
+- **Succeeded**: all containers exited successfully (common for Jobs).
+- **Failed**: at least one container exited with non-zero status.
+- **Unknown**: the node cannot be reached.
+
 ## Why pods alone are not enough
 
 Pods are disposable. They can disappear during node failure, eviction, rescheduling, or rollout. A naked pod does not self-heal.
@@ -103,12 +122,27 @@ kubectl run debug-shell --image=busybox:1.36 --restart=Never -it -- sh
 
 Do not use this pattern for long-running applications.
 
+## Graceful shutdown
+
+When a pod is deleted, Kubernetes sends `SIGTERM` to containers and waits `terminationGracePeriodSeconds` (default 30s) before sending `SIGKILL`. Use the `preStop` lifecycle hook to drain connections cleanly before the signal arrives, especially for servers that need time to finish in-flight requests.
+
+```yaml
+lifecycle:
+  preStop:
+    exec:
+      command: ["/bin/sh", "-c", "sleep 5"]
+```
+
+If your application needs more than 30 seconds to shut down, increase `terminationGracePeriodSeconds`.
+
 ## Common mistakes
 
 - Deploying applications with `kubectl run` and no controller
 - Missing `resources.requests`, which hurts scheduling quality
 - Missing readiness probes, which can route traffic to not-ready pods
 - Using mutable image tags like `latest` in production
+- Setting `imagePullPolicy: Always` without understanding it pulls on every pod start, even for immutable tags
+- Not setting `terminationGracePeriodSeconds` long enough for slow-draining services
 
 ## Quick operations checklist
 

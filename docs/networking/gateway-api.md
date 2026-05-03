@@ -26,12 +26,29 @@ flowchart LR
   Service --> Pods
 ```
 
+## Role separation model
+
+Gateway API is designed around three distinct roles with clear ownership boundaries:
+
+```mermaid
+graph TD
+    INFRA[Infrastructure Provider\nwrites GatewayClass] --> GW[Cluster Operator\nwrites Gateway]
+    GW --> APP[App Developer\nwrites HTTPRoute]
+    APP --> SVC[Service / Pods]
+```
+
+- **GatewayClass**: owned by the infrastructure provider (e.g. the load balancer vendor or platform team). Defines implementation capabilities.
+- **Gateway**: owned by the cluster operator. Defines listeners, ports, TLS config, and which namespaces may attach routes.
+- **HTTPRoute / other routes**: owned by app developers. Defines routing rules within the boundaries the Gateway permits.
+
+This three-tier ownership model eliminates the problem Ingress has: annotations that encode implementation-specific behavior on objects the app team writes but the platform team must maintain.
+
 ## Why teams adopt Gateway API
 
-- clear boundaries between platform and app responsibilities
+- clear role boundaries between platform and app ownership
 - typed fields instead of annotation-heavy behavior
-- protocol-specific route resources
-- stronger cross-namespace attachment controls
+- protocol-specific route resources (HTTP, gRPC, TCP, TLS)
+- stronger cross-namespace attachment controls via `allowedRoutes`
 
 ## Minimal example
 
@@ -86,6 +103,39 @@ spec:
 `allowedRoutes` is a key control. It defines which namespaces may attach routes to a gateway listener.
 
 That single control prevents accidental or unauthorized route attachment in shared clusters.
+
+### ReferenceGrant
+
+When an HTTPRoute in one namespace needs to reference a Service in another namespace, the destination namespace must grant permission with a `ReferenceGrant`:
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-app-route
+  namespace: backend
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: app
+  to:
+    - group: ""
+      kind: Service
+```
+
+Without this grant, cross-namespace backend references are rejected. This is a deliberate security boundary.
+
+## Route types
+
+Gateway API supports protocol-specific route resources:
+
+| Route | Protocol | Stability |
+| :--- | :--- | :--- |
+| `HTTPRoute` | HTTP and HTTPS | GA (v1) |
+| `GRPCRoute` | gRPC | GA (v1) |
+| `TLSRoute` | TLS passthrough | Experimental |
+| `TCPRoute` | Raw TCP | Experimental |
 
 ## Migration notes from Ingress
 

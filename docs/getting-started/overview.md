@@ -38,10 +38,36 @@ This loop is why Kubernetes can self-heal and keep systems stable over time.
 
 A Kubernetes cluster has two major parts:
 
-- Control plane: API server, scheduler, controller manager, etcd.
-- Worker nodes: kubelet, runtime, and your application pods.
+```mermaid
+graph TB
+    subgraph Control Plane
+        API[API Server]
+        ETCD[(etcd)]
+        SCH[Scheduler]
+        CM[Controller Manager]
+        API <--> ETCD
+        SCH --> API
+        CM --> API
+    end
 
-The API server is the central entry point for cluster changes.
+    subgraph Worker Node
+        KL[kubelet]
+        KP[kube-proxy]
+        RT[Container Runtime]
+        KL --> RT
+    end
+
+    API <--> KL
+    User([kubectl / CI]) --> API
+```
+
+- **API server**: the single entry point for all cluster changes; every component talks through it.
+- **etcd**: distributed key-value store that holds all cluster state. Only the API server writes to it directly.
+- **Scheduler**: watches for unscheduled pods and assigns them to nodes based on resources and constraints.
+- **Controller manager**: runs control loops (Deployment, ReplicaSet, Node, etc.) that reconcile desired state.
+- **kubelet**: agent on each node that ensures pods are running per the API server's instructions.
+- **kube-proxy**: maintains network rules on each node to implement Service virtual IPs.
+- **Container runtime**: executes containers (containerd, CRI-O).
 
 ## Key Building Blocks
 

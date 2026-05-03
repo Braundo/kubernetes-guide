@@ -15,16 +15,16 @@ Operational logging and API audit logging serve different goals. You need both.
 
 ## Kubernetes API audit logging
 
-Audit logs are produced by the API server according to an audit policy.
+Audit logs are produced by the API server according to an audit policy. Each log entry captures one stage of a request lifecycle: `RequestReceived`, `ResponseStarted`, `ResponseComplete`, or `Panic`.
 
-Common levels:
+Common audit levels:
 
-- `None`: skip
-- `Metadata`: request metadata only
+- `None`: skip this request entirely
+- `Metadata`: record who, what, and when -- no body
 - `Request`: metadata plus request body
-- `RequestResponse`: metadata plus request and response body
+- `RequestResponse`: metadata plus request and response bodies
 
-For most production systems, `Metadata` is the default and selected `Request` logging is added for high-value resources.
+For most production systems, `Metadata` is the practical default. Add `Request`-level logging selectively for high-value resources like Secrets, ConfigMaps, and RBAC objects. Avoid `RequestResponse` on Secrets -- it logs plaintext secret values.
 
 ## Policy example
 
@@ -48,12 +48,23 @@ Use caution with request and response body logging for sensitive resources such 
 
 Kubernetes does not persist logs for you. Container logs must be collected and shipped to durable storage.
 
+```mermaid
+flowchart LR
+    APP[Application\nstdout / stderr] --> RT[Container Runtime\n/var/log/containers/]
+    RT --> COL[Log Collector DaemonSet\nFluent Bit · Vector · Promtail]
+    COL --> BE[Central Backend\nOpenSearch · Loki · Splunk]
+    BE --> DASH[Dashboards\nand Alerts]
+```
+
+Common collectors: **Fluent Bit** (lightweight, widely deployed), **Vector** (high-performance, flexible), **Promtail** (Loki ecosystem).
+
 Typical architecture:
 
-- app logs to stdout and stderr
-- node-level collector (DaemonSet) tails container logs
-- central backend stores and indexes logs
-- dashboards and alerts consume centralized data
+- Application writes to stdout and stderr (not log files).
+- Container runtime rotates log files under `/var/log/containers/`.
+- Node-level collector DaemonSet tails log files and ships to backend.
+- Central backend stores, indexes, and retains logs.
+- Dashboards and alerts consume centralized data.
 
 ## Incident response value
 

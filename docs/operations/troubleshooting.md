@@ -14,11 +14,26 @@ Start with symptoms, follow evidence, and narrow the failure domain quickly.
 
 ## Triage sequence
 
-1. identify failing object type and status
-2. inspect events and controller messages
-3. inspect application and sidecar logs
-4. validate config references and runtime environment
-5. test service connectivity and DNS paths
+```mermaid
+flowchart TD
+    START([Pod not working]) --> STATUS{kubectl get pod\nstatus?}
+    STATUS -->|Pending| PEND[Check node resources\ntaints and tolerations\ncheck describe pod]
+    STATUS -->|ImagePullBackOff| IMG[Check image name/tag\npull secret\nregistry auth]
+    STATUS -->|CrashLoopBackOff| CRASH[Check logs --previous\ncheck exit code\ncheck liveness probe]
+    STATUS -->|Running but broken| CONN[Check readiness probe\ncheck service selector\ncheck endpoint slices]
+    PEND --> FIX([Fix and redeploy])
+    IMG --> FIX
+    CRASH --> FIX
+    CONN --> FIX
+```
+
+Detailed sequence:
+
+1. Identify failing object type and status.
+2. Inspect events and controller messages (`kubectl describe`).
+3. Inspect application and sidecar logs (`kubectl logs --previous` for crashed containers).
+4. Validate config references and runtime environment (secrets, configmaps, volumes).
+5. Test service connectivity and DNS paths.
 
 ## First-response commands
 
@@ -36,9 +51,13 @@ kubectl get events -A --sort-by=.metadata.creationTimestamp
 | :--- | :--- | :--- |
 | `Pending` | scheduler cannot place pod | `describe pod` for resource or taint constraints |
 | `ImagePullBackOff` | image path, tag, or auth issue | image name, pull secret, registry permissions |
-| `CrashLoopBackOff` | process exits repeatedly | container logs and exit reason |
+| `ErrImagePull` | transient or permanent pull failure | registry reachability, rate limits |
+| `CrashLoopBackOff` | process exits repeatedly | `logs --previous`, exit code, liveness probe |
 | `CreateContainerConfigError` | missing config or secret | referenced ConfigMap or Secret existence |
 | `OOMKilled` | memory limit exceeded | resource settings and memory usage trend |
+| `Terminating` stuck | finalizer blocking deletion | `kubectl get pod -o yaml` for finalizers |
+
+`CrashLoopBackOff` uses exponential backoff: 10s, 20s, 40s, 80s, 160s, then 5 minutes (capped). This means a crashing pod can be slow to recover even after you fix the root cause.
 
 ## Network diagnosis flow
 

@@ -19,7 +19,7 @@ They are useful for separating teams, environments, and policy boundaries withou
 | `default` | Fallback namespace if none is specified |
 | `kube-system` | Control-plane and system workloads |
 | `kube-public` | Publicly readable metadata use cases |
-| `kube-node-lease` | Node heartbeat lease objects |
+| `kube-node-lease` | Lease objects that nodes update each heartbeat cycle; the node controller uses them to detect node failure faster without adding load to etcd |
 
 ## Namespaced vs Cluster-Scoped Resources
 
@@ -64,7 +64,9 @@ Service discovery format:
 - same namespace: `http://my-service`
 - cross namespace: `http://my-service.other-namespace.svc.cluster.local`
 
-Cross-namespace traffic is allowed by default unless restricted by policy.
+The short form (`http://my-service`) only resolves within the pod's own namespace because CoreDNS appends the namespace's search domain. Cross-namespace calls require the fully-qualified name.
+
+Cross-namespace traffic is allowed by default unless restricted by NetworkPolicy.
 
 ## Resource Governance
 

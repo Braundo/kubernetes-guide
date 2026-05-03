@@ -38,8 +38,12 @@ kubectl top pods -A
 kubectl describe pod <pod> -n <ns>
 kubectl logs <pod> -n <ns> --all-containers
 kubectl logs <pod> -n <ns> --all-containers --previous
+kubectl logs <pod> -n <ns> -c <container> -f          # follow live
 kubectl exec -it <pod> -n <ns> -- sh
 kubectl debug -it <pod> -n <ns> --image=busybox:1.36 --target=<container>
+kubectl port-forward pod/<pod> 8080:8080 -n <ns>       # local tunnel to pod
+kubectl port-forward svc/<svc> 8080:80 -n <ns>         # local tunnel to service
+kubectl cp <pod>:/path/to/file ./local-file -n <ns>    # copy file from pod
 ```
 
 ## Deployment operations
@@ -78,12 +82,25 @@ kubectl get pod <pod> -n <ns> -o jsonpath='{.status.podIP}'
 kubectl get pods -A -o jsonpath='{.items[*].spec.containers[*].image}'
 ```
 
+## Patching resources
+
+```bash
+kubectl patch deployment web -n <ns> -p '{"spec":{"replicas":5}}'
+kubectl patch node <node> -p '{"spec":{"unschedulable":true}}'
+kubectl set image deployment/web web=ghcr.io/example/web:v2.0.0 -n <ns>
+kubectl label pod <pod> -n <ns> app=debug --overwrite
+kubectl annotate deployment web -n <ns> kubernetes.io/change-cause="v2 rollout"
+```
+
 ## Cleanup and maintenance
 
 ```bash
 kubectl delete pod --field-selector=status.phase=Failed -A
+kubectl delete pod <pod> -n <ns> --force --grace-period=0   # force-delete stuck pod
 kubectl api-resources
+kubectl api-resources --namespaced=false                     # cluster-scoped only
 kubectl explain deployment.spec.strategy
+kubectl cluster-info
 ```
 
 ## Suggested local aliases

@@ -90,20 +90,52 @@ spec:
             storage: 10Gi
 ```
 
+## Pod Management Policy
+
+By default, StatefulSets use `OrderedReady` semantics: pods are created and deleted one at a time in ordinal order. For workloads that do not need strict ordering during scale-up (like sharded caches), `Parallel` mode starts and stops all pods simultaneously.
+
+```yaml
+spec:
+  podManagementPolicy: Parallel
+```
+
+Use `OrderedReady` (the default) when pod `N` depends on pod `N-1` being ready before it can initialize, which is common for clustered databases and consensus systems.
+
 ## Rolling Updates and Partitions
 
 StatefulSets support rolling updates with identity-aware ordering.
 
-For cautious rollouts, use partitioned updates so higher ordinals update first while lower ordinals stay pinned until you advance.
+For cautious rollouts, use the `partition` field. Only pods with ordinal >= partition are updated; lower ordinals remain at the old version until you advance the partition.
+
+```yaml
+spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 2
+```
+
+With 3 replicas and `partition: 2`, only pod `app-2` updates immediately. Set to `1` to also update `app-1`, then `0` to complete the rollout.
 
 ## Storage Lifecycle
 
-Each replica receives its own PVC, for example:
+Each replica receives its own PVC named after the `volumeClaimTemplate` plus the pod ordinal:
 
 - `data-web-0`
 - `data-web-1`
 
-PVC and PV retention behavior depends on storage class reclaim policy and StatefulSet PVC retention configuration.
+PVC and PV retention behavior depends on storage class reclaim policy. By default, PVCs are **not** deleted when a StatefulSet is scaled down or deleted -- they persist until manually removed. This is intentional to prevent data loss.
+
+Since Kubernetes 1.27 (stable), you can configure automatic PVC deletion with `persistentVolumeClaimRetentionPolicy`:
+
+```yaml
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete   # delete PVCs when StatefulSet is deleted
+    whenScaled: Retain    # keep PVCs when scaling down
+```
+
+Use `Delete` carefully -- it is irreversible for stateful systems.
 
 ## When Not to Use StatefulSet
 

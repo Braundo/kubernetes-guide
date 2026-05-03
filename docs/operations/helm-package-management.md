@@ -62,6 +62,23 @@ helm rollback my-app 3 -n platform
 - prefer immutable image tags for release reproducibility
 - document required values and defaults for platform consumers
 
+## Hooks
+
+Helm hooks execute Jobs at defined lifecycle points: `pre-install`, `post-install`, `pre-upgrade`, `post-upgrade`, `pre-delete`, `post-delete`, and `pre-rollback`.
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+```
+
+Hooks are commonly used for database migrations (`pre-upgrade`), smoke tests (`post-install`), and cleanup jobs (`post-delete`). Set `hook-delete-policy: before-hook-creation` to prevent accumulating old hook Jobs across releases.
+
 ## Dependency management
 
 Declare chart dependencies in `Chart.yaml` and build them during CI or packaging.

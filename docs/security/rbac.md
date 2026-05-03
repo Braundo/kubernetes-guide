@@ -14,10 +14,21 @@ Authentication answers who the caller is. Authorization with RBAC answers what t
 
 ## Core RBAC objects
 
-- Role: namespaced permissions
-- ClusterRole: cluster-scoped or reusable permissions
-- RoleBinding: binds Role or ClusterRole within one namespace
-- ClusterRoleBinding: binds ClusterRole cluster-wide
+```mermaid
+graph LR
+    SA[ServiceAccount\nor User / Group] --> RB[RoleBinding]
+    RB --> R[Role\nnamespace-scoped]
+    R --> PERM[verbs on resources\nin namespace]
+
+    SA2[ServiceAccount\nor User / Group] --> CRB[ClusterRoleBinding]
+    CRB --> CR[ClusterRole\ncluster-scoped]
+    CR --> PERM2[verbs on resources\ncluster-wide]
+```
+
+- **Role**: grants permissions within a single namespace.
+- **ClusterRole**: grants permissions cluster-wide, or defines a reusable permission set applied per-namespace via RoleBinding.
+- **RoleBinding**: attaches a Role or ClusterRole to subjects within one namespace.
+- **ClusterRoleBinding**: attaches a ClusterRole to subjects across the entire cluster.
 
 ## Scope and reuse model
 
@@ -62,6 +73,25 @@ roleRef:
 Workloads should use dedicated service accounts, not the namespace default account.
 
 Pair each service account with only the minimal verbs and resources it needs.
+
+Disable automatic token mounting for service accounts that don't need API access:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-app
+automountServiceAccountToken: false
+```
+
+Or per-pod:
+
+```yaml
+spec:
+  automountServiceAccountToken: false
+```
+
+By default, every pod gets a token for the namespace's `default` service account, even if it never uses the Kubernetes API. Disabling this reduces the blast radius if a pod is compromised.
 
 ## Validation and troubleshooting
 

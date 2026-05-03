@@ -23,6 +23,14 @@ Use them for node-level agents, not for business application services.
 
 A DaemonSet controller watches node inventory. When a new eligible node appears, it schedules a matching pod automatically.
 
+```mermaid
+graph LR
+    DS[DaemonSet Controller] -->|schedules one pod| N1[Node 1\nnode-agent pod]
+    DS -->|schedules one pod| N2[Node 2\nnode-agent pod]
+    DS -->|schedules one pod| N3[Node 3\nnode-agent pod]
+    NEW[New Node joins] -->|triggers| DS
+```
+
 Eligibility depends on:
 
 - node labels and selectors

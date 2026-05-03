@@ -88,6 +88,21 @@ spec:
   externalName: db.example.com
 ```
 
+This type returns a CNAME record rather than a ClusterIP. No proxying occurs.
+
+## Headless Services
+
+Setting `clusterIP: None` creates a headless Service that returns pod IPs directly from DNS instead of a virtual IP. This is how StatefulSets provide stable per-pod DNS names.
+
+```yaml
+spec:
+  clusterIP: None
+  selector:
+    app: web
+```
+
+DNS for a headless service returns `A` records for each ready pod IP directly, rather than a single ClusterIP. Clients get all pod addresses and choose themselves.
+
 ## EndpointSlices
 
 Kubernetes stores service backend endpoint data in EndpointSlice objects.
@@ -101,11 +116,35 @@ kubectl get svc web
 kubectl get endpointslices -l kubernetes.io/service-name=web
 ```
 
+## externalTrafficPolicy
+
+For `NodePort` and `LoadBalancer` services, `externalTrafficPolicy` controls whether external traffic is routed cluster-wide or only to pods on the receiving node.
+
+- `Cluster` (default): traffic can be forwarded to any node that has a ready pod. Source IP is NAT'd, so the pod sees the node IP rather than the client IP.
+- `Local`: traffic is only sent to pods on the node that received it. Preserves the client source IP but causes uneven load distribution if pods are not evenly spread across nodes.
+
+Use `Local` when your app needs the real client IP (e.g. for rate limiting or geo routing) and you accept the tradeoff.
+
+## Session Affinity
+
+By default, each connection is independently load-balanced across pod endpoints. To route repeated connections from the same client to the same pod, use session affinity:
+
+```yaml
+spec:
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+```
+
+This is based on the source IP as seen by the Service, not the original client IP (use `externalTrafficPolicy: Local` if you need the real client IP to drive affinity).
+
 ## Common Pitfalls
 
 - Selector mismatch: Service has no endpoints.
 - Wrong `targetPort`: traffic reaches pod IP but wrong container port.
 - Readiness probe failures: endpoints removed because pods are not ready.
+- Using `sessionAffinity` with `Cluster` externalTrafficPolicy and expecting it to track real client IPs.
 
 ## Summary Table
 
