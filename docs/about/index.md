@@ -1,6 +1,8 @@
 ---
 title: About k8s.guide
 description: Background, editorial approach, and independent disclosure for k8s.guide.
+hide:
+ - footer
 ---
 
 # About k8s.guide

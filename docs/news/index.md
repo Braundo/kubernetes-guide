@@ -8,7 +8,7 @@ hide:
 
 # News
 
-Curated Kubernetes news: release changes, security advisories, and ecosystem developments — filtered for operator impact.
+Curated Kubernetes news: release changes, security advisories, and ecosystem developments - filtered for operator impact.
 
 <!-- AUTO-LATEST:START -->
 | Date | News | Summary |
